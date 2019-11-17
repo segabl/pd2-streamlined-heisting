@@ -10,7 +10,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
     }
   elseif difficulty_index > 3 then
     self.unit_categories.CS_swat_MP5.unit_types.america = {
-      Idstring("units/payday2/characters/ene_fbi_swat_smg/ene_fbi_swat_smg")
+      Idstring("units/payday2/characters/ene_fbi_swat_3/ene_fbi_swat_3")
     }
   else
     self.unit_categories.FBI_swat_R870 = self.unit_categories.CS_swat_R870
@@ -19,7 +19,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
       Idstring("units/payday2/characters/ene_swat_1/ene_swat_1")
     }
     self.unit_categories.CS_swat_MP5.unit_types.america = {
-      Idstring("units/payday2/characters/ene_swat_smg/ene_swat_smg")
+      Idstring("units/payday2/characters/ene_swat_3/ene_swat_3")
     }
     self.unit_categories.FBI_heavy_G36 = self.unit_categories.CS_heavy_M4
     self.unit_categories.FBI_heavy_R870 = self.unit_categories.CS_heavy_R870
@@ -203,7 +203,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     amount = { 3, 4 },
     spawn = {
       {
-        amount_min = 2,
+        amount_min = 1,
         freq = 1,
         amount_max = 2,
         rank = 2,
@@ -212,8 +212,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       },
       {
         amount_min = 1,
-        freq = 3,
-        amount_max = 1,
+        freq = 1,
+        amount_max = 2,
         rank = 3,
         unit = "FBI_heavy_R870",
         tactics = self._tactics.swat_shotgun_rush
@@ -234,7 +234,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     amount = { 3, 4 },
     spawn = {
       {
-        amount_min = 2,
+        amount_min = 1,
         freq = 1,
         amount_max = 2,
         rank = 2,
@@ -243,8 +243,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       },
       {
         amount_min = 1,
-        freq = 3,
-        amount_max = 1,
+        freq = 1,
+        amount_max = 2,
         rank = 3,
         unit = "FBI_heavy_R870",
         tactics = self._tactics.swat_shotgun_flank
@@ -421,7 +421,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     spawn = {
       {
         amount_min = 1,
-        freq = 1,
+        freq = difficulty_index / 16,
         amount_max = 3,
         rank = 3,
         unit = "FBI_tank",
@@ -439,7 +439,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
   }
 
   self.enemy_spawn_groups.tac_tazer_flanking = {
-    amount = { 3, 3 },
+    amount = { 3, 4 },
     spawn = {
       {
         amount_min = 1,
@@ -452,7 +452,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       {
         amount_min = 2,
         freq = 1,
-        amount_max = 2,
+        amount_max = 3,
         rank = 2,
         unit = "CS_swat_MP5",
         tactics = self._tactics.tazer_flanking

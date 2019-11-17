@@ -81,13 +81,11 @@
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit" load="true"/>
             
             <!-- add fbi swat submachine gunner -->
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.cooked_physics"/>
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.material_config"/>
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg_contour.material_config"/>
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.model"/>
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.object"/>
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.unit" load="true"/>
-            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg_husk.unit" load="true"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.cooked_physics"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.model"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.object"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit" load="true"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit" load="true"/>
             
             <!-- make fbi shield use submachine gunner model -->
             <file :name="ene_shield_1/ene_shield_1.unit" load="true"/>
@@ -102,13 +100,11 @@
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit" load="true"/>
 
             <!-- add new swat submachine gunner -->
-            <file :name="ene_swat_smg/ene_swat_smg.cooked_physics"/>
-            <file :name="ene_swat_smg/ene_swat_smg.material_config"/>
-            <file :name="ene_swat_smg/ene_swat_smg_contour.material_config"/>
-            <file :name="ene_swat_smg/ene_swat_smg.model"/>
-            <file :name="ene_swat_smg/ene_swat_smg.object"/>
-            <file :name="ene_swat_smg/ene_swat_smg.unit" load="true"/>
-            <file :name="ene_swat_smg/ene_swat_smg_husk.unit" load="true"/>
+            <file :name="ene_swat_3/ene_swat_3.cooked_physics"/>
+            <file :name="ene_swat_3/ene_swat_3.model"/>
+            <file :name="ene_swat_3/ene_swat_3.object"/>
+            <file :name="ene_swat_3/ene_swat_3.unit" load="true"/>
+            <file :name="ene_swat_3/ene_swat_3_husk.unit" load="true"/>
             
             <!-- make old model use m4 -->
             <file :name="ene_swat_1/ene_swat_1.unit" load="true"/>

@@ -39,8 +39,8 @@ local character_map_original = CharacterTweakData.character_map
 function CharacterTweakData:character_map(...)
   local char_map = character_map_original(self, ...)
   table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
-  table.insert(char_map.basic.list, "ene_swat_smg")
-  table.insert(char_map.basic.list, "ene_fbi_swat_smg")
+  table.insert(char_map.basic.list, "ene_swat_3")
+  table.insert(char_map.basic.list, "ene_fbi_swat_3")
   return char_map
 end
 
