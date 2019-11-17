@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<mod name="CASS" global_key="CASS">
+
+    <hooks script_path="mod.lua" hook_id="lib/">
+
+        <post :hook_id="managers/mission/elementspawnenemygroup"/>
+        <post :hook_id="units/enemies/cop/actions/upper_body/copactionshoot"/>
+        <group :hook_id="tweak_data/">
+            <post :hook_id="charactertweakdata"/>
+            <post :hook_id="groupaitweakdata"/>
+            <post :hook_id="weapontweakdata"/>
+        </group>
+
+    </hooks>
+
+    <assets base_path="assets/">
+
+        <!-- pre enemy visual update -->
+        <group name="units/">
+            <group :name="payday2/characters/">
+                <file :name="shared_textures/ene_city_heavy_df.texture"/>
+                <file :name="shared_textures/ene_city_heavy_nm.texture"/>
+                <file :name="shared_textures/helmets_atlas_df.texture"/>
+                <file :name="shared_textures/helmets_atlas_nm.texture"/>
+                <file :name="shared_textures/swat_city_df.texture"/>
+                <file :name="shared_textures/swat_fbi_body_df.texture"/>
+                <file :name="ene_city_swat_1/ene_city_swat_1.model"/>
+                <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
+                <file :name="ene_city_swat_3/ene_city_swat_3.model"/>
+                <file :name="ene_fbi_swat_1/ene_fbi_swat_1.model"/>
+                <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
+                <file :name="ene_swat_1/ene_swat_1.model"/>
+                <file :name="ene_swat_2/ene_swat_2.model"/>
+            </group>
+            <group :name="pd2_dlc_gitgud/characters/">
+                <file :name="ene_acc_shield_new_swat/shield_df.texture"/>
+                <file :name="ene_acc_shield_new_swat/shield_il.texture"/>
+                <file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
+                <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model"/>
+                <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
+                <file :name="ene_zeal_swat/ene_zeal_swat_df.texture"/>
+                <file :name="ene_zeal_swat/ene_zeal_swat_nm.texture"/>
+                <file :name="ene_zeal_swat/ene_zeal_swat_head_df.texture"/>
+                <file :name="ene_zeal_swat/ene_zeal_swat_head_nm.texture"/>
+                <file :name="ene_zeal_swat_heavy/swat_heavy_df.texture"/>
+                <file :name="ene_zeal_swat_heavy/swat_heavy_nm.texture"/>
+                <file :name="ene_zeal_swat_heavy/swat_heavy_head_df.texture"/>
+                <file :name="ene_zeal_swat_heavy/swat_heavy_head_nm.texture"/>
+                <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
+            </group>
+        </group>
+
+        <!-- new weapons -->
+        <group name="units/payday2/weapons/">
+            <!-- spas12 -->
+            <file :name="wpn_npc_spas12/spas12_df.texture"/>
+            <file :name="wpn_npc_spas12/spas12_nm.texture"/>
+            <file :name="wpn_npc_spas12/wpn_npc_spas12.cooked_physics"/>
+            <file :name="wpn_npc_spas12/wpn_npc_spas12.material_config"/>
+            <file :name="wpn_npc_spas12/wpn_npc_spas12.model"/>
+            <file :name="wpn_npc_spas12/wpn_npc_spas12.object"/>
+            <file :name="wpn_npc_spas12/wpn_npc_spas12.unit"/>
+            <!-- mp7 -->
+            <file :name="wpn_npc_mp7/mp7_df.texture"/>
+            <file :name="wpn_npc_mp7/mp7_nm.texture"/>
+            <file :name="wpn_npc_mp7/wpn_npc_mp7.cooked_physics"/>
+            <file :name="wpn_npc_mp7/wpn_npc_mp7.material_config"/>
+            <file :name="wpn_npc_mp7/wpn_npc_mp7.model"/>
+            <file :name="wpn_npc_mp7/wpn_npc_mp7.object"/>
+            <file :name="wpn_npc_mp7/wpn_npc_mp7.unit"/>
+        </group>
+
+        <!-- new characters -->
+        <group name="units/payday2/characters/">
+            <!-- make city shield use submachine gunner model -->
+            <file :name="ene_city_shield/ene_city_shield.unit" load="true"/>
+            <file :name="ene_city_shield/ene_city_shield_husk.unit" load="true"/>
+
+            <!-- make city heavy r870 use benelli -->
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit" load="true"/>
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit" load="true"/>
+            
+            <!-- add fbi swat submachine gunner -->
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.cooked_physics"/>
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.material_config"/>
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg_contour.material_config"/>
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.model"/>
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.object"/>
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg.unit" load="true"/>
+            <file :name="ene_fbi_swat_smg/ene_fbi_swat_smg_husk.unit" load="true"/>
+            
+            <!-- make fbi shield use submachine gunner model -->
+            <file :name="ene_shield_1/ene_shield_1.unit" load="true"/>
+            <file :name="ene_shield_1/ene_shield_1_husk.unit" load="true"/>
+
+            <!-- make fbi shotgunner use spas12 -->
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit" load="true"/>
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit" load="true"/>
+
+            <!-- make fbi heavy r870 use spas12 -->
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit" load="true"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit" load="true"/>
+
+            <!-- add new swat submachine gunner -->
+            <file :name="ene_swat_smg/ene_swat_smg.cooked_physics"/>
+            <file :name="ene_swat_smg/ene_swat_smg.material_config"/>
+            <file :name="ene_swat_smg/ene_swat_smg_contour.material_config"/>
+            <file :name="ene_swat_smg/ene_swat_smg.model"/>
+            <file :name="ene_swat_smg/ene_swat_smg.object"/>
+            <file :name="ene_swat_smg/ene_swat_smg.unit" load="true"/>
+            <file :name="ene_swat_smg/ene_swat_smg_husk.unit" load="true"/>
+            
+            <!-- make old model use m4 -->
+            <file :name="ene_swat_1/ene_swat_1.unit" load="true"/>
+            <file :name="ene_swat_1/ene_swat_1_husk.unit" load="true"/>
+            
+            <!-- make shield use submachine gunner model -->
+            <file :name="ene_shield_2/ene_shield_2.unit" load="true"/>
+            <file :name="ene_shield_2/ene_shield_2_husk.unit" load="true"/>
+        </group>
+
+    </assets>
+
+</mod>

@@ -19,6 +19,13 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
       self._orig_npc_dmg[k] = v.DAMAGE
     end
   end
+
+  self.benelli_npc.sounds.prefix = self.ben_crew.sounds.prefix
+  self.spas12_npc = deep_clone(self.r870_npc)
+  self.spas12_npc.sounds.prefix = self.spas12_crew.sounds.prefix
+  self.mp7_npc = deep_clone(self.mp5_npc)
+  self.mp7_npc.sounds.prefix = self.mp7_crew.sounds.prefix
+  self.mp7_npc.hold = self.mp7_crew.hold
 end)
 
 Hooks:PostHook(WeaponTweakData, "_set_normal", "cass__set_normal", function(self)
