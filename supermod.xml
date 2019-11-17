@@ -73,47 +73,65 @@
         <!-- new characters -->
         <group name="units/payday2/characters/">
             <!-- make city shield use submachine gunner model -->
-            <file :name="ene_city_shield/ene_city_shield.unit" load="true"/>
-            <file :name="ene_city_shield/ene_city_shield_husk.unit" load="true"/>
+            <file :name="ene_city_shield/ene_city_shield.unit"/>
+            <file :name="ene_city_shield/ene_city_shield_husk.unit"/>
 
             <!-- make city heavy r870 use benelli -->
-            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit" load="true"/>
-            <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit" load="true"/>
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit"/>
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit"/>
             
             <!-- add fbi swat submachine gunner -->
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.cooked_physics"/>
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.model"/>
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.object"/>
-            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit" load="true"/>
-            <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit" load="true"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit"/>
             
             <!-- make fbi shield use submachine gunner model -->
-            <file :name="ene_shield_1/ene_shield_1.unit" load="true"/>
-            <file :name="ene_shield_1/ene_shield_1_husk.unit" load="true"/>
+            <file :name="ene_shield_1/ene_shield_1.unit"/>
+            <file :name="ene_shield_1/ene_shield_1_husk.unit"/>
 
             <!-- make fbi shotgunner use spas12 -->
-            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit" load="true"/>
-            <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit" load="true"/>
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit"/>
 
             <!-- make fbi heavy r870 use spas12 -->
-            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit" load="true"/>
-            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit" load="true"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
+
+            <!-- make original swat use m4 -->
+            <file :name="ene_swat_1/ene_swat_1.unit"/>
+            <file :name="ene_swat_1/ene_swat_1_husk.unit"/>
 
             <!-- add new swat submachine gunner -->
             <file :name="ene_swat_3/ene_swat_3.cooked_physics"/>
             <file :name="ene_swat_3/ene_swat_3.model"/>
             <file :name="ene_swat_3/ene_swat_3.object"/>
-            <file :name="ene_swat_3/ene_swat_3.unit" load="true"/>
-            <file :name="ene_swat_3/ene_swat_3_husk.unit" load="true"/>
-            
-            <!-- make old model use m4 -->
-            <file :name="ene_swat_1/ene_swat_1.unit" load="true"/>
-            <file :name="ene_swat_1/ene_swat_1_husk.unit" load="true"/>
+            <file :name="ene_swat_3/ene_swat_3.unit"/>
+            <file :name="ene_swat_3/ene_swat_3_husk.unit"/>
             
             <!-- make shield use submachine gunner model -->
-            <file :name="ene_shield_2/ene_shield_2.unit" load="true"/>
-            <file :name="ene_shield_2/ene_shield_2_husk.unit" load="true"/>
+            <file :name="ene_shield_2/ene_shield_2.unit"/>
+            <file :name="ene_shield_2/ene_shield_2_husk.unit"/>
         </group>
+
+        <!-- new zeals
+        <group name="units/pd2_dlc_gitgud/characters/">
+            <file :name="ene_zeal_swat/ene_zeal_swat.unit"/>
+            <file :name="ene_zeal_swat/ene_zeal_swat_husk.unit"/>
+            
+            <file :name="ene_zeal_swat_2/ene_zeal_swat_2.unit"/>
+            <file :name="ene_zeal_swat_2/ene_zeal_swat_2_husk.unit"/>
+
+            <file :name="ene_zeal_swat_3/ene_zeal_swat_3.unit"/>
+            <file :name="ene_zeal_swat_3/ene_zeal_swat_3_husk.unit"/>
+            
+            <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.unit"/>
+            <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_husk.unit"/>
+
+            <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870.unit"/>
+            <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870_husk.unit"/>
+        </group> -->
 
     </assets>
 
