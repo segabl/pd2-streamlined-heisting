@@ -6,7 +6,7 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 ### CopActionShoot
 - Gives cops linear damage falloff between their entries in the ``FALLOFF`` table instead of sudden drops after a distance threshold is reached
 - Removes spread from NPC accuracy calculation as it didn't really affect players anyways and just made NPC vs NPC situations very inconsistent
-- Fixes ``acc`` being ignored for single fire weapons in NPC vs NPC situations
+- Fixes accuracy values being ignored for single fire weapons in NPC vs NPC situations
 - Removes (ignores, to be more accurate) the clunky ``mode`` entry in ``FALLOFF`` that defines how cops shoot their guns and interpolates ``autofire_rounds`` based on distance instead
 
 ### Difficulty weapon presets
