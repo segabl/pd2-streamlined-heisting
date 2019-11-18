@@ -198,6 +198,8 @@ Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
   table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"))
   table.insert(self.weap_ids, "mp7")
   table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7"))
+  table.insert(self.weap_ids, "amcar")
+  table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar"))
   
   self._default_preset_users = {}
   for _, name in ipairs(self._enemy_list) do

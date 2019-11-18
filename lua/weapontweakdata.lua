@@ -26,6 +26,8 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.mp7_npc = deep_clone(self.mp5_npc)
   self.mp7_npc.sounds.prefix = self.mp7_crew.sounds.prefix
   self.mp7_npc.hold = self.mp7_crew.hold
+  self.amcar_npc = deep_clone(self.m4_npc)
+  self.amcar_npc.sounds.prefix = self.amcar_crew.sounds.prefix
 end)
 
 Hooks:PostHook(WeaponTweakData, "_set_normal", "cass__set_normal", function(self)
