@@ -24,3 +24,6 @@ Full streamlining mod of CopActionShoot, spawngroups, difficulty presets and mor
 - Adds different weapons for different factions, similar how GenSec uses different weapons
 - Maps factions to difficulty properly, Normal and Hard have blue SWAT, Very Hard and Overkill have green SWAT, Mayhem and Deathwish have GenSec SWAT and Death Sentence has Zeals
 - Gives heavy shotgunners a unique look to make them more distinct from their rifle counterparts (tbd)
+
+# What else does it do?
+- Brings back old cop models from before the enemy visual update (they are just better)
