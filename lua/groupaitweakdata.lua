@@ -509,7 +509,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     amount = { 1, 1 + math.round(difficulty_index / 4) },
     spawn = {
       {
-        freq = 1,
+        freq = difficulty_index / 16,
         amount_min = 1,
         rank = 1,
         unit = "spooc",
@@ -677,7 +677,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
   end
 
   self.besiege.recon.groups = {
-    hostage_rescue = { 10, 10, 10 },
+    hostage_rescue = { 5, 5, 5 },
     hostage_rescue_medic = { 1, 1, 1 },
     hostage_rescue_shield = { 1, 1, 1 }
   }

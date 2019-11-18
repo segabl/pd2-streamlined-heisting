@@ -80,8 +80,8 @@ function CharacterTweakData:_presets(...)
   }
   presets.weapon.cass_overkill_145.is_smg.autofire_rounds = { 6, 18 }
   presets.weapon.cass_overkill_145.is_smg.FALLOFF = {
-    { dmg_mul = 5, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.1, 0.25 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 1, r = 3000, acc = { 0, 0.1 }, recoil = { 0.5, 1.5 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 5, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.1, 0.3 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 0.5, r = 3000, acc = { 0, 0 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_overkill_145.mini.autofire_rounds = { 50, 200 }
   presets.weapon.cass_overkill_145.mini.FALLOFF = {
@@ -178,6 +178,11 @@ function CharacterTweakData:_presets(...)
     { dmg_mul = 4.5, r = 1000, acc = { 0.5, 1 }, recoil = { 1.5, 2.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3.5, r = 10000, acc = { 0.25, 0.5 }, recoil = { 1.5, 2.5 }, mode = { 1, 0, 0, 0 } }
   }
+
+  -- reduce team AI damage because else the improved accuracy calculation for npcs makes them even stronger
+  for _, w in pairs(presets.weapon.gang_member) do
+    manipulate_entries(w.FALLOFF, "dmg_mul", function (val) return val * 0.5 end)
+  end
 
   return presets
 end
