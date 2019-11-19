@@ -26,6 +26,12 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
   end
 
+  -- temp fix
+  self.unit_categories.FBI_suit_M4_MP5.unit_types.murkywater = {
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi"),
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+  }
+
   if difficulty_index <= 2 then
     self.special_unit_spawn_limits = {
       shield = 2,

@@ -10,7 +10,6 @@ end
 
 Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.g36_npc.DAMAGE = 1
-  self.smoke_npc.DAMAGE = 1
   self.ak47_npc.DAMAGE = 2
   self.mac11_npc.DAMAGE = 2
   self._orig_npc_dmg = {}
@@ -28,6 +27,8 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.mp7_npc.hold = self.mp7_crew.hold
   self.amcar_npc = deep_clone(self.m4_npc)
   self.amcar_npc.sounds.prefix = self.amcar_crew.sounds.prefix
+  self.g36_npc = deep_clone(self.m4_npc)
+  self.g36_npc.sounds.prefix = self.g36_crew.sounds.prefix
 end)
 
 Hooks:PostHook(WeaponTweakData, "_set_normal", "cass__set_normal", function(self)

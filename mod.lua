@@ -6,7 +6,7 @@ if not CASS then
   function CASS:log(...)
     local params = {...}
     local str = ""
-    for _, v in ipairs(params) do
+    for _, v in pairs(params) do
       str = str .. tostring(v) .. " "
     end
     log("[CASS] " .. str)
