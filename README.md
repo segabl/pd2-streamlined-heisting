@@ -13,7 +13,7 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 - Creates weapon presets for all actual difficulties instead of reusing presets (i.e. ``expert`` preset being used on both Overkill and Mayhem)
 - Make use of aim delay (which was set to 0 for all presets in vanilla) which affects how long cops take to shoot at you when you enter their line of sight
 - Difficulty presets are based on a common base preset and just scale their damage multipliers, accuracy, melee damage, focus delay and aim delay
-- Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff.
+- Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
 
 ### Spawn groups
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
@@ -25,8 +25,10 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 - Adds missing units to every faction, based on the units present in the GenSec faction (consisting of a Rifle, Shotgun and SMG unit)
 - Adds different weapons for different factions, similar how GenSec uses different weapons
 - Maps factions to difficulty properly, Normal and Hard have blue SWAT, Very Hard and Overkill have green SWAT, Mayhem and Deathwish have GenSec SWAT and Death Sentence has Zeals
-- Makes shield units use the SMG unit model
-- Gives heavy shotgunners a unique look to make them more distinct from their rifle counterparts (TBD)
+- Adds armor plates to the heavy SWAT on Normal and Hard (cosmetic changes to visualize the armor TBD), to be in line with the heavy SWATs on other difficulties
+- Gives heavy shotgunners the helmet treatment of the light shotgunners to make them more distinct from their rifle counterparts (TBD)
 
 ## What else does it do?
+- Makes shield units use the SMG unit model
+- Removes all but light, fire and poison hurt animations from heavy SWAT but scales their damage one difficulty lower
 - Brings back old cop models from before the enemy visual update (they are just better)
