@@ -305,7 +305,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       },
       {
         amount_min = 0,
-        freq = 0.5,
+        freq = 0.25,
         amount_max = 2,
         rank = 2,
         unit = "CS_swat_MP5",
