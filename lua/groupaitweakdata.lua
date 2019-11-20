@@ -1,7 +1,13 @@
 
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categories", function (self, difficulty_index)
 
-  if difficulty_index > 5 and difficulty_index < 8 then
+  -- We're using the same unit categories for all difficulties for the sake of making the code more readable and not having
+  -- to do all that if-else crap that Overkill originally did. While unit categories are the same, the units they contain still
+  -- depend on the difficulty, for instance FBI_heavy_G36 will spawn normal M4 heavies on overkill despite the unit category name
+
+  if difficulty_index == 8 then
+
+  elseif difficulty_index > 5 then
     self.unit_categories.FBI_swat_R870.unit_types.america = {
       Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")
     }
@@ -26,7 +32,20 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
   end
 
-  -- temp fix
+  -- Murky city units are useless, use the same murky units on all difficulties
+  self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+  }
+  self.unit_categories.FBI_swat_M4.unit_types.murkywater = {
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")
+  }
+  self.unit_categories.FBI_heavy_G36.unit_types.murkywater = {
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+  }
+  self.unit_categories.FBI_heavy_R870.unit_types.murkywater = {
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+  }
+  -- temp fix till I have proper murky HRT
   self.unit_categories.FBI_suit_M4_MP5.unit_types.murkywater = {
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi"),
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
@@ -204,7 +223,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
   }
   self.enemy_spawn_groups = {}
 
-  -- tac_swat_shotgun_rush
   self.enemy_spawn_groups.tac_swat_shotgun_rush = {
     amount = { 3, 4 },
     spawn = {
@@ -235,7 +253,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_swat_shotgun_flank
   self.enemy_spawn_groups.tac_swat_shotgun_flank = {
     amount = { 3, 4 },
     spawn = {
@@ -266,7 +283,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_swat_rifle
   self.enemy_spawn_groups.tac_swat_rifle = {
     amount = { 4, 5 },
     spawn = {
@@ -297,7 +313,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_swat_rifle_flank
   self.enemy_spawn_groups.tac_swat_rifle_flank = {
     amount = { 4, 5 },
     spawn = {
@@ -336,7 +351,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_shield_wall_ranged
   self.enemy_spawn_groups.tac_shield_wall_ranged = {
     amount = { 4, 5 },
     spawn = {
@@ -367,7 +381,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_shield_wall_charge
   self.enemy_spawn_groups.tac_shield_wall_charge = {
     amount = { 4, 5 },
     spawn = {
@@ -398,7 +411,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_shield_wall
   self.enemy_spawn_groups.tac_shield_wall = {
     amount = { 4, 5 },
     spawn = {
@@ -421,7 +433,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
     }
   }
 
-  -- tac_bull_rush
   self.enemy_spawn_groups.tac_bull_rush = {
     amount = { 1, 1 + math.round(difficulty_index / 3) },
     spawn = {
@@ -465,6 +476,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       }
     }
   }
+
   self.enemy_spawn_groups.tac_tazer_charge = {
     amount = { 3, 3 },
     spawn = {
@@ -538,6 +550,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       }
     }
   }
+
   self.enemy_spawn_groups.hostage_rescue_shield = {
     amount = { 2, 3 },
     spawn = {
@@ -558,6 +571,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       }
     }
   }
+  
   self.enemy_spawn_groups.hostage_rescue_medic = {
     amount = { 2, 3 },
     spawn = {
