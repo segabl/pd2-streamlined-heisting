@@ -16,41 +16,6 @@
 
     <assets base_path="assets/">
 
-        <!-- pre enemy visual update -->
-        <group name="units/">
-            <group :name="payday2/characters/">
-                <file :name="shared_textures/ene_city_heavy_df.texture"/>
-                <file :name="shared_textures/ene_city_heavy_nm.texture"/>
-                <file :name="shared_textures/helmets_atlas_df.texture"/>
-                <file :name="shared_textures/helmets_atlas_nm.texture"/>
-                <file :name="shared_textures/swat_city_df.texture"/>
-                <file :name="shared_textures/swat_fbi_body_df.texture"/>
-                <file :name="ene_city_swat_1/ene_city_swat_1.model"/>
-                <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
-                <file :name="ene_city_swat_3/ene_city_swat_3.model"/>
-                <file :name="ene_fbi_swat_1/ene_fbi_swat_1.model"/>
-                <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
-                <file :name="ene_swat_1/ene_swat_1.model"/>
-                <file :name="ene_swat_2/ene_swat_2.model"/>
-            </group>
-            <group :name="pd2_dlc_gitgud/characters/">
-                <file :name="ene_acc_shield_new_swat/shield_df.texture"/>
-                <file :name="ene_acc_shield_new_swat/shield_il.texture"/>
-                <file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
-                <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model"/>
-                <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
-                <file :name="ene_zeal_swat/ene_zeal_swat_df.texture"/>
-                <file :name="ene_zeal_swat/ene_zeal_swat_nm.texture"/>
-                <file :name="ene_zeal_swat/ene_zeal_swat_head_df.texture"/>
-                <file :name="ene_zeal_swat/ene_zeal_swat_head_nm.texture"/>
-                <file :name="ene_zeal_swat_heavy/swat_heavy_df.texture"/>
-                <file :name="ene_zeal_swat_heavy/swat_heavy_nm.texture"/>
-                <file :name="ene_zeal_swat_heavy/swat_heavy_head_df.texture"/>
-                <file :name="ene_zeal_swat_heavy/swat_heavy_head_nm.texture"/>
-                <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
-            </group>
-        </group>
-
         <!-- new weapons -->
         <group name="units/payday2/weapons/">
             <!-- spas12 -->
@@ -79,8 +44,22 @@
             <file :name="wpn_npc_amcar/wpn_npc_amcar.unit"/>
         </group>
 
-        <!-- new characters -->
+        <!-- new (and old) characters -->
         <group name="units/payday2/characters/">
+            <file :name="shared_textures/ene_city_heavy_df.texture"/>
+            <file :name="shared_textures/ene_city_heavy_nm.texture"/>
+            <file :name="shared_textures/helmets_atlas_df.texture"/>
+            <file :name="shared_textures/helmets_atlas_nm.texture"/>
+            <file :name="shared_textures/swat_city_df.texture"/>
+            <file :name="shared_textures/swat_fbi_body_df.texture"/>
+            <file :name="ene_city_swat_1/ene_city_swat_1.model"/>
+            <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
+            <file :name="ene_city_swat_3/ene_city_swat_3.model"/>
+            <file :name="ene_fbi_swat_1/ene_fbi_swat_1.model"/>
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
+            <file :name="ene_swat_1/ene_swat_1.model"/>
+            <file :name="ene_swat_2/ene_swat_2.model"/>
+
             <!-- make city shield use submachine gunner model -->
             <file :name="ene_city_shield/ene_city_shield.unit"/>
             <file :name="ene_city_shield/ene_city_shield_husk.unit"/>
@@ -136,8 +115,26 @@
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870_husk.unit"/> -->
         </group>
 
-        <!-- new zeals
-        <group name="units/pd2_dlc_gitgud/characters/">
+        <!-- new (and old) zeals -->
+        <group name="units/pd2_dlc_gitgud/characters/" target="scripted" load_group="zeals">
+            <!--
+            <file :name="ene_acc_shield_new_swat/shield_df.texture"/>
+            <file :name="ene_acc_shield_new_swat/shield_il.texture"/>
+            <file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
+            <file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.model"/>
+            <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model"/>
+            <file :name="ene_zeal_swat/ene_zeal_swat_df.texture"/>
+            <file :name="ene_zeal_swat/ene_zeal_swat_nm.texture"/>
+            <file :name="ene_zeal_swat/ene_zeal_swat_head_df.texture"/>
+            <file :name="ene_zeal_swat/ene_zeal_swat_head_nm.texture"/>
+            <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
+            <file :name="ene_zeal_swat_heavy/swat_heavy_df.texture"/>
+            <file :name="ene_zeal_swat_heavy/swat_heavy_nm.texture"/>
+            <file :name="ene_zeal_swat_heavy/swat_heavy_head_df.texture"/>
+            <file :name="ene_zeal_swat_heavy/swat_heavy_head_nm.texture"/>
+            <file :name="ene_zeal_swat_heavy/swat_heavy.model"/>
+            <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
+
             <file :name="ene_zeal_swat/ene_zeal_swat.unit"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_husk.unit"/>
             
@@ -146,13 +143,14 @@
 
             <file :name="ene_zeal_swat_3/ene_zeal_swat_3.unit"/>
             <file :name="ene_zeal_swat_3/ene_zeal_swat_3_husk.unit"/>
-            
+
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.unit"/>
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_husk.unit"/>
 
             <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870.unit"/>
             <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870_husk.unit"/>
-        </group> -->
+            -->
+        </group>
 
     </assets>
 
