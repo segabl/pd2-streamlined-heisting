@@ -18,6 +18,7 @@ local temp_rot1 = Rotation()
 local bezier_curve = { 0, 0, 1, 1 }
 local lerp = math.lerp
 local random = math.random
+local round = math.round
 
 function CopActionShoot:update(t)
   local vis_state = self._ext_base:lod_stage() or 4
@@ -317,8 +318,8 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
       acc = { lerp(prev_data.acc[1], data.acc[1], t), lerp(prev_data.acc[2], data.acc[2], t) },
       recoil = { lerp(prev_data.recoil[1], data.recoil[1], t), lerp(prev_data.recoil[2], data.recoil[2], t) },
       autofire_rounds = prev_data.autofire_rounds and {
-        lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t),
-        lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t)
+        round(lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t)),
+        round(lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t))
       },
       mode = data.mode
     }
