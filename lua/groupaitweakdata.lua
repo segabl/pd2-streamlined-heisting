@@ -33,8 +33,11 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
   end
 
   -- Murky city units are useless, use the same murky units on all difficulties
+  self.unit_categories.CS_swat_MP5.unit_types.murkywater = {
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+  }
   self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
-    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870")
   }
   self.unit_categories.FBI_swat_M4.unit_types.murkywater = {
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")

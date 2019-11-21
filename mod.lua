@@ -25,6 +25,7 @@ if not CASS then
         return
       end
     end
+    self:log("Loading asset group \"" .. name .. "\"")
     self.asset_loader:LoadAssetGroup(name)
   end
 

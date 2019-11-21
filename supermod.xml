@@ -102,7 +102,7 @@
             <file :name="ene_shield_2/ene_shield_2.unit"/>
             <file :name="ene_shield_2/ene_shield_2_husk.unit"/>
 
-            <!-- give heavy swat rifleman amcar and body plate -->
+            <!-- make heavy swat rifleman use amcar and give body plate -->
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.model"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.object"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.unit"/>
@@ -115,9 +115,25 @@
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870_husk.unit"/> -->
         </group>
 
+        <!-- new (and old) murkies -->
+        <group name="units/pd2_dlc_bph/characters/" target="scripted" load_group="murky">
+            <!-- use normal light as smg unit -->
+            <file :name="ene_murkywater_light/ene_murkywater_light.model"/>
+            <file :name="ene_murkywater_light/ene_murkywater_light.object"/>
+            <file :name="ene_murkywater_light/ene_murkywater_light.unit"/>
+            <file :name="ene_murkywater_light/ene_murkywater_light_husk.unit"/>
+
+            <!-- make light fbi use scar -->
+            <file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi.unit"/>
+            <file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi_husk.unit"/>
+
+            <!-- make heavy use scar -->
+            <file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
+            <file :name="ene_murkywater_heavy/ene_murkywater_heavy_husk.unit"/>
+        </group>
+
         <!-- new (and old) zeals -->
-        <group name="units/pd2_dlc_gitgud/characters/" target="scripted" load_group="zeals">
-            <!--
+        <group name="units/pd2_dlc_gitgud/characters/" target="scripted" load_group="zeal">
             <file :name="ene_acc_shield_new_swat/shield_df.texture"/>
             <file :name="ene_acc_shield_new_swat/shield_il.texture"/>
             <file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
@@ -149,7 +165,6 @@
 
             <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870.unit"/>
             <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870_husk.unit"/>
-            -->
         </group>
 
     </assets>

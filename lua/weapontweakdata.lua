@@ -12,14 +12,10 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.g36_npc.DAMAGE = 1
   self.ak47_npc.DAMAGE = 2
   self.mac11_npc.DAMAGE = 2
-  self._orig_npc_dmg = {}
-  for k, v in pairs(self) do
-    if k:sub(-4) == "_npc" then
-      self._orig_npc_dmg[k] = v.DAMAGE
-    end
-  end
 
   self.benelli_npc.sounds.prefix = self.ben_crew.sounds.prefix
+  self.scar_npc = deep_clone(self.m4_npc)
+  self.scar_npc.sounds = self.scar_crew.sounds.prefix
   self.spas12_npc = deep_clone(self.r870_npc)
   self.spas12_npc.sounds.prefix = self.spas12_crew.sounds.prefix
   self.mp7_npc = deep_clone(self.mp5_npc)
@@ -29,6 +25,13 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.amcar_npc.sounds.prefix = self.amcar_crew.sounds.prefix
   self.g36_npc = deep_clone(self.m4_npc)
   self.g36_npc.sounds.prefix = self.g36_crew.sounds.prefix
+
+  self._orig_npc_dmg = {}
+  for k, v in pairs(self) do
+    if k:sub(-4) == "_npc" then
+      self._orig_npc_dmg[k] = v.DAMAGE
+    end
+  end
 end)
 
 Hooks:PostHook(WeaponTweakData, "_set_normal", "cass__set_normal", function(self)
