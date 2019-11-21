@@ -44,7 +44,7 @@ local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(...)
   local presets = _presets_original(self, ...)
   
-  CASS:log("Setting up presets")
+  CASS:log("Setting up weapon presets")
 
   -- base everything on overkill preset
   presets.weapon.cass_overkill_145 = based_on(presets.weapon.expert, {
@@ -69,6 +69,7 @@ function CharacterTweakData:_presets(...)
     { dmg_mul = 1.5, r = 1000, acc = { 0.5, 0.8 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 0.01, r = 3000, acc = { 0.1, 0.6 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
+  presets.weapon.cass_overkill_145.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
   presets.weapon.cass_overkill_145.is_shotgun_mag = deep_clone(presets.weapon.cass_overkill_145.is_shotgun_pump)
   presets.weapon.cass_overkill_145.is_rifle.autofire_rounds = { 3, 9 }
   presets.weapon.cass_overkill_145.is_rifle.FALLOFF = {
@@ -80,6 +81,7 @@ function CharacterTweakData:_presets(...)
     { dmg_mul = 5, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.1, 0.3 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 0.5, r = 3000, acc = { 0, 0 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
+  presets.weapon.cass_overkill_145.is_smg.range = { optimal = 1500, far = 4000, close = 750 }
   presets.weapon.cass_overkill_145.mini.autofire_rounds = { 50, 200 }
   presets.weapon.cass_overkill_145.mini.FALLOFF = {
     { dmg_mul = 4, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
@@ -259,22 +261,24 @@ local lower_preset_users = {
   medic = true
 }
 local function set_cops_weapon_preset(self, preset, preset_lower)
-  CASS:log("Setting presets to", preset, preset_lower)
+  CASS:log("Setting weapon presets to", preset, preset_lower)
 
-  self._active_presets = { self.presets.weapon[preset], self.presets.weapon[preset_lower] }
+  self._active_weapon_presets = { self.presets.weapon[preset], self.presets.weapon[preset_lower] }
 
   for k, v in pairs(self._default_preset_users) do
-    v.weapon = lower_preset_users[k] and self._active_presets[2] or self._active_presets[1]
+    v.weapon = lower_preset_users[k] and self._active_weapon_presets[2] or self._active_weapon_presets[1]
   end
-  self.taser.weapon.is_rifle = deep_clone(self._active_presets[1].is_rifle)
-  self.taser.weapon.tase_sphere_cast_radius = 30
-  self.taser.weapon.tase_distance = 1500
+  self.taser.weapon.is_rifle = deep_clone(self._active_weapon_presets[1].is_rifle)
+  self.taser.weapon.is_rifle.tase_sphere_cast_radius = 30
+  self.taser.weapon.is_rifle.tase_distance = 1500
+  self.taser.weapon.is_rifle.aim_delay_tase = { 0, 0 }
+  self.shield.weapon = self._active_weapon_presets[1]
 end
 
 local function set_tank_weapon_preset(self, dmg_mul)
   local tank_weapon = based_on(self.presets.weapon.cass_tank, {
-    aim_delay = self._active_presets[1].is_rifle.aim_delay,
-    focus_delay = self._active_presets[1].is_rifle.focus_delay,
+    aim_delay = self._active_weapon_presets[1].is_rifle.aim_delay,
+    focus_delay = self._active_weapon_presets[1].is_rifle.focus_delay,
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * dmg_mul end)
     end

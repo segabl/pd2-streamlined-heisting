@@ -111,7 +111,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
 
 end)
 
-function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_spawn_groups", function (self, difficulty_index)
   self._tactics = {
     Phalanx_minion = {
       "smoke_grenade",
@@ -592,7 +592,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
       },
     }
   }
-end
+end)
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", function (self, difficulty_index)
 
