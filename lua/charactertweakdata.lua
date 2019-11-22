@@ -29,18 +29,19 @@ local function manipulate_entries(tbl, value_name, func)
   end
 end
 
-local function quadratic(x, a, b, c)
-  return a + b * x + c * math.pow(x, 2)
+local function power(x, a, b, c)
+  return a + b * math.pow(x, c)
 end
 
-local function cubic(x, a, b, c, d)
-  return quadratic(x, a, b, c) + d * math.pow(x, 3)
+local function quadratic(x, a, b, c)
+  return a + b * x + c * math.pow(x, 2)
 end
 
 
 local character_map_original = CharacterTweakData.character_map
 function CharacterTweakData:character_map(...)
   local char_map = character_map_original(self, ...)
+  table.insert(char_map.basic.list, "ene_swat_heavy_r870")
   table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
   table.insert(char_map.basic.list, "ene_swat_3")
   table.insert(char_map.basic.list, "ene_fbi_swat_3")
@@ -57,18 +58,18 @@ function CharacterTweakData:_presets(tweak_data, ...)
   -- I know this looks pretty weird, but it's science! We're creating the presets with the help of
   -- some mathematical functions so we don't have to define presets for every difficulty.
   -- The parameters for the functions were determined by curve fitting existing preset values
-  local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-  local diff_i_norm = (diff_i - 1) / 7
-  local dmg_mul = cubic(diff_i, -0.19285714, 0.43365801, -0.16201299, 0.02575758)
-  local acc_mul = cubic(diff_i, 0.75, 0.06444805, -0.02505411, 0.00454545)
-  local focus_delay = quadratic(diff_i, 2.93303571, -0.50744048, 0.02232143)
-  local aim_delay = { 0, math.lerp(0.4, 0.05, diff_i_norm) }
-  local melee_dmg = cubic(diff_i, 0.35714286, 0.04978355, 0.47943723, -0.02272727)
-  CASS:log("dmg_mul", dmg_mul, "acc_mul", acc_mul, "focus_delay", focus_delay, "aim_delay", aim_delay[2], "melee_dmg", melee_dmg)
+  local x = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+  local x_norm = (x - 1) / 7
+  local dmg_mul = power(x, 0.15885586464656734, 0.002320066848959271, 3.772923334982752)
+  local acc_mul = quadratic(x, 0.7874999999995336, -0.03154761904986736, 0.014880952378803491)
+  local focus_delay = quadratic(x, 2.93303571, -0.50744048, 0.02232143)
+  local aim_delay = math.lerp(0.4, 0.05, x_norm)
+  local melee_dmg = power(x, -0.15268551419286125, 0.8509800693138164, 1.5212624505246697)
+  CASS:log("dmg_mul", dmg_mul, "acc_mul", acc_mul, "focus_delay", focus_delay, "aim_delay", aim_delay, "melee_dmg", melee_dmg)
   -- Base everything on Overkill preset
   presets.weapon.cass_base = based_on(presets.weapon.expert, {
     focus_delay = focus_delay,
-    aim_delay = aim_delay,
+    aim_delay = { 0, aim_delay },
     melee_dmg = melee_dmg
   })
   presets.weapon.cass_base.is_pistol.FALLOFF = {
@@ -128,7 +129,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
   
   -- Preset for bulldozers
-  local dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
+  local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   presets.weapon.cass_tank = based_on(presets.weapon.cass_base, {
     melee_dmg = 25
   })
@@ -162,8 +163,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
 
   -- Presets for snipers
-  local dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
-  local recoil_mul = math.lerp(1.3, 0.6, diff_i_norm)
+  local dmg_mul = math.lerp(0.6, 1.3, x_norm)
+  local recoil_mul = math.lerp(1.3, 0.6, x_norm)
   presets.weapon.cass_sniper = based_on(presets.weapon.sniper, {
     focus_delay = 20
   })
@@ -240,7 +241,7 @@ local function set_weapon_presets(self)
   self.taser.weapon.is_rifle.tase_sphere_cast_radius = 30
   self.taser.weapon.is_rifle.tase_distance = 1500
   self.taser.weapon.is_rifle.aim_delay_tase = { 0, 0 }
-  self.shield.weapon = self.presets.weapon.cass_base
+  self.shield.weapon = self.presets.weapon.cass_heavy
   self.spooc.weapon = self.presets.weapon.cass_base
   self.shadow_spooc.weapon = self.presets.weapon.cass_base
   self.sniper.weapon = self.presets.weapon.cass_sniper
