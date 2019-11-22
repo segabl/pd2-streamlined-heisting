@@ -1,4 +1,9 @@
 
+Hooks:PostHook(GroupAITweakData, "init", "cass_init", function (self, tweak_data)
+  -- Unlock npc action limit
+  self.ai_tick_rate = 0
+end)
+
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categories", function (self, difficulty_index)
 
   -- We're using the same unit categories for all difficulties for the sake of making the code more readable and not having
