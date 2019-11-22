@@ -133,6 +133,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   presets.weapon.cass_tank = based_on(presets.weapon.cass_base, {
     melee_dmg = 25
   })
+  presets.weapon.cass_tank.is_shotgun_pump.RELOAD_SPEED = 1
   presets.weapon.cass_tank.is_shotgun_pump.FALLOFF = {
     { dmg_mul = 5 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 1000, acc = { 0.2, 0.75 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
@@ -141,9 +142,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
   presets.weapon.cass_tank.is_shotgun_mag.RELOAD_SPEED = 0.5
   presets.weapon.cass_tank.is_shotgun_mag.autofire_rounds = { 1, 7 }
   presets.weapon.cass_tank.is_shotgun_mag.FALLOFF = {
-    { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 6, 7 } },
-    { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.4, 0.8 }, recoil = { 0.45, 8 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 2, 3 } },
-    { dmg_mul = 0.01 * dmg_mul, r = 3000, acc = { 0.1, 0.35 }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 1 } }
+    { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 4 } },
+    { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.4, 0.8 }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 3 } },
+    { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0.1, 0.35 }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 1 } }
   }
   presets.weapon.cass_tank.is_rifle.focus_dis = 800
   presets.weapon.cass_tank.is_rifle.RELOAD_SPEED = 0.5

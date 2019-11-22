@@ -26,6 +26,9 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.g36_npc = deep_clone(self.m4_npc)
   self.g36_npc.sounds.prefix = self.g36_crew.sounds.prefix
 
+  self.saiga_npc.CLIP_AMMO_MAX = 20 -- test
+  self.saiga_npc.auto.fire_rate = 0.18 -- original is incorrect
+
   self._orig_npc_dmg = {}
   for k, v in pairs(self) do
     if k:sub(-4) == "_npc" then
