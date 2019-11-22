@@ -108,9 +108,12 @@
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.unit"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1_husk.unit"/>
 
-            <!-- give heavy swat r870 a bodyplate -->
+            <!-- give heavy swat r870 bodyplate -->
+            <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.cooked_physics"/>
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.model"/>
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.object"/>
+            <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.unit"/>
+            <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870_husk.unit"/>
         </group>
 
         <!-- new (and old) murkies -->
