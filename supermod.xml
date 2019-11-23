@@ -50,6 +50,8 @@
             <file :name="shared_textures/ene_city_heavy_nm.texture"/>
             <file :name="shared_textures/helmets_atlas_df.texture"/>
             <file :name="shared_textures/helmets_atlas_nm.texture"/>
+            <file :name="shared_textures/helmets_heavy_shotgunner_df.texture"/>
+            <file :name="shared_textures/helmets_heavy_shotgunner_nm.texture"/>
             <file :name="shared_textures/swat_city_df.texture"/>
             <file :name="shared_textures/swat_fbi_body_df.texture"/>
             <file :name="ene_city_swat_1/ene_city_swat_1.model"/>
@@ -64,7 +66,11 @@
             <file :name="ene_city_shield/ene_city_shield.unit"/>
             <file :name="ene_city_shield/ene_city_shield_husk.unit"/>
 
-            <!-- make city heavy r870 use benelli -->
+            <!-- make city heavy r870 distinct and use benelli -->
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.material_config"/>
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870_contour.material_config"/>
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.model"/>
+            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.object"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit"/>
             
@@ -83,7 +89,12 @@
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit"/>
 
-            <!-- make fbi heavy r870 use spas12 -->
+            <!-- make fbi heavy r870 distinct and use spas12 -->
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.cooked_physics"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.material_config"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_contour.material_config"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.model"/>
+            <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.object"/>
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit"/>
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
 

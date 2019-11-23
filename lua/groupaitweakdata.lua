@@ -1,9 +1,3 @@
-
-Hooks:PostHook(GroupAITweakData, "init", "cass_init", function (self, tweak_data)
-  -- Unlock npc action limit
-  self.ai_tick_rate = 0
-end)
-
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categories", function (self, difficulty_index)
 
   -- We're using the same unit categories for all difficulties for the sake of making the code more readable and not having
@@ -232,7 +226,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   self.enemy_spawn_groups = {}
 
   self.enemy_spawn_groups.tac_swat_shotgun_rush = {
-    amount = { 3, 4 },
+    amount = { 2, 4 },
     spawn = {
       {
         amount_min = 1,
@@ -262,7 +256,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_swat_shotgun_flank = {
-    amount = { 3, 4 },
+    amount = { 2, 4 },
     spawn = {
       {
         amount_min = 1,
@@ -292,10 +286,10 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_swat_rifle = {
-    amount = { 4, 5 },
+    amount = { 3, 5 },
     spawn = {
       {
-        amount_min = 2,
+        amount_min = 1,
         freq = 1,
         amount_max = 2,
         rank = 2,
@@ -303,7 +297,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
         tactics = self._tactics.swat_rifle
       },
       {
-        amount_min = 2,
+        amount_min = 1,
         freq = 1,
         amount_max = 2,
         rank = 3,
@@ -322,7 +316,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_swat_rifle_flank = {
-    amount = { 4, 5 },
+    amount = { 3, 5 },
     spawn = {
       {
         amount_min = 0,
@@ -334,14 +328,14 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
       },
       {
         amount_min = 0,
-        freq = 0.25,
+        freq = 0.1,
         amount_max = 2,
         rank = 2,
         unit = "CS_swat_MP5",
         tactics = self._tactics.swat_rifle_flank
       },
       {
-        amount_min = 2,
+        amount_min = 1,
         freq = 1,
         amount_max = 2,
         rank = 3,
@@ -464,7 +458,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_tazer_flanking = {
-    amount = { 3, 4 },
+    amount = { 1, 4 },
     spawn = {
       {
         amount_min = 1,
@@ -475,7 +469,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
         tactics = self._tactics.tazer_flanking
       },
       {
-        amount_min = 2,
+        amount_min = 0,
         freq = 1,
         amount_max = 3,
         rank = 2,
@@ -486,7 +480,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_tazer_charge = {
-    amount = { 3, 3 },
+    amount = { 1, 3 },
     spawn = {
       {
         amount_min = 1,
@@ -497,7 +491,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
         tactics = self._tactics.tazer_charge
       },
       {
-        amount_min = 2,
+        amount_min = 0,
         freq = 1,
         amount_max = 2,
         rank = 2,
@@ -676,8 +670,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     }
   elseif difficulty_index == 7 then
     self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 4, 4, 4 },
-      tac_swat_shotgun_flank = { 2, 2, 2 },
+      tac_swat_shotgun_rush = { 3, 3, 3 },
+      tac_swat_shotgun_flank = { 1.5, 1.5, 1.5 },
       tac_swat_rifle = { 6, 6, 6 },
       tac_swat_rifle_flank = { 3, 3, 3 },
       tac_shield_wall_ranged = { 4, 4, 4 },
@@ -690,8 +684,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     }
   else
     self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 4, 4, 4 },
-      tac_swat_shotgun_flank = { 2, 2, 2 },
+      tac_swat_shotgun_rush = { 2, 2, 2 },
+      tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 4, 4, 4 },
       tac_swat_rifle_flank = { 2, 2, 2 },
       tac_shield_wall_ranged = { 4, 4, 4 },
