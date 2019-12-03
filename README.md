@@ -10,9 +10,9 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 - Removes (ignores, to be more accurate) the clunky fire mode system which defines how cops shoot their guns and interpolates ``autofire_rounds`` based on distance instead
 
 ### Difficulty weapon presets
-- Creates weapon presets for all actual difficulties instead of reusing presets (i.e. ``expert`` preset being used on both Overkill and Mayhem)
+- Creates weapon presets based on the current difficulty instead of reusing presets (i.e. ``expert`` preset being used on both Overkill and Mayhem)
+- Uses only one base preset which scales damage multipliers, accuracy, melee damage, focus delay and aim delay based on difficulty
 - Make use of aim delay (which was set to 0 for all presets in vanilla) which affects how long cops take to shoot at you when you enter their line of sight
-- Difficulty presets are based on a common base preset and just scale their damage multipliers, accuracy, melee damage, focus delay and aim delay
 - Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
 
 ### Spawn groups
@@ -24,11 +24,14 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 ### Cop factions
 - Adds missing units to every faction, based on the units present in the GenSec faction (consisting of a Rifle, Shotgun and SMG unit)
 - Adds different weapons for different factions, similar how GenSec uses different weapons
-- Maps factions to difficulty properly, Normal and Hard have blue SWAT, Very Hard and Overkill have green SWAT, Mayhem and Deathwish have GenSec SWAT and Death Sentence has Zeals
-- Adds armor plates to the heavy SWAT on Normal and Hard (cosmetic changes to visualize the armor TBD), to be in line with the heavy SWATs on other difficulties
-- Gives heavy shotgunners the helmet treatment of the light shotgunners to make them more distinct from their rifle counterparts (TBD)
+- Adds armor plates to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
+- Gives heavy shotgunners the helmet treatment of the light shotgunners to make them more distinct from their rifle counterparts
+
+|SWAT|FBI|GenSec|
+|:---:|:---:|:---:|
+|![SWAT](https://cdn.discordapp.com/attachments/368375218403803146/651486962468913152/20191203191435_1.jpg)|![FBI SWAT](https://cdn.discordapp.com/attachments/368375218403803146/651486972472328193/20191203191447_1.jpg)|![GenSec SWAT](https://cdn.discordapp.com/attachments/368375218403803146/651486986645012510/20191203191459_1.jpg)|
 
 ## What else does it do?
 - Makes shield units use the SMG unit model
-- Removes all but light, fire and poison hurt animations from heavy SWAT but scales their damage one difficulty lower
+- Removes all but light, fire and poison hurt animations from heavy SWAT but scales their damage lower than their light counterparts
 - Brings back old cop models from before the enemy visual update (they are just better)
