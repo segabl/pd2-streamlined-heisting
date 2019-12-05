@@ -139,46 +139,54 @@ function CopActionShoot:update(t)
     elseif target_vec and self._common_data.allow_fire and self._shoot_t < t and self._mod_enable_t < t then
       local shoot = nil
 
-      if self._next_vis_ray_t < t then
-        if self._shooting_husk_player then
-          self._next_vis_ray_t = t + 2
-        end
-        -- The original code didn't really do what it was supposed to do, as the target_pos gets updated to the
-        -- last seen pos after a while of no line of sight to the target. This breaks focus_delay and aim_delay as it only makes
-        -- sense to apply them based on line of sight to the real target position
-        local real_pos = self._attention.handler and self._attention.handler:get_attention_m_pos()
-        self._clear_los = real_pos and not World:raycast("ray", shoot_from_pos, real_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision")
+      -- The original code didn't really do what it was supposed to do, as the target_pos gets updated to the
+      -- last seen pos after a while of no line of sight to the target. This breaks focus_delay and aim_delay as it only makes
+      -- sense to apply them based on line of sight to the real target position
+      if autotarget or self._shooting_husk_player or Network:is_server() then
+        if self._next_vis_ray_t < t then
+          if self._shooting_husk_player then
+            self._next_vis_ray_t = t + 2
+          end
+          
+          local real_pos = self._attention.handler and self._attention.handler:get_attention_m_pos()
+          self._clear_los = real_pos and not World:raycast("ray", shoot_from_pos, real_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision")
 
-        local shoot_hist = self._shoot_history
-        local no_los_dur = t - self._common_data._line_of_sight_t
-        shoot = no_los_dur < 3 and (autotarget or self._shooting_husk_player or not self._attention.unit or not self._attention.unit:character_damage():dead())
-        if self._clear_los and shoot_hist then
-          if no_los_dur > 1 and not self._last_vis_check_status then
-            shoot_hist.m_last_pos = mvector3.copy(target_pos)
-          end
-          -- Apply focus delay after 3 seconds of no los
-          if no_los_dur > 3 then
-            local displacement = mvector3.distance(target_pos, shoot_hist.m_last_pos)
-            local focus_delay = self._w_usage_tweak.focus_delay * math.min(1, displacement / self._w_usage_tweak.focus_dis)
-            shoot_hist.focus_start_t = t
-            shoot_hist.focus_delay = focus_delay
-          end
-          -- Apply aim delay after 6 seconds of no los
-          if no_los_dur > 6 and not self._waiting_for_aim_delay then
-            local aim_delay_minmax = self._w_usage_tweak.aim_delay
-            local lerp_dis = math.min(1, target_dis / self._falloff[#self._falloff].r)
-            local aim_delay = math.lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
-            if self._common_data.is_suppressed then
-              aim_delay = aim_delay * 1.5
+          local shoot_hist = self._shoot_history
+          local no_los_dur = t - self._common_data._line_of_sight_t
+          shoot = no_los_dur < 3 and (autotarget or self._shooting_husk_player or not self._attention.unit or not self._attention.unit:character_damage():dead())
+          if self._clear_los and shoot_hist then
+            if no_los_dur > 1 and not self._last_vis_check_status then
+              shoot_hist.m_last_pos = mvector3.copy(target_pos)
             end
-            self._shoot_t = t + aim_delay
-            self._waiting_for_aim_delay = true
-            shoot = false
+            -- Apply focus delay after 3 seconds of no los
+            if no_los_dur > 3 then
+              local displacement = mvector3.distance(target_pos, shoot_hist.m_last_pos)
+              local focus_delay = self._w_usage_tweak.focus_delay * math.min(1, displacement / self._w_usage_tweak.focus_dis)
+              shoot_hist.focus_start_t = t
+              shoot_hist.focus_delay = focus_delay
+            end
+            -- Apply aim delay after 6 seconds of no los
+            if no_los_dur > 6 and not self._waiting_for_aim_delay then
+              local aim_delay_minmax = self._w_usage_tweak.aim_delay
+              local lerp_dis = math.min(1, target_dis / self._falloff[#self._falloff].r)
+              local aim_delay = math.lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
+              if self._common_data.is_suppressed then
+                aim_delay = aim_delay * 1.5
+              end
+              self._shoot_t = t + aim_delay
+              self._waiting_for_aim_delay = true
+              shoot = false
+              if self._shooting_husk_player then
+                self._next_vis_ray_t = self._shoot_t
+              end
+            end
           end
+          self._last_vis_check_status = shoot
+        else
+          shoot = self._last_vis_check_status
         end
-        self._last_vis_check_status = shoot
       else
-        shoot = self._last_vis_check_status
+        shoot = true
       end
 
       if self._common_data.char_tweak.no_move_and_shoot and self._common_data.ext_anim and self._common_data.ext_anim.move then
