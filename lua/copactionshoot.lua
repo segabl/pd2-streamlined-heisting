@@ -20,6 +20,20 @@ local lerp = math.lerp
 local random = math.random
 local round = math.round
 
+local on_attention_original = CopActionShoot.on_attention
+function CopActionShoot:on_attention(...)
+  on_attention_original(self, ...)
+
+  self._clear_los = false
+  self._next_vis_ray_t = -100
+  self._common_data._line_of_sight_t = self._common_data._line_of_sight_t or -100
+  if self._attention and self._attention.unit then
+    self._verif_slotmask = managers.slot:get_mask("AI_visibility")
+    self._common_data._line_of_sight_t = self._common_data._old_att_unit == self._attention.unit and self._common_data._line_of_sight_t or -100
+    self._common_data._old_att_unit = self._attention.unit
+  end
+end
+
 function CopActionShoot:update(t)
   local vis_state = self._ext_base:lod_stage() or 4
   if vis_state ~= 1 then
@@ -93,11 +107,7 @@ function CopActionShoot:update(t)
         local dmg_mul = (1 + dmg_buff) * falloff.dmg_mul
         local new_target_pos = self._shoot_history and self:_get_unit_shoot_pos(t, target_pos, target_dis, self._w_usage_tweak, falloff, i_range, autotarget)
 
-        if new_target_pos then
-          target_pos = new_target_pos
-        end
-
-        target_dis = mvec3_dir(target_vec, shoot_from_pos, target_pos)
+        target_dis = mvec3_dir(target_vec, shoot_from_pos, new_target_pos or target_pos)
         local fired = self._weapon_base:trigger_held(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
         if fired then
@@ -129,47 +139,46 @@ function CopActionShoot:update(t)
     elseif target_vec and self._common_data.allow_fire and self._shoot_t < t and self._mod_enable_t < t then
       local shoot = nil
 
-      if autotarget or self._shooting_husk_player and self._next_vis_ray_t < t then
+      if self._next_vis_ray_t < t then
         if self._shooting_husk_player then
           self._next_vis_ray_t = t + 2
         end
+        -- The original code didn't really do what it was supposed to do, as the target_pos gets updated to the
+        -- last seen pos after a while of no line of sight to the target. This breaks focus_delay and aim_delay as it only makes
+        -- sense to apply them based on line of sight to the real target position
+        local real_pos = self._attention.handler and self._attention.handler:get_attention_m_pos()
+        self._clear_los = real_pos and not World:raycast("ray", shoot_from_pos, real_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision")
 
-        local fire_line = World:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision")
-
-        if fire_line then
-          if t - self._line_of_sight_t > 3 then
-            local aim_delay_minmax = self._w_usage_tweak.aim_delay
-            local lerp_dis = math.min(1, target_vec:length() / self._falloff[#self._falloff].r)
-            local aim_delay = math.lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
-            aim_delay = aim_delay + self:_pseudorandom() * aim_delay * 0.3
-
-            if self._common_data.is_suppressed then
-              aim_delay = aim_delay * 1.5
-            end
-
-            self._shoot_t = t + aim_delay
-          elseif fire_line.distance > 300 then
-            shoot = true
+        local shoot_hist = self._shoot_history
+        local no_los_dur = t - self._common_data._line_of_sight_t
+        shoot = no_los_dur < 3 and (autotarget or self._shooting_husk_player or not self._attention.unit or not self._attention.unit:character_damage():dead())
+        if self._clear_los and shoot_hist then
+          if no_los_dur > 1 and not self._last_vis_check_status then
+            shoot_hist.m_last_pos = mvector3.copy(target_pos)
           end
-        else
-          if t - self._line_of_sight_t > 1 and not self._last_vis_check_status then
-            local shoot_hist = self._shoot_history
+          -- Apply focus delay after 3 seconds of no los
+          if no_los_dur > 3 then
             local displacement = mvector3.distance(target_pos, shoot_hist.m_last_pos)
             local focus_delay = self._w_usage_tweak.focus_delay * math.min(1, displacement / self._w_usage_tweak.focus_dis)
             shoot_hist.focus_start_t = t
             shoot_hist.focus_delay = focus_delay
-            shoot_hist.m_last_pos = mvector3.copy(target_pos)
           end
-
-          self._line_of_sight_t = t
-          shoot = true
+          -- Apply aim delay after 6 seconds of no los
+          if no_los_dur > 6 and not self._waiting_for_aim_delay then
+            local aim_delay_minmax = self._w_usage_tweak.aim_delay
+            local lerp_dis = math.min(1, target_dis / self._falloff[#self._falloff].r)
+            local aim_delay = math.lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
+            if self._common_data.is_suppressed then
+              aim_delay = aim_delay * 1.5
+            end
+            self._shoot_t = t + aim_delay
+            self._waiting_for_aim_delay = true
+            shoot = false
+          end
         end
-
         self._last_vis_check_status = shoot
-      elseif self._shooting_husk_player then
-        shoot = self._last_vis_check_status
       else
-        shoot = true
+        shoot = self._last_vis_check_status
       end
 
       if self._common_data.char_tweak.no_move_and_shoot and self._common_data.ext_anim and self._common_data.ext_anim.move then
@@ -178,6 +187,8 @@ function CopActionShoot:update(t)
       end
 
       if shoot then
+        self._waiting_for_aim_delay = false
+
         local melee = nil
 
         if autotarget and (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 130 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
@@ -192,10 +203,10 @@ function CopActionShoot:update(t)
 
           local autofire_rounds = falloff.autofire_rounds or self._w_usage_tweak.autofire_rounds
           if self._automatic_weap and falloff.autofire_rounds then
-            local diff = falloff.autofire_rounds[2] - falloff.autofire_rounds[1]
-            number_of_rounds = math.ceil(falloff.autofire_rounds[1] + random() * diff)
+            local diff = autofire_rounds[2] - autofire_rounds[1]
+            number_of_rounds = math.ceil(autofire_rounds[1] + random() * diff)
           elseif self._automatic_weap and self._w_usage_tweak.autofire_rounds then
-            local f = math.max(0, target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r)
+            local f = math.min(1, math.max(0, (target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + random() * 0.3))
             number_of_rounds = math.ceil(lerp(autofire_rounds[2], autofire_rounds[1], f))
           else
             number_of_rounds = 1
@@ -213,10 +224,7 @@ function CopActionShoot:update(t)
           else
 
             local new_target_pos = self._shoot_history and self:_get_unit_shoot_pos(t, target_pos, target_dis, self._w_usage_tweak, falloff, i_range, autotarget)
-            if new_target_pos then
-              target_pos = new_target_pos
-            end
-            target_dis = mvec3_dir(target_vec, shoot_from_pos, target_pos)
+            target_dis = mvec3_dir(target_vec, shoot_from_pos, new_target_pos or target_pos)
             local fired = self._weapon_base:singleshot(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
             if fired and fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
               self._unit:unit_data().mission_element:event("killshot", self._unit)
@@ -234,6 +242,10 @@ function CopActionShoot:update(t)
         end
       end
     end
+  end
+
+  if self._clear_los then
+    self._common_data._line_of_sight_t = t
   end
 
   if self._ext_anim.base_need_upd then

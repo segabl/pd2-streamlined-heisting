@@ -9,11 +9,18 @@ local function _set_orig_npc_dmg(self)
 end
 
 Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
-  self.g36_npc.DAMAGE = 1
   self.ak47_npc.DAMAGE = 2
   self.mac11_npc.DAMAGE = 2
 
+  -- Fix existing weapons sounds
+  self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
+  self.akmsu_smg_npc.sounds.prefix = self.akmsu_crew.sounds.prefix
+  self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
+  --self.ump_npc.sounds.prefix = self.schakal_crew.sounds.prefix
   self.benelli_npc.sounds.prefix = self.ben_crew.sounds.prefix
+  self.sr2_smg_npc.sounds.prefix = self.sr2_crew.sounds.prefix
+  self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
+
   self.scar_npc = deep_clone(self.m4_npc)
   self.scar_npc.sounds = self.scar_crew.sounds.prefix
   self.spas12_npc = deep_clone(self.r870_npc)

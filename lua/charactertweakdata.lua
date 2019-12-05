@@ -52,7 +52,7 @@ end
 local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(tweak_data, ...)
   local presets = _presets_original(self, tweak_data, ...)
-  
+
   CASS:log("Setting up weapon presets")
 
   -- I know this looks pretty weird, but it's science! We're creating the presets with the help of
@@ -63,7 +63,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local dmg_mul = power(x, 0.15885586464656734, 0.002320066848959271, 3.772923334982752)
   local acc_mul = quadratic(x, 0.7874999999995336, -0.03154761904986736, 0.014880952378803491)
   local focus_delay = quadratic(x, 2.93303571, -0.50744048, 0.02232143)
-  local aim_delay = math.lerp(0.4, 0.05, x_norm)
+  local aim_delay = math.lerp(0.8, 0.1, x_norm)
   local melee_dmg = power(x, -0.15268551419286125, 0.8509800693138164, 1.5212624505246697)
   CASS:log("dmg_mul", dmg_mul, "acc_mul", acc_mul, "focus_delay", focus_delay, "aim_delay", aim_delay, "melee_dmg", melee_dmg)
   -- Base everything on Overkill preset
@@ -73,12 +73,12 @@ function CharacterTweakData:_presets(tweak_data, ...)
     melee_dmg = melee_dmg
   })
   presets.weapon.cass_base.is_pistol.FALLOFF = {
-    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.15, 0.25 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 0.4, 1 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.akimbo_pistol.FALLOFF = {
-    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0, 0.2 * acc_mul }, recoil = { 0.2, 0.8 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.05, 0.1 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0, 0.3 * acc_mul }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.is_revolver.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },

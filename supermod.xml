@@ -145,7 +145,7 @@
         </group>
 
         <!-- new (and old) zeals -->
-        <group name="units/pd2_dlc_gitgud/characters/" target="scripted" load_group="zeal">
+        <group name="units/pd2_dlc_gitgud/characters/">
             <file :name="ene_acc_shield_new_swat/shield_df.texture"/>
             <file :name="ene_acc_shield_new_swat/shield_il.texture"/>
             <file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
@@ -162,7 +162,9 @@
             <file :name="ene_zeal_swat_heavy/swat_heavy_head_nm.texture"/>
             <file :name="ene_zeal_swat_heavy/swat_heavy.model"/>
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
+        </group>
 
+        <group name="units/pd2_dlc_gitgud/characters/" target="scripted" load_group="zeal">
             <file :name="ene_zeal_swat/ene_zeal_swat.unit"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_husk.unit"/>
             

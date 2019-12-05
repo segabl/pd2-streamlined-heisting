@@ -7,6 +7,5 @@
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
   "version" : "1",
-  "updates" : [ { "identifier" : "cass" } ],
   "dependencies" : [ "rifd" ]
 }

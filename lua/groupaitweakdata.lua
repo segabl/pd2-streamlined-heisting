@@ -436,19 +436,26 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_bull_rush = {
-    amount = { 1, 1 + math.round(difficulty_index / 3) },
+    amount = { 1, 1 + math.round(difficulty_index / 4) },
     spawn = {
       {
         amount_min = 1,
-        freq = difficulty_index / 16,
-        amount_max = 3,
+        freq = 1,
+        amount_max = 1,
         rank = 3,
         unit = "FBI_tank",
         tactics = self._tactics.tank_rush
       },
       {
         amount_min = 0,
-        freq = difficulty_index / 16,
+        freq = difficulty_index / 32,
+        rank = 3,
+        unit = "FBI_tank",
+        tactics = self._tactics.tank_rush
+      },
+      {
+        amount_min = 0,
+        freq = difficulty_index / 32,
         amount_max = 1,
         rank = 1,
         unit = "medic_M4",
@@ -529,8 +536,16 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
     amount = { 1, 1 + math.round(difficulty_index / 4) },
     spawn = {
       {
-        freq = difficulty_index / 16,
+        freq = 1,
         amount_min = 1,
+        amount_max = 1,
+        rank = 1,
+        unit = "spooc",
+        tactics = self._tactics.spooc
+      },
+      {
+        freq = difficulty_index / 32,
+        amount_min = 0,
         rank = 1,
         unit = "spooc",
         tactics = self._tactics.spooc
