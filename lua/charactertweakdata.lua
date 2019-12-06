@@ -45,6 +45,9 @@ function CharacterTweakData:character_map(...)
   table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
   table.insert(char_map.basic.list, "ene_swat_3")
   table.insert(char_map.basic.list, "ene_fbi_swat_3")
+  table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
+  table.insert(char_map.gitgud.list, "ene_zeal_swat_3")
+  table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_r870")
   return char_map
 end
 
