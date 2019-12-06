@@ -8,6 +8,13 @@ local function _set_orig_npc_dmg(self)
   end
 end
 
+local function _copy_crew_values(weap, crew_weap)
+  weap.sounds.prefix = crew_weap.sounds.prefix
+  weap.muzzleflash = crew_weap.muzzleflash
+  weap.shell_ejection = crew_weap.shell_ejection
+  weap.hold = crew_weap.hold
+end
+
 Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.ak47_npc.DAMAGE = 2
   self.mac11_npc.DAMAGE = 2
@@ -22,18 +29,17 @@ Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
   self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
 
   self.scar_npc = deep_clone(self.m4_npc)
-  self.scar_npc.sounds = self.scar_crew.sounds.prefix
+  _copy_crew_values(self.scar_npc, self.scar_crew)
   self.spas12_npc = deep_clone(self.r870_npc)
-  self.spas12_npc.sounds.prefix = self.spas12_crew.sounds.prefix
+  _copy_crew_values(self.spas12_npc, self.spas12_crew)
   self.mp7_npc = deep_clone(self.mp5_npc)
-  self.mp7_npc.sounds.prefix = self.mp7_crew.sounds.prefix
-  self.mp7_npc.hold = self.mp7_crew.hold
+  _copy_crew_values(self.mp7_npc, self.mp7_crew)
   self.amcar_npc = deep_clone(self.m4_npc)
-  self.amcar_npc.sounds.prefix = self.amcar_crew.sounds.prefix
+  _copy_crew_values(self.amcar_npc, self.amcar_crew)
   self.g36_npc = deep_clone(self.m4_npc)
-  self.g36_npc.sounds.prefix = self.g36_crew.sounds.prefix
+  _copy_crew_values(self.g36_npc, self.g36_crew)
 
-  self.saiga_npc.CLIP_AMMO_MAX = 20 -- test
+  self.saiga_npc.CLIP_AMMO_MAX = 20 -- makes blackdozer not useless
   self.saiga_npc.auto.fire_rate = 0.18 -- original is incorrect
 
   self._orig_npc_dmg = {}
