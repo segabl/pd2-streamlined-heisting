@@ -194,8 +194,9 @@
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_husk.unit"/>
 
             <!-- make heavy zeal use WEAPON -->
-            <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy.unit"/>
-            <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_husk.unit"/>
+            <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.model"/>
+            <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.unit"/>
+            <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy_husk.unit"/>
 
             <!-- add heavy zeal shotgunner -->
             <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870.cooked_physics"/>
