@@ -29,7 +29,15 @@ function CopActionShoot:on_attention(...)
   self._common_data._line_of_sight_t = self._common_data._line_of_sight_t or -100
   if self._attention and self._attention.unit then
     self._verif_slotmask = managers.slot:get_mask("AI_visibility")
-    self._common_data._line_of_sight_t = self._common_data._old_att_unit == self._attention.unit and self._common_data._line_of_sight_t or -100
+    local same_att = self._common_data._old_att_unit == self._attention.unit
+    self._common_data._line_of_sight_t = same_att and self._common_data._line_of_sight_t or -100
+    if self._autofiring and not same_att then
+      -- Stop autofiring on target change so aim delay isn't skipped
+      self._weapon_base:stop_autofire()
+      self._autofiring = nil
+      self._autoshots_fired = nil
+      self._ext_movement:play_redirect("up_idle")
+    end
     self._common_data._old_att_unit = self._attention.unit
   end
 end
