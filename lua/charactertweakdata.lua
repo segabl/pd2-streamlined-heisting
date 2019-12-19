@@ -127,7 +127,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   -- Preset for heavies and medics, they deal a little less damage in exchange for being bulkier
   presets.weapon.cass_heavy = based_on(presets.weapon.cass_base, {
     FALLOFF = function (falloff)
-      manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.8 end)
+      manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
     end
   })
   
