@@ -1,11 +1,17 @@
 {
   "name" : "CASS",
-  "description" : "CopActionShoot Streamline, interpolates falloff data (most notably dmg_mul), simplifies the accuracy calculation and reworks the clunky fire mode system",
+  "description" : "CopActionShoot Streamline, interpolates falloff data, simplifies accuracy calculation and reworks the fire mode system",
   "author" : "Shiny Hoppip",
   "priority" : 401,
   "blt_version" : 2,
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
   "version" : "1",
-  "dependencies" : [ "rifd" ]
+  "dependencies" : [ "rifd" ],
+  "updates" : [
+    {
+      "identifier" : "pd2-cass",
+      "host": { "meta": "http://updates.hoppip.at/pd2-cass" }
+    }
+  ]
 }
