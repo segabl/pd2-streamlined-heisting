@@ -14,7 +14,6 @@ local temp_rot1 = Rotation()
 local lerp = math.lerp
 local random = math.random
 local round = math.round
-local verif_slotmask = managers.slot:get_mask("AI_visibility")
 
 function CopActionShoot:stop_autofire()
   self._weapon_base:stop_autofire()
@@ -40,6 +39,7 @@ function CopActionShoot:on_attention(...)
     self._common_data._line_of_sight_t = same_att and self._common_data._line_of_sight_t or -100
     self._common_data._old_att_unit = self._attention.unit
   end
+  self._verif_slotmask = managers.slot:get_mask("AI_visibility")
 end
 
 function CopActionShoot:update(t)
@@ -147,7 +147,7 @@ function CopActionShoot:update(t)
           end
           
           local real_pos = self._attention.handler and self._attention.handler:get_attention_m_pos()
-          self._clear_los = real_pos and not World:raycast("ray", shoot_from_pos, real_pos, "slot_mask", verif_slotmask, "ray_type", "ai_vision")
+          self._clear_los = real_pos and not World:raycast("ray", shoot_from_pos, real_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision")
 
           local shoot_hist = self._shoot_history
           local no_los_dur = t - self._common_data._line_of_sight_t
