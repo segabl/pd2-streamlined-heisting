@@ -46,14 +46,8 @@
 
         <!-- new (and old) characters -->
         <group name="units/payday2/characters/" dyn_package="false">
-            <file :name="shared_textures/ene_city_heavy_df.texture"/>
-            <file :name="shared_textures/ene_city_heavy_nm.texture"/>
-            <file :name="shared_textures/helmets_atlas_df.texture"/>
-            <file :name="shared_textures/helmets_atlas_nm.texture"/>
             <file :name="shared_textures/helmets_heavy_shotgunner_df.texture"/>
             <file :name="shared_textures/helmets_heavy_shotgunner_nm.texture"/>
-            <file :name="shared_textures/swat_city_df.texture"/>
-            <file :name="shared_textures/swat_fbi_body_df.texture"/>
             <file :name="ene_city_swat_1/ene_city_swat_1.model"/>
             <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
             <file :name="ene_city_swat_3/ene_city_swat_3.model"/>

@@ -41,4 +41,3 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 
 - Makes shield units use the SMG unit model
 - Removes all but light, fire and poison hurt animations from heavy SWAT but scales their damage lower than their light counterparts
-- Brings back old cop models from before the enemy visual update (they are just better)
