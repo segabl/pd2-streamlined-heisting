@@ -5,6 +5,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
   -- depend on the difficulty, for instance FBI_heavy_G36 will spawn normal M4 heavies on overkill despite the unit category name
 
   if difficulty_index == 8 then
+    --[[
     self.unit_categories.FBI_swat_M4 = deep_clone(self.unit_categories.CS_swat_MP5)
     self.unit_categories.FBI_swat_M4.unit_types.america = {
       Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")
@@ -22,6 +23,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
       Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870")
     }
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
+    ]]
   elseif difficulty_index > 5 then
     self.unit_categories.FBI_swat_R870.unit_types.america = {
       Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")

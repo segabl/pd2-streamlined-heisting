@@ -10,7 +10,7 @@ Hooks:PostHook(GameSetup, "init_finalize", "cass_init_finalize", function (self)
   elseif ai_group_type == "russian" then
 
   end
-
+  --[[
   if PackageManager:loaded("packages/sm_wish") then
     CASS:log("Loading new Zeal units...")
     dres:load(unit_ids, Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2"), "packages/sm_wish")
@@ -20,5 +20,6 @@ Hooks:PostHook(GameSetup, "init_finalize", "cass_init_finalize", function (self)
     dres:load(unit_ids, Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870"), "packages/sm_wish")
     dres:load(unit_ids, Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870_husk"), "packages/sm_wish")
   end
+  ]]
 
 end)
