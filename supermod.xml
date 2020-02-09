@@ -6,6 +6,7 @@
         <post :hook_id="managers/mission/elementspawnenemygroup"/>
         <post :hook_id="network/matchmaking/networkmatchmakingsteam"/>
         <post :hook_id="setups/gamesetup"/>
+        <post :hook_id="units/beings/player/playerdamage"/>
         <post :hook_id="units/enemies/cop/actions/upper_body/copactionshoot"/>
         <group :hook_id="tweak_data/">
             <post :hook_id="charactertweakdata"/>

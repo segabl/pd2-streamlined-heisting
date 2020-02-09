@@ -7,7 +7,6 @@
   "color" : "0.043 0.808 0.6",
   "image" : "mod.png",
   "version" : "1",
-  "dependencies" : [ "rifd" ],
   "updates" : [
     {
       "identifier" : "pd2-cass",
