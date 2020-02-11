@@ -64,7 +64,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local x = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
   local x_norm = (x - 1) / 7
   local dmg_mul = power(x, 0.15885586464656734, 0.002320066848959271, 3.772923334982752)
-  local acc_mul = quadratic(x, 0.7874999999995336, -0.03154761904986736, 0.014880952378803491)
+  local acc_mul = quadratic(x, 0.7178571428565321, 0.026190476188350464, 0.00595238095021311)
   local focus_delay = quadratic(x, 2.93303571, -0.50744048, 0.02232143)
   local aim_delay = math.lerp(0.8, 0.1, x_norm)
   local melee_dmg = power(x, -0.15268551419286125, 0.8509800693138164, 1.5212624505246697)
@@ -77,11 +77,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
   presets.weapon.cass_base.is_pistol.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.4, 1 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.akimbo_pistol.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.05, 0.1 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0, 0.3 * acc_mul }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0, 0.3 * acc_mul }, recoil = { 0.2, 0.6 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.is_revolver.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
@@ -100,15 +100,15 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   presets.weapon.cass_base.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
   presets.weapon.cass_base.is_shotgun_mag = deep_clone(presets.weapon.cass_base.is_shotgun_pump)
-  presets.weapon.cass_base.is_rifle.autofire_rounds = { 3, 9 }
+  presets.weapon.cass_base.is_rifle.autofire_rounds = { 2, 8 }
   presets.weapon.cass_base.is_rifle.FALLOFF = {
     { dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_smg.autofire_rounds = { 6, 18 }
+  presets.weapon.cass_base.is_smg.autofire_rounds = { 4, 16 }
   presets.weapon.cass_base.is_smg.FALLOFF = {
     { dmg_mul = 5 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.1, 0.3 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0, 0 }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0, 0 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.is_smg.range = { optimal = 1500, far = 4000, close = 750 }
   presets.weapon.cass_base.mini.autofire_rounds = { 50, 200 }
