@@ -619,8 +619,22 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
 
   if difficulty_index <= 2 then
     self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 2, 2, 2 },
-      tac_swat_shotgun_flank = { 1, 1, 1 },
+      tac_swat_shotgun_rush = { 1, 1, 1 },
+      tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
+      tac_swat_rifle = { 4, 4, 4 },
+      tac_swat_rifle_flank = { 2, 2, 2 },
+      tac_shield_wall_ranged = { 1, 1, 1 },
+      tac_shield_wall_charge = { 0.5, 0.5, 0.5 },
+      tac_shield_wall = { 0.5, 0.5, 0.5 },
+      tac_tazer_flanking = { 0, 0, 0 },
+      tac_tazer_charge = { 0, 0, 0 },
+      FBI_spoocs = { 0, 0, 0 },
+      tac_bull_rush = { 0, 0, 0 }
+    }
+  elseif difficulty_index == 3 then
+    self.besiege.assault.groups = {
+      tac_swat_shotgun_rush = { 1, 1, 1 },
+      tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
       tac_swat_rifle = { 4, 4, 4 },
       tac_swat_rifle_flank = { 2, 2, 2 },
       tac_shield_wall_ranged = { 2, 2, 2 },
@@ -631,10 +645,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       FBI_spoocs = { 0, 0, 0 },
       tac_bull_rush = { 0, 0, 0 }
     }
-  elseif difficulty_index == 3 then
+  elseif difficulty_index == 4 then
     self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 4, 4, 4 },
-      tac_swat_shotgun_flank = { 2, 2, 2 },
+      tac_swat_shotgun_rush = { 2, 2, 2 },
+      tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 8, 8, 8 },
       tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 4, 4, 4 },
@@ -645,10 +659,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       FBI_spoocs = { 1, 1, 1 },
       tac_bull_rush = { 1, 1, 1 }
     }
-  elseif difficulty_index == 4 then
+  elseif difficulty_index == 5 then
     self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 4, 4, 4 },
-      tac_swat_shotgun_flank = { 2, 2, 2 },
+      tac_swat_shotgun_rush = { 2, 2, 2 },
+      tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 8, 8, 8 },
       tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 4, 4, 4 },
@@ -659,10 +673,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       FBI_spoocs = { 2, 2, 2 },
       tac_bull_rush = { 2, 2, 2 }
     }
-  elseif difficulty_index == 5 then
+  elseif difficulty_index == 6 then
     self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 4, 4, 4 },
-      tac_swat_shotgun_flank = { 2, 2, 2 },
+      tac_swat_shotgun_rush = { 2, 2, 2 },
+      tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 8, 8, 8 },
       tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 4, 4, 4 },
@@ -673,40 +687,12 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       FBI_spoocs = { 3, 3, 3 },
       tac_bull_rush = { 3, 3, 3 }
     }
-  elseif difficulty_index == 6 then
-    self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 4, 4, 4 },
-      tac_swat_shotgun_flank = { 2, 2, 2 },
-      tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
-      tac_shield_wall_ranged = { 4, 4, 4 },
-      tac_shield_wall_charge = { 4, 4, 4 },
-      tac_shield_wall = { 4, 4, 4 },
-      tac_tazer_flanking = { 4, 4, 4 },
-      tac_tazer_charge = { 4, 4, 4 },
-      FBI_spoocs = { 4, 4, 4 },
-      tac_bull_rush = { 4, 4, 4 }
-    }
-  elseif difficulty_index == 7 then
-    self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 3, 3, 3 },
-      tac_swat_shotgun_flank = { 1.5, 1.5, 1.5 },
-      tac_swat_rifle = { 6, 6, 6 },
-      tac_swat_rifle_flank = { 3, 3, 3 },
-      tac_shield_wall_ranged = { 4, 4, 4 },
-      tac_shield_wall_charge = { 4, 4, 4 },
-      tac_shield_wall = { 4, 4, 4 },
-      tac_tazer_flanking = { 4, 4, 4 },
-      tac_tazer_charge = { 4, 4, 4 },
-      FBI_spoocs = { 4, 4, 4 },
-      tac_bull_rush = { 4, 4, 4 }
-    }
-  else
+  elseif difficulty_index >= 7 then
     self.besiege.assault.groups = {
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
-      tac_swat_rifle = { 4, 4, 4 },
-      tac_swat_rifle_flank = { 2, 2, 2 },
+      tac_swat_rifle = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 4, 4, 4 },
       tac_shield_wall_charge = { 4, 4, 4 },
       tac_shield_wall = { 4, 4, 4 },
