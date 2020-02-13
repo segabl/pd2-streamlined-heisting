@@ -337,19 +337,11 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
     amount = { 3, 5 },
     spawn = {
       {
-        amount_min = 0,
+        amount_min = 1,
         freq = 1,
         amount_max = 2,
         rank = 2,
         unit = "FBI_swat_M4",
-        tactics = self._tactics.swat_rifle_flank
-      },
-      {
-        amount_min = 0,
-        freq = 0.1,
-        amount_max = 2,
-        rank = 2,
-        unit = "CS_swat_MP5",
         tactics = self._tactics.swat_rifle_flank
       },
       {
