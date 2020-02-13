@@ -29,15 +29,6 @@ local function manipulate_entries(tbl, value_name, func)
   end
 end
 
-local function power(x, a, b, c)
-  return a + b * math.pow(x, c)
-end
-
-local function quadratic(x, a, b, c)
-  return a + b * x + c * math.pow(x, 2)
-end
-
-
 local character_map_original = CharacterTweakData.character_map
 function CharacterTweakData:character_map(...)
   local char_map = character_map_original(self, ...)
@@ -58,22 +49,22 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
   CASS:log("Setting up weapon presets")
 
-  -- I know this looks pretty weird, but it's science! We're creating the presets with the help of
-  -- some mathematical functions so we don't have to define presets for every difficulty.
-  -- The parameters for the functions were determined by curve fitting existing preset values
+  local dmg_mul_tbl = { 0.1, 0.2, 0.4, 0.7, 1, 2, 4, 6 }
+  local acc_mul_tbl = { 0.75, 0.8, 0.85, 0.9, 1, 1.1, 1.2, 1.3 }
+  local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
+  local aim_delay_tbl = { 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1 }
+  local melee_dmg_tbl = { 1, 2, 4, 7, 10, 13, 16, 20 }
+
   local x = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
   local x_norm = (x - 1) / 7
-  local dmg_mul = power(x, 0.15885586464656734, 0.002320066848959271, 3.772923334982752)
-  local acc_mul = quadratic(x, 0.7178571428565321, 0.026190476188350464, 0.00595238095021311)
-  local focus_delay = quadratic(x, 2.93303571, -0.50744048, 0.02232143)
-  local aim_delay = math.lerp(0.8, 0.1, x_norm)
-  local melee_dmg = power(x, -0.15268551419286125, 0.8509800693138164, 1.5212624505246697)
-  CASS:log("dmg_mul", dmg_mul, "acc_mul", acc_mul, "focus_delay", focus_delay, "aim_delay", aim_delay, "melee_dmg", melee_dmg)
+  local dmg_mul = dmg_mul_tbl[x]
+  local acc_mul = acc_mul_tbl[x]
+
   -- Base everything on Overkill preset
   presets.weapon.cass_base = based_on(presets.weapon.expert, {
-    focus_delay = focus_delay,
-    aim_delay = { 0, aim_delay },
-    melee_dmg = melee_dmg
+    focus_delay = focus_delay_tbl[x],
+    aim_delay = { 0, aim_delay_tbl[x] },
+    melee_dmg = melee_dmg_tbl[x]
   })
   presets.weapon.cass_base.is_pistol.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
