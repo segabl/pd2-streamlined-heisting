@@ -121,7 +121,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
     end
   })
-  
+
   -- Preset for bulldozers
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   presets.weapon.cass_tank = based_on(presets.weapon.cass_base, {
@@ -168,7 +168,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 9 * dmg_mul, r = 1000, acc = { 0.5, 1 }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 7 * dmg_mul, r = 10000, acc = { 0.25, 0.5 }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_sniper_heavy = based_on(presets.weapon.cass_sniper)
+  presets.weapon.cass_sniper_heavy = based_on(presets.weapon.cass_sniper, {
+    focus_delay = 10
+  })
   manipulate_entries(presets.weapon.cass_sniper_heavy.is_rifle.FALLOFF, "dmg_mul", function (val) return val * 0.5 end)
   manipulate_entries(presets.weapon.cass_sniper_heavy.is_rifle.FALLOFF, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
 
@@ -191,7 +193,7 @@ Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
   table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7"))
   table.insert(self.weap_ids, "amcar")
   table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar"))
-  
+
   self._default_preset_users = {}
   for _, name in ipairs(self._enemy_list) do
     if self[name].weapon == self.presets.weapon.normal or self[name].weapon == self.presets.weapon.good then
@@ -271,6 +273,3 @@ end)
 Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "cass__set_sm_wish", function(self)
   set_weapon_presets(self)
 end)
-
-
-
