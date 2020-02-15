@@ -1,5 +1,5 @@
 <materials version="3" group="wpn_npc_mp7">
-    <material name="mtr_mp5" version="2" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_3RD_WEAPONS">
+    <material name="mtr_mp7" version="2" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_3RD_WEAPONS">
         <bump_normal_texture file="units/payday2/weapons/wpn_npc_mp7/mp7_nm"/>
         <diffuse_texture file="units/payday2/weapons/wpn_npc_mp7/mp7_df"/>
     </material>
