@@ -57,13 +57,14 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
   local x = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
   local x_norm = (x - 1) / 7
+  local aim_delay = { 0, aim_delay_tbl[x] }
   local dmg_mul = dmg_mul_tbl[x]
   local acc_mul = acc_mul_tbl[x]
 
   -- Base everything on Overkill preset
   presets.weapon.cass_base = based_on(presets.weapon.expert, {
     focus_delay = focus_delay_tbl[x],
-    aim_delay = { 0, aim_delay_tbl[x] },
+    aim_delay = aim_delay,
     melee_dmg = melee_dmg_tbl[x]
   })
   presets.weapon.cass_base.is_pistol.FALLOFF = {
@@ -161,7 +162,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   local recoil_mul = math.lerp(1.3, 0.6, x_norm)
   presets.weapon.cass_sniper = based_on(presets.weapon.sniper, {
-    focus_delay = 20
+    focus_delay = 10,
+    aim_delay = aim_delay,
   })
   presets.weapon.cass_sniper.is_rifle.FALLOFF = {
     { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
@@ -169,10 +171,12 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 7 * dmg_mul, r = 10000, acc = { 0.25, 0.5 }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_sniper_heavy = based_on(presets.weapon.cass_sniper, {
-    focus_delay = 10
+    focus_delay = 5,
+    FALLOFF = function (falloff)
+      manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
+      manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
+    end
   })
-  manipulate_entries(presets.weapon.cass_sniper_heavy.is_rifle.FALLOFF, "dmg_mul", function (val) return val * 0.5 end)
-  manipulate_entries(presets.weapon.cass_sniper_heavy.is_rifle.FALLOFF, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
 
   -- give team ai more reasonable preset values
   presets.weapon.gang_member = based_on(presets.weapon.cass_base)
