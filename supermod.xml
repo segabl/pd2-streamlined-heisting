@@ -5,7 +5,6 @@
 
         <post :hook_id="managers/mission/elementspawnenemygroup"/>
         <post :hook_id="network/matchmaking/networkmatchmakingsteam"/>
-        <post :hook_id="setups/gamesetup"/>
         <post :hook_id="units/beings/player/playerdamage"/>
         <post :hook_id="units/enemies/cop/actions/upper_body/copactionshoot"/>
         <group :hook_id="tweak_data/">
@@ -54,8 +53,6 @@
             <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
             <file :name="ene_city_swat_3/ene_city_swat_3.model"/>
             <file :name="ene_fbi_swat_1/ene_fbi_swat_1.model"/>
-            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
-            <file :name="ene_swat_1/ene_swat_1.model"/>
             <file :name="ene_swat_2/ene_swat_2.model"/>
 
             <!-- make city shield use submachine gunner model -->
@@ -69,19 +66,20 @@
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.object"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit"/>
-            
+
             <!-- add fbi swat submachine gunner -->
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.cooked_physics"/>
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.model"/>
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.object"/>
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit" dyn_package="true"/>
             <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit" dyn_package="true"/>
-            
+
             <!-- make fbi shield use submachine gunner model -->
             <file :name="ene_shield_1/ene_shield_1.unit"/>
             <file :name="ene_shield_1/ene_shield_1_husk.unit"/>
 
             <!-- make fbi shotgunner use spas12 -->
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit"/>
 
@@ -95,6 +93,7 @@
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
 
             <!-- make original swat use amcar -->
+            <file :name="ene_swat_1/ene_swat_1.model"/>
             <file :name="ene_swat_1/ene_swat_1.unit"/>
             <file :name="ene_swat_1/ene_swat_1_husk.unit"/>
 
@@ -104,7 +103,7 @@
             <file :name="ene_swat_3/ene_swat_3.object"/>
             <file :name="ene_swat_3/ene_swat_3.unit" dyn_package="true"/>
             <file :name="ene_swat_3/ene_swat_3_husk.unit" dyn_package="true"/>
-            
+
             <!-- make shield use submachine gunner model -->
             <file :name="ene_shield_2/ene_shield_2.unit"/>
             <file :name="ene_shield_2/ene_shield_2_husk.unit"/>
@@ -159,15 +158,13 @@
             <file :name="ene_zeal_swat/ene_zeal_swat_nm.texture"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_head_df.texture"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_head_nm.texture"/>
-            <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
             <file :name="ene_zeal_swat_heavy/swat_heavy_df.texture"/>
             <file :name="ene_zeal_swat_heavy/swat_heavy_nm.texture"/>
             <file :name="ene_zeal_swat_heavy/swat_heavy_head_df.texture"/>
             <file :name="ene_zeal_swat_heavy/swat_heavy_head_nm.texture"/>
-            <file :name="ene_zeal_swat_heavy/swat_heavy.model"/>
-            <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
 
             <!-- make original zeal swat use WEAPON -->
+            <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
             <file :name="ene_zeal_swat/ene_zeal_swat.unit"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_husk.unit"/>
 
@@ -184,7 +181,7 @@
             <file :name="ene_zeal_swat_3/ene_zeal_swat_3.object"/>
             <file :name="ene_zeal_swat_3/ene_zeal_swat_3.unit"/>
             <file :name="ene_zeal_swat_3/ene_zeal_swat_3_husk.unit"/>
-            
+
             <!-- make shield use submachine gunner model -->
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.unit"/>
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_husk.unit"/>
