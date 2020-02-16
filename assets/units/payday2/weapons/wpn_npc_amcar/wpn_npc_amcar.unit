@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
 <unit type="wpn" slot="13">
-  <object file="units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar" />
+  <object file="units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar"/>
   <dependencies>
-    <depends_on effect="effects/particles/weapons/rifle/muzzleflash_3dp" />
+    <depends_on effect="effects/particles/weapons/rifle/muzzleflash_3dp"/>
     <depends_on bnk="soundbanks/weapon_amcar4"/>
   </dependencies>
   <extensions>
-    <extension name="unit_data" class="ScriptUnitData" />
+    <extension name="unit_data" class="ScriptUnitData"/>
     <extension name="base" class="NPCRaycastWeaponBase" >
-      <var name="name_id" value="amcar_npc" />
-      <var name="_multivoice" value="true" />
+      <var name="name_id" value="amcar_npc"/>
+      <var name="_multivoice" value="true"/>
     </extension>
-    <extension name="damage" class="UnitDamage" />
+    <extension name="damage" class="UnitDamage"/>
   </extensions>
-  
   <sounds>
-    <soundsource name="root" source="rp_m4" />
-    <default_soundsource source="rp_m4" />
+    <soundsource name="root" source="rp_amcar"/>
+    <default_soundsource source="rp_amcar"/>
   </sounds>
 </unit>
