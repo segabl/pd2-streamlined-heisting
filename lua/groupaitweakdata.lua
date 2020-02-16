@@ -131,6 +131,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
 
 end)
 
+
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_spawn_groups", function (self, difficulty_index)
   self._tactics = {
     Phalanx_minion = {
@@ -534,7 +535,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
       }
     }
   }
-  
+
   self.enemy_spawn_groups.FBI_spoocs = {
     amount = { 1, 3 },
     spawn = {
@@ -584,7 +585,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
       }
     }
   }
-  
+
   self.enemy_spawn_groups.hostage_rescue_medic = {
     amount = { 2, 3 },
     spawn = {
@@ -606,6 +607,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
     }
   }
 end)
+
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", function (self, difficulty_index)
 

@@ -15,12 +15,14 @@ local lerp = math.lerp
 local random = math.random
 local round = math.round
 
+
 function CopActionShoot:stop_autofire()
   self._weapon_base:stop_autofire()
   self._autofiring = nil
   self._autoshots_fired = nil
   self._ext_movement:play_redirect("up_idle")
 end
+
 
 local on_attention_original = CopActionShoot.on_attention
 function CopActionShoot:on_attention(...)
@@ -41,6 +43,7 @@ function CopActionShoot:on_attention(...)
   end
   self._verif_slotmask = managers.slot:get_mask("AI_visibility")
 end
+
 
 function CopActionShoot:update(t)
   local vis_state = self._ext_base:lod_stage() or 4
@@ -145,7 +148,7 @@ function CopActionShoot:update(t)
           if self._shooting_husk_player then
             self._next_vis_ray_t = t + 2
           end
-          
+
           local real_pos = self._attention.handler and self._attention.handler:get_attention_m_pos()
           self._clear_los = real_pos and not World:raycast("ray", shoot_from_pos, real_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision")
 
@@ -312,6 +315,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 
   return error_vec
 end
+
 
 function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
   local i = #falloff

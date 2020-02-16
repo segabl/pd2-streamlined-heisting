@@ -1,7 +1,3 @@
-if false then
-  return
-end
-
 -- clones a weapon preset and optionally sets values for all weapons contained in that preset
 -- if the value is a function, it calls the function with the data of the value name instead
 local function based_on(preset, values)
@@ -21,6 +17,7 @@ local function based_on(preset, values)
   return p
 end
 
+
 local function manipulate_entries(tbl, value_name, func)
   for _, v in pairs(tbl) do
     if type(v) == "table" then
@@ -28,6 +25,7 @@ local function manipulate_entries(tbl, value_name, func)
     end
   end
 end
+
 
 local character_map_original = CharacterTweakData.character_map
 function CharacterTweakData:character_map(...)
@@ -205,7 +203,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   presets.surrender.normal = {
     base_chance = 0.3,
-    significant_chance = 0.35,
+    significant_chance = 0.3,
     factors = surrender_factors,
     reasons = {
       pants_down = 0.9,
@@ -218,7 +216,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   presets.surrender.hard = {
     base_chance = 0.3,
-    significant_chance = 0.35,
+    significant_chance = 0.25,
     factors = surrender_factors,
     reasons = {
       pants_down = 0.8,
@@ -239,13 +237,16 @@ function CharacterTweakData:_multiply_weapon_delay(weap_usage_table, mul)
 end
 
 
+function CharacterTweakData:_add_weapon(id, unit_name)
+  table.insert(self.weap_ids, id)
+  table.insert(self.weap_unit_names, Idstring(unit_name))
+end
+
+
 Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
-  table.insert(self.weap_ids, "spas12")
-  table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"))
-  table.insert(self.weap_ids, "mp7")
-  table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7"))
-  table.insert(self.weap_ids, "amcar")
-  table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar"))
+  self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
+  self:_add_weapon("mp7", "units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7")
+  self:_add_weapon("amcar", "units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar")
 
   self._default_preset_users = {}
   for _, name in ipairs(self._enemy_list) do
@@ -303,30 +304,10 @@ local function set_weapon_presets(self)
 end
 
 
-Hooks:PostHook(CharacterTweakData, "_set_normal", "cass__set_normal", function(self)
-  set_weapon_presets(self)
-end)
-
-Hooks:PostHook(CharacterTweakData, "_set_hard", "cass__set_hard", function(self)
-  set_weapon_presets(self)
-end)
-
-Hooks:PostHook(CharacterTweakData, "_set_overkill", "cass__set_overkill", function(self)
-  set_weapon_presets(self)
-end)
-
-Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "cass__set_overkill_145", function(self)
-  set_weapon_presets(self)
-end)
-
-Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "cass__set_easy_wish", function(self)
-  set_weapon_presets(self)
-end)
-
-Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "cass__set_overkill_290", function(self)
-  set_weapon_presets(self)
-end)
-
-Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "cass__set_sm_wish", function(self)
-  set_weapon_presets(self)
-end)
+Hooks:PostHook(CharacterTweakData, "_set_normal", "cass__set_normal", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_hard", "cass__set_hard", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill", "cass__set_overkill", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "cass__set_overkill_145", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "cass__set_easy_wish", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "cass__set_overkill_290", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "cass__set_sm_wish", set_weapon_presets)
