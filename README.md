@@ -33,11 +33,8 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 - Adds armor plates to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
 - Gives heavy shotgunners the helmet treatment of the light shotgunners to make them more distinct from their rifle counterparts
 
-|SWAT|FBI|GenSec|
-|:---:|:---:|:---:|
-|![SWAT](https://cdn.discordapp.com/attachments/368375218403803146/651486962468913152/20191203191435_1.jpg)|![FBI SWAT](https://cdn.discordapp.com/attachments/368375218403803146/651486972472328193/20191203191447_1.jpg)|![GenSec SWAT](https://cdn.discordapp.com/attachments/368375218403803146/651486986645012510/20191203191459_1.jpg)|
-
 ## Other things it does
 
 - Makes shield units use the SMG unit model
 - Removes all but light, fire and poison hurt animations from heavy SWAT but scales their damage lower than their light counterparts
+- Improves the surrender presets, different enemies have different chances to surrender

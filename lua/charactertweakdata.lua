@@ -2,7 +2,7 @@ if false then
   return
 end
 
--- Clones a weapon preset and optionally sets values for all weapons contained in that preset
+-- clones a weapon preset and optionally sets values for all weapons contained in that preset
 -- if the value is a function, it calls the function with the data of the value name instead
 local function based_on(preset, values)
   local p = deep_clone(preset)
@@ -47,8 +47,7 @@ local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(tweak_data, ...)
   local presets = _presets_original(self, tweak_data, ...)
 
-  CASS:log("Setting up weapon presets")
-
+  -- setup weapon presets
   local dmg_mul_tbl = { 0.1, 0.2, 0.4, 0.7, 1, 2, 4, 6 }
   local acc_mul_tbl = { 0.75, 0.8, 0.85, 0.9, 1, 1.1, 1.2, 1.3 }
   local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
@@ -61,7 +60,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local dmg_mul = dmg_mul_tbl[x]
   local acc_mul = acc_mul_tbl[x]
 
-  -- Base everything on Overkill preset
   presets.weapon.cass_base = based_on(presets.weapon.expert, {
     focus_delay = focus_delay_tbl[x],
     aim_delay = aim_delay,
@@ -116,14 +114,14 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0, 0.35 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
 
-  -- Preset for heavies and medics, they deal a little less damage in exchange for being bulkier
+  -- heavy preset (deal less damage in exchange for being bulkier)
   presets.weapon.cass_heavy = based_on(presets.weapon.cass_base, {
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
     end
   })
 
-  -- Preset for bulldozers
+  -- bulldozer preset
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   presets.weapon.cass_tank = based_on(presets.weapon.cass_base, {
     melee_dmg = 25
@@ -158,7 +156,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.01, 0.025 }, recoil = { 0.5, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 40, 100 } }
   }
 
-  -- Presets for snipers
+  -- sniper presets
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   local recoil_mul = math.lerp(1.3, 0.6, x_norm)
   presets.weapon.cass_sniper = based_on(presets.weapon.sniper, {
@@ -180,6 +178,57 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
   -- give team ai more reasonable preset values
   presets.weapon.gang_member = based_on(presets.weapon.cass_base)
+
+  -- setup surrender presets
+  local surrender_factors = {
+    unaware_of_aggressor = 0.1,
+    enemy_weap_cold = 0.1,
+    flanked = 0.05,
+    isolated = 0.1,
+    aggressor_dis = {
+      [300.0] = 0.2,
+      [1000.0] = 0
+    }
+  }
+  presets.surrender.easy = {
+    base_chance = 0.3,
+    significant_chance = 0.35,
+    factors = surrender_factors,
+    reasons = {
+      pants_down = 1,
+      weapon_down = 0.5,
+      health = {
+        [1.0] = 0,
+        [0.8] = 0.8
+      }
+    }
+  }
+  presets.surrender.normal = {
+    base_chance = 0.3,
+    significant_chance = 0.35,
+    factors = surrender_factors,
+    reasons = {
+      pants_down = 0.9,
+      weapon_down = 0.4,
+      health = {
+        [1.0] = 0,
+        [0.6] = 0.6
+      }
+    }
+  }
+  presets.surrender.hard = {
+    base_chance = 0.3,
+    significant_chance = 0.35,
+    factors = surrender_factors,
+    reasons = {
+      pants_down = 0.8,
+      weapon_down = 0.3,
+      health = {
+        [1.0] = 0,
+        [0.4] = 0.4
+      }
+    }
+  }
 
   return presets
 end
@@ -205,23 +254,25 @@ Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
     end
   end
 
-  self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
+  -- set hurt severities for heavies
   self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
   self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
-end)
+  self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
 
+  -- set surrender chances (default is easy)
+  self.swat.surrender = self.presets.surrender.normal
+  self.heavy_swat.surrender = self.presets.surrender.hard
+  self.fbi_swat.surrender = self.presets.surrender.normal
+  self.fbi_heavy_swat.surrender = self.presets.surrender.hard
+  self.city_swat.surrender = self.presets.surrender.normal
+  self.heavy_swat_sniper.surrender = self.presets.surrender.hard
 
-Hooks:PostHook(CharacterTweakData, "_init_tank", "cass__init_tank", function(self)
-  -- restore entrance announcement
-  self.tank.spawn_sound_event = self.tank.spawn_sound_event or self.tank.speech_prefix_p1 .. "_entrance"
-  self.tank_hw.spawn_sound_event = self.tank_hw.spawn_sound_event or self.tank_hw.speech_prefix_p1 .. "_entrance"
-  self.tank_medic.spawn_sound_event = self.tank_medic.spawn_sound_event or self.tank_medic.speech_prefix_p1 .. "_entrance"
-  self.tank_mini.spawn_sound_event = self.tank_mini.spawn_sound_event or self.tank_mini.speech_prefix_p1 .. "_entrance"
-end)
-
-Hooks:PostHook(CharacterTweakData, "_init_taser", "cass__init_taser", function(self)
-  -- restore entrance announcement
-  self.taser.spawn_sound_event = self.taser.spawn_sound_event or self.taser.speech_prefix_p1 .. "_entrance"
+  -- restore special entrance announcements
+  self.tank.spawn_sound_event = self.tank.speech_prefix_p1 .. "_entrance"
+  self.tank_hw.spawn_sound_event = self.tank_hw.speech_prefix_p1 .. "_entrance"
+  self.tank_medic.spawn_sound_event = self.tank_medic.speech_prefix_p1 .. "_entrance"
+  self.tank_mini.spawn_sound_event = self.tank_mini.speech_prefix_p1 .. "_entrance"
+  self.taser.spawn_sound_event = self.taser.speech_prefix_p1 .. "_entrance"
 end)
 
 
@@ -243,6 +294,8 @@ local function set_weapon_presets(self)
   self.taser.weapon.is_rifle.tase_distance = 1500
   self.taser.weapon.is_rifle.aim_delay_tase = { 0, 0 }
   self.shield.weapon = self.presets.weapon.cass_heavy
+  self.phalanx_minion.weapon = self.presets.weapon.cass_heavy
+  self.phalanx_vip.weapon = self.presets.weapon.cass_heavy
   self.spooc.weapon = self.presets.weapon.cass_base
   self.shadow_spooc.weapon = self.presets.weapon.cass_base
   self.sniper.weapon = self.presets.weapon.cass_sniper
