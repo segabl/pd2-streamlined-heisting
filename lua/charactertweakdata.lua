@@ -93,6 +93,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
+  presets.weapon.cass_base.is_bullpup = deep_clone(presets.weapon.cass_base.is_rifle)
   presets.weapon.cass_base.is_smg.autofire_rounds = { 4, 16 }
   presets.weapon.cass_base.is_smg.FALLOFF = {
     { dmg_mul = 5 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.1, 0.3 }, mode = { 1, 0, 0, 0 } },
@@ -247,6 +248,7 @@ Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
   self:_add_weapon("mp7", "units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7")
   self:_add_weapon("amcar", "units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar")
+  self:_add_weapon("aug", "units/payday2/weapons/wpn_npc_aug/wpn_npc_aug")
 
   self._default_preset_users = {}
   for _, name in ipairs(self._enemy_list) do

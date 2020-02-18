@@ -43,6 +43,14 @@
             <file :name="wpn_npc_amcar/wpn_npc_amcar.model"/>
             <file :name="wpn_npc_amcar/wpn_npc_amcar.object"/>
             <file :name="wpn_npc_amcar/wpn_npc_amcar.unit"/>
+            <!-- aug -->
+            <file :name="wpn_npc_aug/aug_df.texture"/>
+            <file :name="wpn_npc_aug/aug_nm.texture"/>
+            <file :name="wpn_npc_aug/wpn_npc_aug.cooked_physics"/>
+            <file :name="wpn_npc_aug/wpn_npc_aug.material_config"/>
+            <file :name="wpn_npc_aug/wpn_npc_aug.model"/>
+            <file :name="wpn_npc_aug/wpn_npc_aug.object"/>
+            <file :name="wpn_npc_aug/wpn_npc_aug.unit"/>
         </group>
 
         <!-- new (and old) characters -->
@@ -163,7 +171,7 @@
             <file :name="ene_zeal_swat_heavy/swat_heavy_head_df.texture"/>
             <file :name="ene_zeal_swat_heavy/swat_heavy_head_nm.texture"/>
 
-            <!-- make original zeal swat use WEAPON -->
+            <!-- make original zeal swat use aug -->
             <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
             <file :name="ene_zeal_swat/ene_zeal_swat.unit"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_husk.unit"/>
@@ -186,7 +194,7 @@
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.unit"/>
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_husk.unit"/>
 
-            <!-- make heavy zeal use WEAPON -->
+            <!-- make heavy zeal use aug -->
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.model"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.unit"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy_husk.unit"/>
