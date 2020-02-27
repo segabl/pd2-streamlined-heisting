@@ -72,8 +72,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0, 0.3 * acc_mul }, recoil = { 0.2, 0.6 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.is_revolver.FALLOFF = {
-    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.cass_base.is_sniper = deep_clone(presets.weapon.cass_base.is_revolver)
   presets.weapon.cass_base.is_sniper.FALLOFF = {
