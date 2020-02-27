@@ -6,8 +6,7 @@ local function based_on(weap, crew_weap)
   w.shell_ejection = crew_weap.shell_ejection
   w.hold = crew_weap.hold
   w.reload = crew_weap.reload
-  w.usage = crew_weap.usage
-  w.anim_usage = crew_weap.anim_usage
+  w.anim_usage = crew_weap.anim_usage or crew_weap.usage
   return w
 end
 
