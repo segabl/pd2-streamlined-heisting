@@ -57,11 +57,6 @@
         <group name="units/payday2/characters/" dyn_package="false">
             <file :name="shared_textures/helmets_heavy_shotgunner_df.texture"/>
             <file :name="shared_textures/helmets_heavy_shotgunner_nm.texture"/>
-            <file :name="ene_city_swat_1/ene_city_swat_1.model"/>
-            <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
-            <file :name="ene_city_swat_3/ene_city_swat_3.model"/>
-            <file :name="ene_fbi_swat_1/ene_fbi_swat_1.model"/>
-            <file :name="ene_swat_2/ene_swat_2.model"/>
 
             <!-- make city shield use submachine gunner model -->
             <file :name="ene_city_shield/ene_city_shield.unit"/>
@@ -87,7 +82,6 @@
             <file :name="ene_shield_1/ene_shield_1_husk.unit"/>
 
             <!-- make fbi shotgunner use spas12 -->
-            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit"/>
 
@@ -101,7 +95,6 @@
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
 
             <!-- make original swat use amcar -->
-            <file :name="ene_swat_1/ene_swat_1.model"/>
             <file :name="ene_swat_1/ene_swat_1.unit"/>
             <file :name="ene_swat_1/ene_swat_1_husk.unit"/>
 
