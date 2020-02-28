@@ -469,7 +469,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.tac_tazer_flanking = {
-    amount = { 1, 4 },
+    amount = { 1, 3 },
     spawn = {
       {
         amount_min = 1,
@@ -506,7 +506,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
         freq = 1,
         amount_max = 2,
         rank = 2,
-        unit = "FBI_swat_R870",
+        unit = "CS_swat_MP5",
         tactics = self._tactics.tazer_charge
       }
     }
@@ -698,7 +698,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
   end
 
   self.besiege.recon.groups = {
-    hostage_rescue = { 5, 5, 5 },
+    hostage_rescue = { 3, 3, 3 },
     hostage_rescue_medic = { 1, 1, 1 },
     hostage_rescue_shield = { 1, 1, 1 }
   }
