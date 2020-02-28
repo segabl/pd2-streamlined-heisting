@@ -85,6 +85,7 @@
             <file :name="ene_shield_1/ene_shield_1_husk.unit"/>
 
             <!-- make fbi shotgunner use spas12 -->
+            <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit"/>
 
