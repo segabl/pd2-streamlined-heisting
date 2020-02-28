@@ -58,6 +58,9 @@
             <file :name="shared_textures/helmets_heavy_shotgunner_df.texture"/>
             <file :name="shared_textures/helmets_heavy_shotgunner_nm.texture"/>
 
+            <!-- give city shotgunner distinct helmet -->
+            <file :name="ene_city_swat_2/ene_city_swat_2.model"/>
+
             <!-- make city shield use submachine gunner model -->
             <file :name="ene_city_shield/ene_city_shield.unit"/>
             <file :name="ene_city_shield/ene_city_shield_husk.unit"/>
@@ -97,6 +100,9 @@
             <!-- make original swat use amcar -->
             <file :name="ene_swat_1/ene_swat_1.unit"/>
             <file :name="ene_swat_1/ene_swat_1_husk.unit"/>
+
+            <!-- give swat shotgunner badges and shell strap -->
+            <file :name="ene_swat_2/ene_swat_2.model"/>
 
             <!-- add new swat submachine gunner -->
             <file :name="ene_swat_3/ene_swat_3.cooked_physics"/>
