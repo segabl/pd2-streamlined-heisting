@@ -49,7 +49,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
   end
 
-  -- Murky city units are useless, use the same murky units on all difficulties
+  -- Use the same murky units on all difficulties since their models don't differ
   self.unit_categories.CS_swat_MP5.unit_types.murkywater = {
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
   }
@@ -69,6 +69,28 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
   self.unit_categories.FBI_suit_M4_MP5.unit_types.murkywater = {
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi"),
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+  }
+
+  -- Use the same federal police units on all difficulties since their models don't differ
+  self.unit_categories.CS_swat_MP5.unit_types.federales = {
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
+  }
+  self.unit_categories.FBI_swat_R870.unit_types.federales = {
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_r870/ene_swat_policia_federale_r870")
+  }
+  self.unit_categories.FBI_swat_M4.unit_types.federales = {
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi")
+  }
+  self.unit_categories.FBI_heavy_G36.unit_types.federales = {
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36")
+  }
+  self.unit_categories.FBI_heavy_R870.unit_types.federales = {
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
+  }
+  -- temp fix till I have proper federal police HRT
+  self.unit_categories.FBI_suit_M4_MP5.unit_types.federales = {
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale"),
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi")
   }
 
   if difficulty_index <= 2 then
