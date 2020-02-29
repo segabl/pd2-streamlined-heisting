@@ -1,7 +1,7 @@
 {
   "name" : "CASS",
   "description" : "CopActionShoot Streamline, interpolates falloff data, simplifies accuracy calculation and reworks the fire mode system",
-  "author" : "Shiny Hoppip",
+  "author" : "Hoppip",
   "priority" : 401,
   "blt_version" : 2,
   "color" : "0.043 0.808 0.6",

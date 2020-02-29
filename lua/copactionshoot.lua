@@ -333,7 +333,7 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
     local prev_data = falloff[i - 1]
     local t = (target_dis - prev_data.r) / (data.r - prev_data.r)
     local n_data = {
-      dmg_mul = round(lerp(prev_data.dmg_mul, data.dmg_mul, t) * 100) / 100,
+      dmg_mul = lerp(prev_data.dmg_mul, data.dmg_mul, t),
       r = target_dis,
       acc = { lerp(prev_data.acc[1], data.acc[1], t), lerp(prev_data.acc[2], data.acc[2], t) },
       recoil = { lerp(prev_data.recoil[1], data.recoil[1], t), lerp(prev_data.recoil[2], data.recoil[2], t) },
