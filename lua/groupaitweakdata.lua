@@ -725,6 +725,11 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     hostage_rescue_shield = { 1, 1, 1 }
   }
 
+  self.besiege.assault.force = { 13, 15, 17 }
+  self.besiege.assault.force_pool = { 150, 175, 225 }
+  self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
+  self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
+
   self.street = deep_clone(self.besiege)
   self.safehouse = deep_clone(self.besiege)
 

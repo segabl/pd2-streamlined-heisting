@@ -88,7 +88,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   presets.weapon.cass_base.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
   presets.weapon.cass_base.is_shotgun_mag = deep_clone(presets.weapon.cass_base.is_shotgun_pump)
-  presets.weapon.cass_base.is_rifle.autofire_rounds = { 2, 8 }
+  presets.weapon.cass_base.is_rifle.autofire_rounds = { 3, 9 }
   presets.weapon.cass_base.is_rifle.FALLOFF = {
     { dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
