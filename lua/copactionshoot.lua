@@ -12,7 +12,6 @@ local mrot_axis_angle = mrotation.set_axis_angle
 local temp_vec1 = Vector3()
 local temp_rot1 = Rotation()
 local lerp = math.lerp
-local random = math.random
 local round = math.round
 
 
@@ -42,6 +41,16 @@ function CopActionShoot:on_attention(...)
     self._common_data._old_att_unit = self._attention.unit
   end
   self._verif_slotmask = managers.slot:get_mask("AI_visibility")
+end
+
+
+-- Returns delay to host in seconds if we are client
+function CopActionShoot:get_client_delay()
+  if Network:is_server() then
+    return 0
+  end
+  self._host_peer = self._host_peer or managers.network:session():peer(1)
+  return self._host_peer and Network:qos(self._host_peer:rpc()).ping / 1000 or 0
 end
 
 
@@ -128,7 +137,7 @@ function CopActionShoot:update(t)
             self:stop_autofire()
 
             if vis_state == 1 then
-              self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], random())
+              self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
             else
               self._shoot_t = t + falloff.recoil[2]
             end
@@ -162,7 +171,7 @@ function CopActionShoot:update(t)
             -- Apply focus delay after 3 seconds of no los
             if no_los_dur > 3 and not shoot_hist.focus_delay then
               shoot_hist.focus_start_t = t
-              shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
+              shoot_hist.focus_delay = self._w_usage_tweak.focus_delay + self:get_client_delay() -- Account for network latency
             end
             -- Apply aim delay after 6 seconds of no los
             if no_los_dur > 6 and not self._waiting_for_aim_delay then
@@ -172,7 +181,7 @@ function CopActionShoot:update(t)
               if self._common_data.is_suppressed then
                 aim_delay = aim_delay * 1.5
               end
-              self._shoot_t = t + aim_delay
+              self._shoot_t = t + aim_delay + self:get_client_delay() -- Account for network latency
               self._waiting_for_aim_delay = true
               if self._shooting_husk_player then
                 self._next_vis_ray_t = self._shoot_t
@@ -211,9 +220,9 @@ function CopActionShoot:update(t)
           local autofire_rounds = falloff.autofire_rounds or self._w_usage_tweak.autofire_rounds
           if self._automatic_weap and falloff.autofire_rounds then
             local diff = autofire_rounds[2] - autofire_rounds[1]
-            number_of_rounds = math.ceil(autofire_rounds[1] + random() * diff)
+            number_of_rounds = math.ceil(autofire_rounds[1] + self:_pseudorandom() * diff)
           elseif self._automatic_weap and self._w_usage_tweak.autofire_rounds then
-            local f = math.min(1, math.max(0, (target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + random() * 0.3))
+            local f = math.min(1, math.max(0, (target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + self:_pseudorandom() * 0.3))
             number_of_rounds = math.ceil(lerp(autofire_rounds[2], autofire_rounds[1], f))
           else
             number_of_rounds = 1
@@ -240,7 +249,7 @@ function CopActionShoot:update(t)
               if not ext_anim.base_no_recoil and not ext_anim.move then
                 self._ext_movement:play_redirect("recoil_single")
               end
-              self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], random())
+              self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
             else
               self._shoot_t = t + falloff.recoil[2]
             end
@@ -287,7 +296,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
     hit_chance = hit_chance * self._common_data.active_actions[2]:accuracy_multiplier()
   end
 
-  if shooting_local_player and random() < hit_chance then
+  if shooting_local_player and self:_pseudorandom() < hit_chance then
     mvec3_set(shoot_hist.m_last_pos, pos)
     return
   end
@@ -298,15 +307,15 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 
   local error_vec = Vector3()
   mvec3_cross(error_vec, enemy_vec, math.UP)
-  mrot_axis_angle(temp_rot1, enemy_vec, random(360))
+  mrot_axis_angle(temp_rot1, enemy_vec, self:_pseudorandom(360))
   mvec3_rot(error_vec, temp_rot1)
 
   local error_vec_len
   if not shooting_local_player and hit_chance > 0 then
-    error_vec_len = random() * math.pow(1.4, (2 - hit_chance) * 8)
+    error_vec_len = self:_pseudorandom() * math.pow(1.4, (2 - hit_chance) * 8)
   else
     local miss_min_dis = shooting_local_player and 31 or 150
-    error_vec_len = miss_min_dis + w_tweak.spread * math.random() + w_tweak.miss_dis * math.random() * (1 - focus_prog)
+    error_vec_len = miss_min_dis + w_tweak.spread * self:_pseudorandom() + w_tweak.miss_dis * self:_pseudorandom() * (1 - focus_prog)
   end
 
   mvec3_set_l(error_vec, error_vec_len)
