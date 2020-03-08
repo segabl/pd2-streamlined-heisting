@@ -203,6 +203,58 @@
             <file :name="ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870_husk.unit"/>
         </group>
 
+        <!-- new federal police -->
+        <group name="units/pd2_dlc_bex/characters/" dyn_package="false">
+            <!-- smg light (base for material config and textures) -->
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale_body_df.texture"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale_heads_df.texture"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale_helmets_df.texture"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale.material_config"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale_contour.material_config"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale.model"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale.object"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale.unit"/>
+            <file :name="ene_swat_policia_federale/ene_swat_policia_federale_husk.unit"/>
+
+            <!-- rifle light -->
+            <file :name="ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi.model"/>
+            <file :name="ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi.object"/>
+            <file :name="ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi.unit"/>
+            <file :name="ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi_husk.unit"/>
+
+            <!-- shotgun light -->
+            <file :name="ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870.model"/>
+            <file :name="ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870.object"/>
+            <file :name="ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870.unit"/>
+            <file :name="ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870_husk.unit"/>
+
+            <!-- rifle heavy -->
+            <file :name="ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale.model"/>
+            <file :name="ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale.object"/>
+            <file :name="ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale.unit"/>
+            <file :name="ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale_husk.unit"/>
+
+            <!-- shotgun heavy -->
+            <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870.model"/>
+            <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870.object"/>
+            <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870.unit"/>
+            <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870_husk.unit"/>
+
+            <!-- c45 shield -->
+            <file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45.unit"/>
+            <file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45_husk.unit"/>
+
+            <!-- mp9 shield -->
+            <file :name="ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9.unit"/>
+            <file :name="ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9_husk.unit"/>
+
+            <!-- sniper -->
+            <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.model"/>
+            <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.object"/>
+            <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.unit"/>
+            <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper_husk.unit"/>
+        </group>
+
     </assets>
 
 </mod>
