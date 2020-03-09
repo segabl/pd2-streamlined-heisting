@@ -249,6 +249,8 @@
             <file :name="ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9_husk.unit"/>
 
             <!-- sniper -->
+            <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.material_config"/>
+            <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper_contour.material_config"/>
             <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.model"/>
             <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.object"/>
             <file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.unit"/>
