@@ -46,7 +46,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local presets = _presets_original(self, tweak_data, ...)
 
   -- setup weapon presets
-  local dmg_mul_tbl = { 0.1, 0.2, 0.4, 0.7, 1, 2, 4, 6 }
+  local dmg_mul_tbl = { 0.1, 0.2, 0.4, 0.7, 1, 2, 4, 7 }
   local acc_mul_tbl = { 0.75, 0.8, 0.85, 0.9, 1, 1.1, 1.2, 1.3 }
   local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
   local aim_delay_tbl = { 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1 }
@@ -116,7 +116,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   -- heavy preset (deal less damage in exchange for being bulkier)
   presets.weapon.cass_heavy = based_on(presets.weapon.cass_base, {
     FALLOFF = function (falloff)
-      manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
+      manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.8 end)
     end
   })
 
