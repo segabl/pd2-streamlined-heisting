@@ -637,11 +637,11 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     self.besiege.assault.groups = {
       tac_swat_shotgun_rush = { 1, 1, 1 },
       tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
-      tac_swat_rifle = { 4, 4, 4 },
-      tac_swat_rifle_flank = { 2, 2, 2 },
-      tac_shield_wall_ranged = { 1, 1, 1 },
-      tac_shield_wall_charge = { 0.5, 0.5, 0.5 },
-      tac_shield_wall = { 0.5, 0.5, 0.5 },
+      tac_swat_rifle = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
+      tac_shield_wall_ranged = { 2, 2, 2 },
+      tac_shield_wall_charge = { 1, 1, 1 },
+      tac_shield_wall = { 1, 1, 1 },
       tac_tazer_flanking = { 0, 0, 0 },
       tac_tazer_charge = { 0, 0, 0 },
       FBI_spoocs = { 0, 0, 0 },
@@ -651,13 +651,13 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     self.besiege.assault.groups = {
       tac_swat_shotgun_rush = { 1, 1, 1 },
       tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
-      tac_swat_rifle = { 4, 4, 4 },
-      tac_swat_rifle_flank = { 2, 2, 2 },
-      tac_shield_wall_ranged = { 2, 2, 2 },
-      tac_shield_wall_charge = { 1, 1, 1 },
-      tac_shield_wall = { 1, 1, 1 },
-      tac_tazer_flanking = { 1, 1, 1 },
-      tac_tazer_charge = { 1, 1, 1 },
+      tac_swat_rifle = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
+      tac_shield_wall_ranged = { 4, 4, 4 },
+      tac_shield_wall_charge = { 2, 2, 2 },
+      tac_shield_wall = { 2, 2, 2 },
+      tac_tazer_flanking = { 2, 2, 2 },
+      tac_tazer_charge = { 2, 2, 2 },
       FBI_spoocs = { 0, 0, 0 },
       tac_bull_rush = { 0, 0, 0 }
     }
@@ -665,57 +665,57 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     self.besiege.assault.groups = {
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
-      tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
-      tac_shield_wall_ranged = { 4, 4, 4 },
-      tac_shield_wall_charge = { 2, 2, 2 },
-      tac_shield_wall = { 2, 2, 2 },
-      tac_tazer_flanking = { 2, 2, 2 },
-      tac_tazer_charge = { 2, 2, 2 },
-      FBI_spoocs = { 1, 1, 1 },
-      tac_bull_rush = { 1, 1, 1 }
+      tac_swat_rifle = { 16, 16, 16 },
+      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_shield_wall_ranged = { 8, 8, 8 },
+      tac_shield_wall_charge = { 4, 4, 4 },
+      tac_shield_wall = { 4, 4, 4 },
+      tac_tazer_flanking = { 4, 4, 4 },
+      tac_tazer_charge = { 4, 4, 4 },
+      FBI_spoocs = { 2, 2, 2 },
+      tac_bull_rush = { 2, 2, 2 }
     }
   elseif difficulty_index == 5 then
     self.besiege.assault.groups = {
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
-      tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
-      tac_shield_wall_ranged = { 4, 4, 4 },
-      tac_shield_wall_charge = { 2, 2, 2 },
-      tac_shield_wall = { 2, 2, 2 },
-      tac_tazer_flanking = { 2, 2, 2 },
-      tac_tazer_charge = { 2, 2, 2 },
-      FBI_spoocs = { 2, 2, 2 },
-      tac_bull_rush = { 2, 2, 2 }
-    }
-  elseif difficulty_index == 6 then
-    self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 2, 2, 2 },
-      tac_swat_shotgun_flank = { 1, 1, 1 },
-      tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
-      tac_shield_wall_ranged = { 4, 4, 4 },
-      tac_shield_wall_charge = { 3, 3, 3 },
-      tac_shield_wall = { 3, 3, 3 },
-      tac_tazer_flanking = { 3, 3, 3 },
-      tac_tazer_charge = { 3, 3, 3 },
-      FBI_spoocs = { 3, 3, 3 },
-      tac_bull_rush = { 3, 3, 3 }
-    }
-  elseif difficulty_index >= 7 then
-    self.besiege.assault.groups = {
-      tac_swat_shotgun_rush = { 2, 2, 2 },
-      tac_swat_shotgun_flank = { 1, 1, 1 },
-      tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
-      tac_shield_wall_ranged = { 4, 4, 4 },
+      tac_swat_rifle = { 16, 16, 16 },
+      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_shield_wall_ranged = { 8, 8, 8 },
       tac_shield_wall_charge = { 4, 4, 4 },
       tac_shield_wall = { 4, 4, 4 },
       tac_tazer_flanking = { 4, 4, 4 },
       tac_tazer_charge = { 4, 4, 4 },
       FBI_spoocs = { 4, 4, 4 },
       tac_bull_rush = { 4, 4, 4 }
+    }
+  elseif difficulty_index == 6 then
+    self.besiege.assault.groups = {
+      tac_swat_shotgun_rush = { 2, 2, 2 },
+      tac_swat_shotgun_flank = { 1, 1, 1 },
+      tac_swat_rifle = { 16, 16, 16 },
+      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_shield_wall_ranged = { 8, 8, 8 },
+      tac_shield_wall_charge = { 6, 6, 6 },
+      tac_shield_wall = { 6, 6, 6 },
+      tac_tazer_flanking = { 6, 6, 6 },
+      tac_tazer_charge = { 6, 6, 6 },
+      FBI_spoocs = { 6, 6, 6 },
+      tac_bull_rush = { 6, 6, 6 }
+    }
+  elseif difficulty_index >= 7 then
+    self.besiege.assault.groups = {
+      tac_swat_shotgun_rush = { 2, 2, 2 },
+      tac_swat_shotgun_flank = { 1, 1, 1 },
+      tac_swat_rifle = { 16, 16, 16 },
+      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_shield_wall_ranged = { 8, 8, 8 },
+      tac_shield_wall_charge = { 8, 8, 8 },
+      tac_shield_wall = { 8, 8, 8 },
+      tac_tazer_flanking = { 8, 8, 8 },
+      tac_tazer_charge = { 8, 8, 8 },
+      FBI_spoocs = { 8, 8, 8 },
+      tac_bull_rush = { 8, 8, 8 }
     }
   end
 
