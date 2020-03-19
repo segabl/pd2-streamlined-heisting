@@ -559,7 +559,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
   }
 
   self.enemy_spawn_groups.FBI_spoocs = {
-    amount = { 1, 3 },
+    amount = { 1, 2 },
     spawn = {
       {
         freq = difficulty_index / 32,
