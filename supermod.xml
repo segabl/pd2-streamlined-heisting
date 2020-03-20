@@ -5,13 +5,14 @@
 
         <post :hook_id="managers/mission/elementspawnenemygroup"/>
         <post :hook_id="network/matchmaking/networkmatchmakingsteam"/>
-        <post :hook_id="units/beings/player/playerdamage"/>
-        <post :hook_id="units/enemies/cop/actions/upper_body/copactionshoot"/>
+        <post :hook_id="setups/gamesetup"/>
         <group :hook_id="tweak_data/">
             <post :hook_id="charactertweakdata"/>
             <post :hook_id="groupaitweakdata"/>
             <post :hook_id="weapontweakdata"/>
         </group>
+        <post :hook_id="units/beings/player/playerdamage"/>
+        <post :hook_id="units/enemies/cop/actions/upper_body/copactionshoot"/>
 
     </hooks>
 
@@ -77,7 +78,6 @@
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.material_config"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870_contour.material_config"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.model"/>
-            <file :name="ene_city_heavy_r870/ene_city_heavy_r870.object"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit"/>
 
@@ -85,8 +85,8 @@
             <file :name="ene_shield_1/ene_shield_1.model"/>
 
             <!-- add fbi swat submachine gunner -->
-            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit" dyn_package="true"/>
-            <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit" dyn_package="true"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit"/>
+            <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit"/>
 
             <!-- make fbi shotgunner use spas12 -->
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
@@ -113,8 +113,8 @@
             <file :name="ene_shield_2/ene_shield_2.model"/>
 
             <!-- add new swat submachine gunner -->
-            <file :name="ene_swat_3/ene_swat_3.unit" dyn_package="true"/>
-            <file :name="ene_swat_3/ene_swat_3_husk.unit" dyn_package="true"/>
+            <file :name="ene_swat_3/ene_swat_3.unit"/>
+            <file :name="ene_swat_3/ene_swat_3_husk.unit"/>
 
             <!-- make heavy swat rifleman use amcar and give body plate -->
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.model"/>
