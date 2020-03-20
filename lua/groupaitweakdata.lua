@@ -638,7 +638,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       tac_swat_shotgun_rush = { 1, 1, 1 },
       tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
       tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
+      tac_swat_rifle_flank = { 2, 2, 2 },
       tac_shield_wall_ranged = { 2, 2, 2 },
       tac_shield_wall_charge = { 1, 1, 1 },
       tac_shield_wall = { 1, 1, 1 },
@@ -652,7 +652,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       tac_swat_shotgun_rush = { 1, 1, 1 },
       tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
       tac_swat_rifle = { 8, 8, 8 },
-      tac_swat_rifle_flank = { 4, 4, 4 },
+      tac_swat_rifle_flank = { 2, 2, 2 },
       tac_shield_wall_ranged = { 4, 4, 4 },
       tac_shield_wall_charge = { 2, 2, 2 },
       tac_shield_wall = { 2, 2, 2 },
@@ -666,7 +666,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 16, 16, 16 },
-      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 8, 8, 8 },
       tac_shield_wall_charge = { 4, 4, 4 },
       tac_shield_wall = { 4, 4, 4 },
@@ -680,7 +680,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 16, 16, 16 },
-      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 8, 8, 8 },
       tac_shield_wall_charge = { 4, 4, 4 },
       tac_shield_wall = { 4, 4, 4 },
@@ -694,7 +694,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 16, 16, 16 },
-      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 8, 8, 8 },
       tac_shield_wall_charge = { 6, 6, 6 },
       tac_shield_wall = { 6, 6, 6 },
@@ -708,7 +708,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
       tac_swat_shotgun_rush = { 2, 2, 2 },
       tac_swat_shotgun_flank = { 1, 1, 1 },
       tac_swat_rifle = { 16, 16, 16 },
-      tac_swat_rifle_flank = { 8, 8, 8 },
+      tac_swat_rifle_flank = { 4, 4, 4 },
       tac_shield_wall_ranged = { 8, 8, 8 },
       tac_shield_wall_charge = { 8, 8, 8 },
       tac_shield_wall = { 8, 8, 8 },
@@ -725,7 +725,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", func
     hostage_rescue_shield = { 1, 1, 1 }
   }
 
-  self.besiege.assault.force = { 13, 15, 17 }
+  self.besiege.assault.force = { 14, 16, 18 }
   self.besiege.assault.force_pool = { 150, 175, 225 }
   self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
   self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
