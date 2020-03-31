@@ -12,8 +12,7 @@ end
 
 
 Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
-  self.ak47_npc.DAMAGE = 2
-  self.mac11_npc.DAMAGE = 2
+  self.ak47_npc.DAMAGE = 1
   self.saiga_npc.CLIP_AMMO_MAX = 20
   self.saiga_npc.auto.fire_rate = 0.18
 

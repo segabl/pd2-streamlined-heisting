@@ -120,6 +120,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
     end
   })
 
+  -- gangster preset (deal more damage)
+  presets.weapon.cass_gangster = based_on(presets.weapon.cass_base, {
+    FALLOFF = function (falloff)
+      manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.5 end)
+    end
+  })
+
   -- bulldozer preset
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   presets.weapon.cass_tank = based_on(presets.weapon.cass_base, {
@@ -250,13 +257,6 @@ Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
   self:_add_weapon("amcar", "units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar")
   self:_add_weapon("aug", "units/payday2/weapons/wpn_npc_aug/wpn_npc_aug")
 
-  self._default_preset_users = {}
-  for _, name in ipairs(self._enemy_list) do
-    if self[name].weapon == self.presets.weapon.normal or self[name].weapon == self.presets.weapon.good then
-      self._default_preset_users[name] = self[name]
-    end
-  end
-
   -- set hurt severities for heavies
   self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
   self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
@@ -279,14 +279,22 @@ Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
 end)
 
 
-local lower_preset_users = {
+local heavy_preset_users = {
   heavy_swat = true,
   fbi_heavy_swat = true,
   medic = true
 }
 local function set_weapon_presets(self)
-  for k, v in pairs(self._default_preset_users) do
-    v.weapon = lower_preset_users[k] and self.presets.weapon.cass_heavy or self.presets.weapon.cass_base
+  local preset
+  for _, name in ipairs(self._enemy_list) do
+    preset = self[name]
+    if preset.access == "gangster" and not name:find("boss") then
+      CASS:log("Using gangster weapon preset for " .. name)
+      preset.weapon = self.presets.weapon.cass_gangster
+    elseif preset.access == "swat" then
+      CASS:log("Using " .. (heavy_preset_users[name] and "heavy" or "base") .. " weapon preset for " .. name)
+      preset.weapon = heavy_preset_users[name] and self.presets.weapon.cass_heavy or self.presets.weapon.cass_base
+    end
   end
   self.tank.weapon = self.presets.weapon.cass_tank
   self.tank_hw.weapon = self.presets.weapon.cass_tank
