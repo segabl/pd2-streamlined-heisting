@@ -29,3 +29,8 @@ end)
 Hooks:PostHook(PlayerTweakData, "_set_sm_wish", "cass__set_sm_wish", function (self)
   self.damage.MIN_DAMAGE_INTERVAL = 0.35
 end)
+
+Hooks:PostHook(PlayerTweakData, "init", "cass_init", function (self)
+  -- give a base dodge chance as new cop firing mechanics lead to more hit checks which would penalize dodge builds
+  self.damage.DODGE_INIT = 0.05
+end)
