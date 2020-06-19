@@ -1,6 +1,6 @@
 {
-  "name" : "CASS",
-  "description" : "CopActionShoot Streamline, interpolates falloff data, simplifies accuracy calculation and reworks the fire mode system",
+  "name" : "Streamlined Heisting",
+  "description" : "CopActionShoot Streamline, interpolates damage data, simplifies accuracy calculation, reworks cop fire mode system and improves cop factions",
   "author" : "Hoppip",
   "priority" : 401,
   "blt_version" : 2,
@@ -10,7 +10,7 @@
   "updates" : [
     {
       "identifier" : "pd2-cass",
-      "host": { "meta": "http://updates.hoppip.at/pd2-cass" }
+      "host": { "meta": "http://updates.hoppip.at/pd2-streamlined-heisting" }
     }
   ]
 }

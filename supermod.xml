@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<mod name="CASS" global_key="CASS">
+<mod name="Streamlined Heisting" global_key="Streamlined Heisting">
 
     <hooks script_path="mod.lua" hook_id="lib/">
 

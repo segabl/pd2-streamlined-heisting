@@ -1,6 +1,6 @@
-# CASS
+# Streamlined Heisting
 
-CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of the game's enemy mechanics more consistent. It is intended to build on what I think the vanilla game tried to do rather than being a full rebalance mod that completely changes how the game works and as such won't adds tons of new features and enemies, weapons etc.
+Streamlined Heisting is a full streamlining mod that makes a lot of the game's enemy mechanics more consistent. It is intended to build on what I think the vanilla game tried to do rather than being a full rebalance mod that completely changes how the game works and as such won't adds tons of new features and enemies, weapons etc.
 
 ## What it does
 
@@ -32,6 +32,11 @@ CASS (CopActionShoot Streamline) is a full streamlining mod that makes a lot of 
 - Adds different weapons for different factions, similar how GenSec uses different weapons
 - Adds armor plates to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
 - Gives heavy shotgunners the helmet treatment of the light shotgunners to make them more distinct from their rifle counterparts
+- Replaces the lazy recolors for Mexican police with slightly less lazy recolors and less seen cop models
+
+### Improves the difficulty curve
+- Adds proper difficulty scaling such that every difficulty feels different from the previous one instead of either barely a change or an extreme change
+- Gives custom min damage intervals (I-frames) to players scaling with difficulty (the default one of .45 on Overkill scaling down to the min .35 on DS)
 
 ## Other things it does
 
