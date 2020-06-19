@@ -2,10 +2,12 @@ if not CASS then
 
   _G.CASS = {}
   CASS.mod_path = ModPath
-  CASS.logs = true
+  CASS.settings = {
+    logs = true
+  }
 
   function CASS:log(...)
-    if not self.logs then
+    if not self.settings.logs then
       return
     end
     local params = {...}
@@ -14,19 +16,6 @@ if not CASS then
       str = str .. tostring(v) .. " "
     end
     log("[CASS] " .. str)
-  end
-
-  function CASS:load_asset_group(name)
-    if not self.asset_loader then
-      local mod = BLT.Mods:GetModOwnerOfFile(CASS.mod_path)
-      self.asset_loader = mod and mod.supermod and mod.supermod:GetAssetLoader()
-      if not self.asset_loader then
-        self:log("ERROR: Couldn't retrieve the mod's asset loader!")
-        return
-      end
-    end
-    self:log("Loading asset group \"" .. name .. "\"")
-    self.asset_loader:LoadAssetGroup(name)
   end
 
 end
