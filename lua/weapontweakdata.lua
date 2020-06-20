@@ -11,7 +11,7 @@ local function based_on(weap, crew_weap)
 end
 
 
-Hooks:PostHook(WeaponTweakData, "init", "cass_init", function(self)
+Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self)
   self.ak47_npc.DAMAGE = 1
   self.saiga_npc.CLIP_AMMO_MAX = 20
   self.saiga_npc.auto.fire_rate = 0.18
@@ -48,10 +48,10 @@ local function restore_npc_weapon_dmg(self)
 end
 
 
-Hooks:PostHook(WeaponTweakData, "_set_normal", "cass__set_normal", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_hard", "cass__set_hard", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_overkill", "cass__set_overkill", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_overkill_145", "cass__set_overkill_145", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_easy_wish", "cass__set_easy_wish", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_overkill_290", "cass__set_overkill_290", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_sm_wish", "cass__set_sm_wish", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_normal", "sh__set_normal", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_hard", "sh__set_hard", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_overkill", "sh__set_overkill", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_overkill_145", "sh__set_overkill_145", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_easy_wish", "sh__set_easy_wish", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_overkill_290", "sh__set_overkill_290", restore_npc_weapon_dmg)
+Hooks:PostHook(WeaponTweakData, "_set_sm_wish", "sh__set_sm_wish", restore_npc_weapon_dmg)

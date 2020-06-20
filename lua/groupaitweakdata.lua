@@ -1,4 +1,4 @@
-Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categories", function (self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categories", function (self, difficulty_index)
 
   -- We're using the same unit categories for all difficulties for the sake of making the code more readable and not having
   -- to do all that if-else crap that Overkill originally did. While unit categories are the same, the units they contain still
@@ -154,7 +154,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cass__init_unit_categ
 end)
 
 
-Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_spawn_groups", function (self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
   self._tactics = {
     Phalanx_minion = {
       "smoke_grenade",
@@ -631,7 +631,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cass__init_enemy_s
 end)
 
 
-Hooks:PostHook(GroupAITweakData, "_init_task_data", "cass__init_task_data", function (self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
 
   if difficulty_index <= 2 then
     self.besiege.assault.groups = {

@@ -9,7 +9,7 @@
   "version" : "1.1",
   "updates" : [
     {
-      "identifier" : "pd2-cass",
+      "identifier" : "pd2-streamlined-heisting",
       "host": { "meta": "http://updates.hoppip.at/pd2-streamlined-heisting" }
     }
   ]

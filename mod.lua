@@ -1,12 +1,12 @@
-if not CASS then
+if not StreamHeist then
 
-  _G.CASS = {}
-  CASS.mod_path = ModPath
-  CASS.settings = {
+  _G.StreamHeist = {}
+  StreamHeist.mod_path = ModPath
+  StreamHeist.settings = {
     logs = true
   }
 
-  function CASS:log(...)
+  function StreamHeist:log(...)
     if not self.settings.logs then
       return
     end
@@ -15,14 +15,14 @@ if not CASS then
     for _, v in pairs(params) do
       str = str .. tostring(v) .. " "
     end
-    log("[CASS] " .. str)
+    log("[StreamlinedHeisting] " .. str)
   end
 
 end
 
 if RequiredScript then
 
-  local fname = CASS.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
+  local fname = StreamHeist.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
   if io.file_is_readable(fname) then
     dofile(fname)
   end

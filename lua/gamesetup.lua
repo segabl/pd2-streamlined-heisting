@@ -6,15 +6,15 @@ local function load_unit(path)
   dres:load(ids_unit, Idstring(path .. "_husk"), dres.DYN_RESOURCES_PACKAGE)
 end
 
-Hooks:PostHook(GameSetup, "init_finalize", "cass_init_finalize", function ()
+Hooks:PostHook(GameSetup, "init_finalize", "sh_init_finalize", function ()
 
-  CASS:log("Loading custom units...")
+  StreamHeist:log("Loading custom units...")
 
   load_unit("units/payday2/characters/ene_swat_3/ene_swat_3")
   load_unit("units/payday2/characters/ene_fbi_swat_3/ene_fbi_swat_3")
 
   if PackageManager:loaded("packages/sm_wish") then
-    --CASS:log("Zeal package loaded, loading custom Zeal units...")
+    --StreamHeist:log("Zeal package loaded, loading custom Zeal units...")
 
     --load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
     --load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_3/ene_zeal_swat_3")

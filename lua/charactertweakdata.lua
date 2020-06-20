@@ -58,70 +58,70 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local dmg_mul = dmg_mul_tbl[x]
   local acc_mul = acc_mul_tbl[x]
 
-  presets.weapon.cass_base = based_on(presets.weapon.expert, {
+  presets.weapon.sh_base = based_on(presets.weapon.expert, {
     focus_delay = focus_delay_tbl[x],
     aim_delay = aim_delay,
     melee_dmg = melee_dmg_tbl[x]
   })
-  presets.weapon.cass_base.is_pistol.FALLOFF = {
+  presets.weapon.sh_base.is_pistol.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.4, 1 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.akimbo_pistol.FALLOFF = {
+  presets.weapon.sh_base.akimbo_pistol.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.05, 0.1 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0, 0.3 * acc_mul }, recoil = { 0.2, 0.6 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_revolver.FALLOFF = {
+  presets.weapon.sh_base.is_revolver.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_sniper = deep_clone(presets.weapon.cass_base.is_revolver)
-  presets.weapon.cass_base.is_sniper.FALLOFF = {
+  presets.weapon.sh_base.is_sniper = deep_clone(presets.weapon.sh_base.is_revolver)
+  presets.weapon.sh_base.is_sniper.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 6 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 4 * dmg_mul, r = 10000, acc = { 0.25 * acc_mul, 0.5 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_shotgun_pump.FALLOFF = {
-    { dmg_mul = 1.75 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 1.25 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
+  presets.weapon.sh_base.is_shotgun_pump.FALLOFF = {
+    { dmg_mul = 1.75 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1.2 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 1.25 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 0.9 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 0.01 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.5 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
-  presets.weapon.cass_base.is_shotgun_mag = deep_clone(presets.weapon.cass_base.is_shotgun_pump)
-  presets.weapon.cass_base.is_rifle.autofire_rounds = { 3, 9 }
-  presets.weapon.cass_base.is_rifle.FALLOFF = {
+  presets.weapon.sh_base.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
+  presets.weapon.sh_base.is_shotgun_mag = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
+  presets.weapon.sh_base.is_rifle.autofire_rounds = { 3, 9 }
+  presets.weapon.sh_base.is_rifle.FALLOFF = {
     { dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1.5, 2.5 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_bullpup = deep_clone(presets.weapon.cass_base.is_rifle)
-  presets.weapon.cass_base.is_smg.autofire_rounds = { 4, 16 }
-  presets.weapon.cass_base.is_smg.FALLOFF = {
+  presets.weapon.sh_base.is_bullpup = deep_clone(presets.weapon.sh_base.is_rifle)
+  presets.weapon.sh_base.is_smg.autofire_rounds = { 4, 16 }
+  presets.weapon.sh_base.is_smg.FALLOFF = {
     { dmg_mul = 4.5 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0, 0.1 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_smg.range = { optimal = 1500, far = 4000, close = 750 }
-  presets.weapon.cass_base.mini.autofire_rounds = { 50, 200 }
-  presets.weapon.cass_base.mini.FALLOFF = {
+  presets.weapon.sh_base.is_smg.range = { optimal = 1500, far = 4000, close = 750 }
+  presets.weapon.sh_base.mini.autofire_rounds = { 50, 200 }
+  presets.weapon.sh_base.mini.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0, 0.35 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_base.is_lmg.autofire_rounds = { 10, 40 }
-  presets.weapon.cass_base.is_lmg.FALLOFF = {
+  presets.weapon.sh_base.is_lmg.autofire_rounds = { 10, 40 }
+  presets.weapon.sh_base.is_lmg.FALLOFF = {
     { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0, 0.35 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
 
   -- heavy preset (deal less damage in exchange for being bulkier)
-  presets.weapon.cass_heavy = based_on(presets.weapon.cass_base, {
+  presets.weapon.sh_heavy = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.8 end)
     end
   })
 
   -- gangster preset (deal more damage)
-  presets.weapon.cass_gangster = based_on(presets.weapon.cass_base, {
+  presets.weapon.sh_gangster = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.5 end)
     end
@@ -129,34 +129,34 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
   -- bulldozer preset
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
-  presets.weapon.cass_tank = based_on(presets.weapon.cass_base, {
+  presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
     melee_dmg = 25
   })
-  presets.weapon.cass_tank.is_shotgun_pump.RELOAD_SPEED = 1
-  presets.weapon.cass_tank.is_shotgun_pump.FALLOFF = {
+  presets.weapon.sh_tank.is_shotgun_pump.RELOAD_SPEED = 1
+  presets.weapon.sh_tank.is_shotgun_pump.FALLOFF = {
     { dmg_mul = 5 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 1000, acc = { 0.2 * acc_mul, 0.75 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0.05 * acc_mul, 0.35 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_tank.is_shotgun_mag.RELOAD_SPEED = 0.5
-  presets.weapon.cass_tank.is_shotgun_mag.autofire_rounds = { 1, 7 }
-  presets.weapon.cass_tank.is_shotgun_mag.FALLOFF = {
+  presets.weapon.sh_tank.is_shotgun_mag.RELOAD_SPEED = 0.5
+  presets.weapon.sh_tank.is_shotgun_mag.autofire_rounds = { 1, 7 }
+  presets.weapon.sh_tank.is_shotgun_mag.FALLOFF = {
     { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 4 } },
     { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.8 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 3 } },
     { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.35 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 1 } }
   }
-  presets.weapon.cass_tank.is_rifle.focus_dis = 800
-  presets.weapon.cass_tank.is_rifle.RELOAD_SPEED = 0.5
-  presets.weapon.cass_tank.is_rifle.autofire_rounds = { 20, 40 }
-  presets.weapon.cass_tank.is_rifle.FALLOFF = {
+  presets.weapon.sh_tank.is_rifle.focus_dis = 800
+  presets.weapon.sh_tank.is_rifle.RELOAD_SPEED = 0.5
+  presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 40 }
+  presets.weapon.sh_tank.is_rifle.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.35 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_tank.mini.focus_dis = 800
-  presets.weapon.cass_tank.mini.RELOAD_SPEED = 1
-  presets.weapon.cass_tank.mini.autofire_rounds = { 40, 700 }
-  presets.weapon.cass_tank.mini.FALLOFF = {
+  presets.weapon.sh_tank.mini.focus_dis = 800
+  presets.weapon.sh_tank.mini.RELOAD_SPEED = 1
+  presets.weapon.sh_tank.mini.autofire_rounds = { 40, 700 }
+  presets.weapon.sh_tank.mini.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.1 * acc_mul, 0.15 * acc_mul }, recoil = { 2, 2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 500, 700 } },
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.04 * acc_mul, 0.075 * acc_mul }, recoil = { 1.2, 1.5 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 300, 500 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.01 * acc_mul, 0.025 * acc_mul }, recoil = { 0.5, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 40, 100 } }
@@ -165,16 +165,16 @@ function CharacterTweakData:_presets(tweak_data, ...)
   -- sniper presets
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   local recoil_mul = math.lerp(1.3, 0.6, x_norm)
-  presets.weapon.cass_sniper = based_on(presets.weapon.sniper, {
+  presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
     focus_delay = 10,
     aim_delay = aim_delay,
   })
-  presets.weapon.cass_sniper.is_rifle.FALLOFF = {
+  presets.weapon.sh_sniper.is_rifle.FALLOFF = {
     { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 9 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 7 * dmg_mul, r = 10000, acc = { 0, 0.5 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.cass_sniper_heavy = based_on(presets.weapon.cass_sniper, {
+  presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
     focus_delay = 5,
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
@@ -183,7 +183,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
 
   -- give team ai more reasonable preset values
-  presets.weapon.gang_member = based_on(presets.weapon.cass_base)
+  presets.weapon.gang_member = based_on(presets.weapon.sh_base)
 
   -- setup surrender presets
   local surrender_factors = {
@@ -251,7 +251,7 @@ function CharacterTweakData:_add_weapon(id, unit_name)
 end
 
 
-Hooks:PostHook(CharacterTweakData, "init", "cass_init", function(self)
+Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
   self:_add_weapon("mp7", "units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7")
   self:_add_weapon("amcar", "units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar")
@@ -289,35 +289,35 @@ local function set_weapon_presets(self)
   for _, name in ipairs(self._enemy_list) do
     preset = self[name]
     if preset.access == "gangster" and not name:find("boss") then
-      CASS:log("Using gangster weapon preset for " .. name)
-      preset.weapon = self.presets.weapon.cass_gangster
+      StreamHeist:log("Using gangster weapon preset for " .. name)
+      preset.weapon = self.presets.weapon.sh_gangster
     elseif preset.access == "swat" then
-      CASS:log("Using " .. (heavy_preset_users[name] and "heavy" or "base") .. " weapon preset for " .. name)
-      preset.weapon = heavy_preset_users[name] and self.presets.weapon.cass_heavy or self.presets.weapon.cass_base
+      StreamHeist:log("Using " .. (heavy_preset_users[name] and "heavy" or "base") .. " weapon preset for " .. name)
+      preset.weapon = heavy_preset_users[name] and self.presets.weapon.sh_heavy or self.presets.weapon.sh_base
     end
   end
-  self.tank.weapon = self.presets.weapon.cass_tank
-  self.tank_hw.weapon = self.presets.weapon.cass_tank
-  self.tank_medic.weapon = self.presets.weapon.cass_tank
-  self.tank_mini.weapon = self.presets.weapon.cass_tank
-  self.taser.weapon.is_rifle = deep_clone(self.presets.weapon.cass_base.is_rifle)
+  self.tank.weapon = self.presets.weapon.sh_tank
+  self.tank_hw.weapon = self.presets.weapon.sh_tank
+  self.tank_medic.weapon = self.presets.weapon.sh_tank
+  self.tank_mini.weapon = self.presets.weapon.sh_tank
+  self.taser.weapon.is_rifle = deep_clone(self.presets.weapon.sh_base.is_rifle)
   self.taser.weapon.is_rifle.tase_sphere_cast_radius = 30
   self.taser.weapon.is_rifle.tase_distance = 1500
   self.taser.weapon.is_rifle.aim_delay_tase = { 0, 0 }
-  self.shield.weapon = self.presets.weapon.cass_heavy
-  self.phalanx_minion.weapon = self.presets.weapon.cass_heavy
-  self.phalanx_vip.weapon = self.presets.weapon.cass_heavy
-  self.spooc.weapon = self.presets.weapon.cass_base
-  self.shadow_spooc.weapon = self.presets.weapon.cass_base
-  self.sniper.weapon = self.presets.weapon.cass_sniper
-  self.heavy_swat_sniper.weapon = self.presets.weapon.cass_sniper_heavy
+  self.shield.weapon = self.presets.weapon.sh_heavy
+  self.phalanx_minion.weapon = self.presets.weapon.sh_heavy
+  self.phalanx_vip.weapon = self.presets.weapon.sh_heavy
+  self.spooc.weapon = self.presets.weapon.sh_base
+  self.shadow_spooc.weapon = self.presets.weapon.sh_base
+  self.sniper.weapon = self.presets.weapon.sh_sniper
+  self.heavy_swat_sniper.weapon = self.presets.weapon.sh_sniper_heavy
 end
 
 
-Hooks:PostHook(CharacterTweakData, "_set_normal", "cass__set_normal", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_hard", "cass__set_hard", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill", "cass__set_overkill", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "cass__set_overkill_145", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "cass__set_easy_wish", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "cass__set_overkill_290", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "cass__set_sm_wish", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", set_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", set_weapon_presets)

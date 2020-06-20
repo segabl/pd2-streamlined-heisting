@@ -3,7 +3,7 @@ local forbidden_groups = {
   FBI_spooks = true,
   Phalanx = true
 }
-Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "cass__finalize_values", function(self)
+Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values", function(self)
   if not self._group_data.spawn_type == "random" then
     return
   end
