@@ -166,8 +166,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local dmg_mul = math.lerp(0.6, 1.3, x_norm)
   local recoil_mul = math.lerp(1.3, 0.6, x_norm)
   presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
-    focus_delay = 10,
-    aim_delay = aim_delay,
+    focus_delay = 5,
+    aim_delay = { aim_delay[1] * 2, aim_delay[2] * 2 },
   })
   presets.weapon.sh_sniper.is_rifle.FALLOFF = {
     { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
@@ -175,7 +175,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 7 * dmg_mul, r = 10000, acc = { 0, 0.5 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-    focus_delay = 5,
+    focus_delay = 2.5,
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
       manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
