@@ -4,8 +4,8 @@
     <hooks script_path="mod.lua" hook_id="lib/">
 
         <post :hook_id="managers/mission/elementspawnenemygroup"/>
+        <post :hook_id="managers/dynamicresourcemanager"/>
         <post :hook_id="network/matchmaking/networkmatchmakingsteam"/>
-        <post :hook_id="setups/gamesetup"/>
         <group :hook_id="tweak_data/">
             <post :hook_id="charactertweakdata"/>
             <post :hook_id="groupaitweakdata"/>

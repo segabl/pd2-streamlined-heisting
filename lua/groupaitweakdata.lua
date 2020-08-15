@@ -5,17 +5,18 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
   -- depend on the difficulty, for instance FBI_heavy_G36 will spawn normal M4 heavies on overkill despite the unit category name
 
   if difficulty_index == 8 then
-    --[[
     self.unit_categories.FBI_swat_M4 = deep_clone(self.unit_categories.CS_swat_MP5)
     self.unit_categories.FBI_swat_M4.unit_types.america = {
       Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")
     }
     self.unit_categories.FBI_swat_R870 = self.unit_categories.CS_swat_R870
     self.unit_categories.FBI_swat_R870.unit_types.america = {
-      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
+      --Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
+      Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2") -- placeholder until custom zeals work
     }
     self.unit_categories.CS_swat_MP5.unit_types.america = {
-      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_3/ene_zeal_swat_3")
+      --Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_3/ene_zeal_swat_3")
+      Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3") -- placeholder until custom zeals work
     }
     self.unit_categories.FBI_heavy_G36 = self.unit_categories.CS_heavy_M4
     self.unit_categories.FBI_heavy_R870 = self.unit_categories.CS_heavy_R870
@@ -23,7 +24,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
       Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870")
     }
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
-    ]]
   elseif difficulty_index > 5 then
     self.unit_categories.FBI_swat_R870.unit_types.america = {
       Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")
