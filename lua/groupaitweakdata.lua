@@ -155,116 +155,113 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
-  self._tactics = {
-    Phalanx_minion = {
-      "smoke_grenade",
-      "charge",
-      "provide_coverfire",
-      "provide_support",
-      "shield",
-      "deathguard"
-    },
-    Phalanx_vip = {
-      "smoke_grenade",
-      "charge",
-      "provide_coverfire",
-      "provide_support",
-      "shield",
-      "deathguard"
-    },
-    swat_shotgun_rush = {
-      "charge",
-      "provide_coverfire",
-      "provide_support",
-      "deathguard",
-      "flash_grenade"
-    },
-    swat_shotgun_flank = {
-      "charge",
-      "provide_coverfire",
-      "provide_support",
-      "flank",
-      "deathguard",
-      "flash_grenade"
-    },
-    swat_rifle = {
-      "ranged_fire",
-      "provide_coverfire",
-      "provide_support"
-    },
-    swat_rifle_flank = {
-      "ranged_fire",
-      "provide_coverfire",
-      "provide_support",
-      "flank",
-      "flash_grenade"
-    },
-    shield_wall_ranged = {
-      "shield",
-      "ranged_fire",
-      "provide_support "
-    },
-    shield_support_ranged = {
-      "shield_cover",
-      "ranged_fire",
-      "provide_coverfire"
-    },
-    shield_wall_charge = {
-      "shield",
-      "charge",
-      "provide_support "
-    },
-    shield_support_charge = {
-      "shield_cover",
-      "charge",
-      "provide_coverfire",
-      "flash_grenade"
-    },
-    shield_wall = {
-      "shield",
-      "ranged_fire",
-      "provide_support",
-      "murder",
-      "deathguard"
-    },
-    shield_flank = {
-      "shield",
-      "ranged_fire",
-      "provide_coverfire",
-      "provide_support",
-      "flank"
-    },
-    shield_support_flank = {
-      "shield_cover",
-      "ranged_fire",
-      "provide_coverfire",
-      "provide_support",
-      "flank"
-    },
-    tazer_flanking = {
-      "flank",
-      "charge",
-      "provide_coverfire",
-      "smoke_grenade",
-      "murder"
-    },
-    tazer_charge = {
-      "charge",
-      "provide_coverfire",
-      "murder"
-    },
-    tank_rush = {
-      "charge",
-      "provide_coverfire",
-      "murder"
-    },
-    spooc = {
-      "charge",
-      "shield_cover",
-      "smoke_grenade"
-    }
+  self._tactics.Phalanx_minion = {
+    "smoke_grenade",
+    "charge",
+    "provide_coverfire",
+    "provide_support",
+    "shield",
+    "deathguard"
   }
-  self.enemy_spawn_groups = {}
+  self._tactics.Phalanx_vip = {
+    "smoke_grenade",
+    "charge",
+    "provide_coverfire",
+    "provide_support",
+    "shield",
+    "deathguard"
+  }
+  self._tactics.swat_shotgun_rush = {
+    "charge",
+    "provide_coverfire",
+    "provide_support",
+    "deathguard",
+    "flash_grenade"
+  }
+  self._tactics.swat_shotgun_flank = {
+    "charge",
+    "provide_coverfire",
+    "provide_support",
+    "flank",
+    "deathguard",
+    "flash_grenade"
+  }
+  self._tactics.swat_rifle = {
+    "ranged_fire",
+    "provide_coverfire",
+    "provide_support"
+  }
+  self._tactics.swat_rifle_flank = {
+    "ranged_fire",
+    "provide_coverfire",
+    "provide_support",
+    "flank",
+    "flash_grenade"
+  }
+  self._tactics.shield_wall_ranged = {
+    "shield",
+    "ranged_fire",
+    "provide_support "
+  }
+  self._tactics.shield_support_ranged = {
+    "shield_cover",
+    "ranged_fire",
+    "provide_coverfire"
+  }
+  self._tactics.shield_wall_charge = {
+    "shield",
+    "charge",
+    "provide_support "
+  }
+  self._tactics.shield_support_charge = {
+    "shield_cover",
+    "charge",
+    "provide_coverfire",
+    "flash_grenade"
+  }
+  self._tactics.shield_wall = {
+    "shield",
+    "ranged_fire",
+    "provide_support",
+    "murder",
+    "deathguard"
+  }
+  self._tactics.shield_flank = {
+    "shield",
+    "ranged_fire",
+    "provide_coverfire",
+    "provide_support",
+    "flank"
+  }
+  self._tactics.shield_support_flank = {
+    "shield_cover",
+    "ranged_fire",
+    "provide_coverfire",
+    "provide_support",
+    "flank"
+  }
+  self._tactics.tazer_flanking = {
+    "flank",
+    "charge",
+    "provide_coverfire",
+    "smoke_grenade",
+    "murder"
+  }
+  self._tactics.tazer_charge = {
+    "charge",
+    "provide_coverfire",
+    "murder"
+  }
+  self._tactics.tank_rush = {
+    "charge",
+    "provide_coverfire",
+    "murder"
+  }
+  self._tactics.spooc = {
+    "charge",
+    "shield_cover",
+    "smoke_grenade"
+  }
 
   self.enemy_spawn_groups.tac_swat_shotgun_rush = {
     amount = { 2, 4 },
