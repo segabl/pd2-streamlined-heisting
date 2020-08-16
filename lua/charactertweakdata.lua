@@ -110,7 +110,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   presets.weapon.sh_base.is_lmg.FALLOFF = {
     { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0, 0.35 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0, 0.1 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
 
   -- heavy preset (deal less damage in exchange for being bulkier)
@@ -183,7 +183,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
 
   -- give team ai more reasonable preset values
-  presets.weapon.gang_member = based_on(presets.weapon.sh_base)
+  presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
+    FALLOFF = function (falloff)
+      manipulate_entries(falloff, "dmg_mul", function (val) return (val / falloff[1].dmg_mul) * x * 0.5 end)
+    end
+  })
 
   -- setup surrender presets
   local surrender_factors = {
