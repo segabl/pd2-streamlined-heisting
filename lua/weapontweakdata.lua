@@ -30,7 +30,6 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self)
   self.mp7_npc = based_on(self.mp5_npc, self.mp7_crew)
   self.amcar_npc = based_on(self.m4_npc, self.amcar_crew)
   self.g36_npc = based_on(self.m4_npc, self.g36_crew)
-  self.aug_npc = based_on(self.m4_npc, self.aug_crew)
 
   self._orig_npc_dmg = {}
   for k, v in pairs(self) do
