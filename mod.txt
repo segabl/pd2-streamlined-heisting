@@ -1,6 +1,6 @@
 {
   "name" : "Streamlined Heisting",
-  "description" : "CopActionShoot Streamline, interpolates damage data, simplifies accuracy calculation, reworks cop fire mode system and improves cop factions",
+  "description" : "Normalizes damage values, interpolates falloff, improves cop factions and more!",
   "author" : "Hoppip",
   "priority" : 401,
   "blt_version" : 2,
