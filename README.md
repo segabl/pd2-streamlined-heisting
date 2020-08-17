@@ -9,8 +9,9 @@ Streamlined Heisting is a full streamlining mod that makes a lot of the game's e
 - Gives cops linear damage falloff between their entries in the ``FALLOFF`` table instead of sudden drops after a distance threshold is reached
 - Removes weapon spread from NPC accuracy calculation as it didn't really affect players anyways and just made NPC vs NPC situations very inconsistent
 - Fixes accuracy values being ignored for single fire weapons in NPC vs NPC situations
-- Removes (ignores, to be more accurate) the clunky fire mode system which defines how cops shoot their guns and interpolates ``autofire_rounds`` based on distance instead
-- Properly implements ``aim_delay`` and ``focus_delay`` handling, the vanilla code barely worked (and only for players)
+- Simplifies the clunky fire mode system which defines how cops shoot their guns and interpolates ``autofire_rounds`` based on distance instead (enemies will utilize full auto more)
+- Properly implements and makes use of ``aim_delay``, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
+- Fixes barely working ``focus_delay`` code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
 
 ### Standardizes difficulty weapon presets
 
@@ -18,12 +19,13 @@ Streamlined Heisting is a full streamlining mod that makes a lot of the game's e
 - Uses only one base preset which scales damage multipliers, accuracy, melee damage, focus delay and aim delay based on difficulty
 - Make use of aim and focus delays (which was set to 0 for all presets in vanilla) which affects how long cops take to shoot at you and reach their full accuracy when you enter their line of sight
 - Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
+- Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as an Car-4, the damage increase comes from higher difficulty, not the weapon)
 
 ### Overhauls spawn groups
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
 - Restores original spawn groups that were disabled by Overkill, adding back shotgunners, flanking squads, Taser rush spawn groups and hostage rescue units
-- Adds a chance for SMG units to spawn with Tasers or to occasionally spawn in rifle flanking groups
+- Adds a chance for heavier hitting SMG wielding enemies to spawn with Tasers
 - Tweaks spawn groups and makes them more interesting adding the occasional medic to bulldozer spawns (chance dependent on difficulty) and more
 
 ### Standardizes cop factions
@@ -35,8 +37,10 @@ Streamlined Heisting is a full streamlining mod that makes a lot of the game's e
 - Replaces the lazy recolors for Mexican police with slightly less lazy recolors and less seen cop models
 
 ### Improves the difficulty curve
+
 - Adds proper difficulty scaling such that every difficulty feels different from the previous one instead of either barely a change or an extreme change
-- Gives custom min damage intervals (I-frames) to players scaling with difficulty (the default one of .45 on Overkill scaling down to the min .35 on DS)
+- Gives custom grace period times (I-frames) to players scaling with difficulty (every difficulty has its own grace period time, down to 0.2s on DS)
+- Reduces the amount of cops on DS to normal levels, the added missing shotgunners and SMG units as well as lower grace period time will keep DS difficult
 
 ## Other things it does
 
