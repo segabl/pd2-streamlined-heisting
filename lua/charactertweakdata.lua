@@ -47,7 +47,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
   -- setup weapon presets
   local dmg_mul_tbl = { 0.1, 0.2, 0.4, 0.7, 1, 2, 4, 7 }
-  local acc_mul_tbl = { 0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.05, 1.1 }
+  local acc_mul_tbl = { 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1.0 }
   local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
   local aim_delay_tbl = { 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05 }
   local melee_dmg_tbl = { 1, 2, 4, 7, 10, 13, 16, 20 }
@@ -259,7 +259,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
   self:_add_weapon("mp7", "units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7")
   self:_add_weapon("amcar", "units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar")
-  self:_add_weapon("aug", "units/payday2/weapons/wpn_npc_aug/wpn_npc_aug")
 
   -- set hurt severities for heavies
   self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
