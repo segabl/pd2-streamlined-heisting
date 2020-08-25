@@ -10,6 +10,7 @@
             <post :hook_id="charactertweakdata"/>
             <post :hook_id="groupaitweakdata"/>
             <post :hook_id="playertweakdata"/>
+            <post :hook_id="upgradestweakdata"/>
             <post :hook_id="weapontweakdata"/>
         </group>
         <post :hook_id="units/beings/player/playerdamage"/>
