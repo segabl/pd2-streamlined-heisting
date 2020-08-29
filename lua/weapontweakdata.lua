@@ -22,6 +22,7 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self)
   self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
   --self.ump_npc.sounds.prefix = self.schakal_crew.sounds.prefix
   self.benelli_npc.sounds.prefix = self.ben_crew.sounds.prefix
+  self.ak47_ass_npc.sounds.prefix = self.ak47_crew.sounds.prefix
   self.sr2_smg_npc.sounds.prefix = self.sr2_crew.sounds.prefix
   self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
 
