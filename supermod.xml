@@ -161,6 +161,8 @@
 
         <!-- new federal police -->
         <group name="units/pd2_dlc_bex/characters/" dyn_package="false">
+            <file :name="shared_textures/ene_acc_shield_lights_df.texture"/>
+
             <!-- base for material config and textures -->
             <file :name="ene_swat_policia_federale/ene_swat_policia_federale_body_df.texture"/>
             <file :name="ene_swat_policia_federale/ene_swat_policia_federale_heads_df.texture"/>
@@ -195,6 +197,12 @@
             <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870.object"/>
             <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870.unit"/>
             <file :name="ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870_husk.unit"/>
+
+            <!-- add improved shield -->
+            <file :name="ene_acc_shield_lights/ene_acc_shield_lights.material_config"/>
+            <file :name="ene_acc_shield_lights/ene_acc_shield_lights.model"/>
+            <file :name="ene_acc_shield_lights/ene_acc_shield_lights.object"/>
+            <file :name="ene_acc_shield_lights/ene_acc_shield_lights.sequence_manager"/>
 
             <!-- c45 shield -->
             <file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45.unit"/>
