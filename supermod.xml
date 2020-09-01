@@ -76,17 +76,13 @@
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit"/>
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
 
-            <!-- make original swat use modified mp5 -->
-            <file :name="ene_swat_1/ene_swat_1.unit"/>
-            <file :name="ene_swat_1/ene_swat_1_husk.unit"/>
-
             <!-- give swat shotgunner badges and shell strap -->
             <file :name="ene_swat_2/ene_swat_2.model"/>
 
             <!-- make shield use unique model -->
             <file :name="ene_shield_2/ene_shield_2.model"/>
 
-            <!-- make heavy swat rifleman use modified mp5 and give body plate -->
+            <!-- make heavy swat rifleman use mp5 and give body plate -->
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.model"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.object"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.unit"/>
