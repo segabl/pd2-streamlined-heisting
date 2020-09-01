@@ -81,6 +81,8 @@
 
             <!-- make shield use unique model -->
             <file :name="ene_shield_2/ene_shield_2.model"/>
+            <file :name="ene_shield_2/ene_shield_2.unit"/>
+            <file :name="ene_shield_2/ene_shield_2_husk.unit"/>
 
             <!-- make heavy swat rifleman use mp5 and give body plate -->
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.model"/>
