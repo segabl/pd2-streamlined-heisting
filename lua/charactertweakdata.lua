@@ -93,7 +93,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   presets.weapon.sh_base.is_bullpup = deep_clone(presets.weapon.sh_base.is_rifle)
   presets.weapon.sh_base.is_smg.autofire_rounds = { 4, 16 }
   presets.weapon.sh_base.is_smg.FALLOFF = {
-    { dmg_mul = 4.5 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0, 0.1 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_base.is_smg.range = { optimal = 1500, far = 4000, close = 750 }
@@ -125,7 +125,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
 
   -- bulldozer preset
-  local dmg_mul = math.lerp(0.6, 1.3, x_norm)
+  dmg_mul = math.lerp(0.6, 1.3, x_norm)
   presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
     melee_dmg = 25
   })
@@ -160,19 +160,19 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
 
   -- sniper presets
-  local dmg_mul = math.lerp(0.6, 1.3, x_norm)
-  local recoil_mul = math.lerp(1.3, 0.6, x_norm)
+  dmg_mul = math.lerp(0.6, 1.3, x_norm)
   presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
-    focus_delay = 5,
-    aim_delay = { aim_delay[1] * 2, aim_delay[2] * 2 },
+    focus_delay = focus_delay_tbl[x] * 4,
+    aim_delay = { 0, aim_delay_tbl[x] * 2 },
   })
   presets.weapon.sh_sniper.is_rifle.FALLOFF = {
-    { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 9 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 7 * dmg_mul, r = 10000, acc = { 0, 0.5 * acc_mul }, recoil = { 3 * recoil_mul, 5 * recoil_mul }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 9 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 7 * dmg_mul, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-    focus_delay = 2.5,
+    focus_delay = focus_delay_tbl[x] * 2,
+    aim_delay = { 0, aim_delay_tbl[x] },
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
       manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
