@@ -25,12 +25,10 @@ Streamlined Heisting is a full streamlining mod that makes a lot of the game's e
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
 - Restores original spawn groups that were disabled by Overkill, adding back shotgunners, flanking squads, Taser rush spawn groups and hostage rescue units
-- Adds a chance for heavier hitting SMG wielding enemies to spawn with Tasers
 - Tweaks spawn groups and makes them more interesting adding the occasional medic to bulldozer spawns (chance dependent on difficulty) and more
 
 ### Standardizes cop factions
 
-- Adds missing units to every faction, based on the units present in the GenSec faction (consisting of a Rifle, Shotgun and SMG unit)
 - Adds different weapons for different factions, similar how GenSec uses different weapons
 - Adds armor plates to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
 - Gives heavy shotgunners the helmet treatment of the light shotgunners to make them more distinct from their rifle counterparts
@@ -44,6 +42,5 @@ Streamlined Heisting is a full streamlining mod that makes a lot of the game's e
 
 ## Other things it does
 
-- Makes shield units use the SMG unit model
 - Removes all but light, fire and poison hurt animations from heavy SWAT but scales their damage lower than their light counterparts
 - Improves the surrender presets, different enemies have different chances to surrender

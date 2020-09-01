@@ -30,22 +30,6 @@
             <file :name="wpn_npc_spas12/wpn_npc_spas12.model"/>
             <file :name="wpn_npc_spas12/wpn_npc_spas12.object"/>
             <file :name="wpn_npc_spas12/wpn_npc_spas12.unit"/>
-            <!-- mp7 -->
-            <file :name="wpn_npc_mp7/mp7_df.texture"/>
-            <file :name="wpn_npc_mp7/mp7_nm.texture"/>
-            <file :name="wpn_npc_mp7/wpn_npc_mp7.cooked_physics"/>
-            <file :name="wpn_npc_mp7/wpn_npc_mp7.material_config"/>
-            <file :name="wpn_npc_mp7/wpn_npc_mp7.model"/>
-            <file :name="wpn_npc_mp7/wpn_npc_mp7.object"/>
-            <file :name="wpn_npc_mp7/wpn_npc_mp7.unit"/>
-            <!-- amcar -->
-            <file :name="wpn_npc_amcar/amcar_df.texture"/>
-            <file :name="wpn_npc_amcar/amcar_nm.texture"/>
-            <file :name="wpn_npc_amcar/wpn_npc_amcar.cooked_physics"/>
-            <file :name="wpn_npc_amcar/wpn_npc_amcar.material_config"/>
-            <file :name="wpn_npc_amcar/wpn_npc_amcar.model"/>
-            <file :name="wpn_npc_amcar/wpn_npc_amcar.object"/>
-            <file :name="wpn_npc_amcar/wpn_npc_amcar.unit"/>
         </group>
 
         <!-- new (and old) characters -->
@@ -78,10 +62,6 @@
             <!-- make fbi shield use unique model -->
             <file :name="ene_shield_1/ene_shield_1.model"/>
 
-            <!-- add fbi swat submachine gunner -->
-            <file :name="ene_fbi_swat_3/ene_fbi_swat_3.unit"/>
-            <file :name="ene_fbi_swat_3/ene_fbi_swat_3_husk.unit"/>
-
             <!-- make fbi shotgunner use spas12 -->
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
             <file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
@@ -96,7 +76,7 @@
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit"/>
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
 
-            <!-- make original swat use amcar -->
+            <!-- make original swat use modified mp5 -->
             <file :name="ene_swat_1/ene_swat_1.unit"/>
             <file :name="ene_swat_1/ene_swat_1_husk.unit"/>
 
@@ -106,11 +86,7 @@
             <!-- make shield use unique model -->
             <file :name="ene_shield_2/ene_shield_2.model"/>
 
-            <!-- add new swat submachine gunner -->
-            <file :name="ene_swat_3/ene_swat_3.unit"/>
-            <file :name="ene_swat_3/ene_swat_3_husk.unit"/>
-
-            <!-- make heavy swat rifleman use amcar and give body plate -->
+            <!-- make heavy swat rifleman use modified mp5 and give body plate -->
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.model"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.object"/>
             <file :name="ene_swat_heavy_1/ene_swat_heavy_1.unit"/>
@@ -126,12 +102,6 @@
 
         <!-- new (and old) murkies -->
         <group name="units/pd2_dlc_bph/characters/" dyn_package="false">
-            <!-- use normal light as smg unit -->
-            <file :name="ene_murkywater_light/ene_murkywater_light.model"/>
-            <file :name="ene_murkywater_light/ene_murkywater_light.object"/>
-            <file :name="ene_murkywater_light/ene_murkywater_light.unit"/>
-            <file :name="ene_murkywater_light/ene_murkywater_light_husk.unit"/>
-
             <!-- make light fbi use scar -->
             <file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi.unit"/>
             <file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi_husk.unit"/>
@@ -180,10 +150,6 @@
             <!-- make shield use unique model -->
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
 
-            <!-- add new zeal submachine gunner -->
-            <file :name="ene_zeal_swat_3/ene_zeal_swat_3.unit"/>
-            <file :name="ene_zeal_swat_3/ene_zeal_swat_3_husk.unit"/>
-
             <!-- make heavy zeal use WEAPON -->
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.model"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.unit"/>
@@ -199,7 +165,7 @@
 
         <!-- new federal police -->
         <group name="units/pd2_dlc_bex/characters/" dyn_package="false">
-            <!-- smg light (base for material config and textures) -->
+            <!-- base for material config and textures -->
             <file :name="ene_swat_policia_federale/ene_swat_policia_federale_body_df.texture"/>
             <file :name="ene_swat_policia_federale/ene_swat_policia_federale_heads_df.texture"/>
             <file :name="ene_swat_policia_federale/ene_swat_policia_federale_helmets_df.texture"/>

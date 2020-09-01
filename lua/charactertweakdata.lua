@@ -32,10 +32,7 @@ function CharacterTweakData:character_map(...)
   local char_map = character_map_original(self, ...)
   table.insert(char_map.basic.list, "ene_swat_heavy_r870")
   table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
-  table.insert(char_map.basic.list, "ene_swat_3")
-  table.insert(char_map.basic.list, "ene_fbi_swat_3")
   table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
-  table.insert(char_map.gitgud.list, "ene_zeal_swat_3")
   table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_r870")
   return char_map
 end
@@ -64,16 +61,16 @@ function CharacterTweakData:_presets(tweak_data, ...)
     melee_dmg = melee_dmg_tbl[x]
   })
   presets.weapon.sh_base.is_pistol.FALLOFF = {
-    { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.4, 1 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 4.5 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 2.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.4, 1 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_base.akimbo_pistol.FALLOFF = {
     { dmg_mul = 6 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.05, 0.1 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3 * dmg_mul, r = 3000, acc = { 0, 0.3 * acc_mul }, recoil = { 0.2, 0.6 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_base.is_revolver.FALLOFF = {
-    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
+    { dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_base.is_sniper = deep_clone(presets.weapon.sh_base.is_revolver)
   presets.weapon.sh_base.is_sniper.FALLOFF = {
@@ -120,8 +117,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
     end
   })
 
-  -- gangster preset (deal more damage)
-  presets.weapon.sh_gangster = based_on(presets.weapon.sh_base, {
+  -- stronger preset (for gangsters and basic cops)
+  presets.weapon.sh_strong = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.5 end)
     end
@@ -257,8 +254,6 @@ end
 
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
-  self:_add_weapon("mp7", "units/payday2/weapons/wpn_npc_mp7/wpn_npc_mp7")
-  self:_add_weapon("amcar", "units/payday2/weapons/wpn_npc_amcar/wpn_npc_amcar")
 
   -- set hurt severities for heavies
   self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
@@ -287,13 +282,19 @@ local heavy_preset_users = {
   fbi_heavy_swat = true,
   medic = true
 }
+local strong_preset_access = {
+  gangster = true,
+  cop = true,
+  security = true,
+  fbi = true
+}
 local function set_weapon_presets(self)
   local preset
   for _, name in ipairs(self._enemy_list) do
     preset = self[name]
-    if preset.access == "gangster" and not name:find("boss") then
-      StreamHeist:log("Using gangster weapon preset for " .. name)
-      preset.weapon = self.presets.weapon.sh_gangster
+    if strong_preset_access[preset.access] and not name:find("boss") then
+      StreamHeist:log("Using strong weapon preset for " .. name)
+      preset.weapon = self.presets.weapon.sh_strong
     elseif preset.access == "swat" then
       StreamHeist:log("Using " .. (heavy_preset_users[name] and "heavy" or "base") .. " weapon preset for " .. name)
       preset.weapon = heavy_preset_users[name] and self.presets.weapon.sh_heavy or self.presets.weapon.sh_base

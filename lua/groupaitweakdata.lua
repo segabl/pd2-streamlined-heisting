@@ -14,10 +14,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
       --Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
       Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2") -- placeholder until custom zeals work
     }
-    self.unit_categories.CS_swat_MP5.unit_types.america = {
-      --Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_3/ene_zeal_swat_3")
-      Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3") -- placeholder until custom zeals work
-    }
     self.unit_categories.FBI_heavy_G36 = self.unit_categories.CS_heavy_M4
     self.unit_categories.FBI_heavy_R870 = self.unit_categories.CS_heavy_R870
     self.unit_categories.FBI_heavy_R870.unit_types.america = {
@@ -28,21 +24,11 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
     self.unit_categories.FBI_swat_R870.unit_types.america = {
       Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")
     }
-    self.unit_categories.CS_swat_MP5.unit_types.america = {
-      Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3")
-    }
-  elseif difficulty_index > 3 then
-    self.unit_categories.CS_swat_MP5.unit_types.america = {
-      Idstring("units/payday2/characters/ene_fbi_swat_3/ene_fbi_swat_3")
-    }
-  else
+  elseif difficulty_index <= 3 then
     self.unit_categories.FBI_swat_R870 = self.unit_categories.CS_swat_R870
     self.unit_categories.FBI_swat_M4 = deep_clone(self.unit_categories.CS_swat_MP5)
     self.unit_categories.FBI_swat_M4.unit_types.america = {
       Idstring("units/payday2/characters/ene_swat_1/ene_swat_1")
-    }
-    self.unit_categories.CS_swat_MP5.unit_types.america = {
-      Idstring("units/payday2/characters/ene_swat_3/ene_swat_3")
     }
     self.unit_categories.FBI_heavy_G36 = self.unit_categories.CS_heavy_M4
     self.unit_categories.FBI_heavy_R870 = self.unit_categories.CS_heavy_R870
@@ -50,9 +36,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
   end
 
   -- Use the same murky units on all difficulties since their models don't differ
-  self.unit_categories.CS_swat_MP5.unit_types.murkywater = {
-    Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
-  }
   self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870")
   }
@@ -72,9 +55,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
   }
 
   -- Use the same federal police units on all difficulties since their models don't differ
-  self.unit_categories.CS_swat_MP5.unit_types.federales = {
-    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")
-  }
   self.unit_categories.FBI_swat_R870.unit_types.federales = {
     Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870")
   }
@@ -503,7 +483,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
         freq = 1,
         amount_max = 3,
         rank = 2,
-        unit = "CS_swat_MP5",
+        unit = "FBI_swat_M4",
         tactics = self._tactics.tazer_flanking
       }
     }
@@ -525,7 +505,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
         freq = 1,
         amount_max = 2,
         rank = 2,
-        unit = "CS_swat_MP5",
+        unit = "FBI_swat_R870",
         tactics = self._tactics.tazer_charge
       }
     }

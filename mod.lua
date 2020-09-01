@@ -15,6 +15,7 @@ if not StreamHeist then
     for _, v in pairs(params) do
       str = str .. tostring(v) .. " "
     end
+    print("[StreamlinedHeisting] " .. str)
     log("[StreamlinedHeisting] " .. str)
   end
 
