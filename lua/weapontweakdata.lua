@@ -1,4 +1,4 @@
--- copies weapon data and sets some values from a crew weapon version
+-- Copies weapon data and sets some values from a crew weapon version
 local function based_on(weap, crew_weap)
   local w = deep_clone(weap)
   w.sounds.prefix = crew_weap.sounds.prefix
@@ -26,10 +26,12 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self)
   self.sr2_smg_npc.sounds.prefix = self.sr2_crew.sounds.prefix
   self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
 
+  -- Make weapons of the same type have the same stats (damage increase is handled by weapon presets)
+  -- This ensures consistent damage scaling independent of the weapon use of different factions
   self.scar_npc = based_on(self.m4_npc, self.scar_crew)
-  self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
   self.mp5_npc = based_on(self.m4_npc, self.mp5_crew)
   self.g36_npc = based_on(self.m4_npc, self.g36_crew)
+  self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
 
   self._orig_npc_dmg = {}
   for k, v in pairs(self) do
@@ -47,6 +49,8 @@ local function restore_npc_weapon_dmg(self)
 end
 
 
+-- Since Overkill decided to mess with weapon stats based on difficulty instead of adjusting the presets
+-- we have to restore the weapon damage values after they have been modified by those functions
 Hooks:PostHook(WeaponTweakData, "_set_normal", "sh__set_normal", restore_npc_weapon_dmg)
 Hooks:PostHook(WeaponTweakData, "_set_hard", "sh__set_hard", restore_npc_weapon_dmg)
 Hooks:PostHook(WeaponTweakData, "_set_overkill", "sh__set_overkill", restore_npc_weapon_dmg)

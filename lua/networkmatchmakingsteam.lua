@@ -1,1 +1,1 @@
-NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "sh-1.0"
+NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "sh-1.1"

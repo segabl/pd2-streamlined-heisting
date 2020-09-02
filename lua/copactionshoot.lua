@@ -54,6 +54,7 @@ function CopActionShoot:get_client_delay()
 end
 
 
+-- Thanks to the messy implementation of this function, we have to replace it completely, no hook can save us here
 function CopActionShoot:update(t)
   local vis_state = self._ext_base:lod_stage() or 4
   if vis_state ~= 1 then
@@ -320,6 +321,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 end
 
 
+-- Interpolate between entries in the FALLOFF table to prevent sudden changes in damage etc
 function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
   local i = #falloff
   local data = falloff[i]

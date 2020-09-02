@@ -1,4 +1,4 @@
--- clones a weapon preset and optionally sets values for all weapons contained in that preset
+-- Clones a weapon preset and optionally sets values for all weapons contained in that preset
 -- if the value is a function, it calls the function with the data of the value name instead
 local function based_on(preset, values)
   local p = deep_clone(preset)
@@ -42,23 +42,23 @@ local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(tweak_data, ...)
   local presets = _presets_original(self, tweak_data, ...)
 
-  -- setup weapon presets
+  -- Difficulty specific values (from easy to death sentence)
   local dmg_mul_tbl = { 0.1, 0.2, 0.4, 0.7, 1, 2, 4, 7 }
   local acc_mul_tbl = { 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1.0 }
   local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
   local aim_delay_tbl = { 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05 }
   local melee_dmg_tbl = { 1, 2, 4, 7, 10, 13, 16, 20 }
 
-  local x = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-  local x_norm = (x - 1) / 7
-  local aim_delay = { 0, aim_delay_tbl[x] }
-  local dmg_mul = dmg_mul_tbl[x]
-  local acc_mul = acc_mul_tbl[x]
+  local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+  local diff_i_norm = (diff_i - 1) / 7
+  local dmg_mul = dmg_mul_tbl[diff_i]
+  local acc_mul = acc_mul_tbl[diff_i]
 
+  -- Setup weapon presets
   presets.weapon.sh_base = based_on(presets.weapon.expert, {
-    focus_delay = focus_delay_tbl[x],
-    aim_delay = aim_delay,
-    melee_dmg = melee_dmg_tbl[x]
+    focus_delay = focus_delay_tbl[diff_i],
+    aim_delay = { 0, aim_delay_tbl[diff_i] },
+    melee_dmg = melee_dmg_tbl[diff_i]
   })
   presets.weapon.sh_base.is_pistol.FALLOFF = {
     { dmg_mul = 4.5 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
@@ -110,22 +110,22 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0, 0.1 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
 
-  -- heavy preset (deal less damage in exchange for being bulkier)
+  -- Heavy preset (deal less damage in exchange for being bulkier)
   presets.weapon.sh_heavy = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.8 end)
     end
   })
 
-  -- stronger preset (for gangsters and basic cops)
+  -- Stronger preset (for gangsters and basic cops)
   presets.weapon.sh_strong = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.5 end)
     end
   })
 
-  -- bulldozer preset
-  dmg_mul = math.lerp(0.6, 1.3, x_norm)
+  -- Bulldozer preset
+  dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
   presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
     melee_dmg = 25
   })
@@ -159,11 +159,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.01 * acc_mul, 0.025 * acc_mul }, recoil = { 0.5, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 40, 100 } }
   }
 
-  -- sniper presets
-  dmg_mul = math.lerp(0.6, 1.3, x_norm)
+  -- Sniper presets
+  dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
   presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
-    focus_delay = focus_delay_tbl[x] * 4,
-    aim_delay = { 0, aim_delay_tbl[x] * 2 },
+    focus_delay = focus_delay_tbl[diff_i] * 4,
+    aim_delay = { 0, aim_delay_tbl[diff_i] * 2 },
   })
   presets.weapon.sh_sniper.is_rifle.FALLOFF = {
     { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
@@ -171,22 +171,22 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 7 * dmg_mul, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-    focus_delay = focus_delay_tbl[x] * 2,
-    aim_delay = { 0, aim_delay_tbl[x] },
+    focus_delay = focus_delay_tbl[diff_i] * 2,
+    aim_delay = { 0, aim_delay_tbl[diff_i] },
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
       manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
     end
   })
 
-  -- give team ai more reasonable preset values
+  -- Give team ai more reasonable preset values
   presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
-      manipulate_entries(falloff, "dmg_mul", function (val) return (val / falloff[1].dmg_mul) * x * 0.5 end)
+      manipulate_entries(falloff, "dmg_mul", function (val) return (val / falloff[1].dmg_mul) * diff_i * 0.5 end)
     end
   })
 
-  -- setup surrender presets
+  -- Setup surrender presets
   local surrender_factors = {
     unaware_of_aggressor = 0.1,
     enemy_weap_cold = 0.1,
@@ -255,12 +255,12 @@ end
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
 
-  -- set hurt severities for heavies
+  -- Set hurt severities for heavies
   self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
   self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
   self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
 
-  -- set surrender chances (default is easy)
+  -- Set custom surrender chances (default is "easy", like vanilla)
   self.swat.surrender = self.presets.surrender.normal
   self.heavy_swat.surrender = self.presets.surrender.hard
   self.fbi_swat.surrender = self.presets.surrender.normal
@@ -268,7 +268,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
   self.city_swat.surrender = self.presets.surrender.normal
   self.heavy_swat_sniper.surrender = self.presets.surrender.hard
 
-  -- restore special entrance announcements
+  -- Restore special entrance announcements
   self.tank.spawn_sound_event = self.tank.speech_prefix_p1 .. "_entrance"
   self.tank_hw.spawn_sound_event = self.tank_hw.speech_prefix_p1 .. "_entrance"
   self.tank_medic.spawn_sound_event = self.tank_medic.speech_prefix_p1 .. "_entrance"
@@ -317,7 +317,8 @@ local function set_weapon_presets(self)
   self.heavy_swat_sniper.weapon = self.presets.weapon.sh_sniper_heavy
 end
 
-
+-- Weapon presets are assigned to the enemies here because the vanilla difficulty functions mess with the
+-- existing presets so we can only assign the correct presets AFTER the vanilla presets have been changed
 Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", set_weapon_presets)
 Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", set_weapon_presets)
 Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", set_weapon_presets)
