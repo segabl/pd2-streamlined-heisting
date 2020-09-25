@@ -108,6 +108,10 @@
             <file :name="ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870.unit"/>
             <file :name="ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870_husk.unit"/>
 
+            <!-- make shield use light model -->
+            <file :name="ene_murkywater_shield/ene_murkywater_shield.unit"/>
+            <file :name="ene_murkywater_shield/ene_murkywater_shield_husk.unit"/>
+
             <!-- make heavy use scar -->
             <file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
             <file :name="ene_murkywater_heavy/ene_murkywater_heavy_husk.unit"/>
