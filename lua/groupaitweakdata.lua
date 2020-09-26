@@ -11,13 +11,12 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
     }
     self.unit_categories.FBI_swat_R870 = self.unit_categories.CS_swat_R870
     self.unit_categories.FBI_swat_R870.unit_types.america = {
-      --Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
-      Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2") -- placeholder until custom zeals work
+      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
     }
     self.unit_categories.FBI_heavy_G36 = self.unit_categories.CS_heavy_M4
     self.unit_categories.FBI_heavy_R870 = self.unit_categories.CS_heavy_R870
     self.unit_categories.FBI_heavy_R870.unit_types.america = {
-      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_r870/ene_zeal_swat_heavy_r870")
+      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_2/ene_zeal_swat_heavy_2")
     }
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
   elseif difficulty_index > 5 then

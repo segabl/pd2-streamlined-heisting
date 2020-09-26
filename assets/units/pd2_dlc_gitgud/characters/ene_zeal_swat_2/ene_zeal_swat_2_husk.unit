@@ -4,7 +4,6 @@
   <object file="units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2" />
 
   <dependencies>
-    <depends_on unit="units/pd2_dlc_gitgud/characters/ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet" />
   </dependencies>
 
   <extensions>
