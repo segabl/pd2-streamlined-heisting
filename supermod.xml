@@ -30,6 +30,15 @@
             <file :name="wpn_npc_spas12/wpn_npc_spas12.model"/>
             <file :name="wpn_npc_spas12/wpn_npc_spas12.object"/>
             <file :name="wpn_npc_spas12/wpn_npc_spas12.unit"/>
+
+            <!-- ksg -->
+            <file :name="wpn_npc_ksg/ksg_df.texture"/>
+            <file :name="wpn_npc_ksg/ksg_nm.texture"/>
+            <file :name="wpn_npc_ksg/wpn_npc_ksg.cooked_physics"/>
+            <file :name="wpn_npc_ksg/wpn_npc_ksg.material_config"/>
+            <file :name="wpn_npc_ksg/wpn_npc_ksg.model"/>
+            <file :name="wpn_npc_ksg/wpn_npc_ksg.object"/>
+            <file :name="wpn_npc_ksg/wpn_npc_ksg.unit"/>
         </group>
 
         <!-- new (and old) characters -->

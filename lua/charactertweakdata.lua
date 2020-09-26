@@ -33,7 +33,7 @@ function CharacterTweakData:character_map(...)
   table.insert(char_map.basic.list, "ene_swat_heavy_r870")
   table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
   table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
-  table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_r870")
+  table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
   return char_map
 end
 
@@ -254,6 +254,7 @@ end
 
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
+  self:_add_weapon("ksg", "units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg")
 
   -- Set hurt severities for heavies
   self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
