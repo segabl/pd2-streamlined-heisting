@@ -9,9 +9,10 @@ Hooks:PostHook(DynamicResourceManager, "preload_units", "sh_preload_units", func
   if PackageManager:loaded("packages/sm_wish") then
     StreamHeist:log("Zeal package loaded, loading custom Zeal units...")
 
-    -- for some fucking reason these crash the game
     load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
     load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_2/ene_zeal_swat_heavy_2")
+    load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_medic_m4/ene_zeal_medic_m4")
+    load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_medic_r870/ene_zeal_medic_r870")
   end
 
 end)

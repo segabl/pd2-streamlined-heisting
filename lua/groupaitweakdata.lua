@@ -19,6 +19,12 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
       Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_2/ene_zeal_swat_heavy_2")
     }
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
+    self.unit_categories.medic_M4.unit_types.america = {
+      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_medic_m4/ene_zeal_medic_m4")
+    }
+    self.unit_categories.medic_R870.unit_types.america = {
+      Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_medic_r870/ene_zeal_medic_r870")
+    }
   elseif difficulty_index > 5 then
     self.unit_categories.FBI_swat_R870.unit_types.america = {
       Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")
@@ -701,7 +707,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
     hostage_rescue_shield = { 1, 1, 1 }
   }
 
-  self.besiege.assault.force = { 14, 16, 18 }
+  self.besiege.assault.force = { 10, 14, 18 }
   self.besiege.assault.force_pool = { 150, 175, 225 }
   self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
   self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }

@@ -19,6 +19,12 @@ if not StreamHeist then
     log("[StreamlinedHeisting] " .. str)
   end
 
+  Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
+
+    HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
+
+  end)
+
 end
 
 if RequiredScript then

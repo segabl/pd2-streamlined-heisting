@@ -34,6 +34,8 @@ function CharacterTweakData:character_map(...)
   table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
   table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
   table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
+  table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
+  table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
   return char_map
 end
 
@@ -91,11 +93,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1.5, 2.5 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_base.is_bullpup = deep_clone(presets.weapon.sh_base.is_rifle)
-  presets.weapon.sh_base.is_smg.autofire_rounds = { 4, 16 }
-  presets.weapon.sh_base.is_smg.FALLOFF = {
-    { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
-    { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0, 0.1 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
-  }
+  presets.weapon.sh_base.is_smg = deep_clone(presets.weapon.sh_base.is_rifle)
+  presets.weapon.sh_base.is_smg.autofire_rounds = { 4, 13 }
   presets.weapon.sh_base.is_smg.range = { optimal = 1500, far = 4000, close = 750 }
   presets.weapon.sh_base.mini.autofire_rounds = { 50, 200 }
   presets.weapon.sh_base.mini.FALLOFF = {
@@ -103,7 +102,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0, 0.35 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.sh_base.is_lmg.autofire_rounds = { 10, 40 }
+  presets.weapon.sh_base.is_lmg.autofire_rounds = { 20, 50 }
   presets.weapon.sh_base.is_lmg.FALLOFF = {
     { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
@@ -120,7 +119,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   -- Stronger preset (for gangsters and basic cops)
   presets.weapon.sh_strong = based_on(presets.weapon.sh_base, {
     FALLOFF = function (falloff)
-      manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.5 end)
+      manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.35 end)
     end
   })
 
@@ -144,7 +143,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   presets.weapon.sh_tank.is_rifle.focus_dis = 800
   presets.weapon.sh_tank.is_rifle.RELOAD_SPEED = 0.5
-  presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 40 }
+  presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 50 }
   presets.weapon.sh_tank.is_rifle.FALLOFF = {
     { dmg_mul = 4 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
@@ -158,6 +157,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.04 * acc_mul, 0.075 * acc_mul }, recoil = { 1.2, 1.5 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 300, 500 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.01 * acc_mul, 0.025 * acc_mul }, recoil = { 0.5, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 40, 100 } }
   }
+
+  -- Taser preset
+  presets.weapon.sh_taser = based_on(presets.weapon.sh_base, {
+    tase_sphere_cast_radius = 30,
+    tase_distance = 1500,
+    aim_delay_tase = { 0, 0 }
+  })
 
   -- Sniper presets
   dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
@@ -303,12 +309,9 @@ local function set_weapon_presets(self)
   end
   self.tank.weapon = self.presets.weapon.sh_tank
   self.tank_hw.weapon = self.presets.weapon.sh_tank
-  self.tank_medic.weapon = self.presets.weapon.sh_tank
+  self.tank_medic.weapon = self.presets.weapon.sh_heavy
   self.tank_mini.weapon = self.presets.weapon.sh_tank
-  self.taser.weapon.is_rifle = deep_clone(self.presets.weapon.sh_base.is_rifle)
-  self.taser.weapon.is_rifle.tase_sphere_cast_radius = 30
-  self.taser.weapon.is_rifle.tase_distance = 1500
-  self.taser.weapon.is_rifle.aim_delay_tase = { 0, 0 }
+  self.taser.weapon = self.presets.weapon.sh_taser
   self.shield.weapon = self.presets.weapon.sh_heavy
   self.phalanx_minion.weapon = self.presets.weapon.sh_heavy
   self.phalanx_vip.weapon = self.presets.weapon.sh_heavy

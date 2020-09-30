@@ -42,7 +42,7 @@ There are certain inconsistencies with the various enemy factions in the game th
 - Adds chest armor to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
 - Makes heavy shotgunners more distinct from their rifle counterparts by adding gadgets to their helmets
 - Replaces the lazy recolors for Mexican police with better recolors of the less seen cop models (blue SWAT)
-- Adds missing enemy types
+- Adds missing enemy types for ZEAL units
 
 ### Improves the difficulty curve
 
@@ -59,3 +59,7 @@ These are minor changes that don't fit any of the above categories.
 - Removes heavy and medium hurt animations from heavy SWAT but scales their damage lower than their light counterparts
 - Improves the surrender presets, different enemies have different chances to surrender
 - Restores spawning voicelines for Bulldozers and Tasers
+
+## Credits
+
+- ZEAL medic textures based on work by [Jarey_](https://modworkshop.net/user/1664)
