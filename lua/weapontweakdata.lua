@@ -31,6 +31,7 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self)
   self.scar_npc = based_on(self.m4_npc, self.scar_crew)
   self.mp5_npc = based_on(self.m4_npc, self.mp5_crew)
   self.g36_npc = based_on(self.m4_npc, self.g36_crew)
+  self.fal_npc = based_on(self.m4_npc, self.fal_crew)
   self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
   self.ksg_npc = based_on(self.r870_npc, self.ksg_crew)
 

@@ -259,6 +259,7 @@ end
 
 
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
+  self:_add_weapon("fal", "units/payday2/weapons/wpn_npc_fal/wpn_npc_fal")
   self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
   self:_add_weapon("ksg", "units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg")
 
