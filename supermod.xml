@@ -159,7 +159,7 @@
             <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.material_config"/>
             <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model"/>
 
-            <!-- make original zeal swat use WEAPON -->
+            <!-- make original zeal swat use fal -->
             <file :name="ene_zeal_swat/ene_zeal_swat.material_config"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_contour.material_config"/>
             <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
@@ -178,7 +178,7 @@
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_contour.material_config"/>
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
 
-            <!-- make heavy zeal use WEAPON -->
+            <!-- make heavy zeal use fal -->
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.material_config"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy_contour.material_config"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.model"/>

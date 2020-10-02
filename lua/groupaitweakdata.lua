@@ -456,7 +456,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
       {
         amount_min = 1,
         freq = difficulty_index / 32,
-        amount_max = 1 + math.round(difficulty_index / 4),
+        amount_max = 2,
         rank = 3,
         unit = "FBI_tank",
         tactics = self._tactics.tank_rush
@@ -541,12 +541,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
   }
 
   self.enemy_spawn_groups.FBI_spoocs = {
-    amount = { 1, 2 },
+    amount = { 1, 1 },
     spawn = {
       {
-        freq = difficulty_index / 32,
         amount_min = 1,
-        amount_max = 1 + math.round(difficulty_index / 4),
+        freq = 1,
+        amount_max = 1,
         rank = 1,
         unit = "spooc",
         tactics = self._tactics.spooc
@@ -569,47 +569,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
     }
   }
 
-  self.enemy_spawn_groups.hostage_rescue_shield = {
-    amount = { 2, 3 },
-    spawn = {
-      {
-        amount_min = 2,
-        freq = 1,
-        rank = 1,
-        unit = "FBI_suit_M4_MP5",
-        tactics = self._tactics.shield_flank_support
-      },
-      {
-        amount_min = 0,
-        freq = difficulty_index / 32,
-        amount_max = 1,
-        rank = 3,
-        unit = "FBI_shield",
-        tactics = self._tactics.shield_flank
-      }
-    }
-  }
-
-  self.enemy_spawn_groups.hostage_rescue_medic = {
-    amount = { 2, 3 },
-    spawn = {
-      {
-        amount_min = 2,
-        freq = 1,
-        rank = 1,
-        unit = "FBI_suit_M4_MP5",
-        tactics = self._tactics.swat_rifle_flank
-      },
-      {
-        amount_min = 0,
-        freq = difficulty_index / 32,
-        amount_max = 1,
-        rank = 3,
-        unit = "medic_M4",
-        tactics = self._tactics.swat_rifle_flank
-      },
-    }
-  }
 end)
 
 
@@ -702,9 +661,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
   end
 
   self.besiege.recon.groups = {
-    hostage_rescue = { 3, 3, 3 },
-    hostage_rescue_medic = { 1, 1, 1 },
-    hostage_rescue_shield = { 1, 1, 1 }
+    hostage_rescue = { 3, 3, 3 }
   }
 
   self.besiege.assault.force = { 10, 14, 18 }
