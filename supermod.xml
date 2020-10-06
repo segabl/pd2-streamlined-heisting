@@ -94,6 +94,10 @@
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit"/>
             <file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
 
+            <!-- fix fbi_3 _tweak_table and make him use spas12 -->
+            <file :name="ene_fbi_3/ene_fbi_3.unit"/>
+            <file :name="ene_fbi_3/ene_fbi_3_husk.unit"/>
+
             <!-- give swat shotgunner badges and shell strap -->
             <file :name="ene_swat_2/ene_swat_2.model"/>
 
@@ -114,6 +118,12 @@
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.object"/>
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.unit"/>
             <file :name="ene_swat_heavy_r870/ene_swat_heavy_r870_husk.unit"/>
+
+            <!-- switch cop 3 and cop 4 weapons -->
+            <file :name="ene_cop_3/ene_cop_3.unit"/>
+            <file :name="ene_cop_3/ene_cop_3_husk.unit"/>
+            <file :name="ene_cop_4/ene_cop_4.unit"/>
+            <file :name="ene_cop_4/ene_cop_4_husk.unit"/>
         </group>
 
         <!-- new (and old) murkies -->
