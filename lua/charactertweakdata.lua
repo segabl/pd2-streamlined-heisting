@@ -27,19 +27,6 @@ local function manipulate_entries(tbl, value_name, func)
 end
 
 
-local character_map_original = CharacterTweakData.character_map
-function CharacterTweakData:character_map(...)
-  local char_map = character_map_original(self, ...)
-  table.insert(char_map.basic.list, "ene_swat_heavy_r870")
-  table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
-  table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
-  table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
-  table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
-  table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
-  return char_map
-end
-
-
 local _presets_original = CharacterTweakData._presets
 function CharacterTweakData:_presets(tweak_data, ...)
   local presets = _presets_original(self, tweak_data, ...)
