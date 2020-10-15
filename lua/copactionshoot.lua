@@ -44,16 +44,6 @@ function CopActionShoot:on_attention(...)
 end
 
 
--- Returns delay to host in seconds if we are client
-function CopActionShoot:get_client_delay()
-  if Network:is_server() then
-    return 0
-  end
-  self._host_peer = self._host_peer or managers.network:session():peer(1)
-  return self._host_peer and Network:qos(self._host_peer:rpc()).ping / 1000 or 0
-end
-
-
 -- Thanks to the messy implementation of this function, we have to replace it completely, no hook can save us here
 function CopActionShoot:update(t)
   local vis_state = self._ext_base:lod_stage() or 4
@@ -172,7 +162,7 @@ function CopActionShoot:update(t)
             -- Apply focus delay after 3 seconds of no los
             if no_los_dur > 3 and not shoot_hist.focus_delay then
               shoot_hist.focus_start_t = t
-              shoot_hist.focus_delay = self._w_usage_tweak.focus_delay + self:get_client_delay() -- Account for network latency
+              shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
             end
             -- Apply aim delay after 6 seconds of no los
             if no_los_dur > 6 and not self._waiting_for_aim_delay then
@@ -182,7 +172,7 @@ function CopActionShoot:update(t)
               if self._common_data.is_suppressed then
                 aim_delay = aim_delay * 1.5
               end
-              self._shoot_t = t + aim_delay + self:get_client_delay() -- Account for network latency
+              self._shoot_t = t + aim_delay
               self._waiting_for_aim_delay = true
               if self._shooting_husk_player then
                 self._next_vis_ray_t = self._shoot_t
