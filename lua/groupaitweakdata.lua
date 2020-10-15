@@ -140,112 +140,13 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
-  self._tactics.Phalanx_minion = {
-    "smoke_grenade",
-    "charge",
-    "provide_coverfire",
-    "provide_support",
-    "shield",
-    "deathguard"
-  }
-  self._tactics.Phalanx_vip = {
-    "smoke_grenade",
-    "charge",
-    "provide_coverfire",
-    "provide_support",
-    "shield",
-    "deathguard"
-  }
-  self._tactics.swat_shotgun_rush = {
-    "charge",
-    "provide_coverfire",
-    "provide_support",
-    "deathguard",
-    "flash_grenade"
-  }
-  self._tactics.swat_shotgun_flank = {
-    "charge",
-    "provide_coverfire",
-    "provide_support",
-    "flank",
-    "deathguard",
-    "flash_grenade"
-  }
-  self._tactics.swat_rifle = {
-    "ranged_fire",
-    "provide_coverfire",
-    "provide_support"
-  }
-  self._tactics.swat_rifle_flank = {
-    "ranged_fire",
-    "provide_coverfire",
-    "provide_support",
-    "flank",
-    "flash_grenade"
-  }
-  self._tactics.shield_wall_ranged = {
-    "shield",
-    "ranged_fire",
-    "provide_support "
-  }
-  self._tactics.shield_support_ranged = {
-    "shield_cover",
-    "ranged_fire",
-    "provide_coverfire"
-  }
-  self._tactics.shield_wall_charge = {
-    "shield",
-    "charge",
-    "provide_support "
-  }
-  self._tactics.shield_support_charge = {
-    "shield_cover",
-    "charge",
-    "provide_coverfire",
-    "flash_grenade"
-  }
-  self._tactics.shield_wall = {
-    "shield",
-    "ranged_fire",
-    "provide_support",
-    "murder",
-    "deathguard"
-  }
-  self._tactics.shield_flank = {
-    "shield",
-    "ranged_fire",
-    "provide_coverfire",
-    "provide_support",
-    "flank"
-  }
-  self._tactics.shield_support_flank = {
-    "shield_cover",
-    "ranged_fire",
-    "provide_coverfire",
-    "provide_support",
-    "flank"
-  }
+  -- fix incorrect flank tactic name
   self._tactics.tazer_flanking = {
     "flank",
     "charge",
     "provide_coverfire",
     "smoke_grenade",
     "murder"
-  }
-  self._tactics.tazer_charge = {
-    "charge",
-    "provide_coverfire",
-    "murder"
-  }
-  self._tactics.tank_rush = {
-    "charge",
-    "provide_coverfire",
-    "murder"
-  }
-  self._tactics.spooc = {
-    "charge",
-    "shield_cover",
-    "smoke_grenade"
   }
 
   self.enemy_spawn_groups.tac_swat_shotgun_rush = {
@@ -516,45 +417,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
     }
   }
 
-  self.enemy_spawn_groups.Phalanx = {
-    amount = {
-      self.phalanx.minions.amount + 1,
-      self.phalanx.minions.amount + 1
-    },
-    spawn = {
-      {
-        amount_min = 1,
-        freq = 1,
-        amount_max = 1,
-        rank = 2,
-        unit = "Phalanx_vip",
-        tactics = self._tactics.Phalanx_vip
-      },
-      {
-        freq = 1,
-        amount_min = 1,
-        rank = 1,
-        unit = "Phalanx_minion",
-        tactics = self._tactics.Phalanx_minion
-      }
-    }
-  }
-
-  self.enemy_spawn_groups.FBI_spoocs = {
-    amount = { 1, 1 },
-    spawn = {
-      {
-        amount_min = 1,
-        freq = 1,
-        amount_max = 1,
-        rank = 1,
-        unit = "spooc",
-        tactics = self._tactics.spooc
-      }
-    }
-  }
-  self.enemy_spawn_groups.single_spooc = self.enemy_spawn_groups.FBI_spoocs
-
   self.enemy_spawn_groups.hostage_rescue = {
     amount = { 2, 3 },
     spawn = {
@@ -659,10 +521,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
       tac_bull_rush = { 8, 8, 8 }
     }
   end
+  self.besiege.assault.groups.single_spooc = { 0, 0, 0 }
+  self.besiege.assault.groups.Phalanx = { 0, 0, 0 }
 
-  self.besiege.recon.groups = {
-    hostage_rescue = { 3, 3, 3 }
-  }
+  self.besiege.recon.groups.hostage_rescue = { 1, 1, 1 }
 
   self.besiege.assault.force = { 10, 14, 18 }
   self.besiege.assault.force_pool = { 150, 175, 225 }
