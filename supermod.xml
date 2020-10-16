@@ -40,14 +40,14 @@
             <file :name="wpn_npc_ksg/wpn_npc_ksg.object"/>
             <file :name="wpn_npc_ksg/wpn_npc_ksg.unit"/>
 
-            <!-- fal -->
-            <file :name="wpn_npc_fal/fal_df.texture"/>
-            <file :name="wpn_npc_fal/fal_nm.texture"/>
-            <file :name="wpn_npc_fal/wpn_npc_fal.cooked_physics"/>
-            <file :name="wpn_npc_fal/wpn_npc_fal.material_config"/>
-            <file :name="wpn_npc_fal/wpn_npc_fal.model"/>
-            <file :name="wpn_npc_fal/wpn_npc_fal.object"/>
-            <file :name="wpn_npc_fal/wpn_npc_fal.unit"/>
+            <!-- shepheard -->
+            <file :name="wpn_npc_shepheard/shepheard_df.texture"/>
+            <file :name="wpn_npc_shepheard/shepheard_nm.texture"/>
+            <file :name="wpn_npc_shepheard/wpn_npc_shepheard.cooked_physics"/>
+            <file :name="wpn_npc_shepheard/wpn_npc_shepheard.material_config"/>
+            <file :name="wpn_npc_shepheard/wpn_npc_shepheard.model"/>
+            <file :name="wpn_npc_shepheard/wpn_npc_shepheard.object"/>
+            <file :name="wpn_npc_shepheard/wpn_npc_shepheard.unit"/>
         </group>
 
         <!-- new (and old) characters -->
