@@ -39,7 +39,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   local melee_dmg_tbl = { 1, 2, 4, 7, 10, 13, 16, 20 }
 
   local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-  local diff_i_norm = (diff_i - 1) / 7
+  local diff_i_norm = (diff_i - 1) / (#tweak_data.difficulties - 1)
   local dmg_mul = dmg_mul_tbl[diff_i]
   local acc_mul = acc_mul_tbl[diff_i]
 
@@ -155,8 +155,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
   -- Sniper presets
   dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
   presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
-    focus_delay = focus_delay_tbl[diff_i] * 4,
-    aim_delay = { 0, aim_delay_tbl[diff_i] * 2 },
+    focus_delay = focus_delay_tbl[diff_i],
+    aim_delay = { 0, aim_delay_tbl[diff_i] * 4 },
   })
   presets.weapon.sh_sniper.is_rifle.FALLOFF = {
     { dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
@@ -164,8 +164,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 7 * dmg_mul, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-    focus_delay = focus_delay_tbl[diff_i] * 2,
-    aim_delay = { 0, aim_delay_tbl[diff_i] },
+    focus_delay = focus_delay_tbl[diff_i],
+    aim_delay = { 0, aim_delay_tbl[diff_i] * 2 },
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
       manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
@@ -211,7 +211,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
       pants_down = 0.9,
       weapon_down = 0.4,
       health = {
-        [1.0] = 0,
+        [0.8] = 0,
         [0.6] = 0.6
       }
     }
@@ -224,18 +224,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
       pants_down = 0.8,
       weapon_down = 0.3,
       health = {
-        [1.0] = 0,
+        [0.6] = 0,
         [0.4] = 0.4
       }
     }
   }
 
   return presets
-end
-
-
-function CharacterTweakData:_multiply_weapon_delay(weap_usage_table, mul)
-  -- wtf was that function overkill, always called with 0 values
 end
 
 
@@ -272,49 +267,43 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 end)
 
 
-local heavy_preset_users = {
-  heavy_swat = true,
-  fbi_heavy_swat = true,
-  medic = true
+local access_presets = {
+  cop = "sh_strong",
+  fbi = "sh_strong",
+  gangster = "sh_strong",
+  security = "sh_strong",
+  shield = "sh_heavy",
+  sniper = "sh_sniper",
+  spooc = "sh_base",
+  swat = "sh_base",
+  tank = "sh_tank",
+  taser = "sh_taser"
 }
-local strong_preset_access = {
-  gangster = true,
-  cop = true,
-  security = true,
-  fbi = true
+local preset_overrides = {
+  fbi_heavy_swat = "sh_heavy",
+  heavy_swat = "sh_heavy",
+  heavy_swat_sniper = "sh_sniper_heavy",
+  medic = "sh_heavy",
+  tank_medic = "sh_heavy"
 }
-local function set_weapon_presets(self)
-  local preset
-  for _, name in ipairs(self._enemy_list) do
-    preset = self[name]
-    if strong_preset_access[preset.access] and not name:find("boss") then
-      StreamHeist:log("Using strong weapon preset for " .. name)
-      preset.weapon = self.presets.weapon.sh_strong
-    elseif preset.access == "swat" then
-      StreamHeist:log("Using " .. (heavy_preset_users[name] and "heavy" or "base") .. " weapon preset for " .. name)
-      preset.weapon = heavy_preset_users[name] and self.presets.weapon.sh_heavy or self.presets.weapon.sh_base
+local function assign_weapon_presets(char_tweak_data)
+  local char_preset, weapon_preset_name
+  for _, name in ipairs(char_tweak_data._enemy_list) do
+    char_preset = char_tweak_data[name]
+    weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
+    if weapon_preset_name then
+      char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
+      StreamHeist:log("Using " .. weapon_preset_name .. " weapon preset for " .. name)
     end
   end
-  self.tank.weapon = self.presets.weapon.sh_tank
-  self.tank_hw.weapon = self.presets.weapon.sh_tank
-  self.tank_medic.weapon = self.presets.weapon.sh_heavy
-  self.tank_mini.weapon = self.presets.weapon.sh_tank
-  self.taser.weapon = self.presets.weapon.sh_taser
-  self.shield.weapon = self.presets.weapon.sh_heavy
-  self.phalanx_minion.weapon = self.presets.weapon.sh_heavy
-  self.phalanx_vip.weapon = self.presets.weapon.sh_heavy
-  self.spooc.weapon = self.presets.weapon.sh_base
-  self.shadow_spooc.weapon = self.presets.weapon.sh_base
-  self.sniper.weapon = self.presets.weapon.sh_sniper
-  self.heavy_swat_sniper.weapon = self.presets.weapon.sh_sniper_heavy
 end
 
 -- Weapon presets are assigned to the enemies here because the vanilla difficulty functions mess with the
--- existing presets so we can only assign the correct presets AFTER the vanilla presets have been changed
-Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", set_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", set_weapon_presets)
+-- currently assigned presets so we assign our custom presets AFTER the vanilla presets have been changed
+Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", assign_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", assign_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", assign_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", assign_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", assign_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", assign_weapon_presets)
+Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", assign_weapon_presets)
