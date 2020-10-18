@@ -10,13 +10,9 @@ if not StreamHeist then
     if not self.settings.logs then
       return
     end
-    local params = {...}
-    local str = ""
-    for _, v in pairs(params) do
-      str = str .. tostring(v) .. " "
-    end
-    print("[StreamlinedHeisting] " .. str)
-    log("[StreamlinedHeisting] " .. str)
+    local str = "[StreamlinedHeisting] " .. table.concat({...}, " ")
+    print(str)
+    log(str)
   end
 
   Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
