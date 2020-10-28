@@ -11,11 +11,12 @@ local mvec3_rot = mvector3.rotate_with
 local mrot_axis_angle = mrotation.set_axis_angle
 local temp_vec1 = Vector3()
 local temp_rot1 = Rotation()
-local lerp = math.lerp
-local round = math.round
+local math_min = math.min
+local math_max = math.max
+local math_lerp = math.lerp
 
 
-function CopActionShoot:stop_autofire()
+function CopActionShoot:_stop_autofire()
   self._weapon_base:stop_autofire()
   self._autofiring = nil
   self._autoshots_fired = nil
@@ -33,7 +34,7 @@ function CopActionShoot:on_attention(...)
   local same_att = self._attention and self._common_data._old_att_unit == self._attention.unit
   if self._autofiring and not same_att then
     -- Stop autofiring on target change so aim delay isn't skipped
-    self:stop_autofire()
+    self:_stop_autofire()
   end
   if self._attention and self._attention.unit then
     -- Preserve old line of sight timer and attention unit to avoid redoing focus and aim delay on target change to same unit
@@ -90,7 +91,7 @@ function CopActionShoot:update(t)
   if not ext_anim.reload and not ext_anim.equip and not ext_anim.melee then
     if self._weapon_base:clip_empty() then
       if self._autofiring then
-        self:stop_autofire()
+        self:_stop_autofire()
       end
 
       if not ext_anim.base_no_reload then
@@ -104,8 +105,8 @@ function CopActionShoot:update(t)
       end
     elseif self._autofiring then
       if not target_vec or not self._common_data.allow_fire then
-        self:stop_autofire()
-        self._shoot_t = t + 0.6
+        self:_stop_autofire()
+        self._shoot_t = t + 0.5
       else
         local falloff, i_range = self:_get_shoot_falloff(target_dis, self._falloff)
         local dmg_buff = self._unit:base():get_total_buff("base_damage")
@@ -125,13 +126,8 @@ function CopActionShoot:update(t)
           end
 
           if not self._autofiring or self._autoshots_fired >= self._autofiring - 1 then
-            self:stop_autofire()
-
-            if vis_state == 1 then
-              self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
-            else
-              self._shoot_t = t + falloff.recoil[2]
-            end
+            self:_stop_autofire()
+            self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
           else
             self._autoshots_fired = self._autoshots_fired + 1
           end
@@ -167,8 +163,8 @@ function CopActionShoot:update(t)
             -- Apply aim delay after 6 seconds of no los
             if no_los_dur > 6 and not self._waiting_for_aim_delay then
               local aim_delay_minmax = self._w_usage_tweak.aim_delay
-              local lerp_dis = math.min(1, target_dis / self._falloff[#self._falloff].r)
-              local aim_delay = math.lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
+              local lerp_dis = math_min(1, target_dis / self._falloff[#self._falloff].r)
+              local aim_delay = math_lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
               if self._common_data.is_suppressed then
                 aim_delay = aim_delay * 1.5
               end
@@ -213,8 +209,8 @@ function CopActionShoot:update(t)
             local diff = autofire_rounds[2] - autofire_rounds[1]
             number_of_rounds = math.ceil(autofire_rounds[1] + self:_pseudorandom() * diff)
           elseif self._automatic_weap and self._w_usage_tweak.autofire_rounds then
-            local f = math.min(1, math.max(0, (target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + self:_pseudorandom() * 0.3))
-            number_of_rounds = math.ceil(lerp(autofire_rounds[2], autofire_rounds[1], f))
+            local f = math_min(1, math_max(0, (target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + self:_pseudorandom() * 0.3))
+            number_of_rounds = math.ceil(math_lerp(autofire_rounds[2], autofire_rounds[1], f))
           else
             number_of_rounds = 1
           end
@@ -224,9 +220,6 @@ function CopActionShoot:update(t)
             self._weapon_base:start_autofire(number_of_rounds < 4 and number_of_rounds)
             self._autofiring = number_of_rounds
             self._autoshots_fired = 0
-            if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
-              self._ext_movement:play_redirect("recoil_auto")
-            end
 
           else
 
@@ -236,14 +229,10 @@ function CopActionShoot:update(t)
             if fired and fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
               self._unit:unit_data().mission_element:event("killshot", self._unit)
             end
-            if vis_state == 1 then
-              if not ext_anim.base_no_recoil and not ext_anim.move then
-                self._ext_movement:play_redirect("recoil_single")
-              end
-              self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
-            else
-              self._shoot_t = t + falloff.recoil[2]
+            if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
+              self._ext_movement:play_redirect("recoil_single")
             end
+            self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
 
           end
         end
@@ -277,7 +266,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
   end
 
   local hit_chances = falloff.acc
-  local hit_chance = math.lerp(hit_chances[1], hit_chances[2], focus_prog) * self._unit:character_damage():accuracy_multiplier()
+  local hit_chance = math_lerp(hit_chances[1], hit_chances[2], focus_prog) * self._unit:character_damage():accuracy_multiplier()
 
   if self._common_data.is_suppressed then
     hit_chance = hit_chance * 0.5
@@ -287,7 +276,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
     hit_chance = hit_chance * self._common_data.active_actions[2]:accuracy_multiplier()
   end
 
-  if self:_pseudorandom() < hit_chance then
+  if math.random() < hit_chance then
     mvec3_set(shoot_hist.m_last_pos, pos)
   else
     mvec3_set(temp_vec1, pos)
@@ -328,13 +317,13 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
     local prev_data = falloff[i - 1]
     local t = (target_dis - prev_data.r) / (data.r - prev_data.r)
     local n_data = {
-      dmg_mul = lerp(prev_data.dmg_mul, data.dmg_mul, t),
+      dmg_mul = math_lerp(prev_data.dmg_mul, data.dmg_mul, t),
       r = target_dis,
-      acc = { lerp(prev_data.acc[1], data.acc[1], t), lerp(prev_data.acc[2], data.acc[2], t) },
-      recoil = { lerp(prev_data.recoil[1], data.recoil[1], t), lerp(prev_data.recoil[2], data.recoil[2], t) },
+      acc = { math_lerp(prev_data.acc[1], data.acc[1], t), math_lerp(prev_data.acc[2], data.acc[2], t) },
+      recoil = { math_lerp(prev_data.recoil[1], data.recoil[1], t), math_lerp(prev_data.recoil[2], data.recoil[2], t) },
       autofire_rounds = prev_data.autofire_rounds and {
-        round(lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t)),
-        round(lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t))
+        math_lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t),
+        math_lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t)
       },
       mode = data.mode
     }

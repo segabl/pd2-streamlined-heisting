@@ -15,6 +15,7 @@ The changes this mod makes are not intended to make the game feel drastically di
 - Simplifies the clunky fire mode system and interpolates ``autofire_rounds`` based on distance instead (enemies will utilize full auto more)
 - Properly implements and makes use of ``aim_delay``, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
 - Fixes barely working ``focus_delay`` code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
+- Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls on leading to a lot of hits/misses in a row
 
 ### Standardizes weapon presets
 
