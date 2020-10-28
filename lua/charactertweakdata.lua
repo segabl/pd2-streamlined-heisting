@@ -173,11 +173,14 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
 
   -- Give team ai more reasonable preset values
-  presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
-    FALLOFF = function (falloff)
-      manipulate_entries(falloff, "dmg_mul", function (val) return (val / falloff[1].dmg_mul) * diff_i * 0.5 end)
+  dmg_mul = math.lerp(0.8, 1.5, diff_i_norm)
+  presets.weapon.gang_member = deep_clone(presets.weapon.sh_base)
+  for _, weapon in pairs(presets.weapon.gang_member) do
+    local reference = weapon.FALLOFF[1].dmg_mul
+    for _, falloff in pairs(weapon.FALLOFF) do
+      falloff.dmg_mul = (falloff.dmg_mul / reference) * dmg_mul
     end
-  })
+  end
 
   -- Setup surrender presets
   local surrender_factors = {
