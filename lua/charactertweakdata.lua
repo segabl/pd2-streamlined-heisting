@@ -74,6 +74,12 @@ function CharacterTweakData:_presets(tweak_data, ...)
   }
   presets.weapon.sh_base.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
   presets.weapon.sh_base.is_shotgun_mag = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
+  presets.weapon.sh_base.is_shotgun_mag.autofire_rounds = { 1, 5 }
+  presets.weapon.sh_base.is_shotgun_mag.FALLOFF = {
+    { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
+    { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.2 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
+  }
   presets.weapon.sh_base.is_rifle.autofire_rounds = { 3, 9 }
   presets.weapon.sh_base.is_rifle.FALLOFF = {
     { dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
@@ -122,7 +128,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.2 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_tank.is_shotgun_mag.RELOAD_SPEED = 0.5
-  presets.weapon.sh_tank.is_shotgun_mag.autofire_rounds = { 1, 7 }
   presets.weapon.sh_tank.is_shotgun_mag.FALLOFF = {
     { dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 4 } },
     { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 3 } },
@@ -173,7 +178,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
   })
 
   -- Give team ai more reasonable preset values
-  dmg_mul = math.lerp(0.8, 1.5, diff_i_norm)
+  dmg_mul = math.lerp(1, 1.7, diff_i_norm)
   presets.weapon.gang_member = deep_clone(presets.weapon.sh_base)
   for _, weapon in pairs(presets.weapon.gang_member) do
     local reference = weapon.FALLOFF[1].dmg_mul
