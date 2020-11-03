@@ -14,7 +14,10 @@
             <post :hook_id="weapontweakdata"/>
         </group>
         <post :hook_id="units/beings/player/playerdamage"/>
-        <post :hook_id="units/enemies/cop/actions/upper_body/copactionshoot"/>
+        <group :hook_id="units/enemies/cop/">
+            <post :hook_id="actions/upper_body/copactionshoot"/>
+            <post :hook_id="copdamage"/>
+        </group>
 
     </hooks>
 
