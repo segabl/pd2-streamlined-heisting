@@ -1,6 +1,6 @@
 # Streamlined Heisting
 
-Streamlined Heisting is a full streamlining mod that makes a lot of the game's enemy mechanics more consistent. It is intended to build on what I think the vanilla game tried to do rather than being a full rebalance mod that completely changes how the game works and as such won't adds tons of new features and enemies, weapons etc.
+Streamlined Heisting is a full streamlining mod that makes a lot of the game's enemy mechanics more consistent. It is intended to build on what I think the vanilla game tried to do rather than being a full rebalance mod that completely changes how the game works. As such, the mod won't adds tons of new features and enemies and won't touch player balance or skills.
 The changes this mod makes are not intended to make the game feel drastically different but to make it more consistent and replace some of the very outdated code with something that actually works and makes more sense. A lot of features that the vanilla game had at some point were broken or disabled with game updates and have been fixed or re-enabled.
 
 ## What it does
@@ -19,13 +19,15 @@ The changes this mod makes are not intended to make the game feel drastically di
 
 ### Standardizes weapon presets
 
-In vanilla there are multiple weapon base presets that are used by most enemies. These presets are assigned based on difficulty, but there is not one preset for every difficulty. Some difficulties are sharing presets which are then further manipulated in different functions which leads to a lot of oversights and inconsistencies.
+In vanilla there are multiple weapon base presets that are used by most enemies. These presets are assigned based on difficulty, but not every difficulty has its own preset. Some difficulties are sharing presets which are then further manipulated in different functions which leads to a lot of oversights and inconsistencies, like some enemy types being left out when difficulty presets are applied.
 The preset system has been improved by creating a single difficulty based preset and setting all the relevant values directly, this preset is then used as the base for a few others. Changing preset values at times other than when they are created is avoided.
 
 - Creates and uses a base weapon preset which scales damage multipliers, accuracy, melee damage, focus delay and aim delay based on difficulty
 - Make use of aim and focus delays (which was set to 0 for all presets in vanilla) which affects how long cops take to shoot at you and reach their full accuracy when you enter their line of sight
 - Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
 - Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as an Car-4, the damage increase comes from higher difficulty, not the weapon)
+- Reduces the insane damage of shields
+- Makes snipers more accurate but take longer to aim before shooting, avoiding cheap instant snipes due to bad RNG
 
 ### Overhauls spawn groups
 
@@ -58,7 +60,6 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 These are minor changes that don't fit any of the above categories.
 
 - Removes heavy and medium hurt animations from heavy SWAT but scales their damage lower than their light counterparts
-- Reduces the damage of shield enemies
 - Improves the surrender presets, different enemies have different chances to surrender
 - Restores spawning voicelines for Bulldozers and Tasers
 
