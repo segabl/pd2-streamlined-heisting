@@ -139,7 +139,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 1.5 * dmg_mul, r = 1000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 3 } },
     { dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.2 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 1 } }
   }
-  presets.weapon.sh_tank.is_rifle.focus_dis = 800
   presets.weapon.sh_tank.is_rifle.RELOAD_SPEED = 0.5
   presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 50 }
   presets.weapon.sh_tank.is_rifle.FALLOFF = {
@@ -147,7 +146,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 3 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.35 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
   }
-  presets.weapon.sh_tank.mini.focus_dis = 800
   presets.weapon.sh_tank.mini.RELOAD_SPEED = 1
   presets.weapon.sh_tank.mini.autofire_rounds = { 40, 700 }
   presets.weapon.sh_tank.mini.FALLOFF = {
@@ -175,7 +173,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 7 * dmg_mul, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-    focus_delay = focus_delay_tbl[diff_i],
     aim_delay = { 0, aim_delay_tbl[diff_i] * 2 },
     FALLOFF = function (falloff)
       manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
