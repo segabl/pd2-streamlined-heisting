@@ -1,3 +1,0 @@
-{
-  "ene_zeal_medic" : "Medic"
-}

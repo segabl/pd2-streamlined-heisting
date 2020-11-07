@@ -17,7 +17,9 @@ if not StreamHeist then
 
   Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
 
-    HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
+    loc:add_localized_strings({
+      ene_zeal_medic = loc:text("ene_medic")
+    })
 
   end)
 
