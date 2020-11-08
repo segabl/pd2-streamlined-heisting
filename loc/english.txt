@@ -1,0 +1,6 @@
+{
+  "StreamHeist_menu_main" : "Streamlined Heisting",
+  "StreamHeist_menu_main_desc" : "Tweak settings for Streamlined Heisting",
+  "StreamHeist_menu_logs" : "Debug logs",
+  "StreamHeist_menu_logs_desc" : "Log debug information"
+}

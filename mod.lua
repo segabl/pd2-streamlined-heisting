@@ -2,8 +2,9 @@ if not StreamHeist then
 
   _G.StreamHeist = {}
   StreamHeist.mod_path = ModPath
+  StreamHeist.menu_id = "StreamHeistMenu"
   StreamHeist.settings = {
-    logs = true
+    logs = false
   }
 
   function StreamHeist:log(...)
@@ -15,13 +16,25 @@ if not StreamHeist then
     log(str)
   end
 
-  Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
+  function StreamHeist:save()
+    local file = io.open(SavePath .. "StreamHeist.txt", "w+")
+    if file then
+      file:write(json.encode(self.settings))
+      file:close()
+    end
+  end
 
-    loc:add_localized_strings({
-      ene_zeal_medic = loc:text("ene_medic")
-    })
-
-  end)
+  function StreamHeist:load()
+    local file = io.open(SavePath .. "StreamHeist.txt", "r")
+    if not file then
+      return
+    end
+    local data = json.decode(file:read("*all"))
+    file:close()
+    for k, v in pairs(data or {}) do
+      self.settings[k] = v
+    end
+  end
 
   -- Add new enemies to the character map
   Hooks:Add("HopLibOnCharacterMapCreated", "HopLibOnCharacterMapCreatedStreamlinedHeisting", function (char_map)
@@ -33,6 +46,48 @@ if not StreamHeist then
     table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
     table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
 
+  end)
+
+  Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
+
+    HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
+    loc:add_localized_strings({
+      ene_zeal_medic = loc:text("ene_medic")
+    })
+
+  end)
+
+  Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenusStreamHeist", function(menu_manager, nodes)
+    MenuHelper:NewMenu(StreamHeist.menu_id)
+  end)
+
+  Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenusStreamHeist", function(menu_manager, nodes)
+
+    StreamHeist:load()
+
+    MenuCallbackHandler.StreamHeist_toggle = function(self, item)
+      StreamHeist.settings[item:name()] = (item:value() == "on")
+    end
+
+    MenuCallbackHandler.StreamHeist_save = function(self)
+      StreamHeist:save()
+    end
+
+    MenuHelper:AddToggle({
+      id = "logs",
+      title = "StreamHeist_menu_logs",
+      desc = "StreamHeist_menu_logs_desc",
+      callback = "StreamHeist_toggle",
+      value = StreamHeist.settings.logs,
+      menu_id = StreamHeist.menu_id,
+      priority = 90
+    })
+
+  end)
+
+  Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusPlayerStreamHeist", function(menu_manager, nodes)
+    nodes[StreamHeist.menu_id] = MenuHelper:BuildMenu(StreamHeist.menu_id, { back_callback = "StreamHeist_save" })
+    MenuHelper:AddMenuItem(nodes["blt_options"], StreamHeist.menu_id, "StreamHeist_menu_main", "StreamHeist_menu_main_desc")
   end)
 
 end
