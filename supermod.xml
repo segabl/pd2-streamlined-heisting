@@ -3,8 +3,11 @@
 
     <hooks script_path="mod.lua" hook_id="lib/">
 
-        <post :hook_id="managers/mission/elementspawnenemygroup"/>
-        <post :hook_id="managers/dynamicresourcemanager"/>
+        <group :hook_id="managers/">
+            <post :hook_id="group_ai_states/groupaistatebase"/>
+            <post :hook_id="mission/elementspawnenemygroup"/>
+            <post :hook_id="dynamicresourcemanager"/>
+        </group>
         <post :hook_id="network/matchmaking/networkmatchmakingsteam"/>
         <group :hook_id="tweak_data/">
             <post :hook_id="charactertweakdata"/>
