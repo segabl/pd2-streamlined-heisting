@@ -106,7 +106,6 @@ function CopActionShoot:update(t)
     elseif self._autofiring then
       if not target_vec or not self._common_data.allow_fire then
         self:_stop_autofire()
-        self._shoot_t = t + 0.5
       else
         local falloff, i_range = self:_get_shoot_falloff(target_dis, self._falloff)
         local dmg_buff = self._unit:base():get_total_buff("base_damage")
