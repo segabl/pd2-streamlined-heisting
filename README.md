@@ -36,6 +36,7 @@ At one point, the game had unique spawn groups with different behaviours and tac
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
 - Restores original spawn groups that were disabled by Overkill, adding back shotgunners, flanking squads, Taser rush spawn groups and hostage rescue units
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
+- Fixes scripted spawns to use the correct enemy faction when spawning enemies
 
 ### Standardizes cop factions
 
