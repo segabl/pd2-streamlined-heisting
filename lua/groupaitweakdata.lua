@@ -361,12 +361,10 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
   }
 
   self.enemy_spawn_groups.tac_bull_rush = {
-    amount = { 1, 2 },
+    amount = { 1, 1 + math.ceil(math.max(0, difficulty_index - 5) / 2) },
     spawn = {
       {
-        amount_min = 1,
         freq = 1,
-        amount_max = 2,
         rank = 3,
         unit = "FBI_tank",
         tactics = self._tactics.tank_rush
