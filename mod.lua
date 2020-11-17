@@ -41,10 +41,12 @@ if not StreamHeist then
 
     table.insert(char_map.basic.list, "ene_swat_heavy_r870")
     table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
+    table.insert(char_map.basic.list, "ene_sniper_3")
     table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
     table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
     table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
     table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
+    table.insert(char_map.gitgud.list, "ene_zeal_sniper")
 
   end)
 
@@ -52,7 +54,8 @@ if not StreamHeist then
 
     HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
     loc:add_localized_strings({
-      ene_zeal_medic = loc:text("ene_medic")
+      ene_zeal_medic = loc:text("ene_medic"),
+      ene_zeal_sniper = loc:text("ene_sniper")
     })
 
   end)

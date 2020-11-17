@@ -46,7 +46,7 @@ There are certain inconsistencies with the various enemy factions in the game th
 - Adds chest armor to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
 - Makes heavy shotgunners more distinct from their rifle counterparts by adding gadgets to their helmets
 - Replaces the lazy recolors for Mexican police with better recolors of the less seen cop models (blue SWAT)
-- Adds missing enemy types for ZEAL units (Shotgunners, Medic)
+- Adds missing enemy types (ZEAL Shotgunners, ZEAL Medic, GenSec and ZEAL Sniper)
 
 ### Improves the difficulty curve
 

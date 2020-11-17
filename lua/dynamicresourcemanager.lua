@@ -6,6 +6,9 @@ Hooks:PostHook(DynamicResourceManager, "preload_units", "sh_preload_units", func
     self:load(ids_unit, Idstring(path .. "_husk"), self.DYN_RESOURCES_PACKAGE)
   end
 
+  StreamHeist:log("Loading custom units...")
+  load_unit("units/payday2/characters/ene_sniper_3/ene_sniper_3")
+
   if PackageManager:loaded("packages/sm_wish") then
     StreamHeist:log("Zeal package loaded, loading custom Zeal units...")
 
@@ -13,6 +16,7 @@ Hooks:PostHook(DynamicResourceManager, "preload_units", "sh_preload_units", func
     load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_2/ene_zeal_swat_heavy_2")
     load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_medic_m4/ene_zeal_medic_m4")
     load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_medic_r870/ene_zeal_medic_r870")
+    load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_sniper/ene_zeal_sniper")
   end
 
 end)

@@ -84,6 +84,15 @@
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870.unit"/>
             <file :name="ene_city_heavy_r870/ene_city_heavy_r870_husk.unit"/>
 
+            <!-- add city sniper -->
+            <file :name="ene_sniper_3/ene_sniper_3.cooked_physics"/>
+            <file :name="ene_sniper_3/ene_sniper_3.material_config"/>
+            <file :name="ene_sniper_3/ene_sniper_3_contour.material_config"/>
+            <file :name="ene_sniper_3/ene_sniper_3.model"/>
+            <file :name="ene_sniper_3/ene_sniper_3.object"/>
+            <file :name="ene_sniper_3/ene_sniper_3.unit"/>
+            <file :name="ene_sniper_3/ene_sniper_3_husk.unit"/>
+
             <!-- make fbi shield use unique model -->
             <file :name="ene_shield_1/ene_shield_1.model"/>
 
@@ -221,6 +230,15 @@
             <!-- add zeal r870 medic -->
             <file :name="ene_zeal_medic_r870/ene_zeal_medic_r870.unit"/>
             <file :name="ene_zeal_medic_r870/ene_zeal_medic_r870_husk.unit"/>
+
+            <!-- add zeal sniper -->
+            <file :name="ene_zeal_sniper/ene_zeal_sniper.cooked_physics"/>
+            <file :name="ene_zeal_sniper/ene_zeal_sniper.material_config"/>
+            <file :name="ene_zeal_sniper/ene_zeal_sniper_contour.material_config"/>
+            <file :name="ene_zeal_sniper/ene_zeal_sniper.model"/>
+            <file :name="ene_zeal_sniper/ene_zeal_sniper.object"/>
+            <file :name="ene_zeal_sniper/ene_zeal_sniper.unit"/>
+            <file :name="ene_zeal_sniper/ene_zeal_sniper_husk.unit"/>
         </group>
 
         <!-- new federal police -->
