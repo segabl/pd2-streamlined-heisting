@@ -67,6 +67,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 5 * dmg_mul, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 4 * dmg_mul, r = 4000, acc = { 0.25 * acc_mul, 0.5 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
   }
+  presets.weapon.sh_base.is_shotgun_pump.RELOAD_SPEED = 1.5
   presets.weapon.sh_base.is_shotgun_pump.range = { optimal = 1000, far = 3000, close = 500 }
   presets.weapon.sh_base.is_shotgun_pump.FALLOFF = {
     { dmg_mul = 1 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 1, 1.25 }, mode = { 1, 0, 0, 0 } },
@@ -74,6 +75,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 0.01 * dmg_mul, r = 3000, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
   }
   presets.weapon.sh_base.is_shotgun_mag = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
+  presets.weapon.sh_base.is_shotgun_mag.RELOAD_SPEED = 1
   presets.weapon.sh_base.is_shotgun_mag.autofire_rounds = { 1, 5 }
   presets.weapon.sh_base.is_shotgun_mag.FALLOFF = {
     { dmg_mul = 1 * dmg_mul, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 } },
