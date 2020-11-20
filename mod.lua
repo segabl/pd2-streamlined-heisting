@@ -39,8 +39,6 @@ if not StreamHeist then
   -- Add new enemies to the character map
   Hooks:Add("HopLibOnCharacterMapCreated", "HopLibOnCharacterMapCreatedStreamlinedHeisting", function (char_map)
 
-    table.insert(char_map.basic.list, "ene_swat_heavy_r870")
-    table.insert(char_map.basic.list, "ene_fbi_heavy_r870")
     table.insert(char_map.basic.list, "ene_sniper_3")
     table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
     table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
