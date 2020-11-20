@@ -1,3 +1,9 @@
+-- Don't replace spawns on custom enemy spawner map
+local level_id =  Global.game_settings and Global.game_settings.level_id
+if level_id == "modders_devmap" or level_id == "Enemy_Spawner" then
+  return
+end
+
 -- Map to correct incorrect faction spawns
 local enemy_replacements = {
   normal = {
