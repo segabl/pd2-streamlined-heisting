@@ -40,6 +40,24 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
     self.unit_categories.FBI_shield = self.unit_categories.CS_shield
   end
 
+  -- Use the same russian units on all difficulties since factions are incomplete
+  self.unit_categories.FBI_swat_R870.unit_types.russia = {
+    Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870")
+  }
+  self.unit_categories.FBI_swat_M4.unit_types.russia = {
+    Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass")
+  }
+  self.unit_categories.FBI_heavy_G36.unit_types.russia = {
+    Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+  }
+  self.unit_categories.FBI_heavy_R870.unit_types.russia = {
+    Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
+  }
+  self.unit_categories.FBI_suit_M4_MP5.unit_types.russia = {
+    Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
+    Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
+  }
+
   -- Use the same murky units on all difficulties since their models don't differ
   self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
     Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870")
@@ -75,7 +93,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
   -- temp fix till I have proper federal police HRT
   self.unit_categories.FBI_suit_M4_MP5.unit_types.federales = {
     Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale"),
-    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi")
+    Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870")
   }
 
   -- Skulldozers on Mayhem
@@ -523,10 +541,11 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
   self.besiege.assault.groups.single_spooc = { 0, 0, 0 }
   self.besiege.assault.groups.Phalanx = { 0, 0, 0 }
 
-  self.besiege.recon.groups.hostage_rescue = { 1, 1, 1 }
-  self.besiege.reenforce.groups.tac_swat_shotgun_flank = { 1, 1, 1 }
-  self.besiege.reenforce.groups.tac_swat_rifle_flank = { 1, 1, 1 }
-  self.besiege.reenforce.groups.FBI_spoocs = { 0.1, 0.1, 0.1 }
+  self.besiege.recon.groups.hostage_rescue = { 10, 10, 10 }
+
+  self.besiege.reenforce.groups.tac_swat_shotgun_flank = { 5, 5, 5 }
+  self.besiege.reenforce.groups.tac_swat_rifle_flank = { 10, 10, 10 }
+  self.besiege.reenforce.groups.FBI_spoocs = { 0.5, 0.5, 0.5 }
 
   self.besiege.assault.force = { 10, 14, 18 }
   self.besiege.assault.force_pool = { 150, 175, 225 }
