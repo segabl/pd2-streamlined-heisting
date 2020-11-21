@@ -32,7 +32,7 @@ function CopActionShoot:on_attention(...)
   self._next_vis_ray_t = -100
   self._common_data._line_of_sight_t = self._common_data._line_of_sight_t or -100
   local same_att = self._attention and self._common_data._old_att_unit == self._attention.unit
-  if self._autofiring and not same_att then
+  if self._autofiring and not same_att and not self._w_usage_tweak.no_autofire_stop then
     -- Stop autofiring on target change so aim delay isn't skipped
     self:_stop_autofire()
   end

@@ -148,6 +148,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
     { dmg_mul = 2.5 * dmg_mul, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
     { dmg_mul = 2 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.35 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
   }
+  presets.weapon.sh_tank.mini.no_autofire_stop = true
   presets.weapon.sh_tank.mini.RELOAD_SPEED = 1
   presets.weapon.sh_tank.mini.autofire_rounds = { 40, 700 }
   presets.weapon.sh_tank.mini.FALLOFF = {
@@ -184,7 +185,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
   -- Give team ai more reasonable preset values
   dmg_mul = math.lerp(1.1, 2.5, diff_i_norm)
-  presets.weapon.gang_member = deep_clone(presets.weapon.sh_base)
+  presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
+    no_autofire_stop = true
+  })
   for _, weapon in pairs(presets.weapon.gang_member) do
     local reference = weapon.FALLOFF[1].dmg_mul
     for _, falloff in pairs(weapon.FALLOFF) do
