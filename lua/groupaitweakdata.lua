@@ -548,7 +548,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
   self.besiege.reenforce.groups.FBI_spoocs = { 0.5, 0.5, 0.5 }
 
   self.besiege.assault.force = { 10, 14, 18 }
-  self.besiege.assault.force_pool = { 150, 175, 225 }
+  self.besiege.assault.force_pool = { 75, 100, 150 }
   self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
   self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
 
