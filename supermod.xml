@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<mod name="Streamlined Heisting" global_key="Streamlined Heisting">
+<mod name="Streamlined Heisting">
 
     <hooks script_path="mod.lua" hook_id="lib/">
 
@@ -47,7 +47,7 @@
             <file :name="wpn_npc_ksg/wpn_npc_ksg.object"/>
             <file :name="wpn_npc_ksg/wpn_npc_ksg.unit"/>
 
-            <!-- shepheard -->
+            <!-- mpx -->
             <file :name="wpn_npc_shepheard/shepheard_df.texture"/>
             <file :name="wpn_npc_shepheard/shepheard_nm.texture"/>
             <file :name="wpn_npc_shepheard/wpn_npc_shepheard.cooked_physics"/>
@@ -185,7 +185,7 @@
             <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.material_config"/>
             <file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model"/>
 
-            <!-- make original zeal swat use fal -->
+            <!-- make original zeal swat use mpx -->
             <file :name="ene_zeal_swat/ene_zeal_swat.material_config"/>
             <file :name="ene_zeal_swat/ene_zeal_swat_contour.material_config"/>
             <file :name="ene_zeal_swat/ene_zeal_swat.model"/>
@@ -204,7 +204,7 @@
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_contour.material_config"/>
             <file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
 
-            <!-- make heavy zeal use fal -->
+            <!-- make heavy zeal use mpx -->
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.material_config"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy_contour.material_config"/>
             <file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.model"/>
