@@ -64,7 +64,9 @@ These are minor changes that don't fit any of the above categories.
 - Removes heavy and medium hurt animations from heavy SWAT but scales their damage lower than their light counterparts
 - Improves the surrender presets, different enemies have different chances to surrender
 - Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
+- Makes the assault delay caused by having hostages scale with the amount of hostages (up to 8 hostages)
 
 ## Credits
 
 - ZEAL medic textures based on work by [Jarey_](https://modworkshop.net/user/1664)
+- Inspired by the early days of [fuglore's Hyper Heisting](https://modworkshop.net/mod/24337)
