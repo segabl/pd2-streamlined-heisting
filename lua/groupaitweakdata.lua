@@ -542,27 +542,17 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
   self.besiege.assault.groups.Phalanx = { 0, 0, 0 }
 
   local f = 2 - (difficulty_index - 1) / 7
-  self.besiege.assault.hostage_hesitation_delay = { 20 * f, 15 * f, 10 * f }
+  self.besiege.assault.hostage_hesitation_delay = { 10 * f, 7.5 * f, 5 * f }
   self.besiege.assault.force = { 6, 12, 18 }
-  self.besiege.assault.force_pool = { 75, 100, 150 }
+  self.besiege.assault.force_pool = { 50, 100, 150 }
   self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
   self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
 
   self.besiege.recon.groups = {
-    tac_swat_shotgun_flank = { 1, 1, 1 },
-    tac_swat_rifle_flank = { 2, 2, 2 },
-    hostage_rescue = { 8, 8, 8 }
+    hostage_rescue = { 1, 1, 1 }
   }
   self.besiege.recon.groups.single_spooc = { 0, 0, 0 }
   self.besiege.recon.groups.Phalanx = { 0, 0, 0 }
-
-  self.besiege.reenforce.groups = {
-    tac_swat_shotgun_flank = { 1, 1, 1 },
-    tac_swat_rifle_flank = { 2, 2, 2 },
-    FBI_spoocs = { 0, 0.5, 1 }
-  }
-  self.besiege.reenforce.groups.single_spooc = { 0, 0, 0 }
-  self.besiege.reenforce.groups.Phalanx = { 0, 0, 0 }
 
   self.street = deep_clone(self.besiege)
   self.safehouse = deep_clone(self.besiege)
