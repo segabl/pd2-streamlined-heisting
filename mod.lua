@@ -16,30 +16,22 @@ if not StreamHeist then
 
   -- Add new enemies to the character map
   Hooks:Add("HopLibOnCharacterMapCreated", "HopLibOnCharacterMapCreatedStreamlinedHeisting", function (char_map)
-
     table.insert(char_map.basic.list, "ene_sniper_3")
     table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
     table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
     table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
     table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
     table.insert(char_map.gitgud.list, "ene_zeal_sniper")
-
   end)
 
-  Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
-
+  Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusStreamlinedHeisting", function(menu_manager, nodes)
+    local loc = managers.localization
     HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
     loc:add_localized_strings({
       ene_zeal_medic = loc:exists("ene_medic") and loc:text("ene_medic"),
       ene_zeal_sniper = loc:exists("ene_sniper") and loc:text("ene_sniper")
     })
-
-  end)
-
-  Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusStreamlinedHeisting", function(menu_manager, nodes)
-
     StreamHeist.menu_builder:create_menu(nodes)
-
   end)
 
 end
