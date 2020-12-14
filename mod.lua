@@ -2,9 +2,11 @@ if not StreamHeist then
 
   _G.StreamHeist = {}
   StreamHeist.mod_path = ModPath
+  StreamHeist.mod_instance = ModInstance
   StreamHeist.settings = {
     logs = false
   }
+  StreamHeist.menu_builder = MenuBuilder:new("streamlined_heisting", StreamHeist.settings)
 
   function StreamHeist:log(...)
     if self.settings.logs then
@@ -36,7 +38,7 @@ if not StreamHeist then
 
   Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusStreamlinedHeisting", function(menu_manager, nodes)
 
-    MenuBuilder:new("streamlined_heisting", StreamHeist.settings):create_menu(nodes)
+    StreamHeist.menu_builder:create_menu(nodes)
 
   end)
 
