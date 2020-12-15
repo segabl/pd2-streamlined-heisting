@@ -1,6 +1,7 @@
 -- Copies weapon data and sets some values from a crew weapon version
 local function based_on(weap, crew_weap)
 	local w = deep_clone(weap)
+	w.categories = clone(crew_weap.categories)
 	w.sounds.prefix = crew_weap.sounds.prefix
 	w.muzzleflash = crew_weap.muzzleflash
 	w.shell_ejection = crew_weap.shell_ejection
