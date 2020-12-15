@@ -1,92 +1,100 @@
 <?xml version="1.0"?>
 <tweaks>
-  <!-- change the max size of the damage param in damage_* messages to account for new health granularity -->
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_bullet"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_explosion_fire"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_explosion_stun"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_fire"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_tase"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_dot"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_melee"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
-  <tweak version="2" name="settings/network" extension="network_settings">
-      <search>
-          <network/>
-          <rpc/>
-          <message name="damage_simple"/>
-          <param type="int" min="0" max="512"/>
-      </search>
-      <target mode="replace">
-          <param type="int" min="0" max="8192"/>
-      </target>
-  </tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_bullet"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_explosion_fire"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_explosion_stun"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_fire"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_tase"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_dot"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_melee"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="settings/network" extension="network_settings">
+		<search>
+			<network/>
+			<rpc/>
+			<message name="damage_simple"/>
+			<param type="int" min="0" max="512"/>
+		</search>
+		<target mode="replace">
+			<param type="int" min="0" max="8192"/>
+		</target>
+	</tweak>
+
 </tweaks>

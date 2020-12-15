@@ -1,17 +1,15 @@
 {
-  "name" : "Streamlined Heisting",
-  "description" : "Normalizes damage values, interpolates falloff, improves cop factions and more!",
-  "author" : "Hoppip",
-  "contact" : "Hoppip#1630",
-  "priority" : 401,
-  "blt_version" : 2,
-  "color" : "0.043 0.808 0.6",
-  "image" : "mod.png",
-  "version" : "1.5",
-  "updates" : [
-    {
-      "identifier" : "pd2-streamlined-heisting",
-      "host": { "meta": "https://updates.hoppip.at/pd2-streamlined-heisting" }
-    }
-  ]
+	"name" : "Streamlined Heisting",
+	"description" : "Normalizes damage values, interpolates falloff, improves cop factions and more!",
+	"author" : "Hoppip",
+	"contact" : "Hoppip#1630",
+	"priority" : 401,
+	"blt_version" : 2,
+	"color" : "0.043 0.808 0.6",
+	"image" : "mod.png",
+	"version" : "1.5",
+	"updates" : [{
+		"identifier" : "pd2-streamlined-heisting",
+		"host": { "meta": "https://updates.hoppip.at/pd2-streamlined-heisting" }
+	}]
 }
