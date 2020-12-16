@@ -55,6 +55,11 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
 	}
+	if difficulty_index > 3 then
+		self.unit_categories.FBI_shield.unit_types.russia = {
+			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_sr2_smg/ene_akan_fbi_shield_sr2_smg")
+		}
+	end
 
 	-- Use the same murky units on all difficulties since their models don't differ
 	self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
