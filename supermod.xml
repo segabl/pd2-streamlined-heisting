@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <mod name="Streamlined Heisting">
 
-	<tweak definition="network_tweak.xml"/>
+	<tweak definition="network.xml"/>
 
 	<hooks script_path="mod.lua" hook_id="lib/">
 
