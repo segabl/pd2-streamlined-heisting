@@ -20,10 +20,11 @@
 			<post :hook_id="upgradestweakdata"/>
 			<post :hook_id="weapontweakdata"/>
 		</group>
-		<post :hook_id="units/beings/player/playerdamage"/>
-		<group :hook_id="units/enemies/cop/">
-			<post :hook_id="actions/upper_body/copactionshoot"/>
-			<post :hook_id="copdamage"/>
+		<group :hook_id="units/">
+			<post :hook_id="beings/player/playerdamage"/>
+			<post :hook_id="enemies/cop/actions/upper_body/copactionshoot"/>
+			<post :hook_id="enemies/cop/copdamage"/>
+			<post :hook_id="units/weapons/raycastweaponbase"/>
 		</group>
 
 	</hooks>
