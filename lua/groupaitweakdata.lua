@@ -108,63 +108,13 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		table.insert(self.unit_categories.FBI_tank.unit_types.federales, Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249"))
 	end
 
-	if difficulty_index <= 2 then
-		self.special_unit_spawn_limits = {
-			shield = 2,
-			medic = 0,
-			taser = 0,
-			tank = 0,
-			spooc = 0
-		}
-	elseif difficulty_index == 3 then
-		self.special_unit_spawn_limits = {
-			shield = 3,
-			medic = 0,
-			taser = 1,
-			tank = 0,
-			spooc = 0
-		}
-	elseif difficulty_index == 4 then
-		self.special_unit_spawn_limits = {
-			shield = 4,
-			medic = 1,
-			taser = 2,
-			tank = 1,
-			spooc = 1
-		}
-	elseif difficulty_index == 5 then
-		self.special_unit_spawn_limits = {
-			shield = 4,
-			medic = 2,
-			taser = 2,
-			tank = 2,
-			spooc = 2
-		}
-	elseif difficulty_index == 6 then
-		self.special_unit_spawn_limits = {
-			shield = 5,
-			medic = 3,
-			taser = 3,
-			tank = 2,
-			spooc = 2
-		}
-	elseif difficulty_index == 7 then
-		self.special_unit_spawn_limits = {
-			shield = 5,
-			medic = 3,
-			taser = 3,
-			tank = 3,
-			spooc = 3
-		}
-	else
-		self.special_unit_spawn_limits = {
-			shield = 6,
-			medic = 5,
-			taser = 4,
-			tank = 4,
-			spooc = 3
-		}
-	end
+	self.special_unit_spawn_limits = {
+		shield = math.max(2, math.ceil(difficulty_index * 0.5)),
+		medic = math.max(0, difficulty_index - 4),
+		taser = math.max(0, math.ceil((difficulty_index - 2) * 0.5)),
+		tank = math.max(0, math.ceil((difficulty_index - 3) * 0.75)),
+		spooc = math.max(0, math.min(difficulty_index - 3, 2))
+	}
 end)
 
 
@@ -381,7 +331,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_bull_rush = {
-		amount = { 1, 1 + math.ceil(math.max(0, difficulty_index - 5) / 2) },
+		amount = { 1, 1 },
 		spawn = {
 			{
 				freq = 1,
@@ -453,96 +403,25 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
-	if difficulty_index <= 2 then
-		self.besiege.assault.groups = {
-			tac_swat_shotgun_rush = { 1, 1, 1 },
-			tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
-			tac_swat_rifle = { 8, 8, 8 },
-			tac_swat_rifle_flank = { 2, 2, 2 },
-			tac_shield_wall_ranged = { 0, 1, 2 },
-			tac_shield_wall_charge = { 0, 0.5, 1 },
-			tac_shield_wall = { 0, 0.5, 1 },
-			tac_tazer_flanking = { 0, 0, 0 },
-			tac_tazer_charge = { 0, 0, 0 },
-			FBI_spoocs = { 0, 0, 0 },
-			tac_bull_rush = { 0, 0, 0 }
-		}
-	elseif difficulty_index == 3 then
-		self.besiege.assault.groups = {
-			tac_swat_shotgun_rush = { 1, 1, 1 },
-			tac_swat_shotgun_flank = { 0.5, 0.5, 0.5 },
-			tac_swat_rifle = { 8, 8, 8 },
-			tac_swat_rifle_flank = { 2, 2, 2 },
-			tac_shield_wall_ranged = { 0, 2, 4 },
-			tac_shield_wall_charge = { 0, 1, 2 },
-			tac_shield_wall = { 0, 1, 2 },
-			tac_tazer_flanking = { 0, 1, 2 },
-			tac_tazer_charge = { 0, 1, 2 },
-			FBI_spoocs = { 0, 0, 0 },
-			tac_bull_rush = { 0, 0, 0 }
-		}
-	elseif difficulty_index == 4 then
-		self.besiege.assault.groups = {
-			tac_swat_shotgun_rush = { 2, 2, 2 },
-			tac_swat_shotgun_flank = { 1, 1, 1 },
-			tac_swat_rifle = { 16, 16, 16 },
-			tac_swat_rifle_flank = { 4, 4, 4 },
-			tac_shield_wall_ranged = { 0, 4, 8 },
-			tac_shield_wall_charge = { 0, 2, 4 },
-			tac_shield_wall = { 0, 2, 4 },
-			tac_tazer_flanking = { 0, 2, 4 },
-			tac_tazer_charge = { 0, 2, 4 },
-			FBI_spoocs = { 0, 1, 2 },
-			tac_bull_rush = { 0, 1, 2 }
-		}
-	elseif difficulty_index == 5 then
-		self.besiege.assault.groups = {
-			tac_swat_shotgun_rush = { 2, 2, 2 },
-			tac_swat_shotgun_flank = { 1, 1, 1 },
-			tac_swat_rifle = { 16, 16, 16 },
-			tac_swat_rifle_flank = { 4, 4, 4 },
-			tac_shield_wall_ranged = { 0, 4, 8 },
-			tac_shield_wall_charge = { 0, 2, 4 },
-			tac_shield_wall = { 0, 2, 4 },
-			tac_tazer_flanking = { 0, 2, 4 },
-			tac_tazer_charge = { 0, 2, 4 },
-			FBI_spoocs = { 0, 2, 4 },
-			tac_bull_rush = { 0, 2, 4 }
-		}
-	elseif difficulty_index == 6 then
-		self.besiege.assault.groups = {
-			tac_swat_shotgun_rush = { 2, 2, 2 },
-			tac_swat_shotgun_flank = { 1, 1, 1 },
-			tac_swat_rifle = { 16, 16, 16 },
-			tac_swat_rifle_flank = { 4, 4, 4 },
-			tac_shield_wall_ranged = { 0, 4, 8 },
-			tac_shield_wall_charge = { 0, 3, 6 },
-			tac_shield_wall = { 0, 3, 6 },
-			tac_tazer_flanking = { 0, 3, 6 },
-			tac_tazer_charge = { 0, 3, 6 },
-			FBI_spoocs = { 0, 3, 6 },
-			tac_bull_rush = { 0, 3, 6 }
-		}
-	elseif difficulty_index >= 7 then
-		self.besiege.assault.groups = {
-			tac_swat_shotgun_rush = { 2, 2, 2 },
-			tac_swat_shotgun_flank = { 1, 1, 1 },
-			tac_swat_rifle = { 16, 16, 16 },
-			tac_swat_rifle_flank = { 4, 4, 4 },
-			tac_shield_wall_ranged = { 0, 4, 8 },
-			tac_shield_wall_charge = { 0, 4, 8 },
-			tac_shield_wall = { 0, 4, 8 },
-			tac_tazer_flanking = { 0, 4, 8 },
-			tac_tazer_charge = { 0, 4, 8 },
-			FBI_spoocs = { 0, 4, 8 },
-			tac_bull_rush = { 0, 4, 8 }
-		}
-	end
+	local special_weight = { 0, difficulty_index * 0.5, difficulty_index }
+	self.besiege.assault.groups = {
+		tac_swat_shotgun_rush = { 2, 2, 2 },
+		tac_swat_shotgun_flank = { 1, 1, 1 },
+		tac_swat_rifle = { 16, 16, 16 },
+		tac_swat_rifle_flank = { 4, 4, 4 },
+		tac_shield_wall_ranged = special_weight,
+		tac_shield_wall_charge = special_weight,
+		tac_shield_wall = special_weight,
+		tac_tazer_flanking = special_weight,
+		tac_tazer_charge = special_weight,
+		FBI_spoocs = special_weight,
+		tac_bull_rush = special_weight
+	}
 	self.besiege.assault.groups.single_spooc = { 0, 0, 0 }
 	self.besiege.assault.groups.Phalanx = { 0, 0, 0 }
 
-	local f = 2 - (difficulty_index - 1) / 7
-	self.besiege.assault.hostage_hesitation_delay = { 10 * f, 7.5 * f, 5 * f }
+	local f = (difficulty_index - 1) / 7
+	self.besiege.assault.hostage_hesitation_delay = { math.lerp(20, 10, f), math.lerp(15, 7.5, f), math.lerp(10, 5, f) }
 	self.besiege.assault.force = { 6, 12, 18 }
 	self.besiege.assault.force_pool = { 50, 100, 150 }
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
