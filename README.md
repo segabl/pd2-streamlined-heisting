@@ -59,13 +59,14 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 
 ### Miscellaneous other changes
 
-These are minor changes that don't fit any of the above categories.
+These are minor changes and fixes that don't fit any of the above categories.
 
 - Removes heavy and medium hurt animations from heavy SWAT but scales their damage lower than their light counterparts
 - Improves the surrender presets, different enemies have different chances to surrender
 - Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
 - Makes the assault delay caused by having hostages scale with the amount of hostages (up to 8 hostages)
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
+- Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
 
 ## Credits
 
