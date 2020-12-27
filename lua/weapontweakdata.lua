@@ -45,12 +45,19 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self)
 end)
 
 
+-- Make npc melee weapon only a cosmetic choice (damage is multiplied in charactertweakdata)
+Hooks:PostHook(WeaponTweakData, "_init_data_npc_melee", "sh__init_data_npc_melee", function (self)
+	for _, data in pairs(self.npc_melee) do
+		data.damage = 1
+	end
+end)
+
+
 local function restore_npc_weapon_dmg(self)
 	for k, v in pairs(self._orig_npc_dmg) do
 		self[k].DAMAGE = v
 	end
 end
-
 
 -- Since Overkill decided to mess with weapon stats based on difficulty instead of adjusting the presets
 -- we have to restore the weapon damage values after they have been modified by those functions

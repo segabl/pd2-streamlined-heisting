@@ -36,7 +36,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local acc_mul_tbl = { 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1.0 }
 	local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
 	local aim_delay_tbl = { 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05 }
-	local melee_dmg_tbl = { 1, 2, 4, 7, 10, 13, 16, 20 }
+	local melee_dmg_tbl = { 6, 8, 10, 12, 14, 16, 18, 20 }
 
 	local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local diff_i_norm = (diff_i - 1) / (#tweak_data.difficulties - 1)
@@ -127,7 +127,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	-- Bulldozer preset
 	dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
 	presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
-		melee_dmg = 25
+		melee_dmg = 20 * dmg_mul
 	})
 	presets.weapon.sh_tank.is_shotgun_pump.RELOAD_SPEED = 1
 	presets.weapon.sh_tank.is_shotgun_pump.FALLOFF = {
@@ -182,6 +182,14 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
 		end
 	})
+
+	-- Shield preset
+	presets.weapon.sh_shield = based_on(presets.weapon.sh_heavy)
+	for _, weapon in pairs(presets.weapon.sh_shield) do
+		weapon.melee_speed = nil
+		weapon.melee_dmg = nil
+		weapon.melee_retry_delay = nil
+	end
 
 	-- Give team ai more reasonable preset values
 	dmg_mul = math.lerp(1.1, 2.5, diff_i_norm)
@@ -288,7 +296,7 @@ local access_presets = {
 	fbi = "sh_strong",
 	gangster = "sh_strong",
 	security = "sh_strong",
-	shield = "sh_heavy",
+	shield = "sh_shield",
 	sniper = "sh_sniper",
 	spooc = "sh_base",
 	swat = "sh_base",
@@ -309,6 +317,7 @@ local function assign_weapon_presets(char_tweak_data)
 		weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
 		if weapon_preset_name then
 			char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
+			char_preset.melee_weapon_dmg_multiplier = char_preset.weapon.is_rifle.melee_dmg
 			StreamHeist:log("Using " .. weapon_preset_name .. " weapon preset for " .. name)
 		end
 	end
