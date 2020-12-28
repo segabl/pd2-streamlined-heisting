@@ -317,7 +317,7 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
 			r = target_dis,
 			acc = { math_lerp(prev_data.acc[1], data.acc[1], t), math_lerp(prev_data.acc[2], data.acc[2], t) },
 			recoil = { math_lerp(prev_data.recoil[1], data.recoil[1], t), math_lerp(prev_data.recoil[2], data.recoil[2], t) },
-			autofire_rounds = prev_data.autofire_rounds and {
+			autofire_rounds = prev_data.autofire_rounds and data.autofire_rounds and {
 				math_lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t),
 				math_lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t)
 			},
