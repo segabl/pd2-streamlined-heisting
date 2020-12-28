@@ -276,7 +276,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 		mvec3_set(shoot_hist.m_last_pos, pos)
 	else
 		mvec3_set(temp_vec1, pos)
-		mvec3_sub(temp_vec1, self._common_data.pos)
+		mvec3_sub(temp_vec1, self._shoot_from_pos)
 
 		local error_vec = Vector3()
 
