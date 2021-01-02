@@ -109,7 +109,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	end
 
 	self.special_unit_spawn_limits = {
-		shield = math.max(2, math.ceil(difficulty_index * 0.5)),
+		shield = math.max(2, math.ceil(difficulty_index * 0.75)),
 		medic = math.max(0, difficulty_index - 4),
 		taser = math.max(0, math.ceil((difficulty_index - 2) * 0.5)),
 		tank = math.max(0, math.ceil((difficulty_index - 3) * 0.75)),
@@ -403,22 +403,23 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
-	local special_weight = { 0, difficulty_index * 0.5, difficulty_index }
+	local special_weight = difficulty_index
+	local shield_weight = difficulty_index * 0.75 + 4
 	self.besiege.assault.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },
 		tac_swat_shotgun_flank = { 1, 1, 1 },
 		tac_swat_rifle = { 16, 16, 16 },
 		tac_swat_rifle_flank = { 4, 4, 4 },
-		tac_shield_wall_ranged = special_weight,
-		tac_shield_wall_charge = special_weight,
-		tac_shield_wall = special_weight,
-		tac_tazer_flanking = special_weight,
-		tac_tazer_charge = special_weight,
-		FBI_spoocs = special_weight,
-		tac_bull_rush = special_weight
+		tac_shield_wall_ranged = { 0, shield_weight * 0.5, shield_weight },
+		tac_shield_wall_charge = { 0, shield_weight * 0.5, shield_weight },
+		tac_shield_wall = { 0, shield_weight * 0.5, shield_weight },
+		tac_tazer_flanking = { 0, special_weight * 0.5, special_weight },
+		tac_tazer_charge = { 0, special_weight * 0.5, special_weight },
+		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
+		tac_bull_rush = { 0, special_weight * 0.5, special_weight },
+		single_spooc = { 0, 0, 0 },
+		Phalanx = { 0, 0, 0 }
 	}
-	self.besiege.assault.groups.single_spooc = { 0, 0, 0 }
-	self.besiege.assault.groups.Phalanx = { 0, 0, 0 }
 
 	local f = (difficulty_index - 1) / 7
 	self.besiege.assault.hostage_hesitation_delay = { math.lerp(20, 10, f), math.lerp(15, 7.5, f), math.lerp(10, 5, f) }
@@ -428,10 +429,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
 
 	self.besiege.recon.groups = {
-		hostage_rescue = { 1, 1, 1 }
+		hostage_rescue = { 1, 1, 1 },
+		single_spooc = { 0, 0, 0 },
+		Phalanx = { 0, 0, 0 }
 	}
-	self.besiege.recon.groups.single_spooc = { 0, 0, 0 }
-	self.besiege.recon.groups.Phalanx = { 0, 0, 0 }
 
 	self.street = deep_clone(self.besiege)
 	self.safehouse = deep_clone(self.besiege)
