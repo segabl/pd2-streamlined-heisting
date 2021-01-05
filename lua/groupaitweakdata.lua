@@ -127,6 +127,10 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"smoke_grenade",
 		"murder"
 	}
+	table.insert(self._tactics.swat_rifle, "shield_cover")
+	table.insert(self._tactics.swat_rifle_flank, "shield_cover")
+	table.insert(self._tactics.swat_shotgun_rush, "shield_cover")
+	table.insert(self._tactics.swat_shotgun_flank, "shield_cover")
 
 	self.enemy_spawn_groups.tac_swat_shotgun_rush = {
 		amount = { 2, 3 },
@@ -149,7 +153,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 2,
 				unit = "medic_R870",
@@ -179,7 +183,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_R870",
@@ -209,7 +213,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
@@ -239,7 +243,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
@@ -254,7 +258,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			{
 				amount_min = 2,
 				freq = 1,
-				amount_max = 2,
+				amount_max = 3,
 				rank = 2,
 				unit = "FBI_heavy_G36",
 				tactics = self._tactics.shield_support_ranged
@@ -269,11 +273,11 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
-				tactics = self._tactics.shield_support_charge
+				tactics = self._tactics.shield_support_ranged
 			}
 		}
 	}
@@ -284,7 +288,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			{
 				amount_min = 2,
 				freq = 1,
-				amount_max = 2,
+				amount_max = 3,
 				rank = 2,
 				unit = "FBI_heavy_R870",
 				tactics = self._tactics.shield_support_charge
@@ -299,7 +303,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_R870",
@@ -309,11 +313,11 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_shield_wall = {
-		amount = { 4, 5 },
+		amount = { 3, 4 },
 		spawn = {
 			{
-				amount_min = 4,
-				freq = 4,
+				amount_min = 3,
+				freq = 1,
 				amount_max = 4,
 				rank = 3,
 				unit = "FBI_shield",
@@ -321,7 +325,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 32,
+				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 2,
 				unit = "medic_M4",
@@ -343,7 +347,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_tazer_flanking = {
-		amount = { 1, 3 },
+		amount = { 3, 4 },
 		spawn = {
 			{
 				amount_min = 1,
@@ -365,7 +369,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_tazer_charge = {
-		amount = { 1, 3 },
+		amount = { 3, 4 },
 		spawn = {
 			{
 				amount_min = 1,
@@ -378,7 +382,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			{
 				amount_min = 0,
 				freq = 1,
-				amount_max = 2,
+				amount_max = 3,
 				rank = 2,
 				unit = "FBI_swat_R870",
 				tactics = self._tactics.tazer_charge
