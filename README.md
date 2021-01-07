@@ -65,6 +65,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Makes the assault delay caused by having hostages scale with the amount of hostages (up to 8 hostages)
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
+- Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
 
 ## Credits
 
