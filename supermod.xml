@@ -25,7 +25,7 @@
 			<post :hook_id="enemies/cop/actions/upper_body/copactionshoot"/>
 			<post :hook_id="enemies/cop/actions/upper_body/copactiontase"/>
 			<post :hook_id="enemies/cop/copdamage"/>
-			<post :hook_id="units/weapons/raycastweaponbase"/>
+			<post :hook_id="weapons/raycastweaponbase"/>
 		</group>
 
 	</hooks>
