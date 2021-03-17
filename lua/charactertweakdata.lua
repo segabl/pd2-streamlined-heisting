@@ -154,9 +154,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Taser preset
 	presets.weapon.sh_taser = based_on(presets.weapon.sh_base, {
-		tase_sphere_cast_radius = 30,
+		tase_sphere_cast_radius = 15,
 		tase_distance = 1500,
-		aim_delay_tase = { 0, aim_delay_tbl[diff_i] * 0.5 }
+		aim_delay_tase = { 0, 0 }
 	})
 
 	-- Sniper presets
