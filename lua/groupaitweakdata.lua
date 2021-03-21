@@ -427,7 +427,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	local f = (difficulty_index - 1) / 7
 	self.besiege.assault.hostage_hesitation_delay = { math.lerp(20, 10, f), math.lerp(15, 7.5, f), math.lerp(10, 5, f) }
-	self.besiege.assault.force = { 6, 12, 18 }
+	self.besiege.assault.force = { 8, 12, 16 }
 	self.besiege.assault.force_pool = { 50, 100, 150 }
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
