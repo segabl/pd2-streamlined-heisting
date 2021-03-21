@@ -67,6 +67,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
 - Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
 - Fixes enemies playing full body crouching animations when suppressed when they are already crouching
+- Raises the maximum amount of important enemies and always treats specials as important (Important enemies are more responsive)
 
 ## Credits
 
