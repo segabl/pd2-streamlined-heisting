@@ -153,7 +153,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 2,
 				unit = "medic_R870",
@@ -183,7 +183,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_R870",
@@ -213,7 +213,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
@@ -243,7 +243,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
@@ -253,12 +253,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_shield_wall_ranged = {
-		amount = { 4, 5 },
+		amount = { 5, 6 },
 		spawn = {
 			{
 				amount_min = 2,
 				freq = 1,
-				amount_max = 3,
+				amount_max = 4,
 				rank = 2,
 				unit = "FBI_heavy_G36",
 				tactics = self._tactics.shield_support_ranged
@@ -273,7 +273,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
@@ -283,12 +283,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_shield_wall_charge = {
-		amount = { 4, 5 },
+		amount = { 5, 6 },
 		spawn = {
 			{
 				amount_min = 2,
 				freq = 1,
-				amount_max = 3,
+				amount_max = 4,
 				rank = 2,
 				unit = "FBI_heavy_R870",
 				tactics = self._tactics.shield_support_charge
@@ -303,7 +303,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_R870",
@@ -325,7 +325,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 0,
-				freq = difficulty_index / 16,
+				freq = difficulty_index / 12,
 				amount_max = 1,
 				rank = 2,
 				unit = "medic_M4",
