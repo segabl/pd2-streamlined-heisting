@@ -264,10 +264,14 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
 	self:_add_weapon("ksg", "units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg")
 
-	-- Set hurt severities for heavies
+	-- Set hurt severities for heavies and bosses
 	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
 	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
 	self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
