@@ -59,6 +59,7 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 
 These are minor changes and fixes that don't fit any of the above categories.
 
+- Reduces the effect of health granularity by drastically increasing the fractional that damage is rounded to (from 1/512 to 1/8192)
 - Removes heavy and medium hurt animations from heavy SWAT but scales their damage lower than their light counterparts
 - Improves the surrender presets, different enemies have different chances to surrender
 - Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
