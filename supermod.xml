@@ -27,6 +27,7 @@
 			<post :hook_id="enemies/cop/actions/upper_body/copactiontase"/>
 			<post :hook_id="enemies/cop/logics/coplogicattack"/>
 			<post :hook_id="enemies/cop/logics/coplogicbase"/>
+			<post :hook_id="enemies/cop/logics/coplogicidle"/>
 			<post :hook_id="enemies/cop/copbrain"/>
 			<post :hook_id="enemies/cop/copdamage"/>
 			<post :hook_id="enemies/cop/copmovement"/>

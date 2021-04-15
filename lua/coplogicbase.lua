@@ -6,3 +6,14 @@ function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, ...)
 	end
 	return queue_task_original(internal_data, id, func, data, exec_t, ...)
 end
+
+
+-- Instant detection outside of stealth
+local _create_detected_attention_object_data_original = CopLogicBase._create_detected_attention_object_data
+function CopLogicBase._create_detected_attention_object_data(...)
+	local data = _create_detected_attention_object_data_original(...)
+	if not managers.groupai:state():whisper_mode() then
+		data.notice_progress = 1
+	end
+	return data
+end
