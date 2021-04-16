@@ -35,14 +35,10 @@ function CopLogicAttack._upd_aim(data, my_data)
 				end
 
 				if not shoot and my_data.attitude == "engage" then
-					if verified then
-						shoot = focus_enemy.verified_dis < firing_range or focus_enemy.reaction == AIAttentionObject.REACT_SHOOT
+					if my_data.firing and time_since_verification < 4 then
+						shoot = true
 					else
-						if my_data.firing and time_since_verification < 3.5 then
-							shoot = true
-						else
-							data.brain:search_for_path_to_unit("hunt" .. tostring(my_data.key), focus_enemy.unit)
-						end
+						data.brain:search_for_path_to_unit("hunt" .. tostring(my_data.key), focus_enemy.unit)
 					end
 				end
 
@@ -52,8 +48,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 			end
 		else
 			aim = not running or time_since_verification < math.lerp(5, 1, math.max(0, focus_enemy.verified_dis - 500) / 600)
-
-			if aim and my_data.shooting and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and time_since_verification < (running and 2 or 3) then
+			if aim and my_data.shooting and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and time_since_verification < (running and 2 or 4) then
 				shoot = true
 			end
 

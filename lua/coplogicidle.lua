@@ -24,17 +24,19 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data)
 		return REACT_COMBAT
 	end
 
-	if record.status == "dead" then
+	if record.status == "dead" or record.being_arrested then
 		return math_min(attention_reaction, REACT_AIM)
-	elseif record.status == "disabled" then
+	end
+
+	if record.status == "disabled" then
 		if record.assault_t and record.assault_t - record.disabled_t > 0.6 then
 			return REACT_COMBAT
 		else
 			return math_min(attention_reaction, REACT_AIM)
 		end
-	elseif record.being_arrested then
-		return math_min(attention_reaction, REACT_AIM)
-	elseif can_arrest and (not record.assault_t or attention_data.unit:base():arrest_settings().aggression_timeout < data.t - record.assault_t) and record.arrest_timeout < data.t and not record.status then
+	end
+
+	if can_arrest and (not record.assault_t or attention_data.unit:base():arrest_settings().aggression_timeout < data.t - record.assault_t) and record.arrest_timeout < data.t and not record.status then
 		if attention_data.dis < 2000 then
 			for u_key, other_crim_rec in pairs(managers.groupai:state():all_criminals()) do
 				local other_crim_attention_info = data.detected_attention_objects[u_key]

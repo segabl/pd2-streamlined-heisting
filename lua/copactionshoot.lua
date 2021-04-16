@@ -146,11 +146,8 @@ function CopActionShoot:update(t)
 
 					local shoot_hist = self._shoot_history
 					local no_los_dur = t - self._common_data._line_of_sight_t
-					shoot = no_los_dur < 3
+					shoot = no_los_dur < 10
 					if self._clear_los and shoot_hist then
-						if no_los_dur > 1 and not self._last_vis_check_status then
-							shoot_hist.m_last_pos = mvector3.copy(target_pos)
-						end
 						-- Apply focus delay after 3 seconds of no los
 						if no_los_dur > 3 and not shoot_hist.focus_delay then
 							shoot_hist.focus_start_t = t
