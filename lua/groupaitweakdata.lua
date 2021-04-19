@@ -1,3 +1,9 @@
+-- Slightly increase tickrate (from 60 tasks/s to 80 tasks/s) to allow higher task throughput
+-- Having more available tasks per second than the max amount of enemies should stop any task slowdown
+Hooks:PostHook(GroupAITweakData, "init", "sh_init", function (self)
+	self.ai_tick_rate = 0.0125
+end)
+
 -- We're using the same unit categories for all difficulties for the sake of making the code more readable and not having
 -- to do all that if-else crap that Overkill originally did. While unit categories are the same, the units they contain still
 -- depend on the difficulty, for instance FBI_heavy_G36 will spawn normal M4 heavies on overkill despite the unit category name
