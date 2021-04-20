@@ -413,8 +413,8 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
-	local special_weight = difficulty_index
-	local shield_weight = difficulty_index * 0.75 + 4
+	local special_weight = difficulty_index * 0.75
+	local shield_weight = difficulty_index * 0.625 + 1
 	self.besiege.assault.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },
 		tac_swat_shotgun_flank = { 1, 1, 1 },
