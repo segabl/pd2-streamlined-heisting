@@ -42,6 +42,11 @@
 
 		<!-- new weapons -->
 		<group name="units/payday2/weapons/">
+			<!-- saiga retexture/model -->
+			<file :name="wpn_npc_saiga/saiga_df.texture"/>
+			<file :name="wpn_npc_saiga/saiga_nm.texture"/>
+			<file :name="wpn_npc_saiga/wpn_npc_saiga.model"/>
+
 			<!-- spas12 -->
 			<file :name="wpn_npc_spas12/spas12_df.texture"/>
 			<file :name="wpn_npc_spas12/spas12_nm.texture"/>
