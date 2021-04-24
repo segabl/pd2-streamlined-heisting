@@ -3,7 +3,12 @@ local REACT_AIM = AIAttentionObject.REACT_AIM
 local REACT_ARREST = AIAttentionObject.REACT_ARREST
 local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
 local math_min = math.min
-function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data)
+local _chk_reaction_to_attention_object_original = CopLogicIdle._chk_reaction_to_attention_object
+function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ...)
+	if not managers.groupai:state():enemy_weapons_hot() then
+		return _chk_reaction_to_attention_object_original(data, attention_data, ...)
+	end
+
 	local record = attention_data.criminal_record
 	local can_arrest = CopLogicBase._can_arrest(data)
 	local attention_reaction = attention_data.settings.reaction
