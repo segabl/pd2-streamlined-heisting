@@ -71,7 +71,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Fixes enemies playing full body crouching animations when suppressed when they are already crouching
 - Raises the maximum amount of important enemies and always treats specials as important (Important enemies are more responsive)
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
-- Makes Cloaker attacks more consistent by removing some of their restrictions (not being able to start a charge attack if other enemies are in between them and their target)
+- Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 
 ## Credits
 

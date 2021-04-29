@@ -13,7 +13,10 @@
 			<post :hook_id="mission/elementspawnenemygroup"/>
 			<post :hook_id="dynamicresourcemanager"/>
 		</group>
-		<post hook_id="lib/network/matchmaking/networkmatchmakingsteam"/>
+		<group hook_id="lib/network/">
+			<post :hook_id="handlers/unitnetworkhandler"/>
+			<post :hook_id="matchmaking/networkmatchmakingsteam"/>
+		</group>
 		<group hook_id="lib/tweak_data/">
 			<post :hook_id="charactertweakdata"/>
 			<post :hook_id="groupaitweakdata"/>
