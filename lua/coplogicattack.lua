@@ -37,7 +37,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 				if not shoot and my_data.attitude == "engage" then
 					if my_data.firing and time_since_verification < 4 then
 						shoot = true
-					else
+					elseif alive(focus_enemy.unit) and focus_enemy.unit.movement and focus_enemy.unit:movement() and focus_enemy.unit:movement():nav_tracker() then
 						data.brain:search_for_path_to_unit("hunt" .. tostring(my_data.key), focus_enemy.unit)
 					end
 				end
