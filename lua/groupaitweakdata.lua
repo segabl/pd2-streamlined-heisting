@@ -45,6 +45,9 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		self.unit_categories.FBI_suit_M4_MP5.unit_types.america = {
 			Idstring("units/payday2/characters/ene_cop_3/ene_cop_3")
 		}
+		self.unit_categories.FBI_suit_M4_MP5.unit_types.zombie = {
+			Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_3/ene_cop_hvh_3")
+		}
 	end
 
 	-- Use the same russian units on all difficulties since factions are incomplete
