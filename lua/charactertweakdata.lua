@@ -36,7 +36,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local dmg_mul_shot_tbl = { 0.8125, 0.875, 1, 1.25, 1.75, 2.5, 3.5, 5 }
 	local acc_mul_tbl = { 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1.0 }
 	local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
-	local aim_delay_tbl = { 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05 }
+	local aim_delay_tbl = { 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2 }
 	local melee_dmg_tbl = { 6, 8, 10, 12, 14, 16, 18, 20 }
 
 	local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
@@ -173,7 +173,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	dmg_mul = math.lerp(0.6, 1.3, diff_i_norm)
 	presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
 		focus_delay = focus_delay,
-		aim_delay = { aim_delay, aim_delay * 4 },
+		aim_delay = { aim_delay, aim_delay * 3 },
 	})
 	presets.weapon.sh_sniper.is_rifle.FALLOFF = {
 		{ dmg_mul = 9 * dmg_mul, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
@@ -181,7 +181,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 9 * dmg_mul, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-		aim_delay = { aim_delay * 0.5, aim_delay * 2 },
+		aim_delay = { aim_delay * 0.5, aim_delay * 1.5 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)

@@ -154,13 +154,13 @@ function CopActionShoot:update(t)
 					local shoot_hist = self._shoot_history
 					local no_los_dur = t - self._common_data._line_of_sight_t
 					if self._clear_los and shoot_hist then
-						-- Apply focus delay after 3 seconds of no los
-						if no_los_dur > 3 and not shoot_hist.focus_delay then
+						-- Apply focus delay after 2 seconds of no los
+						if no_los_dur > 2 and not shoot_hist.focus_delay then
 							shoot_hist.focus_start_t = t
 							shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
 						end
-						-- Apply aim delay after 6 seconds of no los
-						if no_los_dur > 6 and not self._waiting_for_aim_delay then
+						-- Apply aim delay after 4 seconds of no los
+						if no_los_dur > 4 and not self._waiting_for_aim_delay then
 							local aim_delay_minmax = self._w_usage_tweak.aim_delay
 							local lerp_dis = math_min(1, target_dis / self._falloff[#self._falloff].r)
 							local aim_delay = math_lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
