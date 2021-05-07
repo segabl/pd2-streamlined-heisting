@@ -341,3 +341,14 @@ Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", 
 Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", assign_weapon_presets)
 Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", assign_weapon_presets)
 Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", assign_weapon_presets)
+
+
+-- Dynamically loop over enemy list instead of hardcoded preset access
+function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
+	for _, v in ipairs(self._enemy_list) do
+		if self[v].access ~= "security" and self[v].access ~= "cop" then
+			self[v].HEALTH_INIT = self[v].HEALTH_INIT * hp_mul
+		end
+		self[v].headshot_dmg_mul = self[v].headshot_dmg_mul and self[v].headshot_dmg_mul * hs_mul
+	end
+end
