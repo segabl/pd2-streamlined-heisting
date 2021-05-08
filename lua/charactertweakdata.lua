@@ -328,11 +328,9 @@ local preset_overrides = {
 	tank_medic = "sh_heavy"
 }
 local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
-local hs_muls = { 1, 1, 1.35, 1.7, 1.8, 1.9, 1.95, 2 }
 local function set_presets(char_tweak_data)
 	local diff_i = char_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local hp_mul = hp_muls[diff_i]
-	local hs_mul = hs_muls[diff_i]
 
 	local char_preset, weapon_preset_name
 	for _, name in ipairs(char_tweak_data._enemy_list) do
@@ -341,7 +339,7 @@ local function set_presets(char_tweak_data)
 		if char_preset.access ~= "security" and char_preset.access ~= "cop" then
 			char_preset.HEALTH_INIT = char_preset.HEALTH_INIT * hp_mul
 		end
-		char_preset.headshot_dmg_mul = char_preset.headshot_dmg_mul and char_preset.headshot_dmg_mul * hs_mul
+		char_preset.headshot_dmg_mul = char_preset.headshot_dmg_mul and char_preset.headshot_dmg_mul * 2
 
 		weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
 		if weapon_preset_name then
