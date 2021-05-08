@@ -1,5 +1,5 @@
 -- Allow higher number of important cops
-GroupAIStateBase._nr_important_cops = 10
+GroupAIStateBase._nr_important_cops = 6
 
 
 -- Make medic and minigun dozer register as specials
