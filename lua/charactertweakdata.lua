@@ -300,6 +300,14 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 end)
 
 
+-- Non-functional in vanilla (might make use of custom speeds in the future)
+function CharacterTweakData:_multiply_all_speeds()
+end
+
+-- Done below
+function CharacterTweakData:_multiply_all_hp()
+end
+
 local access_presets = {
 	cop = "sh_strong",
 	fbi = "sh_strong",
@@ -319,10 +327,22 @@ local preset_overrides = {
 	medic = "sh_heavy",
 	tank_medic = "sh_heavy"
 }
-local function assign_weapon_presets(char_tweak_data)
+local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
+local hs_muls = { 1, 1, 1.35, 1.7, 1.8, 1.9, 1.95, 2 }
+local function set_presets(char_tweak_data)
+	local diff_i = char_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+	local hp_mul = hp_muls[diff_i]
+	local hs_mul = hs_muls[diff_i]
+
 	local char_preset, weapon_preset_name
 	for _, name in ipairs(char_tweak_data._enemy_list) do
 		char_preset = char_tweak_data[name]
+
+		if char_preset.access ~= "security" and char_preset.access ~= "cop" then
+			char_preset.HEALTH_INIT = char_preset.HEALTH_INIT * hp_mul
+		end
+		char_preset.headshot_dmg_mul = char_preset.headshot_dmg_mul and char_preset.headshot_dmg_mul * hs_mul
+
 		weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
 		if weapon_preset_name then
 			char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
@@ -334,21 +354,10 @@ end
 
 -- Weapon presets are assigned to the enemies here because the vanilla difficulty functions mess with the
 -- currently assigned presets so we assign our custom presets AFTER the vanilla presets have been changed
-Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", assign_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", assign_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", assign_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", assign_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", assign_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", assign_weapon_presets)
-Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", assign_weapon_presets)
-
-
--- Dynamically loop over enemy list instead of hardcoded preset access
-function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
-	for _, v in ipairs(self._enemy_list) do
-		if self[v].access ~= "security" and self[v].access ~= "cop" then
-			self[v].HEALTH_INIT = self[v].HEALTH_INIT * hp_mul
-		end
-		self[v].headshot_dmg_mul = self[v].headshot_dmg_mul and self[v].headshot_dmg_mul * hs_mul
-	end
-end
+Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", set_presets)
+Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", set_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", set_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", set_presets)
+Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", set_presets)
+Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", set_presets)
+Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", set_presets)
