@@ -3,7 +3,7 @@
 function PlayerDamage:_chk_dmg_too_soon()
 	local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
 	if self._last_dodged then
-		next_allowed_dmg_t = next_allowed_dmg_t + 0.3
+		next_allowed_dmg_t = next_allowed_dmg_t + 0.2
 	end
 	return managers.player:player_timer():time() < next_allowed_dmg_t
 end
