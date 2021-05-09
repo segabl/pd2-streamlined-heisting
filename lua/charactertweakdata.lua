@@ -207,6 +207,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			falloff.dmg_mul = (falloff.dmg_mul / reference) * dmg_mul
 		end
 	end
+	presets.gang_member_damage.HEALTH_INIT = 100 * diff_i
+	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.3
 
 	-- Setup surrender presets
 	local surrender_factors = {
@@ -282,6 +284,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
@@ -297,17 +300,29 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_medic.spawn_sound_event = self.tank_medic.speech_prefix_p1 .. "_entrance"
 	self.tank_mini.spawn_sound_event = self.tank_mini.speech_prefix_p1 .. "_entrance"
 	self.taser.spawn_sound_event = self.taser.speech_prefix_p1 .. "_entrance"
+
+	-- Tweak some health values for better scaling
+	self.tank.HEALTH_INIT = 300
+	self.tank_hw.HEALTH_INIT = 300
+	self.tank_medic.HEALTH_INIT = 300
+	self.tank_mini.HEALTH_INIT = 600
+	self.phalanx_minion.HEALTH_INIT = 100
+	self.phalanx_vip.HEALTH_INIT = 200
+	self.mobster_boss.HEALTH_INIT = 150
+	self.chavez_boss.HEALTH_INIT = 150
+	self.hector_boss.HEALTH_INIT = 150
+	self.hector_boss_no_armor.HEALTH_INIT = 5
+	self.drug_lord_boss.HEALTH_INIT = 150
+	self.drug_lord_boss_stealth.HEALTH_INIT = 5
+	self.biker_boss.HEALTH_INIT = 150
+
+	-- Tweak Cloaker attack timeout
+	self.spooc.spooc_attack_timeout = { 4, 5 }
+	self.shadow_spooc.shadow_spooc_attack_timeout = self.spooc.spooc_attack_timeout
 end)
 
 
--- Non-functional in vanilla (might make use of custom speeds in the future)
-function CharacterTweakData:_multiply_all_speeds()
-end
-
--- Done below
-function CharacterTweakData:_multiply_all_hp()
-end
-
+-- Create a preset scaling function that assigns the correct weapon presets and handles HP scaling
 local access_presets = {
 	cop = "sh_strong",
 	fbi = "sh_strong",
@@ -350,12 +365,12 @@ local function set_presets(char_tweak_data)
 	end
 end
 
--- Weapon presets are assigned to the enemies here because the vanilla difficulty functions mess with the
--- currently assigned presets so we assign our custom presets AFTER the vanilla presets have been changed
-Hooks:PostHook(CharacterTweakData, "_set_normal", "sh__set_normal", set_presets)
-Hooks:PostHook(CharacterTweakData, "_set_hard", "sh__set_hard", set_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill", "sh__set_overkill", set_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_145", "sh__set_overkill_145", set_presets)
-Hooks:PostHook(CharacterTweakData, "_set_easy_wish", "sh__set_easy_wish", set_presets)
-Hooks:PostHook(CharacterTweakData, "_set_overkill_290", "sh__set_overkill_290", set_presets)
-Hooks:PostHook(CharacterTweakData, "_set_sm_wish", "sh__set_sm_wish", set_presets)
+-- Override these functions with our custom preset scaling function
+CharacterTweakData._set_easy = set_presets
+CharacterTweakData._set_normal = set_presets
+CharacterTweakData._set_hard = set_presets
+CharacterTweakData._set_overkill = set_presets
+CharacterTweakData._set_overkill_145 = set_presets
+CharacterTweakData._set_easy_wish = set_presets
+CharacterTweakData._set_overkill_290 = set_presets
+CharacterTweakData._set_sm_wish = set_presets
