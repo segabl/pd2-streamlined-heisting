@@ -301,6 +301,17 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_mini.spawn_sound_event = self.tank_mini.speech_prefix_p1 .. "_entrance"
 	self.taser.spawn_sound_event = self.taser.speech_prefix_p1 .. "_entrance"
 
+	-- Fix gangster speech prefixes
+	self.gangster.speech_prefix_p1 = "lt"
+	self.gangster.speech_prefix_p2 = nil
+	self.gangster.speech_prefix_count = 2
+	self.mobster.speech_prefix_p1 = "rt"
+	self.mobster.speech_prefix_p2 = nil
+	self.mobster.speech_prefix_count = 2
+	self.biker.speech_prefix_p1 = "bik"
+	self.biker.speech_prefix_p2 = nil
+	self.biker.speech_prefix_count = 2
+
 	-- Tweak some health values for better scaling
 	self.tank.HEALTH_INIT = 300
 	self.tank_hw.HEALTH_INIT = 300
