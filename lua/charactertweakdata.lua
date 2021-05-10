@@ -326,10 +326,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.drug_lord_boss.HEALTH_INIT = 150
 	self.drug_lord_boss_stealth.HEALTH_INIT = 5
 	self.biker_boss.HEALTH_INIT = 150
-
-	-- Tweak Cloaker attack timeout
-	self.spooc.spooc_attack_timeout = { 4, 5 }
-	self.shadow_spooc.shadow_spooc_attack_timeout = self.spooc.spooc_attack_timeout
 end)
 
 
@@ -356,6 +352,7 @@ local preset_overrides = {
 local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
 local function set_presets(char_tweak_data)
 	local diff_i = char_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+	local diff_i_norm = (diff_i - 1) / (#char_tweak_data.tweak_data.difficulties - 1)
 	local hp_mul = hp_muls[diff_i]
 
 	local char_preset, weapon_preset_name
@@ -372,8 +369,17 @@ local function set_presets(char_tweak_data)
 			char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
 			char_preset.melee_weapon_dmg_multiplier = char_preset.weapon.is_rifle.melee_dmg
 			StreamHeist:log("Using " .. weapon_preset_name .. " weapon preset for " .. name)
+		else
+			StreamHeist:log("No weapon preset for " .. name)
 		end
 	end
+
+	-- Flashbanged duration
+	char_tweak_data.flashbang_multiplier = math.lerp(1, 2, diff_i_norm)
+
+	-- Cloaker attack timeout
+	char_tweak_data.spooc.spooc_attack_timeout = { math.lerp(8, 3, diff_i_norm), math.lerp(10, 4, diff_i_norm) }
+	char_tweak_data.shadow_spooc.shadow_spooc_attack_timeout = char_tweak_data.spooc.spooc_attack_timeout
 end
 
 -- Override these functions with our custom preset scaling function
