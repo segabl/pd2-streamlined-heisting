@@ -1,5 +1,5 @@
 -- Make cops react more aggressively when appropriate (less stare, more shoot)
-local REACT_CHECK = AIAttentionObject.REACT_CHECK
+local REACT_IDLE = AIAttentionObject.REACT_IDLE
 local REACT_AIM = AIAttentionObject.REACT_AIM
 local REACT_ARREST = AIAttentionObject.REACT_ARREST
 local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
@@ -14,8 +14,8 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ..
 	local can_arrest = CopLogicBase._can_arrest(data)
 	local attention_reaction = attention_data.settings.reaction
 
-	if attention_data.settings.relation ~= "foe" then
-		return math_min(attention_reaction, REACT_CHECK)
+	if attention_data.settings.relation ~= "foe" and attention_reaction <= REACT_AIM then
+		return REACT_IDLE
 	end
 
 	if not record or not attention_data.is_person then
