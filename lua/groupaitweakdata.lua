@@ -446,6 +446,13 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
 
+	self.besiege.reenforce.groups = {
+		tac_swat_shotgun_rush = { 2, 2, 2 },
+		tac_swat_shotgun_flank = { 1, 1, 1 },
+		tac_swat_rifle = { 16, 16, 16 },
+		tac_swat_rifle_flank = { 4, 4, 4 }
+	}
+
 	self.besiege.recon.groups = {
 		hostage_rescue = { 1, 1, 1 },
 		single_spooc = { 0, 0, 0 },

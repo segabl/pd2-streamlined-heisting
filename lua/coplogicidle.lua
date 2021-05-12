@@ -58,3 +58,17 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ..
 
 	return REACT_COMBAT
 end
+
+
+-- Make defend_area actually work
+local _chk_relocate_original = CopLogicIdle._chk_relocate
+function CopLogicIdle._chk_relocate(data)
+	if data.objective and data.objective.type == "defend_area" then
+		if data.objective.area and next(data.objective.area.criminal.units) then
+			data.brain:set_objective(nil)
+			return true
+		end
+		return
+	end
+	return _chk_relocate_original(data)
+end
