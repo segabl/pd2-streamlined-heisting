@@ -54,7 +54,7 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
 - Makes each difficulty have custom player revive health percentages (from 70% on normal to 10% on DS)
 - Reduces the amount of cops (especially on DS), DS keeps being difficult through other changes
-- Makes Bulldozer armor scale with difficulty (from a HP multiplier of 1 on normal up to 4 on DS)
+- Makes Bulldozer armor scale with difficulty (from a HP multiplier of 1 on normal up to 8 on DS)
 
 ### Miscellaneous other changes
 
