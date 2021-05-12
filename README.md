@@ -72,6 +72,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Raises the maximum amount of important enemies and always treats specials as important (Important enemies are more responsive)
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
+- Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
 
 ## Credits
 
