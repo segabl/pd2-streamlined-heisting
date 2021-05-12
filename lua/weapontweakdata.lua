@@ -13,7 +13,6 @@ end
 
 
 Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
-	self.ak47_npc.DAMAGE = 1
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.saiga_npc.auto.fire_rate = 0.18
 
@@ -36,24 +35,21 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
 	self.ksg_npc = based_on(self.r870_npc, self.ksg_crew)
 
-	self._orig_npc_dmg = {}
-	for k, v in pairs(self) do
-		if k:match("_npc$") then
-			self._orig_npc_dmg[k] = v.DAMAGE
-		end
-	end
-
-	-- Give turret harsher falloff
+	-- Give turret harsher falloff and backup npc weapon damage values
 	local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local damage_mul_range = {
 		{ 0, 2 },
 		{ 1000, 1 },
 		{ 3000, 0.1 }
 	}
+	self._orig_npc_dmg = {}
 	for k, v in pairs(self) do
 		if k:match("_turret_module$") then
 			v.DAMAGE = diff_i * 0.5
 			v.DAMAGE_MUL_RANGE = damage_mul_range
+			self._orig_npc_dmg[k] = v.DAMAGE
+		elseif k:match("_npc$") then
+			v.DAMAGE = 1
 			self._orig_npc_dmg[k] = v.DAMAGE
 		end
 	end
