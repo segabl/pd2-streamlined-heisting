@@ -5,7 +5,7 @@ Hooks:PostHook(CoreBodyDamage, "init", "sh_init", function (self)
 	if unit_type and unit_type:match("^tank") then
 		if not CoreBodyDamage._tank_armor_multiplier then
 			local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-			CoreBodyDamage._tank_armor_multiplier = hp_muls[diff_i]
+			CoreBodyDamage._tank_armor_multiplier = 1 / hp_muls[diff_i]
 		end
 		self._body_element._damage_multiplier = CoreBodyDamage._tank_armor_multiplier
 	end
