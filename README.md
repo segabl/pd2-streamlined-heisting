@@ -32,7 +32,7 @@ In vanilla there are multiple weapon base presets that are assigned based on dif
 At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. These spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
-- Restores original spawn groups that were disabled by Overkill, adding back shotgunners, flanking squads, Taser rush spawn groups and hostage rescue units
+- Restores original spawn groups that were disabled by Overkill, adding back shotgunners, reenforce groups and hostage rescue units
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 
@@ -73,6 +73,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
+- Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
 
 ## Credits
 
