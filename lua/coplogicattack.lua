@@ -86,6 +86,10 @@ function CopLogicAttack._upd_aim(data, my_data)
 
 	if (focus_enemy or expected_pos) and data.logic.chk_should_turn(data, my_data) then
 		local enemy_pos = expected_pos or (verified or nearly_visible) and focus_enemy.m_pos or focus_enemy.verified_pos
+		-- add velocity to position to respond to close and fast moving enemies better
+		if alive(focus_enemy.unit) and (verified or nearly_visible) then
+			enemy_pos = enemy_pos + focus_enemy.unit:sampled_velocity()
+		end
 		CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, enemy_pos)
 	end
 
