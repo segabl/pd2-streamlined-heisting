@@ -421,25 +421,26 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
-	local special_weight = difficulty_index * 0.75
-	local shield_weight = difficulty_index * 0.625 + 1
+	local special_weight = difficulty_index * 0.5 + 2
+	local bulldozer_weight = difficulty_index * 0.5
 	self.besiege.assault.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },
 		tac_swat_shotgun_flank = { 1, 1, 1 },
 		tac_swat_rifle = { 16, 16, 16 },
 		tac_swat_rifle_flank = { 4, 4, 4 },
-		tac_shield_wall_ranged = { 0, shield_weight * 0.5, shield_weight },
-		tac_shield_wall_charge = { 0, shield_weight * 0.5, shield_weight },
-		tac_shield_wall = { 0, shield_weight * 0.5, shield_weight },
+		tac_shield_wall_ranged = { 0, special_weight * 0.5, special_weight },
+		tac_shield_wall_charge = { 0, special_weight * 0.5, special_weight },
+		tac_shield_wall = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_flanking = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_charge = { 0, special_weight * 0.5, special_weight },
 		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
-		tac_bull_rush = { 0, special_weight * 0.5, special_weight },
+		tac_bull_rush = { 0, bulldozer_weight * 0.5, bulldozer_weight },
 		single_spooc = { 0, 0, 0 },
 		Phalanx = { 0, 0, 0 }
 	}
 
 	local f = (difficulty_index - 1) / 7
+	self.besiege.assault.delay = { math.lerp(50, 25, f), math.lerp(40, 20, f), math.lerp(30, 15, f) }
 	self.besiege.assault.hostage_hesitation_delay = { math.lerp(20, 10, f), math.lerp(15, 7.5, f), math.lerp(10, 5, f) }
 	self.besiege.assault.force = { 8, 12, 16 }
 	self.besiege.assault.force_pool = { 50 + f * 50, 100 + f * 50, 150 + f * 50 }
@@ -453,11 +454,18 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		tac_swat_rifle_flank = { 4, 4, 4 }
 	}
 
+	self.besiege.reenforce.interval = { 15, 20, 25 }
+
 	self.besiege.recon.groups = {
 		hostage_rescue = { 1, 1, 1 },
 		single_spooc = { 0, 0, 0 },
 		Phalanx = { 0, 0, 0 }
 	}
+
+	self.besiege.recon.force = { 3, 4, 6 }
+	self.besiege.recon.interval_variation = 30
+
+	self.besiege.regroup.duration = { 35, 30, 25 }
 
 	self.street = deep_clone(self.besiege)
 	self.safehouse = deep_clone(self.besiege)
