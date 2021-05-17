@@ -35,6 +35,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Restores original spawn groups that were disabled by Overkill, adding back shotgunners, reenforce groups and hostage rescue units
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
+- Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
 
 ### Standardizes enemy factions
 
@@ -52,7 +53,7 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 
 - Adds proper difficulty scaling such that every difficulty feels different from the previous one instead of either barely a change or an extreme change
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
-- Makes each difficulty have custom player revive health percentages (from 70% on normal to 10% on DS)
+- Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
 - Reduces the amount of cops (especially on DS), DS keeps being difficult through other changes
 - Makes Bulldozer armor scale with difficulty (from a HP multiplier of 1 on normal up to 8 on DS)
 
@@ -73,7 +74,6 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
-- Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
 
 ## Credits
 
