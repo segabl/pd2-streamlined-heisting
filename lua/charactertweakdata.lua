@@ -319,13 +319,13 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_mini.HEALTH_INIT = 400
 	self.phalanx_minion.HEALTH_INIT = 100
 	self.phalanx_vip.HEALTH_INIT = 200
-	self.mobster_boss.HEALTH_INIT = 150
-	self.chavez_boss.HEALTH_INIT = 150
-	self.hector_boss.HEALTH_INIT = 150
+	self.mobster_boss.HEALTH_INIT = 200
+	self.chavez_boss.HEALTH_INIT = 200
+	self.hector_boss.HEALTH_INIT = 200
 	self.hector_boss_no_armor.HEALTH_INIT = 5
-	self.drug_lord_boss.HEALTH_INIT = 150
+	self.drug_lord_boss.HEALTH_INIT = 200
 	self.drug_lord_boss_stealth.HEALTH_INIT = 5
-	self.biker_boss.HEALTH_INIT = 150
+	self.biker_boss.HEALTH_INIT = 200
 end)
 
 
