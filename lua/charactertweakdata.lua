@@ -326,6 +326,16 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.drug_lord_boss.HEALTH_INIT = 200
 	self.drug_lord_boss_stealth.HEALTH_INIT = 5
 	self.biker_boss.HEALTH_INIT = 200
+
+	-- Fix/set explosion damage multipliers
+	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
+	self.tank.damage.explosion_damage_mul = 0.85
+	self.tank_hw.damage.explosion_damage_mul = 0.85
+	self.tank_medic.damage.explosion_damage_mul = 0.85
+	self.tank_mini.damage.explosion_damage_mul = 0.85
+	self.shield.damage.explosion_damage_mul = 0.75
+	self.phalanx_minion.damage.explosion_damage_mul = 0.75
+	self.phalanx_vip.damage.explosion_damage_mul = 0.75
 end)
 
 
