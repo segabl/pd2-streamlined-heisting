@@ -9,30 +9,32 @@ Streamlined Heisting makes a lot of the game's enemy mechanics more consistent. 
 The way the game determines how NPCs shoot their guns is ancient code that is not only needlessly complex but also suffers from oversights and broken features. Features like aim delay and focus delay did not work at all or not as intended. Bugs in these implementations have been fixed, code has been simplified and damage and falloff calculation has been updated to properly interpolate values.
 
 - Gives cops linear damage falloff instead of sudden drops after a distance threshold is reached
-- Removes weapon spread from NPC accuracy calculation as it didn't really affect players and just made NPC vs NPC situations very inconsistent
+- Removes weapon spread from NPC accuracy calculation as it doesn't affect players and just makes NPC vs NPC situations very inconsistent
 - Fixes accuracy values being ignored for single fire weapons in NPC vs NPC situations
 - Simplifies the clunky fire mode system and interpolates the number of rounds fired based on distance instead (enemies will utilize full auto more)
 - Properly implements and makes use of aim delay, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
 - Fixes barely working focus delay code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
 - Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls on leading to a lot of hits/misses in a row
+- Makes cops less hesitant to shoot while moving and react to threats with adequate reactions
 
-### Standardizes weapon presets
+### Standardizes weapon and character presets
 
-In vanilla there are multiple weapon base presets that are assigned based on difficulty, but not every difficulty has its own preset and instead reuses other presets. Presets are further manipulated in different functions which leads to a lot of oversights and inconsistencies, like some enemy types being left out when difficulty presets are applied. The preset system has been simplified to avoid changing preset values at times other than when they are created.
+In vanilla there are multiple base presets that are assigned based on difficulty, but not every difficulty has its own preset and instead reuses other presets. Presets are further manipulated in different functions which leads to a lot of oversights and inconsistencies, like some enemy types being left out when difficulty presets are applied. The preset system has been simplified to avoid changing preset values at times other than when they are created.
 
 - Creates and uses a single base weapon preset which scales damage multipliers, accuracy, melee damage, focus delay and aim delay based on difficulty
 - Makes use of aim and focus delays (which were mostly set to 0 in vanilla) which affects how long cops take to shoot and reach their full accuracy
 - Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
 - Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as an Car-4)
-- Reduces the insane damage of shields
 - Makes snipers more accurate but take longer to aim before shooting, avoiding cheap instant snipes due to bad RNG
+- Improves the surrender presets, different enemies have different chances to surrender
+- Removes heavy and medium hurt animations from heavy SWAT but scales their damage slightly lower than their light counterparts
 
 ### Overhauls spawn groups
 
 At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. These spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
-- Restores original spawn groups that were disabled by Overkill, adding back shotgunners, reenforce groups and hostage rescue units
+- Restores original spawn groups that were disabled by Overkill, adding back shotgunners, reinforce groups and hostage rescue units
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
@@ -55,15 +57,13 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
 - Reduces the amount of active cops (especially on DS) and spawn pool size, DS keeps being difficult through other changes
-- Makes Bulldozer armor scale with difficulty (from a HP multiplier of 1 on normal up to 8 on DS)
+- Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS)
 
 ### Miscellaneous other changes
 
 These are minor changes and fixes that don't fit any of the above categories.
 
 - Reduces the effect of health granularity by drastically increasing the fractional that damage is rounded to (from 1/512 to 1/8192)
-- Removes heavy and medium hurt animations from heavy SWAT but scales their damage lower than their light counterparts
-- Improves the surrender presets, different enemies have different chances to surrender
 - Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
 - Makes the assault delay caused by having hostages scale with the amount of hostages (up to 8 hostages)
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
@@ -74,6 +74,9 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
+- Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
+- Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
+- Adds a delay to enemy spawn points when enemies spawned die close to them to prevent endless enemy spawns on top of objectives
 
 ## Credits
 
