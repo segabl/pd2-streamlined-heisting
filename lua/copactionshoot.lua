@@ -152,11 +152,6 @@ function CopActionShoot:update(t)
 					local shoot_hist = self._shoot_history
 					local no_los_dur = t - self._common_data._line_of_sight_t
 					if self._clear_los and shoot_hist then
-						-- Apply focus delay after 2 seconds of no los
-						if no_los_dur > 2 and not shoot_hist.focus_delay then
-							shoot_hist.focus_start_t = t
-							shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
-						end
 						-- Apply aim delay after 4 seconds of no los
 						if no_los_dur > 4 and not self._waiting_for_aim_delay then
 							local aim_delay_minmax = self._w_usage_tweak.aim_delay
@@ -172,6 +167,11 @@ function CopActionShoot:update(t)
 							end
 							shoot = false
 						end
+						-- Apply focus delay after 2 seconds of no los
+						if no_los_dur > 2 and not shoot_hist.focus_delay then
+							shoot_hist.focus_start_t = self._waiting_for_aim_delay and self._shoot_t or t
+							shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
+						end
 					end
 					self._last_vis_check_status = shoot
 				else
@@ -181,7 +181,7 @@ function CopActionShoot:update(t)
 
 			if self._common_data.char_tweak.no_move_and_shoot and self._common_data.ext_anim and self._common_data.ext_anim.move then
 				shoot = false
-				self._shoot_t = t + (self._common_data.char_tweak.move_and_shoot_cooldown or 1)
+				self._shoot_t = math_max(self._shoot_t, t + (self._common_data.char_tweak.move_and_shoot_cooldown or 1))
 			end
 
 			if shoot then
