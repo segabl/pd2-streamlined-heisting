@@ -3,11 +3,8 @@ local mvec3_set_z = mvector3.set_z
 local mvec3_sub = mvector3.subtract
 local mvec3_dot = mvector3.dot
 local mvec3_norm = mvector3.normalize
-local mvec3_add = mvector3.add
-local mvec3_mul = mvector3.multiply
 local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
-local temp_vec3 = Vector3()
 
 -- Remove some of the strict conditions for enemies shooting while on the move
 -- This will result in enemies opening fire more likely while moving
@@ -87,22 +84,6 @@ function CopLogicAttack._upd_aim(data, my_data)
 		aim = true
 	end
 
-	if (focus_enemy or expected_pos) and data.logic.chk_should_turn(data, my_data) then
-		mvec3_set(temp_vec1, expected_pos or (verified or nearly_visible) and focus_enemy.m_pos or focus_enemy.verified_pos)
-		-- add velocity to position to respond to close and fast moving enemies better
-		if alive(focus_enemy.unit) and verified then
-			mvec3_set(temp_vec2, focus_enemy.unit:sampled_velocity())
-
-			mvec3_set(temp_vec3, data.m_pos)
-			mvec3_sub(temp_vec3, temp_vec1)
-
-			local f = math.abs(temp_vec3:to_polar_with_reference(temp_vec2, math.UP).spin) / 180
-			mvec3_mul(temp_vec2, f)
-			mvec3_add(temp_vec1, temp_vec2)
-		end
-		CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, temp_vec1)
-	end
-
 	if aim or shoot then
 		if expected_pos then
 			if my_data.attention_unit ~= expected_pos then
@@ -132,6 +113,10 @@ function CopLogicAttack._upd_aim(data, my_data)
 			end
 		end
 	else
+		if (focus_enemy or expected_pos) and data.logic.chk_should_turn(data, my_data) then
+			CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, expected_pos or (verified or nearly_visible) and focus_enemy.m_pos or focus_enemy.verified_pos)
+		end
+
 		if my_data.shooting then
 			local new_action
 			if data.unit:anim_data().reload then

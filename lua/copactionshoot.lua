@@ -46,7 +46,6 @@ Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self
 			self._shoot_history.focus_delay = nil
 		end
 	end
-	self._verif_slotmask = managers.slot:get_mask("AI_visibility")
 end)
 
 
@@ -74,20 +73,18 @@ function CopActionShoot:update(t)
 		mvec3_norm(tar_vec_flat)
 		local fwd = self._common_data.fwd
 		local fwd_dot = mvec3_dot(fwd, tar_vec_flat)
-		if self._turn_allowed then
-			local active_actions = self._common_data.active_actions
-			local queued_actions = self._common_data.queued_actions
-			if (not active_actions[2] or active_actions[2]:type() == "idle") and (not queued_actions or not queued_actions[1] and not queued_actions[2]) and not self._ext_movement:chk_action_forbidden("walk") then
-				local fwd_dot_flat = mvec3_dot(tar_vec_flat, fwd)
-				if fwd_dot_flat < 0.96 then
-					local spin = tar_vec_flat:to_polar_with_reference(fwd, math.UP).spin
-					local new_action_data = {
-						body_part = 2,
-						type = "turn",
-						angle = spin
-					}
-					self._ext_movement:action_request(new_action_data)
-				end
+		local active_actions = self._common_data.active_actions
+		local queued_actions = self._common_data.queued_actions
+		-- This originally only executed on client side which causes great inconsistencies in enemy turning behaviour
+		-- between host and client. Reworking the turning condition and enabling it for the host too should fix that.
+		if (not active_actions[2] or active_actions[2]:type() == "idle") and (not queued_actions or not queued_actions[1] and not queued_actions[2]) and not self._ext_movement:chk_action_forbidden("walk") then
+			local spin = tar_vec_flat:to_polar_with_reference(fwd, math.UP).spin
+			if math.abs(spin) > 25 then
+				self._ext_movement:action_request({
+					body_part = 2,
+					type = "turn",
+					angle = spin
+				})
 			end
 		end
 		target_vec = self:_upd_ik(target_vec, fwd_dot, t)
