@@ -10,6 +10,7 @@ local mvec3_cross = mvector3.cross
 local mvec3_rot = mvector3.rotate_with
 local mrot_axis_angle = mrotation.set_axis_angle
 local temp_vec1 = Vector3()
+local temp_vec2 = Vector3()
 local temp_rot1 = Rotation()
 local math_min = math.min
 local math_max = math.max
@@ -262,20 +263,18 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 		mvec3_set(temp_vec1, pos)
 		mvec3_sub(temp_vec1, self._shoot_from_pos)
 
-		local error_vec = Vector3()
-
-		mvec3_cross(error_vec, temp_vec1, math.UP)
+		mvec3_cross(temp_vec2, temp_vec1, math.UP)
 		mrot_axis_angle(temp_rot1, temp_vec1, math.random(360))
-		mvec3_rot(error_vec, temp_rot1)
+		mvec3_rot(temp_vec2, temp_rot1)
 
 		local miss_min_dis = shooting_local_player and 31 or 150
 		local error_vec_len = miss_min_dis + w_tweak.spread * math.random() + w_tweak.miss_dis * math.random() * (1 - focus_prog)
 
-		mvec3_set_l(error_vec, error_vec_len)
-		mvec3_add(error_vec, pos)
-		mvec3_set(shoot_hist.m_last_pos, error_vec)
+		mvec3_set_l(temp_vec2, error_vec_len)
+		mvec3_add(temp_vec2, pos)
+		mvec3_set(shoot_hist.m_last_pos, temp_vec2)
 
-		return error_vec
+		return temp_vec2
 	end
 end
 
