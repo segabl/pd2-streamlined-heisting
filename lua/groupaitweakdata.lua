@@ -267,7 +267,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_shield_wall_ranged = {
-		amount = { 5, 6 },
+		amount = { 4, 5 },
 		spawn = {
 			{
 				amount_min = 2,
@@ -278,7 +278,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.shield_support_ranged
 			},
 			{
-				amount_min = 2,
+				amount_min = 1,
 				freq = 1,
 				amount_max = 2,
 				rank = 3,
@@ -297,7 +297,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_shield_wall_charge = {
-		amount = { 5, 6 },
+		amount = { 4, 5 },
 		spawn = {
 			{
 				amount_min = 2,
@@ -308,7 +308,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.shield_support_charge
 			},
 			{
-				amount_min = 2,
+				amount_min = 1,
 				freq = 1,
 				amount_max = 2,
 				rank = 3,
@@ -327,12 +327,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_shield_wall = {
-		amount = { 3, 4 },
+		amount = { 2, 3 },
 		spawn = {
 			{
-				amount_min = 3,
+				amount_min = 2,
 				freq = 1,
-				amount_max = 4,
+				amount_max = 3,
 				rank = 3,
 				unit = "FBI_shield",
 				tactics = self._tactics.shield_wall
