@@ -77,8 +77,9 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "init", "sh_init", function(self)
 	local difficulty = Global.game_settings and Global.game_settings.difficulty or "normal"
 	local mapped_name = enemy_mapping[self._enemy_name:key()]
 	local mapped_unit = enemy_replacements[difficulty] and enemy_replacements[difficulty][mapped_name]
-	if mapped_unit then
+	local mapped_unit_ids = mapped_unit and Idstring(mapped_unit)
+	if mapped_unit_ids and mapped_unit_ids ~= self._enemy_name then
 		StreamHeist:log(self:editor_name(), mapped_name, "->", mapped_unit)
-		self._enemy_name = Idstring(mapped_unit)
+		self._enemy_name = mapped_unit_ids
 	end
 end)
