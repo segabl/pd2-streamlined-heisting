@@ -39,7 +39,7 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local damage_mul_range = {
 		{ 0, 2 },
-		{ 1000, 1 },
+		{ 1500, 1 },
 		{ 3000, 0.1 }
 	}
 	self._orig_npc_dmg = {}
