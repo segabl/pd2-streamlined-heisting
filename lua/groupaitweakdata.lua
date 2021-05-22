@@ -446,6 +446,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.force_pool = { 50 + f * 50, 75 + f * 50, 100 + f * 50 }
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
+	self.besiege.assault.fade_duration = math.lerp(30, 15, f)
 
 	self.besiege.reenforce.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },
