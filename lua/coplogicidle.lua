@@ -70,7 +70,7 @@ local hold_types = {
 local _chk_relocate_original = CopLogicIdle._chk_relocate
 function CopLogicIdle._chk_relocate(data)
 	if data.objective and data.objective.grp_objective and hold_types[data.objective.grp_objective.type] then
-		if data.objective.area and next(data.objective.area.criminal.units) then
+		if data.objective.in_place and data.objective.area and next(data.objective.area.criminal.units) then
 			data.brain:set_objective(nil)
 			return true
 		end
