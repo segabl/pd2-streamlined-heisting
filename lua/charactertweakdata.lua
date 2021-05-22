@@ -322,10 +322,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.mobster_boss.HEALTH_INIT = 200
 	self.chavez_boss.HEALTH_INIT = 200
 	self.hector_boss.HEALTH_INIT = 200
-	self.hector_boss_no_armor.HEALTH_INIT = 5
+	self.hector_boss_no_armor.HEALTH_INIT = 4
 	self.drug_lord_boss.HEALTH_INIT = 200
-	self.drug_lord_boss_stealth.HEALTH_INIT = 5
+	self.drug_lord_boss_stealth.HEALTH_INIT = 4
 	self.biker_boss.HEALTH_INIT = 200
+	self.fbi.HEALTH_INIT = 4
 
 	-- Fix/set explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
