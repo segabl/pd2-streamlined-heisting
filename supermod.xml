@@ -51,6 +51,9 @@
 			<file :name="wpn_npc_saiga/saiga_nm.texture"/>
 			<file :name="wpn_npc_saiga/wpn_npc_saiga.model"/>
 
+			<!-- ump correct sound -->
+			<file :name="wpn_npc_ump/wpn_npc_ump.unit"/>
+
 			<!-- spas12 -->
 			<file :name="wpn_npc_spas12/spas12_df.texture"/>
 			<file :name="wpn_npc_spas12/spas12_nm.texture"/>
