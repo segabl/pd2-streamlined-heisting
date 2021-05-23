@@ -122,12 +122,17 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		table.insert(self.unit_categories.FBI_tank.unit_types.federales, Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249"))
 	end
 
+	local limits_shield = { 0, 2, 2, 3, 3, 4, 4, 5 }
+	local limits_medic = { 0, 0, 0, 0, 1, 2, 3, 4 }
+	local limits_taser = { 0, 0, 1, 1, 2, 2, 3, 3 }
+	local limits_tank = { 0, 0, 0, 1, 2, 2, 3, 3 }
+	local limits_spooc = { 0, 0, 0, 1, 1, 2, 2, 3 }
 	self.special_unit_spawn_limits = {
-		shield = math.max(2, math.ceil(difficulty_index * 0.75)),
-		medic = math.max(0, difficulty_index - 4),
-		taser = math.max(0, math.ceil((difficulty_index - 2) * 0.5)),
-		tank = math.max(0, math.ceil((difficulty_index - 3) * 0.75)),
-		spooc = math.max(0, math.min(difficulty_index - 3, 2))
+		shield = limits_shield[difficulty_index],
+		medic = limits_medic[difficulty_index],
+		taser = limits_taser[difficulty_index],
+		tank = limits_tank[difficulty_index],
+		spooc = limits_spooc[difficulty_index]
 	}
 end)
 
