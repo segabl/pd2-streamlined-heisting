@@ -327,28 +327,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		}
 	}
 
-	self.enemy_spawn_groups.tac_shield_wall = {
-		amount = { 2, 3 },
-		spawn = {
-			{
-				amount_min = 2,
-				freq = 1,
-				amount_max = 3,
-				rank = 3,
-				unit = "FBI_shield",
-				tactics = self._tactics.shield_wall
-			},
-			{
-				amount_min = 0,
-				freq = difficulty_index / 12,
-				amount_max = 1,
-				rank = 2,
-				unit = "medic_M4",
-				tactics = self._tactics.shield_support_ranged
-			}
-		}
-	}
-
 	self.enemy_spawn_groups.tac_bull_rush = {
 		amount = { 1, 1 },
 		spawn = {
@@ -431,11 +409,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		tac_swat_rifle_flank = { 4, 4, 4 },
 		tac_shield_wall_ranged = { 0, special_weight * 0.5, special_weight },
 		tac_shield_wall_charge = { 0, special_weight * 0.5, special_weight },
-		tac_shield_wall = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_flanking = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_charge = { 0, special_weight * 0.5, special_weight },
-		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
 		tac_bull_rush = { 0, bulldozer_weight * 0.5, bulldozer_weight },
+		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
 		single_spooc = { 0, 0, 0 },
 		Phalanx = { 0, 0, 0 }
 	}
