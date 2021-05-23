@@ -69,12 +69,21 @@ local hold_types = {
 }
 local _chk_relocate_original = CopLogicIdle._chk_relocate
 function CopLogicIdle._chk_relocate(data)
-	if data.objective and data.objective.grp_objective and hold_types[data.objective.grp_objective.type] then
-		if data.objective.in_place and data.objective.area and next(data.objective.area.criminal.units) then
+	local objective = data.objective
+	local group_objective_type = objective and objective.grp_objective and objective.grp_objective.type
+	if hold_types[group_objective_type] then
+		-- If we have a defensive objective, stay in place unless criminal enters our area
+		if objective.in_place and objective.area and next(objective.area.criminal.units) then
 			data.brain:set_objective(nil)
 			return true
 		end
 		return
+	elseif group_objective_type == "assault_area" then
+		-- If we have an offensive objective only relocate if we can't see our target
+		local focus_enemy = data.attention_obj
+		if not objective.in_place or focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible or focus_enemy.verified_t and data.t - focus_enemy.verified_t < 3) then
+			return
+		end
 	end
 	return _chk_relocate_original(data)
 end
