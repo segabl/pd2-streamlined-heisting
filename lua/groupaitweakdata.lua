@@ -146,10 +146,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"smoke_grenade",
 		"murder"
 	}
-	table.insert(self._tactics.swat_rifle, "shield_cover")
-	table.insert(self._tactics.swat_rifle_flank, "shield_cover")
-	table.insert(self._tactics.swat_shotgun_rush, "shield_cover")
-	table.insert(self._tactics.swat_shotgun_flank, "shield_cover")
 
 	self.enemy_spawn_groups.tac_swat_shotgun_rush = {
 		amount = { 2, 3 },
