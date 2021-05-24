@@ -70,18 +70,22 @@ local hold_types = {
 local _chk_relocate_original = CopLogicIdle._chk_relocate
 function CopLogicIdle._chk_relocate(data)
 	local objective = data.objective
-	local group_objective_type = objective and objective.grp_objective and objective.grp_objective.type
+	if not objective then
+		return
+	end
+	local group_objective_type = objective.grp_objective and objective.grp_objective.type
+	local in_place = not objective.area or objective.area.nav_segs[data.unit:movement():nav_tracker():nav_segment()]
 	if hold_types[group_objective_type] then
 		-- If we have a defensive objective, stay in place unless criminal enters our area
-		if objective.in_place and objective.area and next(objective.area.criminal.units) then
-			data.brain:set_objective(nil)
+		if in_place and objective.area and next(objective.area.criminal.units) then
+			managers.groupai:state():on_objective_complete(data.unit, objective)
 			return true
 		end
 		return
 	elseif group_objective_type == "assault_area" then
 		-- If we have an offensive objective only relocate if we can't see our target
 		local focus_enemy = data.attention_obj
-		if not objective.in_place or focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible or focus_enemy.verified_t and data.t - focus_enemy.verified_t < 3) then
+		if not in_place or focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible or focus_enemy.verified_t and data.t - focus_enemy.verified_t < 3) then
 			return
 		end
 	end
