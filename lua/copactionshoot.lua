@@ -25,7 +25,6 @@ function CopActionShoot:_stop_firing()
 	self._autofiring = nil
 	self._autoshots_fired = nil
 	self._weapon_base:stop_autofire()
-	self._ext_movement:play_redirect("up_idle")
 end
 
 
@@ -125,8 +124,8 @@ function CopActionShoot:update(t)
 					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
 						self._unit:unit_data().mission_element:event("killshot", self._unit)
 					end
-					if (self._is_single_shot or not ext_anim.recoil) and vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
-						self._ext_movement:play_redirect(self._is_single_shot and "recoil_single" or "recoil_auto")
+					if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
+						self._ext_movement:play_redirect("recoil_single")
 					end
 					if not self._autofiring or self._autoshots_fired >= self._autofiring - 1 then
 						self:_stop_firing()
