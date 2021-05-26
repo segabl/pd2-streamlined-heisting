@@ -61,33 +61,27 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ..
 end
 
 
--- Make defend_area actually work
-local hold_types = {
-	defend_area = true,
-	recon_area = true,
-	reenforce_area = true
-}
+-- Make defensive objectives/behaviour actually work
 local _chk_relocate_original = CopLogicIdle._chk_relocate
 function CopLogicIdle._chk_relocate(data)
 	local objective = data.objective
 	if not objective then
 		return
 	end
-	local group_objective_type = objective.grp_objective and objective.grp_objective.type
 	local in_place = not objective.area or objective.area.nav_segs[data.unit:movement():nav_tracker():nav_segment()]
-	if hold_types[group_objective_type] then
-		-- If we have a defensive objective, stay in place unless criminal enters our area
-		if in_place and objective.area and next(objective.area.criminal.units) then
-			managers.groupai:state():on_objective_complete(data.unit, objective)
-			return true
-		end
-		return
-	elseif group_objective_type == "assault_area" then
+	if objective.grp_objective and objective.grp_objective.type == "assault_area" then
 		-- If we have an offensive objective only relocate if we can't see our target
 		local focus_enemy = data.attention_obj
 		if not in_place or focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible or focus_enemy.verified_t and data.t - focus_enemy.verified_t < 3) then
 			return
 		end
+	elseif objective.attitude == "avoid" then
+		-- If we have a defensive objective, don't relocate towards criminals
+		if in_place and objective.area and next(objective.area.criminal.units) then
+			managers.groupai:state():on_objective_complete(data.unit, objective)
+			return true
+		end
+		return
 	end
 	return _chk_relocate_original(data)
 end
