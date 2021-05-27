@@ -12,6 +12,7 @@
 			<post :hook_id="mission/elementareatrigger"/>
 			<post :hook_id="mission/elementspawnenemydummy"/>
 			<post :hook_id="mission/elementspawnenemygroup"/>
+			<post :hook_id="mission/missionscriptelement"/>
 			<post :hook_id="dynamicresourcemanager"/>
 		</group>
 		<group hook_id="lib/network/">
