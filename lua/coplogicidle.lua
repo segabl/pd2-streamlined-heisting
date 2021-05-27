@@ -68,19 +68,16 @@ function CopLogicIdle._chk_relocate(data)
 	if not objective then
 		return
 	end
-	local in_place = not objective.area or objective.area.nav_segs[data.unit:movement():nav_tracker():nav_segment()]
-	if objective.grp_objective and objective.grp_objective.type == "assault_area" then
+	local group_objective_type = objective.grp_objective and objective.grp_objective.type
+	if group_objective_type == "assault_area" then
 		-- If we have an offensive objective only relocate if we can't see our target
 		local focus_enemy = data.attention_obj
+		local in_place = not objective.area or objective.area.nav_segs[data.unit:movement():nav_tracker():nav_segment()]
 		if not in_place or focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible or focus_enemy.verified_t and data.t - focus_enemy.verified_t < 3) then
 			return
 		end
-	elseif objective.attitude == "avoid" then
+	elseif group_objective_type or objective.attitude == "avoid" then
 		-- If we have a defensive objective, don't relocate towards criminals
-		if in_place and objective.area and next(objective.area.criminal.units) then
-			managers.groupai:state():on_objective_complete(data.unit, objective)
-			return true
-		end
 		return
 	end
 	return _chk_relocate_original(data)
