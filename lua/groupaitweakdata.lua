@@ -417,14 +417,16 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		Phalanx = { 0, 0, 0 }
 	}
 
-	local f = (difficulty_index - 1) / 7
-	self.besiege.assault.delay = { math.lerp(50, 25, f), math.lerp(40, 20, f), math.lerp(30, 15, f) }
+	local f = math.max(0, difficulty_index - 2) / 6
+	self.besiege.assault.delay = { math.lerp(60, 40, f), math.lerp(45, 30, f), math.lerp(30, 20, f) }
 	self.besiege.assault.hostage_hesitation_delay = { math.lerp(20, 10, f), math.lerp(15, 7.5, f), math.lerp(10, 5, f) }
 	self.besiege.assault.force = { 6, 6 + math.ceil(difficulty_index * 0.5), 6 + difficulty_index }
-	self.besiege.assault.force_pool = { 50 + f * 50, 75 + f * 50, 100 + f * 50 }
+	self.besiege.assault.force_pool = table.collect(self.besiege.assault.force, function (val) return val * 8 end)
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
-	self.besiege.assault.fade_duration = math.lerp(30, 15, f)
+	self.besiege.assault.sustain_duration_min = { 60 + 60 * f, 120 + 60 * f, 180 + 60 * f }
+	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
+	self.besiege.assault.fade_duration = 10
 
 	self.besiege.reenforce.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },

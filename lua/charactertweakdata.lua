@@ -41,7 +41,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local melee_dmg_tbl = { 6, 8, 10, 12, 14, 16, 18, 20 }
 
 	local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local diff_i_norm = (diff_i - 1) / (#tweak_data.difficulties - 1)
+	local diff_i_norm = math.max(0, diff_i - 2) / (#tweak_data.difficulties - 2)
 	local focus_delay = focus_delay_tbl[diff_i]
 	local aim_delay = aim_delay_tbl[diff_i]
 	local dmg_mul = dmg_mul_tbl[diff_i]
@@ -197,7 +197,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	end
 
 	-- Give team ai more reasonable preset values
-	local dmg_mul_team = math.lerp(0.7, 3.5, diff_i_norm)
+	local dmg_mul_team = math.lerp(1, 3.5, diff_i_norm)
 	presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
 		no_autofire_stop = true
 	})
@@ -363,7 +363,7 @@ local preset_overrides = {
 local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
 local function set_presets(char_tweak_data)
 	local diff_i = char_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local diff_i_norm = (diff_i - 1) / (#char_tweak_data.tweak_data.difficulties - 1)
+	local diff_i_norm = math.max(0, diff_i - 2) / (#char_tweak_data.tweak_data.difficulties - 2)
 	local hp_mul = hp_muls[diff_i]
 
 	local char_preset, weapon_preset_name
