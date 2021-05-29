@@ -419,12 +419,12 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	local f = math.max(0, difficulty_index - 2) / 6
 	self.besiege.assault.delay = { math.lerp(60, 40, f), math.lerp(45, 30, f), math.lerp(30, 20, f) }
-	self.besiege.assault.hostage_hesitation_delay = { math.lerp(20, 10, f), math.lerp(15, 7.5, f), math.lerp(10, 5, f) }
+	self.besiege.assault.hostage_hesitation_delay = { 10, 7.5, 5 }
 	self.besiege.assault.force = { 6, 6 + math.ceil(difficulty_index * 0.5), 6 + difficulty_index }
 	self.besiege.assault.force_pool = table.collect(self.besiege.assault.force, function (val) return val * 8 end)
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
-	self.besiege.assault.sustain_duration_min = { 60 + 60 * f, 120 + 60 * f, 180 + 60 * f }
+	self.besiege.assault.sustain_duration_min = { 60 + 120 * f, 120 + 120 * f, 180 + 120 * f }
 	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
 	self.besiege.assault.fade_duration = 10
 
