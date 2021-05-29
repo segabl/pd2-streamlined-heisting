@@ -14,7 +14,7 @@ The way the game determines how NPCs shoot their guns is ancient code that is no
 - Simplifies the clunky fire mode system and interpolates the number of rounds fired based on distance instead (enemies will utilize full auto more)
 - Properly implements and makes use of aim delay, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
 - Fixes barely working focus delay code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
-- Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls on leading to a lot of hits/misses in a row
+- Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls leading to a lot of hits/misses in a row
 - Makes cops less hesitant to shoot while moving and react to threats with adequate reactions
 
 ### Standardizes weapon and character presets
@@ -29,7 +29,7 @@ In vanilla there are multiple base presets that are assigned based on difficulty
 - Improves the surrender presets, different enemies have different chances to surrender
 - Removes heavy and medium hurt animations from heavy SWAT but scales their damage slightly lower than their light counterparts
 
-### Overhauls spawn groups
+### Overhauls spawn groups and enemy behaviour
 
 At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. These spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
 
@@ -38,6 +38,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
+- Adds reinforce points to loot secure points and the escape zone
 
 ### Standardizes enemy factions
 
@@ -56,8 +57,9 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Adds proper difficulty scaling such that every difficulty feels different from the previous one instead of either barely a change or an extreme change
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
-- Reduces the amount of active cops (especially on DS) and spawn pool size, DS keeps being difficult through other changes
+- Reduces the amount of active cops (especially on DS) and scales it with difficulty, DS keeps being difficult through other changes
 - Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS)
+- Scales assault duration with difficulty and reduces spawn pool so it's actually possible to end the assault earlier when spawns are exhausted
 
 ### Miscellaneous other changes
 
@@ -76,7 +78,6 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
 - Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
 - Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
-- Adds a delay to enemy spawn points when enemies spawned die close to them to prevent endless enemy spawns on top of objectives
 
 ## Credits
 
