@@ -138,15 +138,38 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
-	-- fix incorrect flank tactic name
+	-- Fix incorrect tactics
 	self._tactics.tazer_flanking = {
 		"flank",
-		"charge",
 		"provide_coverfire",
 		"smoke_grenade",
 		"murder"
 	}
+	self._tactics.swat_shotgun_flank = {
+		"provide_coverfire",
+		"provide_support",
+		"flank",
+		"deathguard",
+		"flash_grenade"
+	}
+	self._tactics.swat_rifle_flank = {
+		"provide_coverfire",
+		"provide_support",
+		"flank",
+		"flash_grenade"
+	}
+	self._tactics.shield_wall_ranged = {
+		"shield",
+		"ranged_fire",
+		"provide_support"
+	}
+	self._tactics.shield_wall_charge = {
+		"shield",
+		"charge",
+		"provide_support"
+	}
 
+	-- Setup/Fix spawngroups
 	self.enemy_spawn_groups.tac_swat_shotgun_rush = {
 		amount = { 2, 3 },
 		spawn = {
