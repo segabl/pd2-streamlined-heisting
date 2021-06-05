@@ -107,14 +107,14 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base.is_lmg.FALLOFF = {
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.3 * acc_mul, 0.7 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 2 * dmg_mul, r = 1000, acc = { 0.2 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.mini = deep_clone(presets.weapon.sh_base.is_lmg)
 	presets.weapon.sh_base.mini.autofire_rounds = { 50, 200 }
 	presets.weapon.sh_base.mini.FALLOFF = {
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.15 * acc_mul, 0.35 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 2 * dmg_mul, r = 1000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0, 0.15 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 0.5 * dmg_mul, r = 3000, acc = { 0, 0.15 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	-- Heavy preset (deal less damage in exchange for being bulkier)
@@ -152,7 +152,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_tank.is_rifle.FALLOFF = {
 		{ dmg_mul = 6 * dmg_mul_lin, r = 0, acc = { 0.3 * acc_mul, 0.7 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 5 * dmg_mul_lin, r = 1000, acc = { 0.2 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 3 * dmg_mul_lin, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 2 * dmg_mul_lin, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.mini.no_autofire_stop = true
 	presets.weapon.sh_tank.mini.RELOAD_SPEED = 1
@@ -160,7 +160,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_tank.mini.FALLOFF = {
 		{ dmg_mul = 6 * dmg_mul_lin, r = 0, acc = { 0.15 * acc_mul, 0.35 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 500, 700 } },
 		{ dmg_mul = 5 * dmg_mul_lin, r = 1000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 300, 500 } },
-		{ dmg_mul = 3 * dmg_mul_lin, r = 3000, acc = { 0, 0.15 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 40, 100 } }
+		{ dmg_mul = 2 * dmg_mul_lin, r = 3000, acc = { 0, 0.15 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 40, 100 } }
 	}
 
 	-- Sniper presets
