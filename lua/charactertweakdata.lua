@@ -341,6 +341,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Fix suppression
 	self.medic.suppression = nil
 	self.gensec.suppression = self.presets.suppression.easy
+
+	-- Allow arrests
+	self.fbi.no_arrest = nil
+	self.swat.no_arrest = nil
+	self.fbi_swat.no_arrest = nil
 end)
 
 
