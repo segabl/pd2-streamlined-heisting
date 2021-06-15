@@ -175,6 +175,8 @@
 			<file :name="ene_murkywater_light/material_nm.texture"/>
 			<file :name="ene_murkywater_light/glasses_df.texture"/>
 			<file :name="ene_murkywater_light/glasses_op.texture"/>
+			<file :name="ene_murkywater_heavy/material_df.texture"/>
+			<file :name="ene_murkywater_heavy/material_nm.texture"/>
 
 			<!-- make light distinct and use scar -->
 			<file :name="ene_murkywater_light/ene_murkywater_light.material_config"/>
@@ -183,12 +185,24 @@
 			<file :name="ene_murkywater_light/ene_murkywater_light.unit"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light_husk.unit"/>
 
+			<!-- redirect other lights to use same model -->
+			<file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi.unit"/>
+			<file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi_husk.unit"/>
+			<file :name="ene_murkywater_light_city/ene_murkywater_light_city.unit"/>
+			<file :name="ene_murkywater_light_city/ene_murkywater_light_city_husk.unit"/>
+
 			<!-- make light r870 distinct and use spas12 -->
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.cooked_physics"/>
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.model"/>
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.object"/>
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.unit"/>
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870_husk.unit"/>
+
+			<!-- redirect other r870 lights to use same model -->
+			<file :name="ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870.unit"/>
+			<file :name="ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870_husk.unit"/>
+			<file :name="ene_murkywater_light_city_r870/ene_murkywater_light_city_r870.unit"/>
+			<file :name="ene_murkywater_light_city_r870/ene_murkywater_light_city_r870_husk.unit"/>
 
 			<!-- make shield use custom model -->
 			<file :name="ene_murkywater_shield/ene_murkywater_shield.cooked_physics"/>
@@ -201,19 +215,16 @@
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy_husk.unit"/>
 
+			<!-- redirect other heavy to use same model -->
+			<file :name="ene_murkywater_heavy_g36/ene_murkywater_heavy_g36.unit"/>
+			<file :name="ene_murkywater_heavy_g36/ene_murkywater_heavy_g36_husk.unit"/>
+
 			<!-- make heavy shotgunner use spas12 -->
+			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.material_config"/>
+			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_contour.material_config"/>
+			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.model"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.unit"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_husk.unit"/>
-
-			<!-- redirect other lights to use same model -->
-			<file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi.unit"/>
-			<file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi_husk.unit"/>
-			<file :name="ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870.unit"/>
-			<file :name="ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870_husk.unit"/>
-			<file :name="ene_murkywater_light_city/ene_murkywater_light_city.unit"/>
-			<file :name="ene_murkywater_light_city/ene_murkywater_light_city_husk.unit"/>
-			<file :name="ene_murkywater_light_city_r870/ene_murkywater_light_city_r870.unit"/>
-			<file :name="ene_murkywater_light_city_r870/ene_murkywater_light_city_r870_husk.unit"/>
 		</group>
 
 		<!-- new (and old) zeals -->
