@@ -212,6 +212,7 @@
 			<file :name="ene_murkywater_shield/ene_murkywater_shield_husk.unit"/>
 
 			<!-- make heavy use scar -->
+			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.model"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy_husk.unit"/>
 

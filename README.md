@@ -49,6 +49,7 @@ There are some inconsistencies with various enemy factions in the game that lead
 - Makes heavy shotgunners more distinct from their rifle counterparts by adding gadgets to their helmets
 - Replaces the lazy recolors for Mexican police with better recolors of the less seen cop models (blue SWAT)
 - Adds missing enemy types (ZEAL Shotgunners, ZEAL Medic, GenSec and ZEAL Sniper)
+- Fixes heavy Murkywater units body armor protecting their back
 
 ### Improves the difficulty curve
 
