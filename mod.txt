@@ -4,7 +4,6 @@
 	"author" : "Hoppip",
 	"contact" : "Hoppip#1630",
 	"priority" : 401,
-	"blt_version" : 2,
 	"color" : "0.043 0.808 0.6",
 	"image" : "mod.png",
 	"version" : "2.5",
