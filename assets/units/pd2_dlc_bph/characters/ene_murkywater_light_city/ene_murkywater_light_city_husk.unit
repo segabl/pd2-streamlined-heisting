@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <unit type="being" slot="12">
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
-	<object file="units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870" />
+	<object file="units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light" />
 
 	<dependencies>
 		<depends_on unit="units/pd2_dlc_bph/characters/ene_acc_murkywater_hat/ene_acc_murkywater_hat" />
@@ -10,8 +10,8 @@
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="HuskCopBase" >
-			<var name="_tweak_table" value="fbi_swat" />
-			<var name="_default_weapon_id" value="spas12" />
+			<var name="_tweak_table" value="city_swat" />
+			<var name="_default_weapon_id" value="scar_murky" />
 		</extension>
 		<extension name="inventory" class="HuskCopInventory" />
 		<extension name="brain" class="HuskCopBrain" />

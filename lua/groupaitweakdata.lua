@@ -77,10 +77,10 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 
 	-- Use the same murky units on all difficulties since their models don't differ
 	self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870")
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
 	}
 	self.unit_categories.FBI_swat_M4.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
 	}
 	self.unit_categories.FBI_heavy_G36.unit_types.murkywater = {
 		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
@@ -90,8 +90,8 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	}
 	-- temp fix till I have proper murky HRT
 	self.unit_categories.FBI_suit_M4_MP5.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi"),
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light"),
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
 	}
 
 	-- Use the same federal police units on all difficulties since their models don't differ
