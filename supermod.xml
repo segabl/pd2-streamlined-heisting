@@ -228,6 +228,13 @@
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_husk.unit"/>
 		</group>
 
+		<!-- murky prop -->
+		<group name="units/pd2_dlc_bph/props/" dyn_package="false">
+			<!-- fix uvs -->
+			<file :name="bph_prop_body_light_01/bph_prop_body_light_01.model"/>
+			<file :name="bph_prop_body_light_table_03/bph_prop_body_light_table_03.model"/>
+		</group>
+
 		<!-- new (and old) zeals -->
 		<group name="units/pd2_dlc_gitgud/characters/" dyn_package="false">
 			<file :name="shared_textures/swat_df.texture"/>
