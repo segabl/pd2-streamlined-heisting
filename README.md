@@ -55,7 +55,7 @@ There are some inconsistencies with various enemy factions in the game that lead
 
 The vanilla difficulty curve is all over the place with some difficulties feeling exactly the same while others introduce a major jump in difficulty. Enemy spawns are highly exaggerated, especially on Death Sentence, because issues in the weapon presets and shooting behaviour prevent them from actually being a threat (unless you count the broken rifle falloff on DS). Health, damage, accuracy, aim and focus delay values have all been rebalanced to create a smoother curve and gradually increasing difficulties.
 
-- Adds proper difficulty scaling such that every difficulty feels different from the previous one instead of either barely a change or an extreme change
+- Adds proper difficulty scaling such that every difficulty feels different from the previous one (smooth transition of difficulty dependent values)
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
 - Reduces the amount of active cops (especially on DS) and scales it with difficulty, DS keeps being difficult through other changes

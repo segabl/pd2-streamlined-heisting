@@ -423,6 +423,13 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
+	local f = math.max(0, difficulty_index - 2) / 6
+
+	self.smoke_and_flash_grenade_timeout = { 15, 20 }
+	self.smoke_grenade_lifetime = math.lerp(6, 12, f)
+	self.flash_grenade.timer = math.lerp(3, 1, f)
+
+	-- Spawn Groups
 	local special_weight = difficulty_index * 0.5 + 2
 	local bulldozer_weight = difficulty_index * 0.5
 	self.besiege.assault.groups = {
@@ -440,7 +447,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		Phalanx = { 0, 0, 0 }
 	}
 
-	local f = math.max(0, difficulty_index - 2) / 6
+	-- Assault phases settings
 	self.besiege.assault.delay = { math.lerp(60, 40, f), math.lerp(45, 30, f), math.lerp(30, 20, f) }
 	self.besiege.assault.hostage_hesitation_delay = { 10, 7.5, 5 }
 	self.besiege.assault.force = { 6, 6 + math.ceil(difficulty_index * 0.5), 6 + difficulty_index }
@@ -470,6 +477,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.recon.interval_variation = 30
 
 	self.besiege.regroup.duration = { 35, 30, 25 }
+
+	self.besiege.recurring_group_SO.recurring_cloaker_spawn.interval = { math.lerp(120, 15, f), math.lerp(240, 30, f) }
 
 	self.street = deep_clone(self.besiege)
 	self.safehouse = deep_clone(self.besiege)
