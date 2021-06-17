@@ -473,7 +473,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		Phalanx = { 0, 0, 0 }
 	}
 
-	self.besiege.recon.force = { 3, 4, 6 }
+	self.besiege.recon.force = { 2, 4, 6 }
 	self.besiege.recon.interval_variation = 30
 
 	self.besiege.regroup.duration = { 35, 30, 25 }
