@@ -17,7 +17,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 	if focus_enemy and AIAttentionObject.REACT_AIM <= focus_enemy.reaction then
 
 		-- The original running check was inaccurate, it returned true if haste was set to run, not if the character was actually currently running
-		local running = my_data.advancing and my_data.advancing._cur_vel and my_data.advancing._cur_vel > 300
+		local running = data.unit:anim_data().run or my_data.advancing and my_data.advancing._cur_vel and my_data.advancing._cur_vel > 300
 		local time_since_verification = focus_enemy.verified_t and data.t - focus_enemy.verified_t or math.huge
 
 		if verified or nearly_visible then
@@ -52,29 +52,25 @@ function CopLogicAttack._upd_aim(data, my_data)
 				shoot = true
 			end
 
-			if not aim then
+			if not shoot then
 				expected_pos = CopLogicAttack._get_expected_attention_position(data, my_data)
-				if expected_pos then
-					if running then
-						local watch_dir = temp_vec1
-						mvec3_set(watch_dir, expected_pos)
-						mvec3_sub(watch_dir, data.m_pos)
-						mvec3_set_z(watch_dir, 0)
-						local watch_pos_dis = mvec3_norm(watch_dir)
-						if watch_pos_dis < 500 then
-							aim =  true
-						elseif watch_pos_dis < 1000 then
-							local walk_to_pos = data.unit:movement():get_walk_to_pos()
-							local walk_vec = temp_vec2
-							mvec3_set(walk_vec, walk_to_pos)
-							mvec3_sub(walk_vec, data.m_pos)
-							mvec3_set_z(walk_vec, 0)
-							mvec3_norm(walk_vec)
-							aim = mvec3_dot(watch_dir, walk_vec) > 0.85
-						end
-					else
-						aim = true
-					end
+			end
+
+			if not aim and expected_pos then
+				mvec3_set(temp_vec1, expected_pos)
+				mvec3_sub(temp_vec1, data.m_pos)
+				mvec3_set_z(temp_vec1, 0)
+				local watch_pos_dis = mvec3_norm(temp_vec1)
+				if watch_pos_dis < 500 then
+					aim =  true
+				elseif watch_pos_dis < 1000 then
+					local walk_to_pos = data.unit:movement():get_walk_to_pos()
+					local walk_vec = temp_vec2
+					mvec3_set(walk_vec, walk_to_pos)
+					mvec3_sub(walk_vec, data.m_pos)
+					mvec3_set_z(walk_vec, 0)
+					mvec3_norm(walk_vec)
+					aim = mvec3_dot(temp_vec1, walk_vec) > 0.85
 				end
 			end
 		end

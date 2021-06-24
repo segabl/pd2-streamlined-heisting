@@ -46,3 +46,15 @@ Hooks:PostHook(GroupAIStateBase, "update", "sh_update", function (self, t)
 		self:_calculate_difficulty_ratio()
 	end
 end)
+
+
+-- Fix enemies aiming at their target's feet if they don't have direct LoS
+local function fix_position(gstate, unit)
+	local u_sighting = gstate._criminals[unit:key()]
+	if u_sighting then
+		mvector3.set_z(u_sighting.pos, u_sighting.pos.z + 140)
+	end
+end
+
+Hooks:PostHook(GroupAIStateBase, "criminal_spotted", "sh_criminal_spotted", fix_position)
+Hooks:PostHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_nav_seg_change", fix_position)
