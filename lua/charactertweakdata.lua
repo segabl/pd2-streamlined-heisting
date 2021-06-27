@@ -285,8 +285,8 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
-	self.spooc.damage.hurt_severity = presets.hurt_severities.no_hurts
-	self.shadow_spooc.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
+	self.shadow_spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
