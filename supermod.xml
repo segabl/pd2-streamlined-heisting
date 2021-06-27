@@ -15,6 +15,7 @@
 			<post :hook_id="mission/missionscriptelement"/>
 			<post :hook_id="dynamicresourcemanager"/>
 		</group>
+		<post hook_id="lib/modifiers/modifierheavies"/>
 		<group hook_id="lib/network/">
 			<post :hook_id="handlers/unitnetworkhandler"/>
 			<post :hook_id="matchmaking/networkmatchmakingsteam"/>
