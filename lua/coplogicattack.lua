@@ -32,7 +32,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 			end
 
 			aim = shoot or focus_enemy.verified_dis < firing_range
-		else
+		elseif expected_pos then
 			aim = not advancing or time_since_verification < math.lerp(4, 1, focus_enemy.verified_dis / firing_range)
 			shoot = aim and my_data.shooting and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and time_since_verification < (running and 2 or 4)
 		end
