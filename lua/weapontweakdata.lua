@@ -13,6 +13,8 @@ end
 
 
 Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
+	self.tweak_data = tweak_data
+
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.saiga_npc.auto.fire_rate = 0.18
 
@@ -33,25 +35,6 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.benelli_npc = based_on(self.r870_npc, self.ben_crew)
 	self.ksg_npc = based_on(self.r870_npc, self.ksg_crew)
 	self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
-
-	-- Give turret harsher falloff and backup npc weapon damage values
-	local diff_i = tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local damage_mul_range = {
-		{ 0, 2 },
-		{ 1500, 1 },
-		{ 3000, 0.1 }
-	}
-	self._orig_npc_dmg = {}
-	for k, v in pairs(self) do
-		if k:match("_turret_module$") then
-			v.DAMAGE = diff_i * 0.5
-			v.DAMAGE_MUL_RANGE = damage_mul_range
-			self._orig_npc_dmg[k] = v.DAMAGE
-		elseif k:match("_npc$") then
-			v.DAMAGE = 1
-			self._orig_npc_dmg[k] = v.DAMAGE
-		end
-	end
 end)
 
 
@@ -63,18 +46,37 @@ Hooks:PostHook(WeaponTweakData, "_init_data_npc_melee", "sh__init_data_npc_melee
 end)
 
 
-local function restore_npc_weapon_dmg(self)
-	for k, v in pairs(self._orig_npc_dmg) do
-		self[k].DAMAGE = v
+-- Scale swat turret stats and standardize NPC weapon damage
+local turret_damage_mul = {
+	{ 0, 2 },
+	{ 1500, 1 },
+	{ 3000, 0.1 }
+}
+local turret_hp_mul = {
+	swat_van_turret_module = 2
+}
+local function set_presets(weap_tweak_data)
+	local diff_i = weap_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+	local diff_i_norm = math.max(0, diff_i - 2) / (#weap_tweak_data.tweak_data.difficulties - 2)
+
+	for k, v in pairs(weap_tweak_data) do
+		if k:match("_turret_module$") then
+			v.DAMAGE = diff_i * 0.5
+			v.DAMAGE_MUL_RANGE = turret_damage_mul
+			v.HEALTH_INIT = math.ceil(math.lerp(1000, 20000, diff_i_norm)) * (turret_hp_mul[k] or 1)
+			v.SHIELD_HEALTH_INIT = math.ceil(math.lerp(50, 400, diff_i_norm)) * (turret_hp_mul[k] or 1)
+			v.CLIP_SIZE = math.ceil(math.lerp(400, 800, diff_i_norm))
+		elseif k:match("_npc$") then
+			v.DAMAGE = 1
+		end
 	end
 end
 
--- Since Overkill decided to mess with weapon stats based on difficulty instead of adjusting the presets
--- we have to restore the weapon damage values after they have been modified by those functions
-Hooks:PostHook(WeaponTweakData, "_set_normal", "sh__set_normal", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_hard", "sh__set_hard", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_overkill", "sh__set_overkill", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_overkill_145", "sh__set_overkill_145", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_easy_wish", "sh__set_easy_wish", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_overkill_290", "sh__set_overkill_290", restore_npc_weapon_dmg)
-Hooks:PostHook(WeaponTweakData, "_set_sm_wish", "sh__set_sm_wish", restore_npc_weapon_dmg)
+WeaponTweakData._set_easy = set_presets
+WeaponTweakData._set_normal = set_presets
+WeaponTweakData._set_hard = set_presets
+WeaponTweakData._set_overkill = set_presets
+WeaponTweakData._set_overkill_145 = set_presets
+WeaponTweakData._set_easy_wish = set_presets
+WeaponTweakData._set_overkill_290 = set_presets
+WeaponTweakData._set_sm_wish = set_presets
