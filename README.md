@@ -81,6 +81,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
 - Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
 - Fixes Cloakers being stuck in the beatdown animation and ignoring threats after a charge attack
+- Fixes the Crime Spree "Heavies" modifier to replace the correct units
 
 ## Credits
 
