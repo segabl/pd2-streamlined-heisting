@@ -181,6 +181,7 @@
 			<file :name="ene_murkywater_light/glasses_op.texture"/>
 			<file :name="ene_murkywater_heavy/material_df.texture"/>
 			<file :name="ene_murkywater_heavy/material_nm.texture"/>
+			<file :name="ene_acc_murkywater_hat/ene_acc_murkywater_hat.model"/>
 
 			<!-- make light distinct and use scar -->
 			<file :name="ene_murkywater_light/ene_murkywater_light.material_config"/>
