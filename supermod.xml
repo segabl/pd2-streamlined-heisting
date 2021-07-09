@@ -187,6 +187,7 @@
 			<file :name="ene_murkywater_light/ene_murkywater_light.material_config"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light_contour.material_config"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light.model"/>
+			<file :name="ene_murkywater_light/ene_murkywater_light.object"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light.unit"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light_husk.unit"/>
 
