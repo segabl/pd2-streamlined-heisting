@@ -7,3 +7,13 @@ function CopLogicBase._create_detected_attention_object_data(...)
 	end
 	return data
 end
+
+
+-- Make important enemies more reactive
+local queue_task_original = CopLogicBase.queue_task
+function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap, ...)
+	if asap and exec_t then
+		exec_t = math.min(exec_t, data.t + (data.important and 0.1 or 1))
+	end
+	return queue_task_original(internal_data, id, func, data, exec_t, asap, ...)
+end

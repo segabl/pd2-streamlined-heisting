@@ -1,7 +1,3 @@
--- Allow higher number of important cops
-GroupAIStateBase._nr_important_cops = 6
-
-
 -- Make medic and minigun dozer register as specials
 local function register_special_types(gstate)
 	gstate._special_unit_types.tank_medic = true

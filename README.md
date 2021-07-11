@@ -67,14 +67,14 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 
 These are minor changes and fixes that don't fit any of the above categories.
 
-- Reduces the effect of health granularity by drastically increasing the fractional that damage is rounded to (from 1/512 to 1/8192)
+- Reduces the effect of health granularity drastically (damage dealt to enemies is more true to the actual weapon damage)
 - Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
 - Makes the assault delay caused by having hostages scale with the amount of hostages (minimum of 5s per hostage, up to 4 hostages)
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
 - Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
 - Fixes enemies playing full body crouching animations when suppressed when they are already crouching
-- Raises the maximum amount of important enemies and always treats specials as important (Important enemies are more responsive)
+- Makes important enemies more responsive and always treats specials as important
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
