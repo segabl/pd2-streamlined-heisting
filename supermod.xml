@@ -219,6 +219,7 @@
 
 			<!-- make heavy use scar -->
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.model"/>
+			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.object"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy_husk.unit"/>
 
@@ -230,6 +231,7 @@
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.material_config"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_contour.material_config"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.model"/>
+			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.object"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.unit"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_husk.unit"/>
 		</group>
