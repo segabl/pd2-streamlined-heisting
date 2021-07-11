@@ -58,3 +58,25 @@ end
 
 Hooks:PostHook(GroupAIStateBase, "criminal_spotted", "sh_criminal_spotted", fix_position)
 Hooks:PostHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_nav_seg_change", fix_position)
+
+
+-- Make flank pathing more dynamic by marking areas in which enemies die unsafe
+Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function (self, unit)
+	if not Network:is_server() or not unit:character_damage():dead() then
+		return
+	end
+
+	local nav_seg = unit:movement():nav_tracker():nav_segment()
+	local area = self:get_area_from_nav_seg_id(nav_seg)
+
+	area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 10, 60) or 10)
+end)
+
+local function check_area_safety(gstate, area)
+	if area.unsafe_t and area.unsafe_t > gstate._t then
+		return false
+	end
+end
+
+Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", check_area_safety)
+Hooks:PostHook(GroupAIStateBase, "is_area_safe_assault", "sh_is_area_safe_assault", check_area_safety)
