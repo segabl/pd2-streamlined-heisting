@@ -430,13 +430,13 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.flash_grenade.timer = math.lerp(3, 1, f)
 
 	-- Spawn Groups
-	local special_weight = difficulty_index * 0.5 + 2
-	local bulldozer_weight = difficulty_index * 0.5
+	local special_weight = difficulty_index * 0.5 + 3
+	local bulldozer_weight = difficulty_index * 0.5 + 1
 	self.besiege.assault.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },
 		tac_swat_shotgun_flank = { 1, 1, 1 },
 		tac_swat_rifle = { 16, 16, 16 },
-		tac_swat_rifle_flank = { 4, 4, 4 },
+		tac_swat_rifle_flank = { 8, 8, 8 },
 		tac_shield_wall_ranged = { 0, special_weight * 0.5, special_weight },
 		tac_shield_wall_charge = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_flanking = { 0, special_weight * 0.5, special_weight },
@@ -463,7 +463,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		tac_swat_shotgun_rush = { 2, 2, 2 },
 		tac_swat_shotgun_flank = { 1, 1, 1 },
 		tac_swat_rifle = { 16, 16, 16 },
-		tac_swat_rifle_flank = { 4, 4, 4 }
+		tac_swat_rifle_flank = { 8, 8, 8 }
 	}
 
 	self.besiege.reenforce.interval = { 15, 20, 25 }
