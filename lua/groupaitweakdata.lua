@@ -448,7 +448,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	}
 
 	-- Assault phases settings
-	self.besiege.assault.delay = { math.lerp(60, 40, f), math.lerp(45, 30, f), math.lerp(30, 20, f) }
+	self.besiege.assault.delay = { math.lerp(50, 25, f), math.lerp(40, 20, f), math.lerp(30, 15, f) }
 	self.besiege.assault.hostage_hesitation_delay = { 10, 7.5, 5 }
 	self.besiege.assault.force = { difficulty_index, difficulty_index + 3, difficulty_index + 6 }
 	self.besiege.assault.force_pool = table.collect(self.besiege.assault.force, function (val) return val * 8 end)
@@ -456,7 +456,6 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.sustain_duration_min = { 60 + 120 * f, 120 + 120 * f, 180 + 120 * f }
 	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
-	self.besiege.assault.fade_duration = 10
 
 	self.besiege.reenforce.groups = {
 		tac_swat_shotgun_rush = { 2, 2, 2 },
@@ -476,7 +475,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.recon.force = { 2, 4, 6 }
 	self.besiege.recon.interval_variation = 30
 
-	self.besiege.regroup.duration = { 35, 30, 25 }
+	self.besiege.regroup.duration = { 30, 25, 20 }
 
 	self.besiege.recurring_group_SO.recurring_cloaker_spawn.interval = { math.lerp(120, 15, f), math.lerp(240, 30, f) }
 
