@@ -8,8 +8,8 @@
     </material>
 
     <material name="mtr_head_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm" mip="3"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df" mip="3"/>
+        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm" mip="4"/>
+        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df" mip="4"/>
         <variable value="1 1 1" type="vector3" name="contour_color"/>
         <variable value="0" type="scalar" name="contour_opacity"/>
     </material>
@@ -29,8 +29,8 @@
     </material>   
     
     <material name="mtr_body_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="3"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="3"/>
+        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="4"/>
+        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="4"/>
         <variable value="1 1 1" type="vector3" name="contour_color"/>
         <variable value="0" type="scalar" name="contour_opacity"/>
     </material>
@@ -43,8 +43,8 @@
     </material>   
     
     <material name="mtr_frame_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="3"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="3"/>
+        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="4"/>
+        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="4"/>
         <variable value="1 1 1" type="vector3" name="contour_color"/>
         <variable value="0" type="scalar" name="contour_opacity"/>
     </material>
