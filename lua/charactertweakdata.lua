@@ -209,6 +209,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	end
 	presets.gang_member_damage.HEALTH_INIT = 100 * diff_i
 	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.3
+	presets.gang_member_damage.REGENERATE_TIME = 2
+	presets.gang_member_damage.REGENERATE_TIME_AWAY = 0.5
 
 	-- Setup surrender presets
 	local surrender_factors = {
