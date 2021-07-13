@@ -68,11 +68,8 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 	area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 10, 60) or 10)
 end)
 
-local function check_area_safety(gstate, area)
-	if area.unsafe_t and area.unsafe_t > gstate._t then
+Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", function (self, area)
+	if area.unsafe_t and area.unsafe_t > self._t then
 		return false
 	end
-end
-
-Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", check_area_safety)
-Hooks:PostHook(GroupAIStateBase, "is_area_safe_assault", "sh_is_area_safe_assault", check_area_safety)
+end)
