@@ -6,7 +6,7 @@
 	"priority" : 401,
 	"color" : "0.043 0.808 0.6",
 	"image" : "mod.png",
-	"version" : "2.6",
+	"version" : "2.7",
 	"updates" : [{
 		"identifier" : "pd2-streamlined-heisting",
 		"host": { "meta": "https://updates.hoppip.at/pd2-streamlined-heisting" }
