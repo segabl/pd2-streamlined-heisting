@@ -64,21 +64,7 @@ end
 -- Make defensive objectives/behaviour actually work
 local _chk_relocate_original = CopLogicIdle._chk_relocate
 function CopLogicIdle._chk_relocate(data)
-	local objective = data.objective
-	if not objective then
-		return
+	if data.objective and data.objective.type == "follow" then
+		return _chk_relocate_original(data)
 	end
-	local group_objective_type = objective.grp_objective and objective.grp_objective.type
-	if group_objective_type == "assault_area" then
-		-- If we have an offensive objective only relocate if we can't see our target
-		local focus_enemy = data.attention_obj
-		local in_place = not objective.area or objective.area.nav_segs[data.unit:movement():nav_tracker():nav_segment()]
-		if not in_place or focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible or focus_enemy.verified_t and data.t - focus_enemy.verified_t < 3) then
-			return
-		end
-	elseif group_objective_type or objective.attitude == "avoid" then
-		-- If we have a defensive objective, don't relocate towards criminals
-		return
-	end
-	return _chk_relocate_original(data)
 end

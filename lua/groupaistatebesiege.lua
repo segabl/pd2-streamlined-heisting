@@ -130,3 +130,38 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 
 	self:_assign_enemy_groups_to_assault(task_data.phase)
 end
+
+
+-- Add an alternate in_place check to prevent enemy groups from getting stuck
+function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
+	for group_id, group in pairs(self._groups) do
+		if group.has_spawned and group.objective.type == "assault_area" then
+			if group.objective.moving_out then
+				local done_moving
+
+				for u_key, u_data in pairs(group.units) do
+					local objective = u_data.unit:brain():objective()
+					if objective and objective.grp_objective == group.objective then
+						if objective.in_place or objective.area and objective.area.nav_segs[u_data.unit:movement():nav_tracker():nav_segment()] then
+							done_moving = true
+						else
+							done_moving = false
+							break
+						end
+					end
+				end
+
+				if done_moving then
+					group.objective.moving_out = nil
+					group.in_place_t = self._t
+					group.objective.moving_in = nil
+					self:_voice_move_complete(group)
+				end
+			end
+
+			if not group.objective.moving_in then
+				self:_set_assault_objective_to_group(group, phase)
+			end
+		end
+	end
+end

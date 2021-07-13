@@ -39,6 +39,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
 - Adds reinforce points to loot secure points and the escape zone
+- Fixes enemies crouch-walking when they are supposed to run
 
 ### Standardizes enemy factions
 
