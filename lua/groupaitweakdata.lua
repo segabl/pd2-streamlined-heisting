@@ -427,7 +427,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	self.smoke_and_flash_grenade_timeout = { 15, 20 }
 	self.smoke_grenade_lifetime = math.lerp(6, 12, f)
-	self.flash_grenade.timer = math.lerp(3, 1, f)
+	self.flash_grenade.timer = math.lerp(2, 0.5, f)
 
 	-- Spawn Groups
 	local special_weight = difficulty_index * 0.5 + 3
