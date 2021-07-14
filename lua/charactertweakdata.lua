@@ -340,9 +340,9 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_hw.damage.explosion_damage_mul = 0.85
 	self.tank_medic.damage.explosion_damage_mul = 0.85
 	self.tank_mini.damage.explosion_damage_mul = 0.85
-	self.shield.damage.explosion_damage_mul = 0.75
-	self.phalanx_minion.damage.explosion_damage_mul = 0.75
-	self.phalanx_vip.damage.explosion_damage_mul = 0.75
+	self.shield.damage.explosion_damage_mul = 1
+	self.phalanx_minion.damage.explosion_damage_mul = 1
+	self.phalanx_vip.damage.explosion_damage_mul = 1
 
 	-- Fix suppression
 	self.medic.suppression = nil
