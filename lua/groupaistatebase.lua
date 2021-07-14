@@ -73,3 +73,19 @@ Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", function (se
 		return false
 	end
 end)
+
+
+-- Fix this function doing nothing
+function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
+	local i_nav_seg = #coarse_path
+	local area, last_area
+	while i_nav_seg > 0 and #coarse_path > 2 do
+		area = self:get_area_from_nav_seg_id(coarse_path[i_nav_seg][1])
+		if last_area and last_area == area then
+			table.remove(coarse_path, i_nav_seg)
+		else
+			last_area = area
+		end
+		i_nav_seg = i_nav_seg - 1
+	end
+end

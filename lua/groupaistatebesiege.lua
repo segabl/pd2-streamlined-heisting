@@ -178,11 +178,10 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	local approach, open_fire, push, pull_back, charge
 	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
-	local tactics_map
+	local in_place_duration = group.in_place_t and self._t - group.in_place_t or math.huge
+	local tactics_map = {}
 
 	if group_leader_u_data and group_leader_u_data.tactics then
-		tactics_map = {}
-
 		for _, tactic_name in ipairs(group_leader_u_data.tactics) do
 			tactics_map[tactic_name] = true
 		end
@@ -203,7 +202,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					end
 				end
 
-				local closest_crim_u_data, closest_crim_dis_sq = nil
+				local closest_crim_u_data, closest_crim_dis_sq
 				for u_key, u_data in pairs(self._char_criminals) do
 					if u_data.status then
 						local closest_u_id, closest_u_data, closest_u_dis_sq = self._get_closest_group_unit_to_pos(u_data.m_pos, group.units)
@@ -241,7 +240,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 						return
 					end
 				end
-			elseif tactic_name == "charge" and not current_objective.moving_out and group.in_place_t and (self._t - group.in_place_t > 15 or self._t - group.in_place_t > 4 and self._drama_data.amount <= tweak_data.drama.low) and next(current_objective.area.criminal.units) and group.is_chasing and not current_objective.charge then
+			elseif tactic_name == "charge" and not current_objective.moving_out and (in_place_duration > 5 or in_place_duration > 2 and self._drama_data.amount <= tweak_data.drama.low) and next(current_objective.area.criminal.units) and group.is_chasing and not current_objective.charge then
 				charge = true
 			end
 		end
@@ -263,10 +262,13 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			pull_back = true
 		elseif not current_objective.moving_out then
 			local has_criminals_close
-			if not current_objective.moving_out then
-				for area_id, neighbour_area in pairs(objective_area.neighbours) do
+			if next(objective_area.criminal.units) then
+				has_criminals_close = true
+			else
+				for _, neighbour_area in pairs(objective_area.neighbours) do
 					if next(neighbour_area.criminal.units) then
 						has_criminals_close = true
+						obstructed_area = neighbour_area
 						break
 					end
 				end
@@ -274,11 +276,11 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 
 			if charge then
 				push = true
-			elseif not has_criminals_close or not group.in_place_t then
+			elseif not has_criminals_close then
 				approach = true
-			elseif not phase_is_anticipation and not current_objective.open_fire and not self:is_area_safe_assault(objective_area) then
+			elseif not phase_is_anticipation and not current_objective.open_fire then
 				open_fire = true
-			elseif not phase_is_anticipation and group.in_place_t and (group.is_chasing or not tactics_map or not tactics_map.ranged_fire or self._t - group.in_place_t > 15) then
+			elseif not phase_is_anticipation and (group.is_chasing or not tactics_map.ranged_fire or in_place_duration > 10) then
 				push = true
 			elseif phase_is_anticipation and current_objective.open_fire then
 				pull_back = true
@@ -309,7 +311,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		self:_set_objective_to_enemy_group(group, grp_objective)
 		self:_voice_open_fire_start(group)
 	elseif approach or push then
-		local assault_area, alternate_assault_area, alternate_assault_area_from, assault_path, alternate_assault_path = nil
+		local assault_area, alternate_assault_area, alternate_assault_area_from, assault_path, alternate_assault_path
 		local to_search_areas = {
 			objective_area
 		}
@@ -323,7 +325,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
 
-				if not push and tactics_map and tactics_map.flank then
+				if not push and tactics_map.flank then
 					local assault_from_area = found_areas[search_area]
 
 					if assault_from_area ~= "init" then
@@ -432,7 +434,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			self:_set_objective_to_enemy_group(group, grp_objective)
 		end
 	elseif pull_back then
-		local retreat_area, do_not_retreat = nil
+		local retreat_area
 
 		for u_key, u_data in pairs(group.units) do
 			local nav_seg_id = u_data.tracker:nav_segment()
@@ -448,9 +450,8 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			end
 		end
 
-		if not retreat_area and not do_not_retreat and current_objective.coarse_path then
+		if not retreat_area and current_objective.coarse_path then
 			local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
-
 			if forwardmost_i_nav_point then
 				local nearest_safe_nav_seg_id = current_objective.coarse_path(forwardmost_i_nav_point)
 				retreat_area = self:get_area_from_nav_seg_id(nearest_safe_nav_seg_id)
