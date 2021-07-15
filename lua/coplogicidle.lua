@@ -35,7 +35,7 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ..
 	end
 
 	if record.status == "disabled" then
-		if record.assault_t and record.assault_t - record.disabled_t > 0.6 then
+		if record.assault_t and record.assault_t - record.disabled_t > 0.6 or data.tactics and data.tactics.murder then
 			return REACT_COMBAT
 		else
 			return math_min(attention_reaction, REACT_AIM)
