@@ -274,18 +274,28 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				end
 			end
 
+			local has_visible_target, logic_data, focus_enemy
+			for _, u_data in pairs(group.units) do
+				logic_data = u_data.unit:brain()._logic_data
+				focus_enemy = logic_data and logic_data.attention_obj
+				if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_SHOOT and focus_enemy.verified then
+					has_visible_target = true
+					break
+				end
+			end
+
 			if charge then
 				push = true
 			elseif not has_criminals_close then
 				approach = true
-			elseif not phase_is_anticipation and not current_objective.open_fire then
-				open_fire = true
-			elseif not phase_is_anticipation and (group.is_chasing or not tactics_map.ranged_fire or in_place_duration > 10) then
+			elseif phase_is_anticipation then
+				pull_back = current_objective.open_fire
+			elseif not has_visible_target then
 				push = true
-			elseif phase_is_anticipation and current_objective.open_fire then
-				pull_back = true
-			else
-				approach = true
+			elseif not current_objective.open_fire then
+				open_fire = true
+			elseif group.is_chasing or not tactics_map.ranged_fire or in_place_duration > 10 then
+				push = true
 			end
 		end
 	end
@@ -325,7 +335,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
 
-				if not push and tactics_map.flank then
+				if tactics_map.flank then
 					local assault_from_area = found_areas[search_area]
 
 					if assault_from_area ~= "init" then

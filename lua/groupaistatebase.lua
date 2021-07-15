@@ -65,7 +65,7 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 	local nav_seg = unit:movement():nav_tracker():nav_segment()
 	local area = self:get_area_from_nav_seg_id(nav_seg)
 
-	area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 10, 60) or 10)
+	area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 5, 60) or 5)
 end)
 
 Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", function (self, area)
