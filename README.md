@@ -31,7 +31,7 @@ In vanilla there are multiple base presets that are assigned based on difficulty
 
 ### Overhauls spawn groups and enemy behaviour
 
-At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. These spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
+At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. Missing tactics have been implemented and spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
 - Restores original spawn groups that were disabled by Overkill, adding back shotgunners, reinforce groups and hostage rescue units
@@ -40,6 +40,8 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
 - Adds reinforce points to loot secure points and the escape zone
 - Fixes enemies crouch-walking when they are supposed to run
+- Implements missing ``murder`` tactic, enemies with this tactic will continue shooting at downed players regardless of any aggressive behavior
+- Implements missing ``shield`` and ``shield_cover`` tactics, enemies with ``shield_cover`` tactic will stick closely to group members with ``shield`` tactic
 
 ### Standardizes enemy factions
 

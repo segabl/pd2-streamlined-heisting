@@ -17,3 +17,25 @@ function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap, ..
 	end
 	return queue_task_original(internal_data, id, func, data, exec_t, asap, ...)
 end
+
+
+-- Make shield_cover tactics stick closer to their shield tactics providers
+Hooks:PreHook(CopLogicBase, "on_new_objective", "sh_on_new_objective", function (data, old_objective)
+	if not data.objective or data.objective.type ~= "defend_area" or not data.group or not data.tactics or not data.tactics.shield_cover then
+		return
+	end
+
+	local logic_data
+	local shielding_units = {}
+	for _, u_data in pairs(data.group.units) do
+		logic_data = u_data.unit:brain()._logic_data
+		if logic_data and logic_data.tactics and logic_data.tactics.shield then
+			table.insert(shielding_units, u_data.unit)
+		end
+	end
+	if #shielding_units > 0 then
+		data.objective.type = "follow"
+		data.objective.follow_unit = table.random(shielding_units)
+		data.objective.distance = 400
+	end
+end)

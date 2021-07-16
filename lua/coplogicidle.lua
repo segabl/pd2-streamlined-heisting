@@ -61,10 +61,49 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ..
 end
 
 
--- Make defensive objectives/behaviour actually work
+-- Fix defend_area objectives being force relocated to areas with players in them and make shield_cover tactics stick closer to their shield tactics providers
 local _chk_relocate_original = CopLogicIdle._chk_relocate
-function CopLogicIdle._chk_relocate(data)
+function CopLogicIdle._chk_relocate(data, ...)
 	if data.objective and data.objective.type == "follow" then
-		return _chk_relocate_original(data)
+		if data.is_converted then
+			return _chk_relocate_original(data, ...)
+		end
+
+		local follow_unit = data.objective.follow_unit
+		local follow_unit_pos = follow_unit:movement():m_pos()
+		if data.is_tied and data.objective.lose_track_dis and data.objective.lose_track_dis * data.objective.lose_track_dis < mvector3.distance_sq(data.m_pos, follow_unit_pos) then
+			data.brain:set_objective(nil)
+			return true
+		end
+
+		if not data.tactics or not data.tactics.shield_cover then
+			follow_unit_pos = follow_unit:brain() and follow_unit:brain():is_advancing() or follow_unit_pos
+		end
+
+		if data.objective.relocated_to and mvector3.equal(data.objective.relocated_to, follow_unit_pos) then
+			return
+		end
+
+		local relocate
+		if data.objective.distance and data.objective.distance < mvector3.distance(data.m_pos, follow_unit_pos) then
+			relocate = true
+		else
+			local ray_params = {
+				tracker_from = data.unit:movement():nav_tracker(),
+				pos_to = follow_unit_pos
+			}
+			if managers.navigation:raycast(ray_params) then
+				relocate = true
+			end
+		end
+
+		if relocate then
+			data.objective.in_place = nil
+			data.objective.nav_seg = follow_unit:movement():nav_tracker():nav_segment()
+			data.objective.relocated_to = mvector3.copy(follow_unit_pos)
+
+			data.logic._exit(data.unit, "travel")
+			return true
+		end
 	end
 end

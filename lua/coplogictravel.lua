@@ -12,3 +12,11 @@ Hooks:PreHook(CopLogicTravel, "upd_advance", "sh_upd_advance", function (data)
 		end
 	end
 end)
+
+
+-- Sanity check for rare follow_unit crash
+Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
+	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
+		data.objective.follow_unit = nil
+	end
+end)
