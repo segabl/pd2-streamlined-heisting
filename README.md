@@ -92,3 +92,4 @@ These are minor changes and fixes that don't fit any of the above categories.
 
 - ZEAL medic textures based on work by [Jarey_](https://modworkshop.net/user/1664)
 - Inspired by the early days of [fuglore's Hyper Heisting](https://modworkshop.net/mod/24337)
+- [RedFlame](https://modworkshop.net/user/78332), [creepyyy](https://modworkshop.net/user/54264) and [AverageChan](https://modworkshop.net/user/97086) for helping with testing and providing feedback
