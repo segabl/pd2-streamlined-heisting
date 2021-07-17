@@ -42,6 +42,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Fixes enemies crouch-walking when they are supposed to run
 - Implements missing ``murder`` tactic, enemies with this tactic will continue shooting at downed players regardless of any aggressive behavior
 - Implements missing ``shield`` and ``shield_cover`` tactics, enemies with ``shield_cover`` tactic will stick closely to group members with ``shield`` tactic
+- Fixes enemies not pulling back when encountering players during anticipation
 
 ### Standardizes enemy factions
 

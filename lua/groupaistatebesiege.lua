@@ -178,7 +178,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	local approach, open_fire, push, pull_back, charge
 	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
-	local in_place_duration = group.in_place_t and self._t - group.in_place_t or math.huge
+	local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
 	local tactics_map = {}
 
 	if group_leader_u_data and group_leader_u_data.tactics then
@@ -248,10 +248,10 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 
 	local objective_area = current_objective.area
 	if obstructed_area then
-		if current_objective.moving_out then
-			if not current_objective.open_fire then
-				open_fire = true
-			end
+		if phase_is_anticipation then
+			pull_back = true
+		elseif current_objective.moving_out then
+			open_fire = not current_objective.open_fire
 		elseif not current_objective.pushed or charge and not current_objective.charge then
 			push = true
 		end
@@ -285,17 +285,14 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			end
 
 			if charge then
-				push = true
+				approach = not has_criminals_close
+				push = not approach
 			elseif not has_criminals_close then
-				approach = true
-			elseif phase_is_anticipation then
-				pull_back = current_objective.open_fire
-			elseif not has_visible_target then
-				push = true
-			elseif not current_objective.open_fire then
-				open_fire = true
-			elseif group.is_chasing or not tactics_map.ranged_fire or in_place_duration > 10 then
-				push = true
+				approach = not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10
+				open_fire = not approach and not current_objective.open_fire
+			else
+				push = not has_visible_target or group.is_chasing
+				open_fire = has_visible_target and not current_objective.open_fire
 			end
 		end
 	end
@@ -463,8 +460,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		if not retreat_area and current_objective.coarse_path then
 			local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
 			if forwardmost_i_nav_point then
-				local nearest_safe_nav_seg_id = current_objective.coarse_path(forwardmost_i_nav_point)
-				retreat_area = self:get_area_from_nav_seg_id(nearest_safe_nav_seg_id)
+				retreat_area = self:get_area_from_nav_seg_id(current_objective.coarse_path[forwardmost_i_nav_point][1])
 			end
 		end
 
