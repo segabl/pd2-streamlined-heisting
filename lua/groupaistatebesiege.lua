@@ -255,45 +255,39 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		elseif not current_objective.pushed or charge and not current_objective.charge then
 			push = true
 		end
-	else
-		local obstructed_path_index = self:_chk_coarse_path_obstructed(group)
-		if obstructed_path_index then
-			objective_area = self:get_area_from_nav_seg_id(group.coarse_path[math.max(obstructed_path_index - 1, 1)][1])
-			pull_back = true
-		elseif not current_objective.moving_out then
-			local has_criminals_close
-			if next(objective_area.criminal.units) then
-				has_criminals_close = true
-			else
-				for _, neighbour_area in pairs(objective_area.neighbours) do
-					if next(neighbour_area.criminal.units) then
-						has_criminals_close = true
-						obstructed_area = neighbour_area
-						break
-					end
-				end
-			end
-
-			local has_visible_target, logic_data, focus_enemy
-			for _, u_data in pairs(group.units) do
-				logic_data = u_data.unit:brain()._logic_data
-				focus_enemy = logic_data and logic_data.attention_obj
-				if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_SHOOT and focus_enemy.verified then
-					has_visible_target = true
+	elseif not current_objective.moving_out then
+		local has_criminals_close
+		if next(objective_area.criminal.units) then
+			has_criminals_close = true
+		else
+			for _, neighbour_area in pairs(objective_area.neighbours) do
+				if next(neighbour_area.criminal.units) then
+					has_criminals_close = true
+					obstructed_area = neighbour_area
 					break
 				end
 			end
+		end
 
-			if charge then
-				approach = not has_criminals_close
-				push = not approach
-			elseif not has_criminals_close then
-				approach = not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10
-				open_fire = not approach and not current_objective.open_fire
-			else
-				push = not has_visible_target or group.is_chasing
-				open_fire = has_visible_target and not current_objective.open_fire
+		local has_visible_target, logic_data, focus_enemy
+		for _, u_data in pairs(group.units) do
+			logic_data = u_data.unit:brain()._logic_data
+			focus_enemy = logic_data and logic_data.attention_obj
+			if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_SHOOT and focus_enemy.verified then
+				has_visible_target = true
+				break
 			end
+		end
+
+		if charge then
+			approach = not has_criminals_close
+			push = not approach
+		elseif not has_criminals_close or not group.in_place_t then
+			approach = not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10
+			open_fire = not approach and not current_objective.open_fire
+		else
+			push = not has_visible_target or group.is_chasing
+			open_fire = has_visible_target and not current_objective.open_fire
 		end
 	end
 
@@ -482,6 +476,17 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 
 			self:_set_objective_to_enemy_group(group, new_grp_objective)
 			return
+		end
+	end
+end
+
+
+-- Optimize this function to use existing area lookups instead of nested loops
+function GroupAIStateBesiege:_chk_group_areas_tresspassed(group)
+	for _, u_data in pairs(group.units) do
+		local area = self:get_area_from_nav_seg_id(u_data.tracker:nav_segment())
+		if not self:is_area_safe(area) then
+			return area
 		end
 	end
 end
