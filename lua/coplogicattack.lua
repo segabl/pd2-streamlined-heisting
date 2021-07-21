@@ -56,23 +56,16 @@ function CopLogicAttack._upd_aim(data, my_data)
 		end
 
 		if not my_data.shooting and not my_data.spooc_attack and not data.unit:anim_data().reload and not data.unit:movement():chk_action_forbidden("action") then
-			local shoot_action = {
+			my_data.shooting = data.unit:brain():action_request({
 				body_part = 3,
 				type = "shoot"
-			}
-			if data.unit:brain():action_request(shoot_action) then
-				my_data.shooting = true
-			end
+			})
 		end
 	else
-		if (focus_enemy or expected_pos) and data.logic.chk_should_turn(data, my_data) then
-			CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, (verified or nearly_visible) and focus_enemy.m_pos or expected_pos)
-		end
-
 		if my_data.shooting then
-			data.unit:brain():action_request({
+			my_data.shooting = not data.unit:brain():action_request({
 				body_part = 3,
-				type = data.unit:anim_data().reload and "reload" or "idle"
+				type = "idle"
 			})
 		end
 

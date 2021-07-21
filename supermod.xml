@@ -30,6 +30,7 @@
 		</group>
 		<group hook_id="lib/units/">
 			<post :hook_id="beings/player/playerdamage"/>
+			<post :hook_id="enemies/cop/actions/lower_body/copactionidle"/>
 			<post :hook_id="enemies/cop/actions/upper_body/copactionshoot"/>
 			<post :hook_id="enemies/cop/actions/upper_body/copactiontase"/>
 			<post :hook_id="enemies/cop/logics/coplogicattack"/>
