@@ -91,7 +91,7 @@
 			<file :name="wpn_npc_shepheard/wpn_npc_shepheard.unit"/>
 		</group>
 
-		<!-- new (and old) characters -->
+		<!-- swat -->
 		<group name="units/payday2/characters/" dyn_package="false">
 			<file :name="shared_textures/ene_acc_shield_city_df.texture"/>
 			<file :name="shared_textures/helmets_heavy_shotgunner_df.texture"/>
@@ -176,7 +176,7 @@
 			<file :name="ene_cop_4/ene_cop_4_husk.unit"/>
 		</group>
 
-		<!-- new (and old) murkies -->
+		<!-- murkies -->
 		<group name="units/pd2_dlc_bph/characters/" dyn_package="false">
 			<file :name="ene_murkywater_light/material_df.texture"/>
 			<file :name="ene_murkywater_light/material_nm.texture"/>
@@ -256,7 +256,7 @@
 			<file :name="bph_prop_body_light_table_03/bph_prop_body_light_table_03.model"/>
 		</group>
 
-		<!-- new (and old) zeals -->
+		<!-- zeals -->
 		<group name="units/pd2_dlc_gitgud/characters/" dyn_package="false">
 			<file :name="shared_textures/swat_df.texture"/>
 			<file :name="shared_textures/swat_nm.texture"/>
@@ -329,7 +329,7 @@
 			<file :name="ene_zeal_sniper/ene_zeal_sniper_husk.unit"/>
 		</group>
 
-		<!-- new federal police -->
+		<!-- federal police -->
 		<group name="units/pd2_dlc_bex/characters/" dyn_package="false">
 			<file :name="shared_textures/ene_acc_shield_lights_df.texture"/>
 
@@ -389,6 +389,13 @@
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.object"/>
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.unit"/>
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper_husk.unit"/>
+		</group>
+
+		<!-- russian mercs -->
+		<group name="units/pd2_dlc_mad/characters/" dyn_package="false">
+			<!-- assign faction weapons to medic -->
+			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass.unit"/>
+			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass_husk.unit"/>
 		</group>
 
 	</assets>
