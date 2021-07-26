@@ -237,6 +237,12 @@
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.object"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.unit"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_husk.unit"/>
+
+			<!-- assign faction weapons to medic -->
+			<file :name="ene_murkywater_medic/ene_murkywater_medic.unit"/>
+			<file :name="ene_murkywater_medic/ene_murkywater_medic_husk.unit"/>
+			<file :name="ene_murkywater_medic_r870/ene_murkywater_medic_r870.unit"/>
+			<file :name="ene_murkywater_medic_r870/ene_murkywater_medic_r870_husk.unit"/>
 		</group>
 
 		<!-- murky prop -->
