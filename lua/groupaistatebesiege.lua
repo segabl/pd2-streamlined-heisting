@@ -175,7 +175,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
-	local approach, open_fire, push, pull_back, charge
+	local approach, open_fire, push, pull_back, charge, use_grenade
 	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
 	local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
@@ -255,6 +255,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		elseif not current_objective.pushed or charge and not current_objective.charge then
 			push = true
 		end
+		use_grenade = push
 	elseif not current_objective.moving_out then
 		local has_criminals_close
 		if next(objective_area.criminal.units) then
@@ -289,6 +290,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			push = not has_visible_target or group.is_chasing
 			open_fire = has_visible_target and not current_objective.open_fire
 		end
+		use_grenade = push or has_visible_target
 	end
 
 	if open_fire then
@@ -399,7 +401,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				table.remove(assault_path)
 			end
 
-			if push then
+			if use_grenade then
 				local detonate_pos
 				if charge then
 					for c_key, c_data in pairs(assault_area.criminal.units) do
@@ -488,5 +490,73 @@ function GroupAIStateBesiege:_chk_group_areas_tresspassed(group)
 		if not self:is_area_safe(area) then
 			return area
 		end
+	end
+end
+
+
+-- Fix smoke/flash grenades not being detonated if their detonation position was already provided
+function GroupAIStateBesiege:_find_grenade_detonate_pos(group, task_data, detonate_pos, grenade_type)
+	for u_key, u_data in pairs(group.units) do
+		if u_data.tactics_map and u_data.tactics_map[grenade_type] then
+			if not detonate_pos then
+				local nav_seg = managers.navigation._nav_segments[u_data.tracker:nav_segment()]
+				for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
+					local area = self:get_area_from_nav_seg_id(neighbour_nav_seg_id)
+					if task_data.target_areas[1].nav_segs[neighbour_nav_seg_id] or next(area.criminal.units) then
+						local random_door_id = door_list[math.random(#door_list)]
+						if type(random_door_id) == "number" then
+							detonate_pos = managers.navigation._room_doors[random_door_id].center
+						else
+							detonate_pos = random_door_id:script_data().element:nav_link_end_pos()
+						end
+					end
+				end
+			end
+			if detonate_pos then
+				return u_data, detonate_pos
+			end
+		end
+	end
+end
+
+function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, detonate_pos)
+	if not task_data.use_smoke then
+		return
+	end
+
+	local user, detonate_pos = self:_find_grenade_detonate_pos(group, task_data, detonate_pos, "smoke_grenade")
+	if user and detonate_pos then
+		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(user.m_pos), tweak_data.group_ai.smoke_grenade_lifetime, false)
+
+		local timeout = tweak_data.group_ai.smoke_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
+		task_data.use_smoke_timer = self._t + math.lerp(timeout[1], timeout[2], math.random())
+		task_data.use_smoke = false
+
+		if user.char_tweak.chatter.smoke then
+			self:chk_say_enemy_chatter(user.unit, user.m_pos, "smoke")
+		end
+
+		return true
+	end
+end
+
+function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, detonate_pos)
+	if not task_data.use_smoke then
+		return
+	end
+
+	local user, detonate_pos = self:_find_grenade_detonate_pos(group, task_data, detonate_pos, "flash_grenade")
+	if user and detonate_pos then
+		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(user.m_pos), tweak_data.group_ai.flash_grenade_lifetime, true)
+
+		local timeout = tweak_data.group_ai.flash_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
+		task_data.use_smoke_timer = self._t + math.lerp(timeout[1], timeout[2], math.random())
+		task_data.use_smoke = false
+
+		if user.char_tweak.chatter.flash_grenade then
+			self:chk_say_enemy_chatter(user.unit, user.m_pos, "flash_grenade")
+		end
+
+		return true
 	end
 end

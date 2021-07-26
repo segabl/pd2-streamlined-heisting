@@ -144,18 +144,13 @@ end)
 
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
 	-- Fix incorrect tactics
-	self._tactics.tazer_flanking = {
-		"flank",
-		"provide_coverfire",
-		"smoke_grenade",
-		"murder"
-	}
-	self._tactics.swat_shotgun_flank = {
+	self._tactics.swat_shotgun_rush = {
+		"charge",
 		"provide_coverfire",
 		"provide_support",
-		"flank",
 		"deathguard",
-		"flash_grenade"
+		"flash_grenade",
+		"smoke_grenade"
 	}
 	self._tactics.swat_rifle_flank = {
 		"provide_coverfire",
@@ -172,6 +167,19 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"shield",
 		"charge",
 		"provide_support"
+	}
+	self._tactics.tazer_charge = {
+		"charge",
+		"provide_coverfire",
+		"murder",
+		"flash_grenade",
+		"smoke_grenade"
+	}
+	self._tactics.tazer_flanking = {
+		"flank",
+		"provide_coverfire",
+		"flash_grenade",
+		"murder"
 	}
 
 	-- Setup/Fix spawngroups
@@ -430,8 +438,9 @@ end)
 Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
 	local f = math.max(0, difficulty_index - 2) / 6
 
-	self.smoke_and_flash_grenade_timeout = { 15, 20 }
-	self.smoke_grenade_lifetime = math.lerp(6, 12, f)
+	self.smoke_grenade_timeout = { 15, 20 }
+	self.smoke_grenade_lifetime = math.lerp(9, 15, f)
+	self.flash_grenade_timeout = { 10, 15 }
 	self.flash_grenade.timer = math.lerp(2, 0.5, f)
 
 	-- Spawn Groups
