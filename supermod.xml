@@ -393,6 +393,10 @@
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.object"/>
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.unit"/>
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper_husk.unit"/>
+
+			<!-- assign faction weapons to medic -->
+			<file :name="ene_swat_medic_policia_federale/ene_swat_medic_policia_federale.unit"/>
+			<file :name="ene_swat_medic_policia_federale/ene_swat_medic_policia_federale_husk.unit"/>
 		</group>
 
 		<!-- russian mercs -->
