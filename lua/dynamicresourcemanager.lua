@@ -8,6 +8,11 @@ Hooks:PostHook(DynamicResourceManager, "preload_units", "sh_preload_units", func
 	StreamHeist:log("Loading custom units...")
 	load_unit("units/payday2/characters/ene_sniper_3/ene_sniper_3")
 
+	if PackageManager:loaded("packages/narr_jerry1") then
+		StreamHeist:log("Murky package loaded, loading custom Murky units...")
+		load_unit("units/pd2_dlc_bph/characters/ene_murkywater_shield_c45/ene_murkywater_shield_c45")
+	end
+	
 	if PackageManager:loaded("packages/sm_wish") then
 		StreamHeist:log("Zeal package loaded, loading custom Zeal units...")
 		load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")

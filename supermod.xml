@@ -220,6 +220,10 @@
 			<file :name="ene_murkywater_shield/ene_murkywater_shield.unit"/>
 			<file :name="ene_murkywater_shield/ene_murkywater_shield_husk.unit"/>
 
+			<!-- add c45 shield -->
+			<file :name="ene_murkywater_shield_c45/ene_murkywater_shield_c45.unit"/>
+			<file :name="ene_murkywater_shield_c45/ene_murkywater_shield_c45_husk.unit"/>
+
 			<!-- make heavy use scar -->
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.model"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.object"/>
