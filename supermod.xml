@@ -401,6 +401,10 @@
 
 		<!-- russian mercs -->
 		<group name="units/pd2_dlc_mad/characters/" dyn_package="false">
+			<!-- make shotgunner use heavy model for better distinction -->
+			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870.unit"/>
+			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870_husk.unit"/>
+
 			<!-- assign faction weapons to medic -->
 			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass.unit"/>
 			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass_husk.unit"/>
