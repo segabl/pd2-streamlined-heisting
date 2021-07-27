@@ -509,6 +509,7 @@ function GroupAIStateBesiege:_find_grenade_detonate_pos(group, task_data, detona
 						else
 							detonate_pos = random_door_id:script_data().element:nav_link_end_pos()
 						end
+						break
 					end
 				end
 			end
