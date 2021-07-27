@@ -1,6 +1,0 @@
-{
-	"menu_streamlined_heisting" : "Streamlined Heisting",
-	"menu_streamlined_heisting_desc" : "Tweak settings for Streamlined Heisting",
-	"menu_streamlined_heisting_logs" : "Debug logs",
-	"menu_streamlined_heisting_logs_desc" : "Log debug information"
-}

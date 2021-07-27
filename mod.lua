@@ -1,20 +1,21 @@
 if not HopLib then
-	log("[StreamlinedHeisting] ERROR: HopLib not found!")
-	return
+	Hooks:PostHook(MenuMainState, "at_enter", "sh_at_enter", function ()
+		local title = "HopLib not found!"
+		local text = "Streamlined Heisting needs HopLib to work properly!\n\nPlease check the required dependencies!"
+		QuickMenu:new(title, text, {}, true)
+	end)
 end
 
 if not StreamHeist then
 
-	_G.StreamHeist = {}
-	StreamHeist.mod_path = ModPath
-	StreamHeist.mod_instance = ModInstance
-	StreamHeist.settings = {
-		logs = false
+	StreamHeist = {
+		mod_path = ModPath,
+		mod_instance = ModInstance,
+		logging = io.file_is_readable("mods/developer.txt")
 	}
-	StreamHeist.menu_builder = MenuBuilder:new("streamlined_heisting", StreamHeist.settings)
 
 	function StreamHeist:log(...)
-		if self.settings.logs then
+		if self.logging then
 			log("[StreamlinedHeisting] " .. table.concat({...}, " "))
 		end
 	end
@@ -30,14 +31,12 @@ if not StreamHeist then
 		table.insert(char_map.gitgud.list, "ene_zeal_sniper")
 	end)
 
-	Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusStreamlinedHeisting", function(menu_manager, nodes)
-		local loc = managers.localization
-		HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
+	-- Redirect unit localization for units that can't be auto-detected
+	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
 		loc:add_localized_strings({
 			ene_zeal_medic = loc:exists("ene_medic") and loc:text("ene_medic"),
 			ene_zeal_sniper = loc:exists("ene_sniper") and loc:text("ene_sniper")
 		})
-		StreamHeist.menu_builder:create_menu(nodes)
 	end)
 
 end
