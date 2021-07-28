@@ -554,3 +554,14 @@ function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, deto
 		return true
 	end
 end
+
+
+-- Keep recon groups around during anticipation
+-- Making them retreat only afterwards gives them more time to complete their objectives
+local _assign_recon_groups_to_retire_original = GroupAIStateBesiege._assign_recon_groups_to_retire
+function GroupAIStateBesiege:_assign_recon_groups_to_retire(...)
+	if self._task_data.assault.phase == "anticipation" then
+		return
+	end
+	return _assign_recon_groups_to_retire_original(self, ...)
+end
