@@ -44,18 +44,11 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 	self:_assign_recon_groups_to_retire()
 
 	if not self._hunt_mode then
-		local enemies_defeated_time_limit = 30
-		local drama_engagement_time_limit = 60
-
-		if managers.skirmish:is_skirmish() then
-			enemies_defeated_time_limit = 0
-			drama_engagement_time_limit = 0
-		end
-
 		local end_assault
+		local time_limits = managers.skirmish:is_skirmish() and 0 or 30
 		local enemies_left = self:_count_police_force("assault")
-		local min_enemies_left = task_data.force * 0.5
-		local enemies_defeated = enemies_left < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time_limit
+		local min_enemies_left = task_data.force * (self._tweak_data.assault.fade_settings.enemies_defeated_percentage or 0.5)
+		local enemies_defeated = enemies_left < min_enemies_left or self._t > task_data.phase_end_t + (self._tweak_data.assault.fade_settings.enemies_defeated_time_limit or 30)
 		if enemies_defeated then
 			if not task_data.said_retreat then
 				task_data.said_retreat = true
@@ -63,7 +56,7 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 			elseif task_data.phase_end_t < self._t then
 				local drama_pass = self._drama_data.amount < tweak_data.drama.assault_fade_end
 				local engagement_pass = self:_count_criminals_engaged_force(11) <= 10
-				local taking_too_long = self._t > task_data.phase_end_t + drama_engagement_time_limit
+				local taking_too_long = self._t > task_data.phase_end_t + (self._tweak_data.assault.fade_settings.drama_engagement_time_limit or 30)
 				end_assault = drama_pass and engagement_pass or taking_too_long
 			end
 		end
