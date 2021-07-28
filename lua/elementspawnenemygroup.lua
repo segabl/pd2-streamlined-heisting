@@ -1,3 +1,4 @@
+-- Update preferred spawn groups to contain all available groups
 local forbidden_groups = {
 	single_spooc = true,
 	Phalanx = true

@@ -1,3 +1,4 @@
+-- Load custom units when they are needed
 local ids_unit = Idstring("unit")
 Hooks:PostHook(DynamicResourceManager, "preload_units", "sh_preload_units", function (self)
 	local function load_unit(path)

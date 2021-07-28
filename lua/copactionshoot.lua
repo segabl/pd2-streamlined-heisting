@@ -17,6 +17,7 @@ local math_max = math.max
 local math_lerp = math.lerp
 
 
+-- Helper function to reset variables when shooting is stopped
 function CopActionShoot:_stop_firing()
 	self._is_single_shot = nil
 	if not self._autofiring then
@@ -28,6 +29,7 @@ function CopActionShoot:_stop_firing()
 end
 
 
+-- Set some values needed for fixed focus and aim delay
 Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self)
 	self._clear_los = false
 	self._next_vis_ray_t = -100
@@ -227,6 +229,7 @@ function CopActionShoot:update(t)
 end
 
 
+-- Remove pseudrandom hitchance and hit chance interpolation (interpolation is already done in _get_shoot_falloff)
 function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_range, shooting_local_player)
 	local shoot_hist = self._shoot_history
 	local focus_delay, focus_prog

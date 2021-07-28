@@ -244,14 +244,18 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	local objective_area = current_objective.area
 	if obstructed_area then
 		if phase_is_anticipation then
+			-- If we run into enemies during anticipation, pull back
 			pull_back = true
 		elseif current_objective.moving_out then
+			-- If we run into enemies while moving out, open fire (if we aren't already doing that)
 			open_fire = not current_objective.open_fire
 		elseif not current_objective.pushed or charge and not current_objective.charge then
+			-- If we run into enemies and haven't pushed yet, push
 			push = true
 		end
 		use_grenade = push
 	elseif not current_objective.moving_out then
+		-- Check if there are any criminals in our objective area or the neighbouring areas
 		local has_criminals_close
 		if next(objective_area.criminal.units) then
 			has_criminals_close = true
@@ -265,6 +269,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			end
 		end
 
+		-- Check if any of our group members can see an enemy
 		local has_visible_target, logic_data, focus_enemy
 		for _, u_data in pairs(group.units) do
 			logic_data = u_data.unit:brain()._logic_data
@@ -276,12 +281,16 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		end
 
 		if charge then
+			-- When we are charging, always move closer, push if enemies are already close
 			approach = not has_criminals_close
 			push = not approach
 		elseif not has_criminals_close or not group.in_place_t then
+			-- If no criminals are close or if we just spawned, approach if we can't see any enemy, are not using ranged fire or have been in place for a while
+			-- Open fire otherwise (if we aren't already doing that)
 			approach = not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10
 			open_fire = not approach and not current_objective.open_fire
 		else
+			-- If none of the above applies, push if we can't see any enemy or if we're chasing, open fire otherwise (if we aren't already doing that)
 			push = not has_visible_target or group.is_chasing
 			open_fire = has_visible_target and not current_objective.open_fire
 		end

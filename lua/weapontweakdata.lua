@@ -12,6 +12,7 @@ local function based_on(weap, crew_weap)
 end
 
 
+-- Setup/fix npc weapons
 Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.tweak_data = tweak_data
 
