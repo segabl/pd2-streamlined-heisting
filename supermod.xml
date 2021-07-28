@@ -13,6 +13,7 @@
 			<post :hook_id="mission/elementspawnenemydummy"/>
 			<post :hook_id="mission/elementspawnenemygroup"/>
 			<post :hook_id="dynamicresourcemanager"/>
+			<post :hook_id="enemymanager"/>
 			<post :hook_id="explosionmanager"/>
 			<post :hook_id="missionmanager"/>
 		</group>
@@ -30,17 +31,19 @@
 		</group>
 		<group hook_id="lib/units/">
 			<post :hook_id="beings/player/playerdamage"/>
-			<post :hook_id="enemies/cop/actions/lower_body/copactionidle"/>
-			<post :hook_id="enemies/cop/actions/upper_body/copactionshoot"/>
-			<post :hook_id="enemies/cop/actions/upper_body/copactiontase"/>
-			<post :hook_id="enemies/cop/logics/coplogicattack"/>
-			<post :hook_id="enemies/cop/logics/coplogicbase"/>
-			<post :hook_id="enemies/cop/logics/coplogicidle"/>
-			<post :hook_id="enemies/cop/logics/coplogicsniper"/>
-			<post :hook_id="enemies/cop/logics/coplogictravel"/>
-			<post :hook_id="enemies/cop/copbrain"/>
-			<post :hook_id="enemies/cop/copdamage"/>
-			<post :hook_id="enemies/cop/copmovement"/>
+			<group hook_id="enemies/cop/">
+				<post :hook_id="actions/lower_body/copactionidle"/>
+				<post :hook_id="actions/upper_body/copactionshoot"/>
+				<post :hook_id="actions/upper_body/copactiontase"/>
+				<post :hook_id="logics/coplogicattack"/>
+				<post :hook_id="logics/coplogicbase"/>
+				<post :hook_id="logics/coplogicidle"/>
+				<post :hook_id="logics/coplogicsniper"/>
+				<post :hook_id="logics/coplogictravel"/>
+				<post :hook_id="copbrain"/>
+				<post :hook_id="copdamage"/>
+				<post :hook_id="copmovement"/>
+			</group>
 			<post :hook_id="enemies/spooc/actions/lower_body/actionspooc"/>
 			<post :hook_id="enemies/spooc/logics/spooclogicattack"/>
 			<post :hook_id="equipment/sentry_gun/sentrygunbase"/>
