@@ -89,3 +89,13 @@ function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
 		i_nav_seg = i_nav_seg - 1
 	end
 end
+
+
+-- Make specials not take up importance slots (they're already always counted as important)
+local set_importance_weight_original = GroupAIStateBase.set_importance_weight
+function GroupAIStateBase:set_importance_weight(u_key, ...)
+	if self._police[u_key] and self._police[u_key].unit:brain()._forced_important then
+		return
+	end
+	return set_importance_weight_original(self, u_key, ...)
+end
