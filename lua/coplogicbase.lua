@@ -12,8 +12,8 @@ end
 -- Make important enemies more reactive
 local queue_task_original = CopLogicBase.queue_task
 function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap, ...)
-	if asap and exec_t then
-		exec_t = math.min(exec_t, data.t + (data.important and 0.1 or 1))
+	if asap and exec_t and data.important then
+		exec_t = math.min(exec_t, data.t + 0.1)
 	end
 	return queue_task_original(internal_data, id, func, data, exec_t, asap, ...)
 end
