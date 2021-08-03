@@ -1,11 +1,9 @@
--- Update preferred spawn groups to contain all available groups
-local forbidden_groups = {
-	single_spooc = true,
-	Phalanx = true
-}
+-- Update preferred spawn groups to contain all used groups
 local all_groups = {}
-for name, _ in pairs(tweak_data.group_ai.enemy_spawn_groups) do
-	if not forbidden_groups[name] then
+local group_ai_tweak = tweak_data.group_ai
+for name, _ in pairs(group_ai_tweak.enemy_spawn_groups) do
+	local entry = group_ai_tweak.besiege.assault.groups[name] or group_ai_tweak.besiege.recon.groups[name] or group_ai_tweak.besiege.reenforce.groups[name]
+	if entry and table.count(entry, function (weight) return weight ~= 0 end) > 0 then
 		table.insert(all_groups, name)
 	end
 end
