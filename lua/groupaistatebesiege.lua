@@ -256,14 +256,11 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		use_grenade = push
 	elseif not current_objective.moving_out then
 		-- Check if there are any criminals in our objective area or the neighbouring areas
-		local has_criminals_close
-		if next(objective_area.criminal.units) then
-			has_criminals_close = true
-		else
+		local has_criminals_close = next(objective_area.criminal.units) and true
+		if not has_criminals_close then
 			for _, neighbour_area in pairs(objective_area.neighbours) do
 				if next(neighbour_area.criminal.units) then
 					has_criminals_close = true
-					obstructed_area = neighbour_area
 					break
 				end
 			end
