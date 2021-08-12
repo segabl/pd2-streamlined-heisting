@@ -46,6 +46,7 @@
 			</group>
 			<post :hook_id="enemies/spooc/actions/lower_body/actionspooc"/>
 			<post :hook_id="enemies/spooc/logics/spooclogicattack"/>
+			<post :hook_id="enemies/taser/logics/taserlogicattack"/>
 			<post :hook_id="equipment/sentry_gun/sentrygunbase"/>
 			<post :hook_id="equipment/sentry_gun/sentrygundamage"/>
 			<post :hook_id="player_team/teamaimovement"/>
