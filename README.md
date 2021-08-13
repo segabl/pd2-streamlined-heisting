@@ -92,6 +92,8 @@ These are minor changes and fixes that don't fit any of the above categories.
 
 ## Credits
 
-- ZEAL medic textures based on work by [Jarey_](https://modworkshop.net/user/1664)
+- [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
+- [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code and providing code snippets
+- [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
+- [creepyyy](https://modworkshop.net/user/54264) for testing and providing feedback
 - Inspired by the early days of [fuglore's Hyper Heisting](https://modworkshop.net/mod/24337)
-- [RedFlame](https://modworkshop.net/user/78332), [creepyyy](https://modworkshop.net/user/54264) and [AverageChan](https://modworkshop.net/user/97086) for helping with testing and providing feedback
