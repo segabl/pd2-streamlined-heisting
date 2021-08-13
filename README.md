@@ -8,18 +8,19 @@ Streamlined Heisting makes a lot of the game's enemy mechanics more consistent. 
 
 The way the game determines how NPCs shoot their guns is ancient code that is not only needlessly complex but also suffers from oversights and broken features. Features like aim delay and focus delay did not work at all or not as intended. Bugs in these implementations have been fixed, code has been simplified and damage and falloff calculation has been updated to properly interpolate values.
 
-- Gives cops linear damage falloff instead of sudden drops after a distance threshold is reached
+- Gives enemies linear damage falloff instead of sudden drops after a distance threshold is reached
 - Removes weapon spread from NPC accuracy calculation as it doesn't affect players and just makes NPC vs NPC situations very inconsistent
 - Fixes accuracy values being ignored for single fire weapons in NPC vs NPC situations
 - Simplifies the clunky fire mode system and interpolates the number of rounds fired based on distance instead (enemies will utilize full auto more)
 - Properly implements and makes use of aim delay, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
 - Fixes barely working focus delay code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
 - Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls leading to a lot of hits/misses in a row
-- Makes cops less hesitant to shoot while moving and react to threats with adequate reactions
+- Makes enemies less hesitant to shoot while moving and react to threats with adequate reactions
+- Fixes instances of enemies shooting when they shouldn't on clients
 
 ### Standardizes weapon and character presets
 
-In vanilla there are multiple base presets that are assigned based on difficulty, but not every difficulty has its own preset and instead reuses other presets. Presets are further manipulated in different functions which leads to a lot of oversights and inconsistencies, like some enemy types being left out when difficulty presets are applied. The preset system has been simplified to avoid changing preset values at times other than when they are created.
+The vanilla game uses multiple base presets that are assigned based on difficulty, but not every difficulty has its own preset and instead reuses other presets. Presets are further manipulated in different functions which leads to a lot of oversights and inconsistencies, like some enemy types being left out when difficulty presets are applied. The preset system has been simplified to avoid changing preset values at times other than when they are created.
 
 - Creates and uses a single base weapon preset which scales damage multipliers, accuracy, melee damage, focus delay and aim delay based on difficulty
 - Makes use of aim and focus delays (which were mostly set to 0 in vanilla) which affects how long cops take to shoot and reach their full accuracy
@@ -43,6 +44,10 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Implements missing ``murder`` tactic, enemies with this tactic will continue shooting at downed players regardless of any aggressive behavior
 - Implements missing ``shield`` and ``shield_cover`` tactics, enemies with ``shield_cover`` tactic will stick closely to group members with ``shield`` tactic
 - Fixes enemies not pulling back when encountering players during anticipation
+- Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
+- Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
+- Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
+- Makes Medics require line of sight to heal
 
 ### Standardizes enemy factions
 
@@ -76,19 +81,15 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Makes the assault delay caused by having hostages scale with the amount of hostages (minimum of 5s per hostage, up to 4 hostages)
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
-- Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
 - Fixes enemies playing full body crouching animations when suppressed when they are already crouching
 - Makes important enemies more responsive and always treats specials as important
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
-- Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes sentry guns not count as criminals which stops cops from pathing to them and ultimately get stuck
 - Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
 - Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
 - Fixes Cloakers being stuck in the beatdown animation and ignoring threats after a charge attack
 - Fixes the Crime Spree "Heavies" modifier to replace the correct units
 - Fixes the assault fade phase almost always ending after the minimum amount of time
-- Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
-- Makes Medics require line of sight to heal
 
 ## Credits
 
