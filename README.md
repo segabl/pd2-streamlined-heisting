@@ -48,6 +48,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
 - Makes Medics require line of sight to heal
+- Fixes Bulldozers sprinting when they shouldn't and not switching to walking when they are close enough
 
 ### Standardizes enemy factions
 
