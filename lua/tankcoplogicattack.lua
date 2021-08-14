@@ -27,7 +27,7 @@ function TankCopLogicAttack.update(data)
 
 	TankCopLogicAttack._process_pathing_results(data, my_data)
 
-	if data.unit:movement():chk_action_forbidden("walk") then
+	if unit:movement():chk_action_forbidden("walk") then
 		return
 	end
 
@@ -47,7 +47,7 @@ function TankCopLogicAttack.update(data)
 			chase = z_dist < 300 or focus_enemy.verified_dis > 2000 or engage and focus_enemy.verified_dis > 500
 
 			if walk and unit:anim_data().run then
-				data.unit:brain():action_request({
+				unit:brain():action_request({
 					body_part = 2,
 					type = "idle"
 				})
@@ -67,7 +67,7 @@ function TankCopLogicAttack.update(data)
 			end
 
 			if my_data.chase_pos then
-				local from_pos = data.unit:movement():nav_tracker():field_position()
+				local from_pos = unit:movement():nav_tracker():field_position()
 				local to_pos = my_data.chase_pos
 
 				my_data.chase_pos = nil
