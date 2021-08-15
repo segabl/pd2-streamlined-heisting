@@ -1,3 +1,11 @@
+-- Sanity check for rare follow_unit crash
+Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
+	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
+		data.objective.follow_unit = nil
+	end
+end)
+
+
 -- Fix need for another queued task to update pathing or leaving cover on expired cover time
 -- Basicall just does the needed checks before calling the original function to save on a queued update
 Hooks:PreHook(CopLogicTravel, "upd_advance", "sh_upd_advance", function (data)
@@ -14,12 +22,10 @@ Hooks:PreHook(CopLogicTravel, "upd_advance", "sh_upd_advance", function (data)
 end)
 
 
--- Sanity check for rare follow_unit crash
-Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
-	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
-		data.objective.follow_unit = nil
-	end
-end)
+-- If Iter is installed and streamlined path option is used, don't make any further changes
+if Iter and Iter.settings and Iter.settings.streamline_path then
+	return
+end
 
 
 -- Take the direct path if possible and immediately start pathing instead of waiting for the next update (thanks to RedFlame)
