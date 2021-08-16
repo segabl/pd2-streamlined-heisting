@@ -56,16 +56,57 @@ Hooks:PostHook(GroupAIStateBase, "criminal_spotted", "sh_criminal_spotted", fix_
 Hooks:PostHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_nav_seg_change", fix_position)
 
 
--- Make flank pathing more dynamic by marking areas in which enemies die unsafe
+-- Make flank pathing more dynamic by marking areas in which enemies die unsafe and delay spawn points when enemies die close to them
 Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function (self, unit)
 	if not Network:is_server() or not unit:character_damage():dead() then
 		return
 	end
 
-	local nav_seg = unit:movement():nav_tracker():nav_segment()
-	local area = self:get_area_from_nav_seg_id(nav_seg)
+	local fs_settings = FullSpeedSwarm and FullSpeedSwarm.final_settings or {}
 
-	area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 5, 60) or 5)
+	if not fs_settings.improved_tactics then
+		local nav_seg = unit:movement():nav_tracker():nav_segment()
+		local area = self:get_area_from_nav_seg_id(nav_seg)
+		area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 5, 60) or 5)
+	end
+
+	if fs_settings.spawn_delay then
+		return
+	end
+
+	local e_data = self._police[unit:key()]
+	if not e_data.group or not e_data.group.has_spawned then
+		return
+	end
+
+	local spawn_point = unit:unit_data().mission_element
+	if not spawn_point then
+		return
+	end
+
+	local u_pos = e_data.m_pos
+	local spawn_pos = spawn_point:value("position")
+	local dist_sq = mvector3.distance_sq(spawn_pos, u_pos)
+	local max_dist_sq = 1000000
+	if dist_sq > max_dist_sq then
+		return
+	end
+
+	for _, area in pairs(self._area_data) do
+		if area.spawn_groups then
+			for _, group in pairs(area.spawn_groups) do
+				if group.spawn_pts then
+					for _, point in pairs(group.spawn_pts) do
+						if point.mission_element == spawn_point then
+							local delay_t = self._t + math.lerp(8, 0, dist_sq / max_dist_sq)
+							group.delay_t = math.max(group.delay_t, delay_t)
+							return
+						end
+					end
+				end
+			end
+		end
+	end
 end)
 
 Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", function (self, area)
