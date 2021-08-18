@@ -1,3 +1,11 @@
+local math_min = math.min
+local math_lerp = math.lerp
+local math_random = math.random
+local table_insert = table.insert
+local table_remove = table.remove
+local mvec_dist = mvector3.distance
+
+
 -- Make hostage count affect hesitation delay
 local _begin_assault_task_original = GroupAIStateBesiege._begin_assault_task
 function GroupAIStateBesiege:_begin_assault_task(...)
@@ -324,7 +332,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		}
 
 		repeat
-			local search_area = table.remove(to_search_areas, 1)
+			local search_area = table_remove(to_search_areas, 1)
 
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
@@ -339,7 +347,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 							if u_data.group and u_data.group ~= group and u_data.group.objective.type == "assault_area" then
 								assault_from_here = false
 
-								if not alternate_assault_area or math.random() < 0.5 then
+								if not alternate_assault_area or math_random() < 0.5 then
 									local search_params = {
 										id = "GroupAI_assault",
 										from_seg = current_objective.area.pos_nav_seg,
@@ -382,7 +390,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			else
 				for other_area_id, other_area in pairs(search_area.neighbours) do
 					if not found_areas[other_area] then
-						table.insert(to_search_areas, other_area)
+						table_insert(to_search_areas, other_area)
 						found_areas[other_area] = search_area
 					end
 				end
@@ -399,7 +407,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			local assault_area = push and assault_area or found_areas[assault_area] == "init" and objective_area or found_areas[assault_area]
 
 			if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path - 1][1]] then
-				table.remove(assault_path)
+				table_remove(assault_path)
 			end
 
 			if use_grenade then
@@ -411,7 +419,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					end
 				end
 
-				local first_chk = math.random() < 0.5 and self._chk_group_use_flash_grenade or self._chk_group_use_smoke_grenade
+				local first_chk = math_random() < 0.5 and self._chk_group_use_flash_grenade or self._chk_group_use_smoke_grenade
 				local second_chk = first_chk == self._chk_group_use_flash_grenade and self._chk_group_use_smoke_grenade or self._chk_group_use_flash_grenade
 				if not first_chk(self, group, self._task_data.assault, detonate_pos) then
 					second_chk(self, group, self._task_data.assault, detonate_pos)
@@ -504,7 +512,7 @@ function GroupAIStateBesiege:_find_grenade_detonate_pos(group, task_data, detona
 				for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
 					local area = self:get_area_from_nav_seg_id(neighbour_nav_seg_id)
 					if task_data.target_areas[1].nav_segs[neighbour_nav_seg_id] or next(area.criminal.units) then
-						local random_door_id = door_list[math.random(#door_list)]
+						local random_door_id = door_list[math_random(#door_list)]
 						if type(random_door_id) == "number" then
 							detonate_pos = managers.navigation._room_doors[random_door_id].center
 						else
@@ -531,7 +539,7 @@ function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, deto
 		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(user.m_pos), tweak_data.group_ai.smoke_grenade_lifetime, false)
 
 		local timeout = tweak_data.group_ai.smoke_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
-		task_data.use_smoke_timer = self._t + math.lerp(timeout[1], timeout[2], math.random())
+		task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
 		task_data.use_smoke = false
 
 		if user.char_tweak.chatter.smoke then
@@ -552,7 +560,7 @@ function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, deto
 		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(user.m_pos), tweak_data.group_ai.flash_grenade_lifetime, true)
 
 		local timeout = tweak_data.group_ai.flash_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
-		task_data.use_smoke_timer = self._t + math.lerp(timeout[1], timeout[2], math.random())
+		task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
 		task_data.use_smoke = false
 
 		if user.char_tweak.chatter.flash_grenade then
@@ -572,4 +580,143 @@ function GroupAIStateBesiege:_assign_recon_groups_to_retire(...)
 		return
 	end
 	return _assign_recon_groups_to_retire_original(self, ...)
+end
+
+
+-- Reduce the importance of spawn group distance in spawn group weight to encourage enemies spawning from more directions
+-- Also slightly optimize this function's use of table.remove
+local function make_dis_id(from, to)
+	return tostring(from < to and from or to) .. "-" .. tostring(to < from and from or to)
+end
+
+function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_groups, target_pos, max_dis, verify_clbk)
+	target_pos = target_pos or target_area.pos
+	max_dis = max_dis and max_dis * max_dis
+
+	local t = self._t
+	local valid_spawn_groups = {}
+	local valid_spawn_group_distances = {}
+	local total_dis = 0
+	local all_areas = self._area_data
+	local to_search_areas = {
+		target_area
+	}
+	local found_areas = {
+		[target_area.id] = true
+	}
+
+	repeat
+		local search_area = table_remove(to_search_areas)
+		local spawn_groups = search_area.spawn_groups
+
+		if spawn_groups then
+			for _, spawn_group in ipairs(spawn_groups) do
+				if spawn_group.delay_t <= t and (not verify_clbk or verify_clbk(spawn_group)) then
+					local dis_id = make_dis_id(spawn_group.nav_seg, target_area.pos_nav_seg)
+
+					if not self._graph_distance_cache[dis_id] then
+						local path = managers.navigation:search_coarse({
+							access_pos = "swat",
+							from_seg = spawn_group.nav_seg,
+							to_seg = target_area.pos_nav_seg,
+							id = dis_id
+						})
+
+						if path and #path >= 2 then
+							local dis = 0
+							local current = spawn_group.pos
+							for i = 2, #path do
+								local nxt = path[i][2]
+								if current and nxt then
+									dis = dis + mvec_dist(current, nxt)
+								end
+								current = nxt
+							end
+							self._graph_distance_cache[dis_id] = dis
+						end
+					end
+
+					if self._graph_distance_cache[dis_id] then
+						local my_dis = self._graph_distance_cache[dis_id]
+						if not max_dis or my_dis < max_dis then
+							local spawn_group_id = spawn_group.mission_element:id()
+							valid_spawn_groups[spawn_group_id] = spawn_group
+							valid_spawn_group_distances[spawn_group_id] = my_dis
+							total_dis = total_dis + my_dis
+						end
+					end
+				end
+			end
+		end
+
+		for other_area_id, other_area in pairs(all_areas) do
+			if not found_areas[other_area_id] and other_area.neighbours[search_area.id] then
+				table_insert(to_search_areas, other_area)
+				found_areas[other_area_id] = true
+			end
+		end
+	until #to_search_areas == 0
+
+	if not next(valid_spawn_group_distances) then
+		return
+	end
+
+	local timer_can_spawn = false
+	for id in pairs(valid_spawn_groups) do
+		if not self._spawn_group_timers[id] or self._spawn_group_timers[id] <= t then
+			timer_can_spawn = true
+			break
+		end
+	end
+
+	if not timer_can_spawn then
+		self._spawn_group_timers = {}
+	end
+
+	for id in pairs(valid_spawn_groups) do
+		if self._spawn_group_timers[id] and t < self._spawn_group_timers[id] then
+			valid_spawn_groups[id] = nil
+			valid_spawn_group_distances[id] = nil
+		end
+	end
+
+	if total_dis == 0 then
+		total_dis = 1
+	end
+
+	local total_weight = 0
+	local candidate_groups = {}
+	for i, dis in pairs(valid_spawn_group_distances) do
+		local my_wgt = math_lerp(1, 0.75, math_min(1, dis / 5000))
+		local my_spawn_group = valid_spawn_groups[i]
+		local my_group_types = my_spawn_group.mission_element:spawn_groups()
+		my_spawn_group.distance = dis
+		total_weight = total_weight + self:_choose_best_groups(candidate_groups, my_spawn_group, my_group_types, allowed_groups, my_wgt)
+	end
+
+	if total_weight == 0 then
+		return
+	end
+
+	return self:_choose_best_group(candidate_groups, total_weight)
+end
+
+
+-- Reduce the spawn group timer to avoid running out of valid spawn points and thus resetting the timers too often
+function GroupAIStateBesiege:_choose_best_group(best_groups, total_weight)
+	local rand_wgt = total_weight * math_random()
+	local best_grp, best_grp_type = nil
+
+	for i, candidate in ipairs(best_groups) do
+		rand_wgt = rand_wgt - candidate.wght
+
+		if rand_wgt <= 0 then
+			self._spawn_group_timers[candidate.group.mission_element:id()] = self._t + math_lerp(5, 10, math_random())
+			best_grp = candidate.group
+			best_grp_type = candidate.group_type
+			best_grp.delay_t = self._t + best_grp.interval
+
+			return best_grp, best_grp_type
+		end
+	end
 end
