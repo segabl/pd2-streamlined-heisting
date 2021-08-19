@@ -332,7 +332,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		}
 
 		repeat
-			local search_area = table_remove(to_search_areas, 1)
+			local search_area = table_remove(to_search_areas)
 
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
