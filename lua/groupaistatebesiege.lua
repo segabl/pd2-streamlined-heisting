@@ -172,10 +172,6 @@ end
 
 -- Fix more cases of stuck enemies
 function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
-	if not group.has_spawned then
-		return
-	end
-
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
 	local approach, open_fire, push, pull_back, charge, use_grenade
@@ -719,4 +715,36 @@ function GroupAIStateBesiege:_choose_best_group(best_groups, total_weight)
 			return best_grp, best_grp_type
 		end
 	end
+end
+
+
+-- Reorder task updates so groups that have finished spawning immediately get their objectives instead of waiting for the next update
+function GroupAIStateBesiege:_upd_police_activity()
+	self._police_upd_task_queued = false
+
+	if self._police_activity_blocked then
+		return
+	end
+
+	if self._ai_enabled then
+		self:_upd_SO()
+		self:_upd_grp_SO()
+		self:_check_spawn_phalanx()
+		self:_check_phalanx_group_has_spawned()
+		self:_check_phalanx_damage_reduction_increase()
+
+		-- Do _upd_group_spawning and _upd_groups before the various task updates
+		if self._enemy_weapons_hot then
+			self:_claculate_drama_value()
+			self:_upd_group_spawning()
+			self:_upd_groups()
+			self:_upd_regroup_task()
+			self:_upd_reenforce_tasks()
+			self:_upd_recon_tasks()
+			self:_upd_assault_task()
+			self:_begin_new_tasks()
+		end
+	end
+
+	self:_queue_police_upd_task()
 end
