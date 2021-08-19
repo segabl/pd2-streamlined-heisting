@@ -254,7 +254,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		if phase_is_anticipation then
 			-- If we run into enemies during anticipation, pull back
 			pull_back = true
-		elseif current_objective.moving_out then
+		elseif current_objective.moving_out and tactics_map.ranged_fire then
 			-- If we run into enemies while moving out, open fire (if we aren't already doing that)
 			open_fire = not current_objective.open_fire
 		elseif not current_objective.pushed or charge and not current_objective.charge then
@@ -296,8 +296,8 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			open_fire = not approach and not current_objective.open_fire
 		else
 			-- If none of the above applies, push if we can't see any enemy or if we're chasing, open fire otherwise (if we aren't already doing that)
-			push = not has_visible_target or group.is_chasing
-			open_fire = has_visible_target and not current_objective.open_fire
+			push = not has_visible_target or group.is_chasing or not tactics_map.ranged_fire
+			open_fire = not push and not current_objective.open_fire
 		end
 		use_grenade = push or has_visible_target
 	end
