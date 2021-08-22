@@ -174,7 +174,7 @@ end
 function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
-	local approach, open_fire, push, pull_back, charge, use_grenade
+	local approach, open_fire, push, pull_back, charge
 	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
 	local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
@@ -257,7 +257,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			-- If we run into enemies and haven't pushed yet, push
 			push = true
 		end
-		use_grenade = push
 	elseif not current_objective.moving_out then
 		-- Check if there are any criminals in our objective area or the neighbouring areas
 		local has_criminals_close = next(objective_area.criminal.units) and true
@@ -295,7 +294,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			push = not has_visible_target or group.is_chasing or not tactics_map.ranged_fire
 			open_fire = not push and not current_objective.open_fire
 		end
-		use_grenade = push or has_visible_target
 	end
 
 	if open_fire then
@@ -406,7 +404,8 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				table_remove(assault_path)
 			end
 
-			if use_grenade then
+			local used_grenade
+			if push then
 				local detonate_pos
 				if charge then
 					for c_key, c_data in pairs(assault_area.criminal.units) do
@@ -415,31 +414,38 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					end
 				end
 
+				-- Check which grenade to use to push, grenade use is required for the push to be initiated
+				-- If grenade isn't available, push regardless if grenade use was tried for at least 1s to not get groups stuck
 				local first_chk = math_random() < 0.5 and self._chk_group_use_flash_grenade or self._chk_group_use_smoke_grenade
 				local second_chk = first_chk == self._chk_group_use_flash_grenade and self._chk_group_use_smoke_grenade or self._chk_group_use_flash_grenade
-				if not first_chk(self, group, self._task_data.assault, detonate_pos) then
-					second_chk(self, group, self._task_data.assault, detonate_pos)
-				end
+				used_grenade = first_chk(self, group, self._task_data.assault, detonate_pos) or second_chk(self, group, self._task_data.assault, detonate_pos)
+				used_grenade = used_grenade or group.grenade_check_fail_t and group.grenade_check_fail_t + 1 < self._t
 
-				self:_voice_move_in_start(group)
+				if used_grenade then
+					self:_voice_move_in_start(group)
+				elseif not group.grenade_check_fail_t then
+					group.grenade_check_fail_t = self._t
+				end
 			end
 
-			local grp_objective = {
-				type = "assault_area",
-				stance = "hos",
-				area = assault_area,
-				coarse_path = assault_path,
-				pose = push and "crouch" or "stand",
-				attitude = push and "engage" or "avoid",
-				moving_in = push and true or nil,
-				open_fire = push or nil,
-				pushed = push or nil,
-				charge = charge,
-				interrupt_dis = charge and 0 or nil
-			}
-			group.is_chasing = group.is_chasing or push
+			if not push or used_grenade then
+				local grp_objective = {
+					type = "assault_area",
+					stance = "hos",
+					area = assault_area,
+					coarse_path = assault_path,
+					pose = push and "crouch" or "stand",
+					attitude = push and "engage" or "avoid",
+					moving_in = push and true or nil,
+					open_fire = push or nil,
+					pushed = push or nil,
+					charge = charge,
+					interrupt_dis = charge and 0 or nil
+				}
+				group.is_chasing = group.is_chasing or push
 
-			self:_set_objective_to_enemy_group(group, grp_objective)
+				self:_set_objective_to_enemy_group(group, grp_objective)
+			end
 		end
 	elseif pull_back then
 		local retreat_area
@@ -747,4 +753,13 @@ function GroupAIStateBesiege:_upd_police_activity()
 	end
 
 	self:_queue_police_upd_task()
+end
+
+
+-- Update police activity in consistent intervals
+function GroupAIStateBesiege:_queue_police_upd_task()
+	if not self._police_upd_task_queued then
+		self._police_upd_task_queued = true
+		managers.enemy:queue_task("GroupAIStateBesiege._upd_police_activity", self._upd_police_activity, self, self._t + 0.5)
+	end
 end
