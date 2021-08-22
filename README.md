@@ -49,6 +49,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
 - Makes Medics require line of sight to heal
 - Fixes Bulldozers sprinting when they shouldn't and not switching to walking when they are close enough
+- Adds increasing chance for enemies to use teargas grenades when players camp in an area for too long
 
 ### Standardizes enemy factions
 

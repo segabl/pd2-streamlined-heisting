@@ -44,6 +44,28 @@ Hooks:PostHook(GroupAIStateBase, "update", "sh_update", function (self, t)
 end)
 
 
+-- Log time when criminals enter an area to use for the teargas check
+Hooks:PreHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_nav_seg_change", function (self, unit, nav_seg_id)
+	local u_sighting = self._criminals[unit:key()]
+	if not u_sighting then
+		return
+	end
+
+	local prev_area = u_sighting.area
+	local area = prev_area and prev_area.nav_segs[nav_seg_id] and prev_area or self:get_area_from_nav_seg_id(nav_seg_id)
+	if prev_area and prev_area ~= area then
+		if table.size(prev_area.criminal.units) <= 1 then
+			prev_area.criminal_left_t = self._t
+			prev_area.old_criminal_entered_t = prev_area.criminal_entered_t
+			prev_area.criminal_entered_t = nil
+		end
+		if not area.criminal_entered_t then
+			area.criminal_entered_t = area.criminal_left_t and area.criminal_left_t + 10 > self._t and area.old_criminal_entered_t or self._t
+		end
+	end
+end)
+
+
 -- Fix enemies aiming at their target's feet if they don't have direct LoS
 local function fix_position(gstate, unit)
 	local u_sighting = gstate._criminals[unit:key()]

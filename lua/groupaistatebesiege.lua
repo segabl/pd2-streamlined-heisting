@@ -416,10 +416,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 
 				-- Check which grenade to use to push, grenade use is required for the push to be initiated
 				-- If grenade isn't available, push regardless if grenade use was tried for at least 1s to not get groups stuck
-				local first_chk = math_random() < 0.5 and self._chk_group_use_flash_grenade or self._chk_group_use_smoke_grenade
-				local second_chk = first_chk == self._chk_group_use_flash_grenade and self._chk_group_use_smoke_grenade or self._chk_group_use_flash_grenade
-				used_grenade = first_chk(self, group, self._task_data.assault, detonate_pos) or second_chk(self, group, self._task_data.assault, detonate_pos)
-				used_grenade = used_grenade or group.grenade_check_fail_t and group.grenade_check_fail_t + 1 < self._t
+				used_grenade = self:_chk_group_use_grenade(group, detonate_pos) or group.grenade_check_fail_t and group.grenade_check_fail_t + 1 < self._t
 
 				if used_grenade then
 					self:_voice_move_in_start(group)
@@ -505,72 +502,85 @@ function GroupAIStateBesiege:_chk_group_areas_tresspassed(group)
 end
 
 
--- Fix smoke/flash grenades not being detonated if their detonation position was already provided
-function GroupAIStateBesiege:_find_grenade_detonate_pos(group, task_data, detonate_pos, grenade_type)
+-- Add custom grenade usage function
+function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
+	local task_data = self._task_data.assault
+	if not task_data.use_smoke then
+		return
+	end
+
+	local grenade_types = {
+		smoke_grenade = true,
+		flash_grenade = true
+	}
+	local grenade_candidates = {}
 	for u_key, u_data in pairs(group.units) do
-		if u_data.tactics_map and u_data.tactics_map[grenade_type] then
-			if not detonate_pos then
-				local nav_seg = managers.navigation._nav_segments[u_data.tracker:nav_segment()]
-				for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
-					local area = self:get_area_from_nav_seg_id(neighbour_nav_seg_id)
-					if task_data.target_areas[1].nav_segs[neighbour_nav_seg_id] or next(area.criminal.units) then
-						local random_door_id = door_list[math_random(#door_list)]
-						if type(random_door_id) == "number" then
-							detonate_pos = managers.navigation._room_doors[random_door_id].center
-						else
-							detonate_pos = random_door_id:script_data().element:nav_link_end_pos()
-						end
-						break
-					end
+		if u_data.tactics_map then
+			for grenade_type, _ in pairs(grenade_types) do
+				if u_data.tactics_map[grenade_type] then
+					table.insert(grenade_candidates, { grenade_type, u_data })
 				end
 			end
-			if detonate_pos then
-				return u_data, detonate_pos
+		end
+	end
+
+	if #grenade_candidates == 0 then
+		return
+	end
+
+	local grenade_type, grenade_user = unpack(table.random(grenade_candidates))
+
+	local area
+	if detonate_pos then
+		area = self:get_area_from_nav_seg_id(managers.navigation:get_nav_seg_from_pos(detonate_pos, true))
+	else
+		local nav_seg = managers.navigation._nav_segments[grenade_user.tracker:nav_segment()]
+		for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
+			area = self:get_area_from_nav_seg_id(neighbour_nav_seg_id)
+			if task_data.target_areas[1].nav_segs[neighbour_nav_seg_id] or next(area.criminal.units) then
+				local random_door_id = door_list[math_random(#door_list)]
+				if type(random_door_id) == "number" then
+					detonate_pos = managers.navigation._room_doors[random_door_id].center
+				else
+					detonate_pos = random_door_id:script_data().element:nav_link_end_pos()
+				end
+				break
 			end
 		end
 	end
-end
 
-function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, detonate_pos)
-	if not task_data.use_smoke then
+	if not detonate_pos then
 		return
 	end
 
-	local user, detonate_pos = self:_find_grenade_detonate_pos(group, task_data, detonate_pos, "smoke_grenade")
-	if user and detonate_pos then
-		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(user.m_pos), tweak_data.group_ai.smoke_grenade_lifetime, false)
+	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 120 then
+		-- If players camp a specific area for too long, turn the originally chosen grenade into a teargas grenade instead
+		area.criminal_entered_t = nil
+		grenade_type = "cs_grenade"
 
-		local timeout = tweak_data.group_ai.smoke_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
-		task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
-		task_data.use_smoke = false
+		detonate_pos = mvector3.copy(area.pos)
+		for _, v in pairs(area.criminal.units) do
+			mvector3.add(detonate_pos, v.unit:movement():m_pos())
+		end
+		mvector3.divide(detonate_pos, table.size(area.criminal.units) + 1)
+		mvector3.set_z(detonate_pos, area.pos.z)
 
-		if user.char_tweak.chatter.smoke then
-			self:chk_say_enemy_chatter(user.unit, user.m_pos, "smoke")
+		self:detonate_cs_grenade(detonate_pos, mvector3.copy(grenade_user.m_pos), tweak_data.group_ai.cs_grenade_lifetime or 10)
+	else
+		if grenade_type == "flash_grenade" and grenade_user.char_tweak.chatter.flash_grenade then
+			self:chk_say_enemy_chatter(grenade_user.unit, grenade_user.m_pos, "flash_grenade")
+		elseif grenade_type == "smoke_grenade" and grenade_user.char_tweak.chatter.smoke then
+			self:chk_say_enemy_chatter(grenade_user.unit, grenade_user.m_pos, "smoke")
 		end
 
-		return true
-	end
-end
-
-function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, detonate_pos)
-	if not task_data.use_smoke then
-		return
+		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(grenade_user.m_pos), tweak_data.group_ai[grenade_type .. "_lifetime"] or 10, grenade_type == "flash_grenade")
 	end
 
-	local user, detonate_pos = self:_find_grenade_detonate_pos(group, task_data, detonate_pos, "flash_grenade")
-	if user and detonate_pos then
-		self:detonate_smoke_grenade(detonate_pos, mvector3.copy(user.m_pos), tweak_data.group_ai.flash_grenade_lifetime, true)
+	local timeout = tweak_data.group_ai[grenade_type .. "_timeout"] or tweak_data.group_ai.smoke_and_flash_grenade_timeout
+	task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
+	task_data.use_smoke = false
 
-		local timeout = tweak_data.group_ai.flash_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
-		task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
-		task_data.use_smoke = false
-
-		if user.char_tweak.chatter.flash_grenade then
-			self:chk_say_enemy_chatter(user.unit, user.m_pos, "flash_grenade")
-		end
-
-		return true
-	end
+	return true
 end
 
 

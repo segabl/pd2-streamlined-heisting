@@ -143,7 +143,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"provide_coverfire",
 		"provide_support",
 		"deathguard",
-		"flash_grenade",
 		"smoke_grenade"
 	}
 	self._tactics.swat_rifle_flank = {
@@ -165,9 +164,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	self._tactics.tazer_charge = {
 		"charge",
 		"provide_coverfire",
-		"murder",
-		"flash_grenade",
-		"smoke_grenade"
+		"smoke_grenade",
+		"murder"
 	}
 	self._tactics.tazer_flanking = {
 		"flank",
@@ -436,6 +434,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.smoke_grenade_lifetime = math.lerp(9, 15, f)
 	self.flash_grenade_timeout = { 10, 15 }
 	self.flash_grenade.timer = math.lerp(2, 0.5, f)
+	self.cs_grenade_timeout = { 20, 25 }
+	self.cs_grenade_lifetime = math.lerp(18, 36, f)
 
 	-- Spawn Groups
 	local special_weight = difficulty_index * 0.5 + 3
