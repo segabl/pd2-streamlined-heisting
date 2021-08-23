@@ -506,7 +506,8 @@ end
 function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 	local task_data = self._task_data.assault
 	if not task_data.use_smoke then
-		return
+		-- If a grenade was previously used within a certain timeframe, count that as a successful current use
+		return task_data.use_smoke_push_t and task_data.use_smoke_push_t < self._t
 	end
 
 	local grenade_types = {
@@ -577,6 +578,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 	end
 
 	local timeout = tweak_data.group_ai[grenade_type .. "_timeout"] or tweak_data.group_ai.smoke_and_flash_grenade_timeout
+	task_data.use_smoke_push_t = self._t + timeout[1] / 4
 	task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
 	task_data.use_smoke = false
 
