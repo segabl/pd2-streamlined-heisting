@@ -51,6 +51,7 @@
 			<post :hook_id="equipment/sentry_gun/sentrygunbase"/>
 			<post :hook_id="equipment/sentry_gun/sentrygundamage"/>
 			<post :hook_id="player_team/teamaimovement"/>
+			<post :hook_id="weapons/grenades/quickflashgrenade"/>
 			<post :hook_id="weapons/raycastweaponbase"/>
 		</group>
 
