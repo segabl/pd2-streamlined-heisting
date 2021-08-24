@@ -308,7 +308,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 1,
-				freq = 1,
+				freq = 0.75,
 				amount_max = 2,
 				rank = 3,
 				unit = "FBI_shield",
@@ -338,7 +338,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				amount_min = 1,
-				freq = 1,
+				freq = 0.75,
 				amount_max = 2,
 				rank = 3,
 				unit = "FBI_shield",
@@ -462,7 +462,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.force_pool = table.collect(self.besiege.assault.force, function (val) return val * 8 end)
 	self.besiege.assault.force_balance_mul = { 1, 2, 3, 4 }
 	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
-	self.besiege.assault.sustain_duration_min = { 60 + 120 * f, 120 + 120 * f, 180 + 120 * f }
+	self.besiege.assault.sustain_duration_min = { math.lerp(60, 120, f), math.lerp(120, 210, f), math.lerp(180, 300, f) }
 	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
 	self.besiege.assault.fade_settings = {
 		enemies_defeated_percentage = 0.5,
@@ -471,13 +471,11 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	}
 
 	self.besiege.reenforce.groups = {
-		tac_swat_shotgun_rush = { 2, 2, 2 },
 		tac_swat_shotgun_flank = { 1, 1, 1 },
-		tac_swat_rifle = { 16, 16, 16 },
-		tac_swat_rifle_flank = { 8, 8, 8 }
+		tac_swat_rifle_flank = { 4, 4, 4 }
 	}
 
-	self.besiege.reenforce.interval = { 15, 20, 25 }
+	self.besiege.reenforce.interval = { 20, 20, 20 }
 
 	self.besiege.recon.groups = {
 		hostage_rescue = { 1, 1, 1 },
