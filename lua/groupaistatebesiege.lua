@@ -756,11 +756,11 @@ function GroupAIStateBesiege:_upd_police_activity()
 			self:_claculate_drama_value()
 			self:_upd_group_spawning()
 			self:_upd_groups()
+			self:_begin_new_tasks()
 			self:_upd_regroup_task()
 			self:_upd_reenforce_tasks()
 			self:_upd_recon_tasks()
 			self:_upd_assault_task()
-			self:_begin_new_tasks()
 		end
 	end
 
