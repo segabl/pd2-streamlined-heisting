@@ -5,7 +5,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 	local focus_enemy = data.attention_obj
 	local verified = focus_enemy and focus_enemy.verified
 	local nearly_visible = focus_enemy and focus_enemy.nearly_visible
-	local expected_pos = focus_enemy and (focus_enemy.last_verified_pos or focus_enemy.verified_pos or focus_enemy.criminal_record and focus_enemy.criminal_record.pos)
+	local expected_pos = focus_enemy and (focus_enemy.verified_pos or focus_enemy.last_verified_pos or focus_enemy.criminal_record and focus_enemy.criminal_record.pos or focus_enemy.m_head_pos)
 
 	local aim, shoot = CopLogicAttack._check_aim_shoot(data, my_data, focus_enemy, verified, nearly_visible, expected_pos)
 
