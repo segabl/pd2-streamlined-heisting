@@ -10,7 +10,7 @@ Hooks:PostHook(ElementAreaTrigger, "on_set_enabled", "sh_on_set_enabled", functi
 		local element_meta = getmetatable(element)
 		if element_meta == ElementMissionEnd or element_meta == ElementCarry and element._values.operation == "secure" then
 			if self._values.enabled then
-				managers.groupai:state():set_area_min_police_force(self._id, 1, self._values.position)
+				managers.groupai:state():set_area_min_police_force(self._id, 3, self._values.position)
 				StreamHeist:log(element_meta == ElementMissionEnd and "Escape" or "Loot secure", "zone activated, enabling reinforce groups in its area")
 			else
 				managers.groupai:state():set_area_min_police_force(self._id)

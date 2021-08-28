@@ -1,10 +1,10 @@
 -- Add custom reinforce locations to specific levels
 local level_reinforce_triggers = {
 	des = {
-		[100304] = { name = "main_hall", force = 3, position = Vector3(-120, -2400, 100), disable_id = 100286 } -- Henry's Rock main hall
+		[100304] = { name = "main_hall", force = 9, position = Vector3(-120, -2400, 100), disable_id = 100286 } -- Henry's Rock main hall
 	},
 	sah = {
-		[101400] = { name = "main_room", force = 3, position = Vector3(0, 2000, -100) } -- Shacklethorn auction room
+		[101400] = { name = "main_room", force = 5, position = Vector3(0, 2000, -100) } -- Shacklethorn auction room
 	}
 }
 local reinforce_triggers = level_reinforce_triggers[Global.game_settings and Global.game_settings.level_id]
