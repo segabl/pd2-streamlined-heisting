@@ -161,6 +161,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"charge",
 		"provide_support"
 	}
+	self._tactics.tank_rush = {
+		"shield",
+		"charge",
+		"provide_coverfire",
+		"murder"
+	}
 	self._tactics.tazer_charge = {
 		"charge",
 		"provide_coverfire",
@@ -356,13 +362,39 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 
 	self.enemy_spawn_groups.tac_bull_rush = {
-		amount = { 1, 1 },
+		amount = { 3, 4 },
 		spawn = {
 			{
+				amount_min = 1,
 				freq = 1,
+				amount_max = 1,
 				rank = 3,
 				unit = "FBI_tank",
 				tactics = self._tactics.tank_rush
+			},
+			{
+				freq = 1,
+				rank = 2,
+				unit = "FBI_heavy_R870",
+				tactics = self._tactics.shield_support_charge
+			},
+			{
+				freq = 1,
+				rank = 1,
+				unit = "FBI_swat_R870",
+				tactics = self._tactics.shield_support_charge
+			},
+			{
+				freq = 1,
+				rank = 2,
+				unit = "FBI_heavy_G36",
+				tactics = self._tactics.shield_support_charge
+			},
+			{
+				freq = 1,
+				rank = 1,
+				unit = "FBI_swat_M4",
+				tactics = self._tactics.shield_support_charge
 			}
 		}
 	}
