@@ -1,3 +1,7 @@
+-- Reuse function of idle logic to make enemies in an area aware of a player entering the area
+CopLogicTravel.on_area_safety = CopLogicIdle.on_area_safety
+
+
 -- Sanity check for rare follow_unit crash
 Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
 	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
