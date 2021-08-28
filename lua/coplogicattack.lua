@@ -1,3 +1,7 @@
+-- Reuse function of idle logic to make enemies in an area aware of a player entering the area
+CopLogicAttack.on_area_safety = CopLogicIdle.on_area_safety
+
+
 -- Remove some of the strict conditions for enemies shooting while on the move
 -- This will result in enemies opening fire more likely while moving
 -- Also greatly simplified the function
