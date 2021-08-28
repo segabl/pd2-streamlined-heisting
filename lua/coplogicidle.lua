@@ -1,9 +1,11 @@
--- Make cops react more aggressively when appropriate (less stare, more shoot)
 local REACT_IDLE = AIAttentionObject.REACT_IDLE
 local REACT_AIM = AIAttentionObject.REACT_AIM
 local REACT_ARREST = AIAttentionObject.REACT_ARREST
 local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
 local math_min = math.min
+local tmp_vec1 = Vector3()
+
+-- Make cops react more aggressively when appropriate (less stare, more shoot)
 local _chk_reaction_to_attention_object_original = CopLogicIdle._chk_reaction_to_attention_object
 function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ...)
 	if not managers.groupai:state():enemy_weapons_hot() then
@@ -76,7 +78,12 @@ function CopLogicIdle._chk_relocate(data, ...)
 			return true
 		end
 
-		if not data.tactics or not data.tactics.shield_cover then
+		if data.tactics and data.tactics.shield_cover then
+			mvector3.set(tmp_vec1, follow_unit:movement():m_fwd())
+			mvector3.multiply(tmp_vec1, -200)
+			mvector3.add(tmp_vec1, follow_unit_pos)
+			follow_unit_pos = tmp_vec1
+		else
 			follow_unit_pos = follow_unit:brain() and follow_unit:brain():is_advancing() or follow_unit_pos
 		end
 
