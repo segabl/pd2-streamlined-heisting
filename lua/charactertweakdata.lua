@@ -265,6 +265,17 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		}
 	}
 
+	-- Tweak movement speed presets
+	presets.move_speed.very_slow = deep_clone(presets.move_speed.slow)
+	for _, pose in pairs(presets.move_speed.very_slow) do
+		for _, stance in pairs(pose.walk) do
+			for dir, speed in pairs(stance) do
+				stance[dir] = speed * 0.75
+			end
+		end
+		pose.run = deep_clone(pose.walk)
+	end
+
 	return presets
 end
 
@@ -354,6 +365,12 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.fbi.no_arrest = nil
 	self.swat.no_arrest = nil
 	self.fbi_swat.no_arrest = nil
+
+	-- Tweak move speeds
+	self.mobster_boss.move_speed = self.presets.move_speed.slow
+	self.hector_boss.move_speed = self.presets.move_speed.slow
+	self.biker_boss.move_speed = self.presets.move_speed.slow
+	self.tank_mini.move_speed = self.presets.move_speed.very_slow
 end)
 
 
