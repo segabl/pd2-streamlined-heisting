@@ -29,7 +29,7 @@ end)
 -- Make groups move together (remove close to criminal check to avoid splitting groups)
 function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	local my_objective = data.objective
-	if not my_objective.grp_objective then
+	if not my_objective.grp_objective or my_objective.type == "follow" then
 		return true
 	end
 

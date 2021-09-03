@@ -72,19 +72,10 @@ function CopLogicIdle._chk_relocate(data, ...)
 		end
 
 		local follow_unit = data.objective.follow_unit
-		local follow_unit_pos = follow_unit:movement():m_pos()
+		local follow_unit_pos = (not data.tactics or not data.tactics.shield_cover) and follow_unit:brain() and follow_unit:brain():is_advancing() or follow_unit:movement():m_pos()
 		if data.is_tied and data.objective.lose_track_dis and data.objective.lose_track_dis * data.objective.lose_track_dis < mvector3.distance_sq(data.m_pos, follow_unit_pos) then
 			data.brain:set_objective(nil)
 			return true
-		end
-
-		if data.tactics and data.tactics.shield_cover then
-			mvector3.set(tmp_vec1, follow_unit:movement():m_fwd())
-			mvector3.multiply(tmp_vec1, -200)
-			mvector3.add(tmp_vec1, follow_unit_pos)
-			follow_unit_pos = tmp_vec1
-		else
-			follow_unit_pos = follow_unit:brain() and follow_unit:brain():is_advancing() or follow_unit_pos
 		end
 
 		if data.objective.relocated_to and mvector3.equal(data.objective.relocated_to, follow_unit_pos) then
