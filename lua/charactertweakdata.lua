@@ -371,6 +371,14 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.hector_boss.move_speed = self.presets.move_speed.slow
 	self.biker_boss.move_speed = self.presets.move_speed.slow
 	self.tank_mini.move_speed = self.presets.move_speed.very_slow
+
+	-- Set damage clamps
+	self.hector_boss.DAMAGE_CLAMP_BULLET = 80
+	self.hector_boss.DAMAGE_CLAMP_EXPLOSION = 80
+	self.phalanx_minion.DAMAGE_CLAMP_BULLET = 40
+	self.phalanx_minion.DAMAGE_CLAMP_EXPLOSION = 80
+	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 40
+	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = 80
 end)
 
 
