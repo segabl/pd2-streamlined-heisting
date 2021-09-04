@@ -32,6 +32,7 @@
 		<group hook_id="lib/units/">
 			<post :hook_id="beings/player/playerdamage"/>
 			<group :hook_id="enemies/cop/">
+				<post :hook_id="actions/full_body/copactionhurt"/>
 				<post :hook_id="actions/lower_body/copactionidle"/>
 				<post :hook_id="actions/upper_body/copactionshoot"/>
 				<post :hook_id="actions/upper_body/copactiontase"/>

@@ -92,6 +92,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Fixes Cloakers being stuck in the beatdown animation and ignoring threats after a charge attack
 - Fixes the Crime Spree "Heavies" modifier to replace the correct units
 - Fixes the assault fade phase almost always ending after the minimum amount of time
+- Makes Shield knockdown animations not stackable, no new animation triggers while there's already one playing
 
 ## Credits
 
