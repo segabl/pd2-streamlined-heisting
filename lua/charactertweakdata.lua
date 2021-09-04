@@ -345,6 +345,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.biker_boss.HEALTH_INIT = 200
 	self.fbi.HEALTH_INIT = 4
 
+	-- Tweak headshot multipliers
+	self.fbi_swat.headshot_dmg_mul = 2
+	self.phalanx_minion.headshot_dmg_mul = 3
+	self.phalanx_vip.headshot_dmg_mul = 3
+
 	-- Fix/set explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
 	self.tank.damage.explosion_damage_mul = 0.85
@@ -376,9 +381,9 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.hector_boss.DAMAGE_CLAMP_BULLET = 80
 	self.hector_boss.DAMAGE_CLAMP_EXPLOSION = 80
 	self.phalanx_minion.DAMAGE_CLAMP_BULLET = 40
-	self.phalanx_minion.DAMAGE_CLAMP_EXPLOSION = 80
+	self.phalanx_minion.DAMAGE_CLAMP_EXPLOSION = 100
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 40
-	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = 80
+	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = 100
 end)
 
 
