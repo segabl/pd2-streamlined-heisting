@@ -487,6 +487,10 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		Phalanx = { 0, 0, 0 }
 	}
 
+	-- Winters damage reduction settings
+	self.phalanx.vip.damage_reduction.start = 0
+	self.phalanx.vip.damage_reduction.increase = 0.025
+
 	-- Assault phases settings
 	self.besiege.assault.delay = { math.lerp(50, 25, f), math.lerp(40, 20, f), math.lerp(30, 15, f) }
 	self.besiege.assault.hostage_hesitation_delay = { 10, 7.5, 5 }
