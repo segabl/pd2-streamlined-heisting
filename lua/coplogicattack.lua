@@ -2,6 +2,11 @@
 CopLogicAttack.on_area_safety = CopLogicIdle.on_area_safety
 
 
+-- Compatibility with The Fixes
+TheFixesPreventer = TheFixesPreventer or {
+	crash_upd_aim_coplogicattack = true
+}
+
 -- Remove some of the strict conditions for enemies shooting while on the move
 -- This will result in enemies opening fire more likely while moving
 -- Also greatly simplified the function
