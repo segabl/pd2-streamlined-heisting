@@ -15,6 +15,7 @@
 			<post :hook_id="dynamicresourcemanager"/>
 			<post :hook_id="enemymanager"/>
 			<post :hook_id="explosionmanager"/>
+			<post :hook_id="hudmanager"/>
 			<post :hook_id="missionmanager"/>
 		</group>
 		<post hook_id="lib/modifiers/modifierheavies"/>
