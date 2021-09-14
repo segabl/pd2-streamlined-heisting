@@ -65,7 +65,8 @@ function ExplosionManager:_damage_characters(detect_results, params, variant, da
 					action_data.damage = math.max(damage * (math.clamp(1 - len / range, 0, 1) ^ curve_pow), 1)
 					-- Check for a shield blocking direct los to the explosion impact and reduce damage if the explosion is in front of it
 					local shield_block = World:raycast("ray", hit_pos, hit_body_pos, "slot_mask", shield_slot_mask)
-					if shield_block and shield_block.unit and mvector3.dot(shield_block.unit:rotation():y(), hit_dir) < -0.5 then
+					local shield_unit = shield_block and shield_block.unit
+					if alive(shield_unit) and alive(shield_unit:parent()) and mvector3.dot(shield_unit:rotation():y(), hit_dir) < -0.5 then
 						action_data.damage = action_data.damage * 0.5
 					end
 				else
