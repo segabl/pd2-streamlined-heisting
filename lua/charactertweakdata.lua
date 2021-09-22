@@ -219,48 +219,48 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		unaware_of_aggressor = 0.1,
 		enemy_weap_cold = 0.1,
 		flanked = 0.2,
-		isolated = 0.1,
+		isolated = 0.2,
 		aggressor_dis = {
-			[300.0] = 0.2,
+			[100.0] = 0.2,
 			[1000.0] = 0
 		}
 	}
 	presets.surrender.easy = {
-		base_chance = 0.3,
-		significant_chance = 0.35,
+		base_chance = 0,
+		significant_chance = 0,
 		factors = surrender_factors,
 		reasons = {
 			pants_down = 1,
-			weapon_down = 0.5,
+			weapon_down = 0.6,
 			health = {
 				[1.0] = 0,
-				[0.8] = 0.8
+				[0.0] = 1
 			}
 		}
 	}
 	presets.surrender.normal = {
-		base_chance = 0.25,
-		significant_chance = 0.3,
+		base_chance = 0,
+		significant_chance = 0,
 		factors = surrender_factors,
 		reasons = {
 			pants_down = 0.9,
 			weapon_down = 0.4,
 			health = {
-				[0.8] = 0,
-				[0.6] = 0.6
+				[0.75] = 0,
+				[0.0] = 0.75
 			}
 		}
 	}
 	presets.surrender.hard = {
-		base_chance = 0.2,
-		significant_chance = 0.25,
+		base_chance = 0,
+		significant_chance = 0,
 		factors = surrender_factors,
 		reasons = {
 			pants_down = 0.8,
-			weapon_down = 0.3,
+			weapon_down = 0.2,
 			health = {
-				[0.6] = 0,
-				[0.4] = 0.4
+				[0.5] = 0,
+				[0.0] = 0.5
 			}
 		}
 	}
