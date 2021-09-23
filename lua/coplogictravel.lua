@@ -124,3 +124,14 @@ function CopLogicTravel._chk_start_pathing_to_next_nav_point(data, my_data)
 
 	data.unit:brain():search_for_path(my_data.advance_path_search_id, to_pos, prio, nil, nav_segs)
 end
+
+function CopLogicTravel.clbk_pathing_results(data)
+	local my_data = data.internal_data
+	data.t = TimerManager:game():time()
+
+	CopLogicTravel._upd_enemy_detection(data)
+
+	if data.internal_data == my_data then
+		CopLogicTravel.upd_advance(data)
+	end
+end
