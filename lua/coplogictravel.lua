@@ -53,6 +53,16 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	return true
 end
 
+function CopLogicTravel.clbk_pathing_results(data)
+	local my_data = data.internal_data
+	data.t = TimerManager:game():time()
+
+	CopLogicTravel._upd_enemy_detection(data)
+
+	if data.internal_data == my_data then
+		CopLogicTravel.upd_advance(data)
+	end
+end
 
 -- If Iter is installed and streamlined path option is used, don't make any further changes
 if Iter and Iter.settings and Iter.settings.streamline_path then
@@ -123,15 +133,4 @@ function CopLogicTravel._chk_start_pathing_to_next_nav_point(data, my_data)
 	local nav_segs = CopLogicTravel._get_allowed_travel_nav_segs(data, my_data, to_pos)
 
 	data.unit:brain():search_for_path(my_data.advance_path_search_id, to_pos, prio, nil, nav_segs)
-end
-
-function CopLogicTravel.clbk_pathing_results(data)
-	local my_data = data.internal_data
-	data.t = TimerManager:game():time()
-
-	CopLogicTravel._upd_enemy_detection(data)
-
-	if data.internal_data == my_data then
-		CopLogicTravel.upd_advance(data)
-	end
 end
