@@ -1,9 +1,11 @@
+local math_abs = math.abs
 local math_min = math.min
 local math_lerp = math.lerp
 local math_random = math.random
 local table_insert = table.insert
 local table_remove = table.remove
-local mvec_dist = mvector3.distance
+local mvec_dis = mvector3.distance
+local mvec_dis_sq = mvector3.distance_sq
 
 
 -- Make hostage count affect hesitation delay
@@ -110,7 +112,7 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 
 		for criminal_key, criminal_data in pairs(self._player_criminals) do
 			if not criminal_data.status then
-				local dis = mvector3.distance_sq(target_pos, criminal_data.m_pos)
+				local dis = mvec_dis_sq(target_pos, criminal_data.m_pos)
 
 				if not nearest_dis or dis < nearest_dis then
 					nearest_dis = dis
@@ -258,11 +260,12 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			push = true
 		end
 	elseif not current_objective.moving_out then
-		-- Check if there are any criminals in our objective area or the neighbouring areas
+		-- Check if there are any criminals close to our objective area
 		local has_criminals_close = next(objective_area.criminal.units) and true
 		if not has_criminals_close then
-			for _, neighbour_area in pairs(objective_area.neighbours) do
-				if next(neighbour_area.criminal.units) then
+			local objective_pos = objective_area.pos
+			for _, u_data in pairs(self:all_criminals()) do
+				if math_abs(u_data.m_pos.z - objective_pos.z) < 300 and mvec_dis_sq(u_data.m_pos, objective_pos) < 4000000 then
 					has_criminals_close = true
 					break
 				end
@@ -274,7 +277,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		for _, u_data in pairs(group.units) do
 			logic_data = u_data.unit:brain()._logic_data
 			focus_enemy = logic_data and logic_data.attention_obj
-			if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_SHOOT and focus_enemy.verified then
+			if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_AIM and focus_enemy.verified then
 				has_visible_target = true
 				break
 			end
@@ -635,7 +638,7 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 							for i = 2, #path do
 								local nxt = path[i][2]
 								if current and nxt then
-									dis = dis + mvec_dist(current, nxt)
+									dis = dis + mvec_dis(current, nxt)
 								end
 								current = nxt
 							end
