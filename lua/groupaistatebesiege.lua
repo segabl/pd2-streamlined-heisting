@@ -594,7 +594,7 @@ end
 
 
 -- Reduce the importance of spawn group distance in spawn group weight to encourage enemies spawning from more directions
--- Also slightly optimize this function's use of table.remove
+-- Also slightly optimized this function to properly check all areas
 local function make_dis_id(from, to)
 	return tostring(from < to and from or to) .. "-" .. tostring(to < from and from or to)
 end
@@ -606,19 +606,9 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	local t = self._t
 	local valid_spawn_groups = {}
 	local valid_spawn_group_distances = {}
-	local total_dis = 0
-	local all_areas = self._area_data
-	local to_search_areas = {
-		target_area
-	}
-	local found_areas = {
-		[target_area.id] = true
-	}
 
-	repeat
-		local search_area = table_remove(to_search_areas)
-		local spawn_groups = search_area.spawn_groups
-
+	for _, area in pairs(self._area_data) do
+		local spawn_groups = area.spawn_groups
 		if spawn_groups then
 			for _, spawn_group in ipairs(spawn_groups) do
 				if spawn_group.delay_t <= t and (not verify_clbk or verify_clbk(spawn_group)) then
@@ -652,20 +642,12 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 							local spawn_group_id = spawn_group.mission_element:id()
 							valid_spawn_groups[spawn_group_id] = spawn_group
 							valid_spawn_group_distances[spawn_group_id] = my_dis
-							total_dis = total_dis + my_dis
 						end
 					end
 				end
 			end
 		end
-
-		for other_area_id, other_area in pairs(all_areas) do
-			if not found_areas[other_area_id] and other_area.neighbours[search_area.id] then
-				table_insert(to_search_areas, other_area)
-				found_areas[other_area_id] = true
-			end
-		end
-	until #to_search_areas == 0
+	end
 
 	if not next(valid_spawn_group_distances) then
 		return
@@ -688,10 +670,6 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 			valid_spawn_groups[id] = nil
 			valid_spawn_group_distances[id] = nil
 		end
-	end
-
-	if total_dis == 0 then
-		total_dis = 1
 	end
 
 	local total_weight = 0
