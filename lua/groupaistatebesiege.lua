@@ -331,37 +331,30 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
 
-				if tactics_map.flank then
+				if not push and tactics_map.flank then
 					local assault_from_area = found_areas[search_area]
 
 					if assault_from_area ~= "init" then
-						local cop_units = assault_from_area.police.units
+						assault_from_here = false
 
-						for u_key, u_data in pairs(cop_units) do
-							if u_data.group and u_data.group ~= group and u_data.group.objective.type == "assault_area" then
-								assault_from_here = false
+						if not alternate_assault_area or math_random() < 0.5 then
+							local search_params = {
+								id = "GroupAI_assault",
+								from_seg = current_objective.area.pos_nav_seg,
+								to_seg = search_area.pos_nav_seg,
+								access_pos = self._get_group_acces_mask(group),
+								verify_clbk = callback(self, self, "is_nav_seg_safe")
+							}
+							alternate_assault_path = managers.navigation:search_coarse(search_params)
 
-								if not alternate_assault_area or math_random() < 0.5 then
-									local search_params = {
-										id = "GroupAI_assault",
-										from_seg = current_objective.area.pos_nav_seg,
-										to_seg = search_area.pos_nav_seg,
-										access_pos = self._get_group_acces_mask(group),
-										verify_clbk = callback(self, self, "is_nav_seg_safe")
-									}
-									alternate_assault_path = managers.navigation:search_coarse(search_params)
-
-									if alternate_assault_path then
-										self:_merge_coarse_path_by_area(alternate_assault_path)
-										alternate_assault_area = search_area
-										alternate_assault_area_from = assault_from_area
-									end
-								end
-
-								found_areas[search_area] = nil
-								break
+							if alternate_assault_path then
+								self:_merge_coarse_path_by_area(alternate_assault_path)
+								alternate_assault_area = search_area
+								alternate_assault_area_from = assault_from_area
 							end
 						end
+
+						found_areas[search_area] = nil
 					end
 				end
 

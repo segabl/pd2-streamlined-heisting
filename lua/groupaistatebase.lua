@@ -78,20 +78,13 @@ Hooks:PostHook(GroupAIStateBase, "criminal_spotted", "sh_criminal_spotted", fix_
 Hooks:PostHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_nav_seg_change", fix_position)
 
 
--- Make flank pathing more dynamic by marking areas in which enemies die unsafe and delay spawn points when enemies die close to them
+-- Delay spawn points when enemies die close to them
 Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function (self, unit)
 	if not Network:is_server() or not unit:character_damage():dead() then
 		return
 	end
 
 	local fs_settings = FullSpeedSwarm and FullSpeedSwarm.final_settings or {}
-
-	if not fs_settings.improved_tactics then
-		local nav_seg = unit:movement():nav_tracker():nav_segment()
-		local area = self:get_area_from_nav_seg_id(nav_seg)
-		area.unsafe_t = self._t + (area.unsafe_t and area.unsafe_t > self._t and math.min((area.unsafe_t - self._t) + 5, 60) or 5)
-	end
-
 	if fs_settings.spawn_delay then
 		return
 	end
@@ -128,12 +121,6 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 				end
 			end
 		end
-	end
-end)
-
-Hooks:PostHook(GroupAIStateBase, "is_area_safe", "sh_is_area_safe", function (self, area)
-	if area.unsafe_t and area.unsafe_t > self._t then
-		return false
 	end
 end)
 
