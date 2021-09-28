@@ -264,8 +264,9 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		local has_criminals_close = next(objective_area.criminal.units) and true
 		if not has_criminals_close then
 			local objective_pos = objective_area.pos
+			local max_dis_sq = charge and 1000000 or 4000000
 			for _, u_data in pairs(self:all_criminals()) do
-				if math_abs(u_data.m_pos.z - objective_pos.z) < 300 and mvec_dis_sq(u_data.m_pos, objective_pos) < 4000000 then
+				if math_abs(u_data.m_pos.z - objective_pos.z) < 300 and mvec_dis_sq(u_data.m_pos, objective_pos) < max_dis_sq then
 					has_criminals_close = true
 					break
 				end
@@ -653,25 +654,6 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 		return
 	end
 
-	local timer_can_spawn = false
-	for id in pairs(valid_spawn_groups) do
-		if not self._spawn_group_timers[id] or self._spawn_group_timers[id] <= t then
-			timer_can_spawn = true
-			break
-		end
-	end
-
-	if not timer_can_spawn then
-		self._spawn_group_timers = {}
-	end
-
-	for id in pairs(valid_spawn_groups) do
-		if self._spawn_group_timers[id] and t < self._spawn_group_timers[id] then
-			valid_spawn_groups[id] = nil
-			valid_spawn_group_distances[id] = nil
-		end
-	end
-
 	local total_weight = 0
 	local candidate_groups = {}
 	for i, dis in pairs(valid_spawn_group_distances) do
@@ -687,26 +669,6 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	end
 
 	return self:_choose_best_group(candidate_groups, total_weight)
-end
-
-
--- Reduce the spawn group timer to avoid running out of valid spawn points and thus resetting the timers too often
-function GroupAIStateBesiege:_choose_best_group(best_groups, total_weight)
-	local rand_wgt = total_weight * math_random()
-	local best_grp, best_grp_type = nil
-
-	for i, candidate in ipairs(best_groups) do
-		rand_wgt = rand_wgt - candidate.wght
-
-		if rand_wgt <= 0 then
-			self._spawn_group_timers[candidate.group.mission_element:id()] = self._t + math_lerp(5, 10, math_random())
-			best_grp = candidate.group
-			best_grp_type = candidate.group_type
-			best_grp.delay_t = self._t + best_grp.interval
-
-			return best_grp, best_grp_type
-		end
-	end
 end
 
 
