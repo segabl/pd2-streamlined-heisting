@@ -344,6 +344,8 @@
 		<!-- federal police -->
 		<group name="units/pd2_dlc_bex/characters/" dyn_package="false">
 			<file :name="shared_textures/ene_acc_shield_lights_df.texture"/>
+			<file :name="shared_textures/ene_acc_shield_lights_nm.texture"/>
+			<file :name="shared_textures/ene_acc_shield_lights_op.texture"/>
 
 			<!-- base for material config and textures -->
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale_body_df.texture"/>
