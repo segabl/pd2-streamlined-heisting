@@ -199,7 +199,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	end
 
 	-- Give team ai more reasonable preset values
-	local dmg_mul_team = math.lerp(1, 3.5, diff_i_norm)
+	local dmg_mul_team = math.lerp(1, 4, diff_i_norm)
 	presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
 		no_autofire_stop = true
 	})
