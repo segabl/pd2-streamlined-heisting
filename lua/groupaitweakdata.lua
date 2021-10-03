@@ -526,11 +526,6 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	self.besiege.recurring_group_SO.recurring_cloaker_spawn.interval = { math.lerp(120, 15, f), math.lerp(240, 30, f) }
 
-	self.besiege.cloaker.groups = {
-		FBI_spoocs = { 1, 1, 1 },
-		single_spooc = { 1, 1, 1 }
-	}
-
 	self.street = deep_clone(self.besiege)
 	self.safehouse = deep_clone(self.besiege)
 end)
