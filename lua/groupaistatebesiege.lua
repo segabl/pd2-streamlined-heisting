@@ -108,9 +108,9 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 	local primary_target_area = task_data.target_areas[1]
 	if self:is_area_safe_assault(primary_target_area) then
 		local target_pos = primary_target_area.pos
-		local nearest_area, nearest_dis = nil
+		local nearest_area, nearest_dis
 
-		for criminal_key, criminal_data in pairs(self._player_criminals) do
+		for _, criminal_data in pairs(self._player_criminals) do
 			if not criminal_data.status then
 				local dis = mvec_dis_sq(target_pos, criminal_data.m_pos)
 
@@ -526,7 +526,9 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 		return
 	end
 
-	local grenade_type, grenade_user = unpack(table.random(grenade_candidates))
+	local candidate = table.random(grenade_candidates)
+	local grenade_type = candidate[1]
+	local grenade_user = candidate[2]
 
 	local area
 	if detonate_pos then

@@ -146,7 +146,7 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 
 	local rand_nr = math_random()
 	local total_chance = 0
-	local variation, variation_data = nil
+	local variation, variation_data
 	for test_variation, test_variation_data in pairs(dodge_tweak.variations) do
 		total_chance = total_chance + test_variation_data.chance
 
