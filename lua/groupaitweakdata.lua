@@ -465,7 +465,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.smoke_grenade_timeout = { 15, 20 }
 	self.smoke_grenade_lifetime = math.lerp(9, 15, f)
 	self.flash_grenade_timeout = { 10, 15 }
-	self.flash_grenade.timer = math.lerp(2, 0.5, f)
+	self.flash_grenade.timer = math.lerp(2, 0.75, f)
 	self.cs_grenade_timeout = { 20, 25 }
 	self.cs_grenade_lifetime = math.lerp(18, 36, f)
 
