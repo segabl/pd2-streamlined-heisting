@@ -405,7 +405,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			if push then
 				local detonate_pos
 				if charge then
-					for c_key, c_data in pairs(assault_area.criminal.units) do
+					for _, c_data in pairs(assault_area.criminal.units) do
 						detonate_pos = c_data.unit:movement():m_pos()
 						break
 					end
@@ -553,7 +553,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 		return
 	end
 
-	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 120 then
+	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 180 then
 		-- If players camp a specific area for too long, turn the originally chosen grenade into a teargas grenade instead
 		area.criminal_entered_t = nil
 		grenade_type = "cs_grenade"

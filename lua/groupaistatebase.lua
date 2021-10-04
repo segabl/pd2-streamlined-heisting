@@ -47,7 +47,7 @@ end)
 -- Log time when criminals enter an area to use for the teargas check
 Hooks:PreHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_nav_seg_change", function (self, unit, nav_seg_id)
 	local u_sighting = self._criminals[unit:key()]
-	if not u_sighting then
+	if not u_sighting or u_sighting.ai then
 		return
 	end
 
