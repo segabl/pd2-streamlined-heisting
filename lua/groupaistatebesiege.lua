@@ -95,9 +95,9 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 		for criminal_key, criminal_data in pairs(self._player_criminals) do
 			self:criminal_spotted(criminal_data.unit)
 
-			for group_id, group in pairs(self._groups) do
+			for _, group in pairs(self._groups) do
 				if group.objective.charge then
-					for u_key, u_data in pairs(group.units) do
+					for _, u_data in pairs(group.units) do
 						u_data.unit:brain():clbk_group_member_attention_identified(nil, criminal_key)
 					end
 				end
@@ -139,12 +139,12 @@ end
 
 -- Add an alternate in_place check to prevent enemy groups from getting stuck
 function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
-	for group_id, group in pairs(self._groups) do
+	for _, group in pairs(self._groups) do
 		if group.has_spawned and group.objective.type == "assault_area" then
 			if group.objective.moving_out then
 				local done_moving
 
-				for u_key, u_data in pairs(group.units) do
+				for _, u_data in pairs(group.units) do
 					local objective = u_data.unit:brain():objective()
 					if objective and objective.grp_objective == group.objective then
 						if objective.in_place or objective.area and objective.area.nav_segs[u_data.unit:movement():nav_tracker():nav_segment()] then
@@ -379,7 +379,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					end
 				end
 			else
-				for other_area_id, other_area in pairs(search_area.neighbours) do
+				for _, other_area in pairs(search_area.neighbours) do
 					if not found_areas[other_area] then
 						table_insert(to_search_areas, other_area)
 						found_areas[other_area] = search_area
@@ -395,7 +395,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		end
 
 		if assault_area and assault_path then
-			local assault_area = push and assault_area or found_areas[assault_area] == "init" and objective_area or found_areas[assault_area]
+			assault_area = push and assault_area or found_areas[assault_area] == "init" and objective_area or found_areas[assault_area]
 
 			if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path - 1][1]] then
 				table_remove(assault_path)
@@ -412,13 +412,13 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				end
 
 				-- Check which grenade to use to push, grenade use is required for the push to be initiated
-				-- If grenade isn't available, push regardless if grenade use was tried for at least 1s to not get groups stuck
-				used_grenade = self:_chk_group_use_grenade(group, detonate_pos) or group.grenade_check_fail_t and group.grenade_check_fail_t + 1 < self._t
+				-- If grenade isn't available, push regardless anyway after a short delay
+				used_grenade = self:_chk_group_use_grenade(group, detonate_pos) or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t
 
 				if used_grenade then
 					self:_voice_move_in_start(group)
-				elseif not group.grenade_check_fail_t then
-					group.grenade_check_fail_t = self._t
+				elseif not group.ignore_grenade_check_t then
+					group.ignore_grenade_check_t = self._t + 2
 				end
 			end
 
@@ -444,7 +444,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	elseif pull_back then
 		local retreat_area
 
-		for u_key, u_data in pairs(group.units) do
+		for _, u_data in pairs(group.units) do
 			local nav_seg_id = u_data.tracker:nav_segment()
 
 			if current_objective.area.nav_segs[nav_seg_id] then
@@ -504,7 +504,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 	local task_data = self._task_data.assault
 	if not task_data.use_smoke then
 		-- If a grenade was previously used within a certain timeframe, count that as a successful current use
-		return task_data.use_smoke_push_t and task_data.use_smoke_push_t < self._t
+		return task_data.use_smoke_push_t and task_data.use_smoke_push_t <= self._t
 	end
 
 	local grenade_types = {
@@ -512,7 +512,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 		flash_grenade = true
 	}
 	local grenade_candidates = {}
-	for u_key, u_data in pairs(group.units) do
+	for _, u_data in pairs(group.units) do
 		if u_data.tactics_map then
 			for grenade_type, _ in pairs(grenade_types) do
 				if u_data.tactics_map[grenade_type] then
@@ -577,7 +577,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 	end
 
 	local timeout = tweak_data.group_ai[grenade_type .. "_timeout"] or tweak_data.group_ai.smoke_and_flash_grenade_timeout
-	task_data.use_smoke_push_t = self._t + timeout[1] / 4
+	task_data.use_smoke_push_t = self._t + timeout[1] * 0.15
 	task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
 	task_data.use_smoke = false
 
