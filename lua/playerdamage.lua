@@ -1,18 +1,31 @@
 -- Grace period protects no matter the new potential damage but is shorter in general
--- If the previous shot was dodged, extend the grace period to reduce negative impact of lower grace period on dodge builds
 function PlayerDamage:_chk_dmg_too_soon()
 	local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
-	if self._last_dodged then
-		next_allowed_dmg_t = next_allowed_dmg_t + 0.2
-	end
 	return managers.player:player_timer():time() < next_allowed_dmg_t
 end
 
 
--- If this function is called with a value of 0 for health_subtracted it means the player dodged a shot
+-- Add slightly longer grace period on dodge (repurposing Anarchist/Armorer damage timer)
 Hooks:PostHook(PlayerDamage, "_send_damage_drama", "sh__send_damage_drama", function (self, attack_data, health_subtracted)
-	self._last_dodged = health_subtracted == 0
+	if health_subtracted == 0 and self._can_take_dmg_timer <= 0 then
+		self._can_take_dmg_timer = self._dmg_interval + 0.2
+	end
 end)
+
+
+-- Add slightly longer grace period on armor break (repurposing Anarchist/Armorer damage timer)
+local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
+function PlayerDamage:_calc_armor_damage(...)
+	local had_armor = self:get_real_armor() > 0
+
+	local health_subtracted = _calc_armor_damage_original(self, ...)
+
+	if health_subtracted > 0 and had_armor and self:get_real_armor() <= 0 and self._can_take_dmg_timer <= 0 then
+		self._can_take_dmg_timer = self._dmg_interval + 0.2
+	end
+
+	return health_subtracted
+end
 
 
 -- Stop dead enemies from making kill taunts
