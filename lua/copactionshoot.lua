@@ -78,7 +78,7 @@ function CopActionShoot:update(t)
 		local queued_actions = self._common_data.queued_actions
 		-- This originally only executed on client side which causes great inconsistencies in enemy turning behaviour
 		-- between host and client. Reworking the turning condition and enabling it for the host too should fix that.
-		if (not active_actions[2] or active_actions[2]:type() == "idle") and (not queued_actions or not queued_actions[1] and not queued_actions[2]) and not self._ext_movement:chk_action_forbidden("walk") then
+		if (not active_actions[2] or active_actions[2]:type() == "idle") and (not queued_actions or not queued_actions[1] and not queued_actions[2]) then
 			local spin = tar_vec_flat:to_polar_with_reference(fwd, math.UP).spin
 			if math.abs(spin) > 25 then
 				self._ext_movement:action_request({
