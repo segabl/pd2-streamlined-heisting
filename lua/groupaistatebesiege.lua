@@ -553,7 +553,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 		return
 	end
 
-	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 180 then
+	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 240 then
 		-- If players camp a specific area for too long, turn the originally chosen grenade into a teargas grenade instead
 		area.criminal_entered_t = nil
 		grenade_type = "cs_grenade"
@@ -598,10 +598,6 @@ end
 
 -- Reduce the importance of spawn group distance in spawn group weight to encourage enemies spawning from more directions
 -- Also slightly optimized this function to properly check all areas
-local function make_dis_id(from, to)
-	return tostring(from < to and from or to) .. "-" .. tostring(to < from and from or to)
-end
-
 function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_groups, target_pos, max_dis, verify_clbk)
 	target_pos = target_pos or target_area.pos
 	max_dis = max_dis and max_dis * max_dis
@@ -615,7 +611,7 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 		if spawn_groups then
 			for _, spawn_group in ipairs(spawn_groups) do
 				if spawn_group.delay_t <= t and (not verify_clbk or verify_clbk(spawn_group)) then
-					local dis_id = make_dis_id(spawn_group.nav_seg, target_area.pos_nav_seg)
+					local dis_id = tostring(spawn_group.nav_seg) .. "-" .. tostring(target_area.pos_nav_seg)
 
 					if not self._graph_distance_cache[dis_id] then
 						local path = managers.navigation:search_coarse({
