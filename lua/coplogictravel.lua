@@ -2,6 +2,12 @@
 CopLogicTravel.on_area_safety = CopLogicIdle.on_area_safety
 
 
+-- Update pathing immediately when receiving travel logic
+Hooks:PostHook(CopLogicTravel, "enter", "sh_enter", function (data)
+	CopLogicTravel.upd_advance(data)
+end)
+
+
 -- Sanity check for rare follow_unit crash
 Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
 	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
