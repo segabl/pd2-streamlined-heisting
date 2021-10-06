@@ -488,7 +488,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	}
 
 	-- Winters damage reduction settings
-	self.phalanx.vip.damage_reduction.start = 0
+	self.phalanx.vip.damage_reduction.start = 0.05
 	self.phalanx.vip.damage_reduction.increase = 0.025
 
 	-- Assault phases settings
