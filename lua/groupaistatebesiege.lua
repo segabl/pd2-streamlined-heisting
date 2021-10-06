@@ -241,7 +241,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 						return
 					end
 				end
-			elseif tactic_name == "charge" and not current_objective.moving_out and (in_place_duration > 5 or in_place_duration > 2 and self._drama_data.amount <= tweak_data.drama.low) and next(current_objective.area.criminal.units) and group.is_chasing and not current_objective.charge then
+			elseif tactic_name == "charge" and not current_objective.moving_out then
 				charge = true
 			end
 		end
