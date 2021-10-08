@@ -188,7 +188,7 @@ function CopActionShoot:update(t)
 
 				local melee
 
-				if autotarget and (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 130 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
+				if autotarget and (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 100 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
 					melee = self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
 				end
 
