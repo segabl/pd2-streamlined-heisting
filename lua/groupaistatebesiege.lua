@@ -685,16 +685,16 @@ function GroupAIStateBesiege:_upd_police_activity()
 		self:_check_phalanx_group_has_spawned()
 		self:_check_phalanx_damage_reduction_increase()
 
-		-- Do _upd_group_spawning and _upd_groups before the various task updates
+		-- Do _upd_group_spawning and _begin_new_tasks before the various task updates
 		if self._enemy_weapons_hot then
 			self:_claculate_drama_value()
 			self:_upd_group_spawning()
-			self:_upd_groups()
 			self:_begin_new_tasks()
 			self:_upd_regroup_task()
 			self:_upd_reenforce_tasks()
 			self:_upd_recon_tasks()
 			self:_upd_assault_task()
+			self:_upd_groups()
 		end
 	end
 
