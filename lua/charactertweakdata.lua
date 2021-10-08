@@ -34,7 +34,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	-- Difficulty specific values (from easy to death sentence)
 	local dmg_mul_tbl = { 0.3, 0.4, 0.55, 0.75, 1, 1.5, 3, 6 }
 	local dmg_mul_str_tbl = { 0.8125, 0.875, 1, 1.25, 1.75, 2.5, 3.5, 5 }
-	local dmg_mul_lin_tbl = { 0.05, 0.2, 0.35, 0.5, 0.65, 0.7, 0.85, 1 }
+	local dmg_mul_lin_tbl = { 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 }
 	local acc_mul_tbl = { 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0 }
 	local focus_delay_tbl = { 1.8, 1.6, 1.4, 1.2, 1, 0.8, 0.6, 0.4 }
 	local aim_delay_tbl = { 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2 }
