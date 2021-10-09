@@ -62,6 +62,71 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 end
 
 
+-- Find a random fallback position in the nav segment if no covers are available
+-- This is done to prevent enemies stacking in one spot if no positions next to walls are available
+local _get_exact_move_pos_original = CopLogicTravel._get_exact_move_pos
+function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
+	local my_data = data.internal_data
+	local to_pos = nil
+	local coarse_path = my_data.coarse_path
+	local total_nav_points = #coarse_path
+
+	if total_nav_points <= nav_index then
+		return _get_exact_move_pos_original(data, nav_index, ...)
+	end
+
+	local nav_seg = coarse_path[nav_index][1]
+	local area = managers.groupai:state():get_area_from_nav_seg_id(nav_seg)
+	local cover = managers.navigation:find_cover_in_nav_seg_1(area.nav_segs)
+
+	if my_data.moving_to_cover then
+		managers.navigation:release_cover(my_data.moving_to_cover[1])
+		my_data.moving_to_cover = nil
+	end
+
+	if cover then
+		managers.navigation:reserve_cover(cover, data.pos_rsrv_id)
+		my_data.moving_to_cover = {
+			cover
+		}
+		to_pos = cover[1]
+	else
+		to_pos = CopLogicTravel._get_pos_on_wall(managers.navigation:find_random_position_in_segment(nav_seg), 500)
+	end
+
+	return to_pos
+end
+
+local _determine_destination_occupation_original = CopLogicTravel._determine_destination_occupation
+function CopLogicTravel._determine_destination_occupation(data, objective, ...)
+	if objective.type == "defend_area" and not objective.cover and not objective.pos then
+		local near_pos = objective.follow_unit and objective.follow_unit:movement():nav_tracker():field_position()
+		local cover = CopLogicTravel._find_cover(data, objective.nav_seg, near_pos)
+
+		if cover then
+			return {
+				type = "defend",
+				seg = objective.nav_seg,
+				cover = {
+					cover
+				},
+				radius = objective.radius
+			}
+		else
+			near_pos = CopLogicTravel._get_pos_on_wall(managers.navigation:find_random_position_in_segment(objective.nav_seg), 500)
+			return {
+				type = "defend",
+				seg = objective.nav_seg,
+				pos = near_pos,
+				radius = objective.radius
+			}
+		end
+	end
+
+	return _determine_destination_occupation_original(data, objective, ...)
+end
+
+
 -- If Iter is installed and streamlined path option is used, don't make any further changes
 if Iter and Iter.settings and Iter.settings.streamline_path then
 	return
