@@ -10,3 +10,12 @@ local set_important_original = CopBrain.set_important
 function CopBrain:set_important(state, ...)
 	return set_important_original(self, self._forced_important and true or state, ...)
 end
+
+
+-- Call pathing results callback in logic if it exists
+Hooks:PostHook(CopBrain, "clbk_pathing_results", "sh_clbk_pathing_results", function (self)
+	local current_logic = self._current_logic
+	if current_logic.on_pathing_results then
+		current_logic.on_pathing_results(self._logic_data)
+	end
+end)
