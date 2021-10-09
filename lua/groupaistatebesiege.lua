@@ -265,9 +265,14 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		if not has_criminals_close then
 			local objective_pos = objective_area.pos
 			local max_dis_sq = charge and 1000000 or 4000000
-			for _, u_data in pairs(self:all_criminals()) do
-				if math_abs(u_data.m_pos.z - objective_pos.z) < 300 and mvec_dis_sq(u_data.m_pos, objective_pos) < max_dis_sq then
-					has_criminals_close = true
+			for _, neighbour in pairs(objective_area.neighbours) do
+				for _, c_data in pairs(neighbour.criminal.units) do
+					if math_abs(c_data.m_pos.z - objective_pos.z) < 300 and mvec_dis_sq(c_data.m_pos, objective_pos) < max_dis_sq then
+						has_criminals_close = true
+						break
+					end
+				end
+				if has_criminals_close then
 					break
 				end
 			end
@@ -482,7 +487,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			group.is_chasing = nil
 
 			self:_set_objective_to_enemy_group(group, new_grp_objective)
-			return
 		end
 	end
 end
