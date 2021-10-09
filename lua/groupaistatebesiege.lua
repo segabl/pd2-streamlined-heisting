@@ -411,8 +411,10 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				local detonate_pos
 				if charge then
 					for _, c_data in pairs(assault_area.criminal.units) do
-						detonate_pos = c_data.unit:movement():m_pos()
-						break
+						if not c_data.ai then
+							detonate_pos = c_data.unit:movement():m_pos()
+							break
+						end
 					end
 				end
 
@@ -492,11 +494,11 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 end
 
 
--- Optimize this function to use existing area lookups instead of nested loops
+-- Optimize this function to directly check areas
 function GroupAIStateBesiege:_chk_group_areas_tresspassed(group)
 	for _, u_data in pairs(group.units) do
 		local area = self:get_area_from_nav_seg_id(u_data.tracker:nav_segment())
-		if not self:is_area_safe(area) then
+		if next(area.criminal.units) then
 			return area
 		end
 	end
@@ -557,17 +559,28 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 		return
 	end
 
-	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 240 then
-		-- If players camp a specific area for too long, turn the originally chosen grenade into a teargas grenade instead
+	-- If players camp a specific area for too long, turn the originally chosen grenade into a teargas grenade instead
+	local use_teargas
+	if area and area.criminal_entered_t and not area.criminal_left_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 240 then
+		-- Check if a player actually currently is in this area
+		local num_player_criminals = 0
+		detonate_pos = mvector3.copy(area.pos)
+		for _, c_data in pairs(area.criminal.units) do
+			if not c_data.ai then
+				num_player_criminals = num_player_criminals + 1
+				mvector3.add(detonate_pos, c_data.m_pos)
+			end
+		end
+		if num_player_criminals > 0 then
+			mvector3.divide(detonate_pos, num_player_criminals + 1)
+			mvector3.set_z(detonate_pos, area.pos.z)
+			use_teargas = true
+		end
+	end
+
+	if use_teargas then
 		area.criminal_entered_t = nil
 		grenade_type = "cs_grenade"
-
-		detonate_pos = mvector3.copy(area.pos)
-		for _, v in pairs(area.criminal.units) do
-			mvector3.add(detonate_pos, v.unit:movement():m_pos())
-		end
-		mvector3.divide(detonate_pos, table.size(area.criminal.units) + 1)
-		mvector3.set_z(detonate_pos, area.pos.z)
 
 		self:detonate_cs_grenade(detonate_pos, mvector3.copy(grenade_user.m_pos), tweak_data.group_ai.cs_grenade_lifetime or 10)
 	else

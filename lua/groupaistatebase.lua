@@ -52,9 +52,9 @@ Hooks:PreHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_na
 	end
 
 	local prev_area = u_sighting.area
-	local area = prev_area and prev_area.nav_segs[nav_seg_id] and prev_area or self:get_area_from_nav_seg_id(nav_seg_id)
+	local area = self:get_area_from_nav_seg_id(nav_seg_id)
 	if prev_area and prev_area ~= area then
-		if table.size(prev_area.criminal.units) <= 1 then
+		if table.count(prev_area.criminal.units, function (c_data) return not c_data.ai end) <= 1 then
 			prev_area.criminal_left_t = self._t
 			prev_area.old_criminal_entered_t = prev_area.criminal_entered_t
 			prev_area.criminal_entered_t = nil
