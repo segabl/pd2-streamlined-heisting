@@ -96,6 +96,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Makes Shield knockdown animations not stackable, no new animation triggers while there's already one playing
 - Fixes some spawn points being unavailable on certain maps due to incorrect pathing checks
 - Makes flashbangs more consistent and less penalizing when looking away in time
+- Fixes fire damage over time not triggering when a new damage over time instance is applied within a second
 
 ## Credits
 

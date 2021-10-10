@@ -18,6 +18,7 @@
 			<post :hook_id="dynamicresourcemanager"/>
 			<post :hook_id="enemymanager"/>
 			<post :hook_id="explosionmanager"/>
+			<post :hook_id="firemanager"/>
 			<post :hook_id="hudmanager"/>
 			<post :hook_id="missionmanager"/>
 		</group>
