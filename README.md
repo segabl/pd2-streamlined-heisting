@@ -95,6 +95,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Increases the time it takes for Cpt. Winters to reach the maximum damage reduction (10-50% in 40s to 5-50% in 90s)
 - Makes Shield knockdown animations not stackable, no new animation triggers while there's already one playing
 - Fixes some spawn points being unavailable on certain maps due to incorrect pathing checks
+- Makes flashbangs more consistent and less penalizing when looking away in time
 
 ## Credits
 

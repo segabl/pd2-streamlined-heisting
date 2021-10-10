@@ -5,7 +5,10 @@
 
 	<hooks script_path="mod.lua">
 
-		<post hook_id="core/lib/units/coreunitdamage"/>
+		<group hook_id="core/lib/">
+			<post :hook_id="managers/coreenvironmentcontrollermanager"/>
+			<post :hook_id="units/coreunitdamage"/>
+		</group>
 		<group hook_id="lib/managers/">
 			<post :hook_id="group_ai_states/groupaistatebase"/>
 			<post :hook_id="group_ai_states/groupaistatebesiege"/>

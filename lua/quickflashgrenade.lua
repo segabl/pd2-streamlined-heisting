@@ -11,7 +11,7 @@ function QuickFlashGrenade:_chk_dazzle_local_player(detonate_pos, range, ignore_
 		return
 	end
 
-	detonate_pos = detonate_pos or self._unit:position() + math.UP * 150
+	detonate_pos = detonate_pos or self._unit:position()
 
 	local m_pl_head_pos = player:movement():m_head_pos()
 	local linear_dis = mvector3.distance(detonate_pos, m_pl_head_pos)
