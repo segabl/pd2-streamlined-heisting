@@ -15,6 +15,7 @@ local temp_rot1 = Rotation()
 local math_min = math.min
 local math_max = math.max
 local math_lerp = math.lerp
+local math_random = math.random
 
 
 -- Helper function to reset variables when shooting is stopped
@@ -243,8 +244,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 		focus_prog = 1
 	end
 
-	local hit_chances = falloff.acc
-	local hit_chance = math_lerp(hit_chances[1], hit_chances[2], focus_prog) * self._unit:character_damage():accuracy_multiplier()
+	local hit_chance = math_lerp(falloff.acc[1], falloff.acc[2], focus_prog) * self._unit:character_damage():accuracy_multiplier()
 
 	if self._common_data.is_suppressed then
 		hit_chance = hit_chance * 0.5
@@ -254,18 +254,18 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 		hit_chance = hit_chance * self._common_data.active_actions[2]:accuracy_multiplier()
 	end
 
-	if math.random() < hit_chance then
+	if math_random() < hit_chance then
 		mvec3_set(shoot_hist.m_last_pos, pos)
 	else
 		mvec3_set(temp_vec1, pos)
 		mvec3_sub(temp_vec1, self._shoot_from_pos)
 
 		mvec3_cross(temp_vec2, temp_vec1, math.UP)
-		mrot_axis_angle(temp_rot1, temp_vec1, math.random(360))
+		mrot_axis_angle(temp_rot1, temp_vec1, math_random(360))
 		mvec3_rot(temp_vec2, temp_rot1)
 
 		local miss_min_dis = shooting_local_player and 31 or 150
-		local error_vec_len = miss_min_dis + w_tweak.spread * math.random() + w_tweak.miss_dis * math.random() * (1 - focus_prog)
+		local error_vec_len = miss_min_dis + 100 * (1 - hit_chance) * (2 - focus_prog) * math_random()
 
 		mvec3_set_l(temp_vec2, error_vec_len)
 		mvec3_add(temp_vec2, pos)
