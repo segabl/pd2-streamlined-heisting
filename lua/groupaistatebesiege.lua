@@ -561,7 +561,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 
 	-- If players camp a specific area for too long, turn the originally chosen grenade into a teargas grenade instead
 	local use_teargas
-	if area and area.criminal_entered_t and not area.criminal_left_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 240 then
+	if area and area.criminal_entered_t and table.size(area.neighbours) <= 2 and math_random() < (self._t - area.criminal_entered_t - 60) / 240 then
 		-- Check if a player actually currently is in this area
 		local num_player_criminals = 0
 		detonate_pos = mvector3.copy(area.pos)
