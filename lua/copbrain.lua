@@ -12,6 +12,12 @@ function CopBrain:set_important(state, ...)
 end
 
 
+-- If Iter is installed and streamlined path option is used, don't make any further changes
+if Iter and Iter.settings and Iter.settings.streamline_path then
+	return
+end
+
+
 -- Call pathing results callback in logic if it exists
 Hooks:PostHook(CopBrain, "clbk_pathing_results", "sh_clbk_pathing_results", function (self)
 	local current_logic = self._current_logic
