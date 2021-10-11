@@ -1,7 +1,7 @@
 -- Make snipers always aim if they have a target
 function CopLogicSniper._upd_aim(data, my_data)
 	local focus_enemy = data.attention_obj
-	local expected_pos = focus_enemy and (focus_enemy.verified_pos or focus_enemy.criminal_record and focus_enemy.criminal_record.pos)
+	local expected_pos = focus_enemy and focus_enemy.last_verified_pos
 	local aim = expected_pos and true
 	local shoot = focus_enemy and focus_enemy.verified and focus_enemy.reaction >= AIAttentionObject.REACT_SHOOT
 	local anim_data = data.unit:anim_data()
@@ -69,8 +69,8 @@ function CopLogicSniper._upd_aim(data, my_data)
 				my_data.attention_unit = focus_enemy.unit:key()
 			end
 		elseif my_data.attention_unit ~= expected_pos then
-			CopLogicBase._set_attention_on_pos(data, mvector3.copy(expected_pos))
-			my_data.attention_unit = mvector3.copy(expected_pos)
+			CopLogicBase._set_attention_on_pos(data, expected_pos)
+			my_data.attention_unit = expected_pos
 		end
 
 		if not my_data.shooting and not anim_data.reload and not data.unit:movement():chk_action_forbidden("action") then
