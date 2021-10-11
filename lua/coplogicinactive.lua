@@ -7,15 +7,9 @@ function CopLogicInactive.on_enemy_weapons_hot(data)
 	end
 end
 
-function CopLogicInactive._register_attention(data, my_data)
-	if data.unit:character_damage():dead() then
-		if managers.groupai:state():enemy_weapons_hot() then
-			data.unit:brain():set_attention_settings(nil)
-		else
-			data.unit:brain():set_attention_settings({
-				corpse_sneak = true
-			})
-		end
+function CopLogicInactive._register_attention(data)
+	if data.unit:character_damage():dead() and not managers.groupai:state():enemy_weapons_hot() then
+		data.unit:brain():set_attention_settings({ corpse_sneak = true })
 	else
 		data.unit:brain():set_attention_settings(nil)
 	end
