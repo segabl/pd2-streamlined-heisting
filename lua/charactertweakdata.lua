@@ -65,7 +65,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.2, 0.6 }, mode = { 1, 0, 0, 0 } }
 	}
-	presets.weapon.sh_base.akimbo_pistol.range = { optimal = 2000, far = 4000, close = 1000 }
+	presets.weapon.sh_base.is_revolver.range = { optimal = 2000, far = 4000, close = 1000 }
 	presets.weapon.sh_base.is_revolver.FALLOFF = {
 		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 3 * dmg_mul_str, r = 3000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
