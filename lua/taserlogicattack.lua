@@ -7,21 +7,11 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 	local focus_enemy = data.attention_obj
 	local verified = focus_enemy and focus_enemy.verified
 	local nearly_visible = focus_enemy and focus_enemy.nearly_visible
-	local expected_pos = focus_enemy and (focus_enemy.last_verified_pos or focus_enemy.verified_pos or focus_enemy.criminal_record and focus_enemy.criminal_record.pos)
+
+	local aim, shoot, expected_pos = CopLogicAttack._check_aim_shoot(data, my_data, focus_enemy, verified, nearly_visible)
 	local tase = focus_enemy and focus_enemy.reaction == AIAttentionObject.REACT_SPECIAL_ATTACK
 
-	local aim, shoot = true, true
-	if not tase then
-		aim, shoot = CopLogicAttack._check_aim_shoot(data, my_data, focus_enemy, verified, nearly_visible, expected_pos)
-	elseif not data.unit:movement():chk_action_forbidden("walk") then
-		-- Stop moving when we're about to tase
-		data.unit:brain():action_request({
-			body_part = 2,
-			type = "idle"
-		})
-	end
-
-	if aim or shoot then
+	if aim or shoot or tase then
 		if verified or nearly_visible then
 			if my_data.attention_unit ~= focus_enemy.u_key then
 				CopLogicBase._set_attention(data, focus_enemy)
@@ -29,13 +19,21 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 			end
 		elseif expected_pos then
 			if my_data.attention_unit ~= expected_pos then
-				CopLogicBase._set_attention_on_pos(data, mvector3.copy(expected_pos))
-				my_data.attention_unit = mvector3.copy(expected_pos)
+				CopLogicBase._set_attention_on_pos(data, expected_pos)
+				my_data.attention_unit = expected_pos
 			end
 		end
 
 		if not data.unit:anim_data().reload and not data.unit:movement():chk_action_forbidden("action") then
 			if tase and not focus_enemy.unit:movement():zipline_unit() then
+				-- Stop moving when we're about to tase
+				if not data.unit:movement():chk_action_forbidden("walk") then
+					data.unit:brain():action_request({
+						body_part = 2,
+						type = "idle"
+					})
+				end
+
 				local tase_action = {
 					body_part = 3,
 					type = "tase"
