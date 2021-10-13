@@ -99,31 +99,30 @@ end
 
 local _determine_destination_occupation_original = CopLogicTravel._determine_destination_occupation
 function CopLogicTravel._determine_destination_occupation(data, objective, ...)
-	if objective.type == "defend_area" and not objective.cover and not objective.pos then
-		local near_pos = objective.follow_unit and objective.follow_unit:movement():nav_tracker():field_position()
-		local cover = CopLogicTravel._find_cover(data, objective.nav_seg, near_pos)
-
-		if cover then
-			return {
-				type = "defend",
-				seg = objective.nav_seg,
-				cover = {
-					cover
-				},
-				radius = objective.radius
-			}
-		else
-			near_pos = CopLogicTravel._get_pos_on_wall(managers.navigation:find_random_position_in_segment(objective.nav_seg), 500)
-			return {
-				type = "defend",
-				seg = objective.nav_seg,
-				pos = near_pos,
-				radius = objective.radius
-			}
-		end
+	if objective.type ~= "defend_area" or objective.cover or objective.pos or data.kpr_keep_position then
+		return _determine_destination_occupation_original(data, objective, ...)
 	end
 
-	return _determine_destination_occupation_original(data, objective, ...)
+	local near_pos = objective.follow_unit and objective.follow_unit:movement():nav_tracker():field_position()
+	local cover = CopLogicTravel._find_cover(data, objective.nav_seg, near_pos)
+	if cover then
+		return {
+			type = "defend",
+			seg = objective.nav_seg,
+			cover = {
+				cover
+			},
+			radius = objective.radius
+		}
+	else
+		near_pos = CopLogicTravel._get_pos_on_wall(managers.navigation:find_random_position_in_segment(objective.nav_seg), 500)
+		return {
+			type = "defend",
+			seg = objective.nav_seg,
+			pos = near_pos,
+			radius = objective.radius
+		}
+	end
 end
 
 
