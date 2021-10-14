@@ -79,9 +79,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base.is_shotgun_pump.RELOAD_SPEED = 1.5
 	presets.weapon.sh_base.is_shotgun_pump.range = { optimal = 1000, far = 2000, close = 500 }
 	presets.weapon.sh_base.is_shotgun_pump.FALLOFF = {
-		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 1, 1.25 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.7 * acc_mul, 0.9 * acc_mul }, recoil = { 1.25, 1.5 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.8, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.7 * acc_mul, 0.9 * acc_mul }, recoil = { 1, 1.4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 1.2, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_shotgun_mag = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
 	presets.weapon.sh_base.is_shotgun_mag.RELOAD_SPEED = 1
@@ -349,6 +349,10 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.fbi_swat.headshot_dmg_mul = 2
 	self.phalanx_minion.headshot_dmg_mul = 3
 	self.phalanx_vip.headshot_dmg_mul = 3
+	self.tank.headshot_dmg_mul = 4
+	self.tank_hw.headshot_dmg_mul = 4
+	self.tank_medic.headshot_dmg_mul = 4
+	self.tank_mini.headshot_dmg_mul = 4
 
 	-- Fix/set explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
