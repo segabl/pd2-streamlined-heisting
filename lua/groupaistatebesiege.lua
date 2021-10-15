@@ -27,16 +27,6 @@ function GroupAIStateBesiege:_begin_assault_task(...)
 end
 
 
--- Make medic and minigun dozer count as dozers
-local _get_special_unit_type_count_original = GroupAIStateBesiege._get_special_unit_type_count
-function GroupAIStateBesiege:_get_special_unit_type_count(special_type, ...)
-	if special_type ~= "tank" then
-		return _get_special_unit_type_count_original(self, special_type, ...)
-	end
-	return _get_special_unit_type_count_original(self, "tank_medic", ...) + _get_special_unit_type_count_original(self, "tank_mini", ...) + _get_special_unit_type_count_original(self, "tank", ...)
-end
-
-
 -- Improve ending condition for assault fade
 -- The hardcoded amount of minimum enemies left was way too high and would lead to fade being instantly over after its minimum duration
 local _upd_assault_task_original = GroupAIStateBesiege._upd_assault_task
