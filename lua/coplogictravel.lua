@@ -83,11 +83,17 @@ end
 -- Also add different positioning for shield_cover groups, sticking close to and behind their follow units
 local _get_exact_move_pos_original = CopLogicTravel._get_exact_move_pos
 function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
+	local my_data = data.internal_data
+
 	if data.tactics and data.tactics.shield_cover and alive(data.objective.follow_unit) then
+		if my_data.moving_to_cover then
+			managers.navigation:release_cover(my_data.moving_to_cover[1])
+			my_data.moving_to_cover = nil
+		end
+
 		return CopLogicTravel._get_pos_behind_unit(data, data.objective.follow_unit, 50, 300)
 	end
 
-	local my_data = data.internal_data
 	local to_pos = nil
 	local coarse_path = my_data.coarse_path
 	local total_nav_points = #coarse_path
