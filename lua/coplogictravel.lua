@@ -1,3 +1,19 @@
+local math_abs = math.abs
+local math_random = math.random
+local mvec3_add = mvector3.add
+local mvec3_copy = mvector3.copy
+local mvec3_cross = mvector3.cross
+local mvec3_dir = mvector3.direction
+local mvec3_dis = mvector3.distance
+local mvec3_dis_sq = mvector3.distance_sq
+local mvec3_mul = mvector3.multiply
+local mvec3_neg = mvector3.negate
+local mvec3_normalize = mvector3.normalize
+local mvec3_set = mvector3.set
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
+
+
 -- Reuse function of idle logic to make enemies in an area aware of a player entering the area
 CopLogicTravel.on_area_safety = CopLogicIdle.on_area_safety
 
@@ -41,7 +57,7 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 		return true
 	end
 
-	local my_dis = mvector3.distance_sq(my_objective.area.pos, data.m_pos)
+	local my_dis = mvec3_dis_sq(my_objective.area.pos, data.m_pos)
 	if my_dis > 4000000 then
 		return true
 	end
@@ -51,7 +67,7 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 		if u_key ~= data.key then
 			local his_objective = u_data.unit:brain():objective()
 			if his_objective and his_objective.grp_objective == my_objective.grp_objective and not his_objective.in_place then
-				if my_dis < mvector3.distance_sq(his_objective.area.pos, u_data.m_pos) then
+				if my_dis < mvec3_dis_sq(his_objective.area.pos, u_data.m_pos) then
 					return false
 				end
 			end
@@ -64,8 +80,13 @@ end
 
 -- Find a random fallback position in the nav segment if no covers are available
 -- This is done to prevent enemies stacking in one spot if no positions next to walls are available
+-- Also add different positioning for shield_cover groups, sticking close to and behind their follow units
 local _get_exact_move_pos_original = CopLogicTravel._get_exact_move_pos
 function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
+	if data.tactics and data.tactics.shield_cover and alive(data.objective.follow_unit) then
+		return CopLogicTravel._get_pos_behind_unit(data, data.objective.follow_unit, 50, 300)
+	end
+
 	local my_data = data.internal_data
 	local to_pos = nil
 	local coarse_path = my_data.coarse_path
@@ -125,6 +146,64 @@ function CopLogicTravel._determine_destination_occupation(data, objective, ...)
 	end
 end
 
+function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
+	local advancing = unit:brain():is_advancing()
+	local unit_pos = advancing or unit:movement():m_pos()
+	-- If target unit is advancing, add an offset so we don't run in front of it during advance
+	local offset = advancing and mvec3_dis(advancing, unit:movement():m_pos()) * 0.5 or 0
+
+	-- Get the threat direction
+	if data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_AIM then
+		mvec3_dir(tmp_vec1, data.attention_obj.m_pos, unit_pos)
+	else
+		mvec3_set(tmp_vec1, unit:movement():m_fwd())
+		mvec3_neg(tmp_vec1)
+	end
+
+	-- Threat direction side
+	mvec3_cross(tmp_vec2, tmp_vec1, math.UP)
+
+	local fallback_pos
+	local rays = 7
+	local min_dis_sq = min_dis ^ 2
+	local nav_manager = managers.navigation
+	local ray_params = {
+		allow_entry = false,
+		trace = true,
+		pos_from = unit_pos
+	}
+	local rsrv_desc = {
+		false,
+		40
+	}
+
+	repeat
+		if math_random() < 0.5 then
+			mvec3_neg(tmp_vec2)
+		end
+
+		-- Get a random vector between main threat direction and side threat direction
+		local lerped = math.lerp(tmp_vec1, tmp_vec2, math_random() * 0.5)
+		mvec3_normalize(lerped)
+		mvec3_mul(lerped, offset + math_random(min_dis, max_dis))
+		mvec3_add(lerped, unit_pos)
+
+		ray_params.pos_to = lerped
+		if not nav_manager:raycast(ray_params) or mvec3_dis_sq(ray_params.trace[1], unit_pos) > min_dis_sq then
+			rsrv_desc.position = ray_params.trace[1]
+			if nav_manager:is_pos_free(rsrv_desc) then
+				return ray_params.trace[1]
+			elseif not fallback_pos then
+				fallback_pos = ray_params.trace[1]
+			end
+		end
+
+		rays = rays - 1
+	until rays <= 0
+
+	return fallback_pos or unit_pos
+end
+
 
 -- If Iter is installed and streamlined path option is used, don't make any further changes
 if Iter and Iter.settings and Iter.settings.streamline_path then
@@ -151,9 +230,9 @@ function CopLogicTravel._check_start_path_ahead(data)
 	local to_pos = data.logic._get_exact_move_pos(data, next_index)
 	local from_pos = data.pos_rsrv.move_dest.position
 
-	if math.abs(from_pos.z - to_pos.z) < 100 and not managers.navigation:raycast({allow_entry = false, pos_from = from_pos, pos_to = to_pos}) then
+	if math_abs(from_pos.z - to_pos.z) < 100 and not managers.navigation:raycast({allow_entry = false, pos_from = from_pos, pos_to = to_pos}) then
 		my_data.advance_path = {
-			mvector3.copy(from_pos),
+			mvec3_copy(from_pos),
 			to_pos
 		}
 
@@ -175,9 +254,9 @@ function CopLogicTravel._chk_start_pathing_to_next_nav_point(data, my_data)
 	local from_pos = data.unit:movement():nav_tracker():field_position()
 	local to_pos = CopLogicTravel._get_exact_move_pos(data, my_data.coarse_path_index + 1)
 
-	if math.abs(from_pos.z - to_pos.z) < 100 and not managers.navigation:raycast({allow_entry = false, pos_from = from_pos, pos_to = to_pos}) then
+	if math_abs(from_pos.z - to_pos.z) < 100 and not managers.navigation:raycast({allow_entry = false, pos_from = from_pos, pos_to = to_pos}) then
 		my_data.advance_path = {
-			mvector3.copy(from_pos),
+			mvec3_copy(from_pos),
 			to_pos
 		}
 
