@@ -85,7 +85,7 @@ local _get_exact_move_pos_original = CopLogicTravel._get_exact_move_pos
 function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
 	local my_data = data.internal_data
 
-	if data.tactics and data.tactics.shield_cover and alive(data.objective.follow_unit) then
+	if data.group and data.tactics and data.tactics.shield_cover and alive(data.objective.follow_unit) then
 		if my_data.moving_to_cover then
 			managers.navigation:release_cover(my_data.moving_to_cover[1])
 			my_data.moving_to_cover = nil
@@ -153,7 +153,7 @@ function CopLogicTravel._determine_destination_occupation(data, objective, ...)
 end
 
 function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
-	local advancing = unit:brain():is_advancing()
+	local advancing = unit:brain() and unit:brain():is_advancing()
 	local unit_pos = advancing or unit:movement():m_pos()
 	-- If target unit is advancing, add an offset so we don't run in front of it during advance
 	local offset = advancing and mvec3_dis(advancing, unit:movement():m_pos()) * 0.5 or 0
