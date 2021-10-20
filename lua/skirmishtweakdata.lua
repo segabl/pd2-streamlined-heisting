@@ -3,6 +3,7 @@ Hooks:PostHook(SkirmishTweakData, "_init_group_ai_data", "sh__init_group_ai_data
 	local skirmish_data = tweak_data.group_ai.skirmish
 	skirmish_data.assault.force = { 7, 7, 7 }
 	skirmish_data.assault.force_pool = { 200, 200, 200 }
+	skirmish_data.recon.force = { 0, 0, 0 }
 end)
 
 
