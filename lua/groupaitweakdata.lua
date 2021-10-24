@@ -137,12 +137,26 @@ end)
 
 
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
-	-- Fix incorrect tactics
+	-- Improve and fix incorrect tactics
 	self._tactics.swat_shotgun_rush = {
 		"charge",
 		"provide_coverfire",
 		"provide_support",
 		"deathguard",
+		"smoke_grenade"
+	}
+	self._tactics.swat_shotgun_flank = {
+		"charge",
+		"provide_coverfire",
+		"provide_support",
+		"flank",
+		"deathguard",
+		"flash_grenade"
+	}
+	self._tactics.swat_rifle = {
+		"ranged_fire",
+		"provide_coverfire",
+		"provide_support",
 		"smoke_grenade"
 	}
 	self._tactics.swat_rifle_flank = {
@@ -164,7 +178,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	self._tactics.tank_rush = {
 		"shield",
 		"charge",
-		"provide_coverfire",
+		"smoke_grenade",
 		"murder"
 	}
 	self._tactics.tazer_charge = {
@@ -380,32 +394,20 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				amount_min = 1,
 				freq = 1,
 				amount_max = 1,
-				rank = 3,
+				rank = 2,
 				unit = "FBI_tank",
 				tactics = self._tactics.tank_rush
 			},
 			{
 				freq = 1,
-				rank = 2,
+				rank = 1,
 				unit = "FBI_heavy_R870",
 				tactics = self._tactics.shield_support_charge
 			},
 			{
 				freq = 1,
 				rank = 1,
-				unit = "FBI_swat_R870",
-				tactics = self._tactics.shield_support_charge
-			},
-			{
-				freq = 1,
-				rank = 2,
 				unit = "FBI_heavy_G36",
-				tactics = self._tactics.shield_support_charge
-			},
-			{
-				freq = 1,
-				rank = 1,
-				unit = "FBI_swat_M4",
 				tactics = self._tactics.shield_support_charge
 			}
 		}
