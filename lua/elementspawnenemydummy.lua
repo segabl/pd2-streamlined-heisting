@@ -1,6 +1,7 @@
 -- Don't replace spawns on custom enemy spawner map
 local level_id =  Global.game_settings and Global.game_settings.level_id
-if level_id == "modders_devmap" or level_id == "Enemy_Spawner" then
+if Global.editor_mode or level_id == "modders_devmap" or level_id == "Enemy_Spawner" then
+	StreamHeist:log("Editor/Spawner mode is active, spawn group fixes disabled")
 	return
 end
 

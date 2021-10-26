@@ -1,3 +1,9 @@
+-- Don't replace spawns in editor mode
+if Global.editor_mode then
+	StreamHeist:log("Editor mode is active, spawn group changes disabled")
+	return
+end
+
 -- Update preferred spawn groups to contain all used groups and add intervals to groups with special spawn actions
 local all_groups = {}
 local group_ai_tweak = tweak_data.group_ai
@@ -19,7 +25,7 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 			end
 		end
 	end
-	if self._values.preferred_spawn_groups and #self._values.preferred_spawn_groups > 1 then
+	if self._values.preferred_spawn_groups and #self._values.preferred_spawn_groups > 4 then
 		StreamHeist:log(self:editor_name(), "preferred_spawn_groups", #self._values.preferred_spawn_groups, "->", #all_groups, "entries")
 		self._values.preferred_spawn_groups = all_groups
 	end
