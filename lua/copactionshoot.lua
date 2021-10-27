@@ -95,14 +95,7 @@ function CopActionShoot:update(t)
 	if not ext_anim.reload and not ext_anim.equip and not ext_anim.melee then
 		if self._weapon_base:clip_empty() then
 			self:_stop_firing()
-
-			local res = CopActionReload._play_reload(self)
-			if res then
-				self._machine:set_speed(res, self._reload_speed)
-				if Network:is_server() then
-					managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
-				end
-			end
+			CopActionReload._play_reload(self)
 		elseif self._autofiring then
 			if not target_vec or not self._common_data.allow_fire then
 				self:_stop_firing()
