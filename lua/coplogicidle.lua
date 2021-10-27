@@ -66,7 +66,60 @@ end
 -- Fix defend_area objectives being force relocated to areas with players in them
 local _chk_relocate_original = CopLogicIdle._chk_relocate
 function CopLogicIdle._chk_relocate(data, ...)
-	if data.objective and data.objective.type == "follow" then
+	local objective = data.objective
+	local objective_type = objective and objective.type
+	if objective_type == "follow" then
 		return _chk_relocate_original(data, ...)
+	elseif objective_type == "hunt" then
+		local objective_area = objective.area
+		if not objective_area or next(objective_area.criminal.units) or not CopLogicTravel.chk_group_ready_to_move(data, data.internal_data) then
+			return
+		end
+
+		local found_areas = {
+			[objective_area] = true
+		}
+		local areas_to_search = {
+			objective_area
+		}
+		local target_area
+
+		while next(areas_to_search) do
+			local current_area = table.remove(areas_to_search, 1)
+
+			if next(current_area.criminal.units) then
+				target_area = current_area
+				break
+			end
+
+			for _, n_area in pairs(current_area.neighbours) do
+				if not found_areas[n_area] then
+					found_areas[n_area] = true
+					table.insert(areas_to_search, n_area)
+				end
+			end
+		end
+
+		local grp_objective = objective.grp_objective
+		if grp_objective then
+			for _, u_data in pairs(data.group.units) do
+				u_data.unit:brain():set_objective(nil)
+			end
+
+			grp_objective.coarse_path = nil
+			grp_objective.area = target_area
+			grp_objective.nav_seg = target_area.pos_nav_seg
+
+			managers.groupai:state():_set_objective_to_enemy_group(data.group, grp_objective)
+		else
+			objective.in_place = nil
+			objective.path_data = nil
+			objective.area = target_area
+			objective.nav_seg = target_area.pos_nav_seg
+
+			data.logic._exit(data.unit, "travel")
+
+			return true
+		end
 	end
 end

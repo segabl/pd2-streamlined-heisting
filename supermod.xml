@@ -15,6 +15,7 @@
 			<post :hook_id="mission/elementareatrigger"/>
 			<post :hook_id="mission/elementspawnenemydummy"/>
 			<post :hook_id="mission/elementspawnenemygroup"/>
+			<post :hook_id="mission/elementspecialobjective"/>
 			<post :hook_id="dynamicresourcemanager"/>
 			<post :hook_id="enemymanager"/>
 			<post :hook_id="explosionmanager"/>
