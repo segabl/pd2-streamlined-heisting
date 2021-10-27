@@ -69,7 +69,7 @@ function CopLogicAttack._check_aim_shoot(data, my_data, focus_enemy, verified, n
 	local expected_pos = not shoot and focus_enemy.verified_dis < weapon_range.close and focus_enemy.m_head_pos or focus_enemy.last_verified_pos or focus_enemy.verified_pos
 
 	if verified or nearly_visible then
-		if AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction then
+		if not shoot and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction then
 			local last_sup_t = data.unit:character_damage():last_suppression_t()
 
 			if last_sup_t and data.t - last_sup_t < 7 * (running and 0.5 or 1) * (verified and 1 or 0.5) then
