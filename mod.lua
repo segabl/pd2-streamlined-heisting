@@ -1,11 +1,3 @@
-if not HopLib then
-	Hooks:PostHook(MenuMainState, "at_enter", "sh_at_enter", function ()
-		local title = "HopLib not found!"
-		local text = "Streamlined Heisting needs HopLib to work properly!\n\nPlease check the required dependencies!"
-		QuickMenu:new(title, text, {}, true)
-	end)
-end
-
 if not StreamHeist then
 
 	StreamHeist = {
@@ -19,17 +11,6 @@ if not StreamHeist then
 			log("[StreamlinedHeisting] " .. table.concat({...}, " "))
 		end
 	end
-
-	-- Add new enemies to the character map
-	Hooks:Add("HopLibOnCharacterMapCreated", "HopLibOnCharacterMapCreatedStreamlinedHeisting", function (char_map)
-		table.insert(char_map.basic.list, "ene_sniper_3")
-		table.insert(char_map.bph.list, "ene_murkywater_shield_c45")
-		table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
-		table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
-		table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
-		table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
-		table.insert(char_map.gitgud.list, "ene_zeal_sniper")
-	end)
 
 	-- Redirect unit localization for units that can't be auto-detected
 	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)

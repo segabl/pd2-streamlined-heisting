@@ -280,17 +280,38 @@ function CharacterTweakData:_presets(tweak_data, ...)
 end
 
 
-function CharacterTweakData:_add_weapon(id, unit_name)
-	table.insert(self.weap_ids, id)
-	table.insert(self.weap_unit_names, Idstring(unit_name))
+-- Add new enemies to the character map
+local character_map_original = CharacterTweakData.character_map
+function CharacterTweakData:character_map(...)
+	local char_map = character_map_original(self, ...)
+
+	table.insert(char_map.basic.list, "ene_sniper_3")
+	table.insert(char_map.bph.list, "ene_murkywater_shield_c45")
+	table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
+	table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
+	table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
+	table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
+	table.insert(char_map.gitgud.list, "ene_zeal_sniper")
+
+	return char_map
 end
 
 
-Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
-	self:_add_weapon("shepheard", "units/payday2/weapons/wpn_npc_shepheard/wpn_npc_shepheard")
-	self:_add_weapon("spas12", "units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12")
-	self:_add_weapon("ksg", "units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg")
+-- Add new weapons
+Hooks:PostHook(CharacterTweakData, "_create_table_structure", "sh__create_table_structure", function (self)
+	table.insert(self.weap_ids, "shepheard")
+	table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_shepheard/wpn_npc_shepheard"))
 
+	table.insert(self.weap_ids, "spas12")
+	table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_spas12/wpn_npc_spas12"))
+
+	table.insert(self.weap_ids, "ksg")
+	table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_ksg/wpn_npc_ksg"))
+end)
+
+
+-- Set specific character preset settings
+Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Set hurt severities for heavies and bosses
 	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
 	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
