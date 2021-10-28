@@ -1,21 +1,22 @@
+local math_clamp = math.clamp
+local math_lerp = math.lerp
+local math_max = math.max
+local math_min = math.min
+local math_random = math.random
+local mrot_axis_angle = mrotation.set_axis_angle
+local mvec3_add = mvector3.add
+local mvec3_cross = mvector3.cross
+local mvec3_dir = mvector3.direction
+local mvec3_dot = mvector3.dot
+local mvec3_norm = mvector3.normalize
+local mvec3_rot = mvector3.rotate_with
 local mvec3_set = mvector3.set
+local mvec3_set_l = mvector3.set_length
 local mvec3_set_z = mvector3.set_z
 local mvec3_sub = mvector3.subtract
-local mvec3_norm = mvector3.normalize
-local mvec3_dir = mvector3.direction
-local mvec3_set_l = mvector3.set_length
-local mvec3_add = mvector3.add
-local mvec3_dot = mvector3.dot
-local mvec3_cross = mvector3.cross
-local mvec3_rot = mvector3.rotate_with
-local mrot_axis_angle = mrotation.set_axis_angle
+local temp_rot1 = Rotation()
 local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
-local temp_rot1 = Rotation()
-local math_min = math.min
-local math_max = math.max
-local math_lerp = math.lerp
-local math_random = math.random
 
 
 -- Helper function to reset variables when shooting is stopped
@@ -181,23 +182,21 @@ function CopActionShoot:update(t)
 				self._waiting_for_aim_delay = false
 
 				local melee
-
 				if autotarget and (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 100 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
 					melee = self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
 				end
 
 				if not melee then
-					local number_of_rounds
+					local number_of_rounds = 1
 					local falloff = self:_get_shoot_falloff(target_dis, self._falloff)
 					local autofire_rounds = falloff.autofire_rounds or self._w_usage_tweak.autofire_rounds
-					if self._automatic_weap and falloff.autofire_rounds then
-						local diff = autofire_rounds[2] - autofire_rounds[1]
-						number_of_rounds = math.ceil(autofire_rounds[1] + self:_pseudorandom() * diff)
-					elseif self._automatic_weap and self._w_usage_tweak.autofire_rounds then
-						local f = math_min(1, math_max(0, (target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + self:_pseudorandom() * 0.3))
-						number_of_rounds = math.ceil(math_lerp(autofire_rounds[2], autofire_rounds[1], f))
-					else
-						number_of_rounds = 1
+					if self._automatic_weap then
+						if falloff.autofire_rounds then
+							number_of_rounds = self:_pseudorandom(autofire_rounds[1], autofire_rounds[2])
+						elseif self._w_usage_tweak.autofire_rounds then
+							local f = math_clamp((target_dis - self._falloff[1].r) / (self._falloff[#self._falloff].r - self._falloff[1].r) - 0.15 + self:_pseudorandom() * 0.3, 0, 1)
+							number_of_rounds = math.ceil(math_lerp(autofire_rounds[2], autofire_rounds[1], f))
+						end
 					end
 
 					self._is_single_shot = number_of_rounds == 1
@@ -247,9 +246,7 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 		hit_chance = hit_chance * self._common_data.active_actions[2]:accuracy_multiplier()
 	end
 
-	if math_random() < hit_chance then
-		mvec3_set(shoot_hist.m_last_pos, pos)
-	else
+	if math_random() >= hit_chance then
 		mvec3_set(temp_vec1, pos)
 		mvec3_sub(temp_vec1, self._shoot_from_pos)
 
@@ -262,7 +259,6 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 
 		mvec3_set_l(temp_vec2, error_vec_len)
 		mvec3_add(temp_vec2, pos)
-		mvec3_set(shoot_hist.m_last_pos, temp_vec2)
 
 		return temp_vec2
 	end
