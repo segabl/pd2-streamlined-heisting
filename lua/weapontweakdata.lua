@@ -21,6 +21,7 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 
 	-- Fix existing weapons sounds
 	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
+	self.ump_npc.sounds.prefix = self.schakal_crew.sounds.prefix
 	self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
 	self.sr2_smg_npc.sounds.prefix = self.sr2_crew.sounds.prefix
 	self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
