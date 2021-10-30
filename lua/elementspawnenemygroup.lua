@@ -4,17 +4,38 @@ if Global.editor_mode then
 	return
 end
 
--- Update preferred spawn groups to contain all used groups and add intervals to groups with special spawn actions
-local all_groups = {}
-local group_ai_tweak = tweak_data.group_ai
-for name, _ in pairs(group_ai_tweak.enemy_spawn_groups) do
-	local entry = group_ai_tweak.besiege.assault.groups[name] or group_ai_tweak.besiege.recon.groups[name] or group_ai_tweak.besiege.reenforce.groups[name]
-	if entry and table.count(entry, function (weight) return weight ~= 0 end) > 0 then
-		table.insert(all_groups, name)
-	end
-end
+-- Update preferred spawn groups to contain new groups and add intervals to groups with special spawn actions
+local group_mapping = {
+	tac_swat_rifle = {
+		"tac_swat_rifle",
+		"tac_swat_rifle_no_medic",
+		"tac_swat_rifle_flank",
+		"tac_swat_rifle_flank_no_medic",
+		"tac_swat_shotgun_rush",
+		"tac_swat_shotgun_rush_no_medic",
+		"tac_swat_shotgun_flank",
+		"tac_swat_shotgun_flank_no_medic",
+		"hostage_rescue"
+	},
+	tac_shield_wall = {
+		"tac_shield_wall_ranged",
+		"tac_shield_wall_charge"
+	},
+	tac_tazer_flanking = {
+		"tac_tazer_flanking",
+		"tac_tazer_charge"
+	}
+}
+group_mapping.tac_swat_rifle_flank = group_mapping.tac_swat_rifle
+group_mapping.tac_shield_wall_ranged = group_mapping.tac_shield_wall
+group_mapping.tac_shield_wall_charge = group_mapping.tac_shield_wall
+group_mapping.tac_tazer_charge = group_mapping.tac_tazer_flanking
 
 Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values", function (self)
+	if not self._values.preferred_spawn_groups then
+		return
+	end
+
 	if self._values.interval == 0 then
 		for _, id in pairs(self._values.elements) do
 			local spawn_point = self:get_mission_element(id)
@@ -25,8 +46,22 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 			end
 		end
 	end
-	if self._values.preferred_spawn_groups and #self._values.preferred_spawn_groups > 4 then
-		StreamHeist:log(self:editor_name(), "preferred_spawn_groups", #self._values.preferred_spawn_groups, "->", #all_groups, "entries")
-		self._values.preferred_spawn_groups = all_groups
+
+	local new_groups = {}
+	for _, initial_group in pairs(self._values.preferred_spawn_groups) do
+		local mapping = group_mapping[initial_group]
+		if mapping then
+			for _, added_group in pairs(mapping) do
+				new_groups[added_group] = true
+			end
+		else
+			new_groups[initial_group] = true
+		end
+	end
+	new_groups = table.map_keys(new_groups)
+
+	if #self._values.preferred_spawn_groups ~= #new_groups then
+		StreamHeist:log(self:editor_name(), "preferred_spawn_groups", #self._values.preferred_spawn_groups, "->", #new_groups, "entries")
+		self._values.preferred_spawn_groups = new_groups
 	end
 end)
