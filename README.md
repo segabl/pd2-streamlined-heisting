@@ -17,6 +17,7 @@ The way the game determines how NPCs shoot their guns is ancient code that is no
 - Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls leading to a lot of hits/misses in a row
 - Makes enemies less hesitant to shoot while moving and react to threats with adequate reactions
 - Fixes instances of enemies shooting when they shouldn't on clients
+- Allows NPCs to use melee attacks against other NPCs
 
 ### Standardizes weapon and character presets
 

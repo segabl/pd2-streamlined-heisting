@@ -182,7 +182,7 @@ function CopActionShoot:update(t)
 				self._waiting_for_aim_delay = false
 
 				local melee
-				if autotarget and (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 100 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
+				if (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 100 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
 					melee = self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
 				end
 
@@ -293,5 +293,67 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
 			mode = data.mode
 		}
 		return n_data, i
+	end
+end
+
+
+-- Adjust this function to make NPC melee work against other NPCs
+function CopActionShoot:anim_clbk_melee_strike()
+	-- If we are server and shooting a client, or we are client and not shooting the local player, don't actually deal damage
+	if Network:is_server() and self._shooting_husk_player or not Network:is_server() and not self._shooting_player then
+		return
+	end
+
+	if not self._attention or not self._attention.unit or not self._attention.unit:character_damage() then
+		return
+	end
+
+	local target_vec = temp_vec1
+	local target_dis = mvec3_dir(target_vec, self._shoot_from_pos, self._attention.unit:movement():m_head_pos())
+	local max_dis = 150
+	if target_dis >= max_dis then
+		return
+	end
+
+	local tar_vec_flat = temp_vec2
+	mvec3_set(tar_vec_flat, target_vec)
+	mvec3_set_z(tar_vec_flat, 0)
+	mvec3_norm(tar_vec_flat)
+
+	local fwd = self._common_data.fwd
+	local fwd_dot = mvec3_dot(fwd, tar_vec_flat)
+	local min_dot = math.lerp(0.1, 0.5, target_dis / max_dis)
+	if fwd_dot < min_dot then
+		return
+	end
+
+	local defense_data = self._attention.unit:character_damage():damage_melee({
+		variant = "melee",
+		damage = (self._w_usage_tweak.melee_dmg or 10) * (1 + self._unit:base():get_total_buff("base_damage")),
+		weapon_unit = self._weapon_unit,
+		attacker_unit = self._common_data.unit,
+		melee_weapon = self._unit:base():melee_weapon(),
+		push_vel = target_vec:with_z(0.1):normalized() * 500,
+		col_ray = {
+			position = self._shoot_from_pos + fwd * 50,
+			ray = mvector3.copy(target_vec),
+			body = self._attention.unit:body("body")
+		}
+	})
+
+	if defense_data == "countered" then
+		self._common_data.melee_countered_t = TimerManager:game():time()
+		self._unit:character_damage():damage_melee({
+			damage_effect = 1,
+			damage = 0,
+			variant = "counter_spooc",
+			attacker_unit = self._strike_unit,
+			col_ray = {
+				body = self._unit:body("body"),
+				position = self._common_data.pos + math.UP * 100
+			},
+			attack_dir = -1 * target_vec:normalized(),
+			name_id = managers.blackmarket:equipped_melee_weapon()
+		})
 	end
 end

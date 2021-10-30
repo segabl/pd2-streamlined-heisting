@@ -456,7 +456,6 @@ local function set_presets(char_tweak_data)
 			weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
 			if weapon_preset_name then
 				char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
-				char_preset.melee_weapon_dmg_multiplier = char_preset.weapon.is_rifle.melee_dmg
 				StreamHeist:log("Using", weapon_preset_name, "weapon preset for", name)
 			else
 				StreamHeist:log("[Warning] No weapon preset for", name)

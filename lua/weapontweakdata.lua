@@ -39,14 +39,6 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 end)
 
 
--- Make npc melee weapon only a cosmetic choice (damage is multiplied in charactertweakdata)
-Hooks:PostHook(WeaponTweakData, "_init_data_npc_melee", "sh__init_data_npc_melee", function (self)
-	for _, data in pairs(self.npc_melee) do
-		data.damage = 1
-	end
-end)
-
-
 -- Scale swat turret stats and standardize NPC weapon damage
 local turret_damage_mul = {
 	{ 0, 2 },
