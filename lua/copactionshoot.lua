@@ -304,7 +304,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 
-	if not self._attention or not self._attention.unit or not self._attention.unit:character_damage() then
+	if not self._common_data.allow_fire or not self._attention or not self._attention.unit or not self._attention.unit:character_damage() then
 		return
 	end
 
