@@ -257,7 +257,8 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			local max_dis_sq = charge and 1000000 or 4000000
 			for _, neighbour in pairs(objective_area.neighbours) do
 				for _, c_data in pairs(neighbour.criminal.units) do
-					if math_abs(c_data.m_pos.z - objective_pos.z) < 300 and mvec_dis_sq(c_data.m_pos, objective_pos) < max_dis_sq then
+					-- Don't just check for neighboring areas, also check for distance (in case areas are very large)
+					if math_abs(c_data.m_pos.z - objective_pos.z) < 500 and mvec_dis_sq(c_data.m_pos, objective_pos) < max_dis_sq then
 						has_criminals_close = true
 						break
 					end
@@ -321,11 +322,12 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			objective_area
 		}
 		local found_areas = {
-			[objective_area] = "init"
+			[objective_area] = objective_area
 		}
+		local group_access_mask = self._get_group_acces_mask(group)
 
 		repeat
-			local search_area = table_remove(to_search_areas)
+			local search_area = table_remove(to_search_areas, 1)
 
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
@@ -333,21 +335,21 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				if not push and tactics_map.flank then
 					local assault_from_area = found_areas[search_area]
 
-					if assault_from_area ~= "init" then
+					if assault_from_area ~= objective_area then
 						assault_from_here = false
 
 						if not alternate_assault_area or math_random() < 0.5 then
-							local search_params = {
+							local new_alternate_assault_path = managers.navigation:search_coarse({
 								id = "GroupAI_assault",
 								from_seg = current_objective.area.pos_nav_seg,
 								to_seg = search_area.pos_nav_seg,
-								access_pos = self._get_group_acces_mask(group),
+								access_pos = group_access_mask,
 								verify_clbk = callback(self, self, "is_nav_seg_safe")
-							}
-							alternate_assault_path = managers.navigation:search_coarse(search_params)
+							})
 
-							if alternate_assault_path then
-								self:_merge_coarse_path_by_area(alternate_assault_path)
+							if new_alternate_assault_path then
+								self:_merge_coarse_path_by_area(new_alternate_assault_path)
+								alternate_assault_path = new_alternate_assault_path
 								alternate_assault_area = search_area
 								alternate_assault_area_from = assault_from_area
 							end
@@ -358,14 +360,13 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				end
 
 				if assault_from_here then
-					local search_params = {
+					assault_path = managers.navigation:search_coarse({
 						id = "GroupAI_assault",
 						from_seg = current_objective.area.pos_nav_seg,
 						to_seg = search_area.pos_nav_seg,
-						access_pos = self._get_group_acces_mask(group),
+						access_pos = group_access_mask,
 						verify_clbk = callback(self, self, "is_nav_seg_safe")
-					}
-					assault_path = managers.navigation:search_coarse(search_params)
+					})
 
 					if assault_path then
 						self:_merge_coarse_path_by_area(assault_path)
@@ -383,17 +384,19 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			end
 		until #to_search_areas == 0
 
-		if not assault_area and alternate_assault_area then
+		if alternate_assault_area then
 			assault_area = alternate_assault_area
 			found_areas[assault_area] = alternate_assault_area_from
 			assault_path = alternate_assault_path
 		end
 
 		if assault_area and assault_path then
-			assault_area = push and assault_area or found_areas[assault_area] == "init" and objective_area or found_areas[assault_area]
-
-			if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path - 1][1]] then
-				table_remove(assault_path)
+			-- If we aren't pushing we're not going to the actual criminal area, but one area before that (if that area isn't our current one)
+			if not push and found_areas[assault_area] ~= objective_area then
+				assault_area = found_areas[assault_area]
+				if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path - 1][1]] then
+					table_remove(assault_path)
+				end
 			end
 
 			local used_grenade
