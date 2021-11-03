@@ -53,7 +53,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base = based_on(presets.weapon.expert, {
 		focus_delay = focus_delay,
 		aim_delay = { 0, aim_delay },
-		melee_dmg = melee_dmg_tbl[diff_i]
+		melee_dmg = melee_dmg_tbl[diff_i],
+		melee_speed = 1
 	})
 	presets.weapon.sh_base.is_pistol.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.is_pistol.FALLOFF = {
