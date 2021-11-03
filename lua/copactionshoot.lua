@@ -181,12 +181,7 @@ function CopActionShoot:update(t)
 			if shoot then
 				self._waiting_for_aim_delay = false
 
-				local melee
-				if (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 100 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
-					melee = self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
-				end
-
-				if not melee then
+				if not self:_chk_start_melee(t, target_dis) then
 					local number_of_rounds = 1
 					local falloff = self:_get_shoot_falloff(target_dis, self._falloff)
 					local autofire_rounds = falloff.autofire_rounds or self._w_usage_tweak.autofire_rounds
@@ -297,19 +292,61 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
 end
 
 
--- Adjust this function to make NPC melee work against other NPCs
-function CopActionShoot:anim_clbk_melee_strike()
-	-- If we are server and shooting a client, or we are client and not shooting the local player, don't actually deal damage
-	if Network:is_server() and self._shooting_husk_player or not Network:is_server() and not self._shooting_player then
+-- Do all the melee related checks inside this function
+function CopActionShoot:_chk_start_melee(t, target_dis)
+	if target_dis > 100 or not self._w_usage_tweak.melee_speed then
 		return
 	end
 
-	if not self._common_data.allow_fire or not self._attention or not self._attention.unit or not self._attention.unit:character_damage() then
+	if self._melee_timeout_t > t or self._common_data.melee_countered_t and t - self._common_data.melee_countered_t < 15 then
+		return
+	end
+
+	local attention_unit = self._attention.unit
+	if not attention_unit or not attention_unit:character_damage() or not attention_unit:character_damage().damage_melee then
+		return
+	end
+
+	local melee_weapon = self._unit:base():melee_weapon()
+	local is_weapon = melee_weapon == "weapon"
+	local state = self._ext_movement:play_redirect(is_weapon and "melee" or "melee_item")
+	if not state then
+		return
+	end
+
+	if not is_weapon then
+		local anim_attack_vars = self._common_data.char_tweak.melee_anims or {
+			"var1",
+			"var2"
+		}
+		local melee_var = self:_pseudorandom(#anim_attack_vars)
+		self._common_data.machine:set_parameter(state, anim_attack_vars[melee_var], 1)
+
+		local param = tweak_data.weapon.npc_melee[melee_weapon].animation_param
+		self._common_data.machine:set_parameter(state, param, 1)
+	end
+
+	self._common_data.machine:set_speed(state, self._w_usage_tweak.melee_speed)
+
+	local retry_delay = self._w_usage_tweak.melee_retry_delay
+	self._melee_timeout_t = t + (retry_delay and math.lerp(retry_delay[1], retry_delay[2], self:_pseudorandom()) or 1)
+
+	-- Set melee unit if we should process damage for it (server and not shooting a client, or client and shooting the local player)
+	local is_server = Network:is_server()
+	self._melee_unit = (is_server and not self._shooting_husk_player or not is_server and self._shooting_player) and attention_unit
+
+	return true
+end
+
+
+-- Adjust this function to make NPC melee work against other NPCs
+function CopActionShoot:anim_clbk_melee_strike()
+	if not alive(self._melee_unit) then
 		return
 	end
 
 	local target_vec = temp_vec1
-	local target_dis = mvec3_dir(target_vec, self._shoot_from_pos, self._attention.unit:movement():m_head_pos())
+	local target_dis = mvec3_dir(target_vec, self._shoot_from_pos, self._melee_unit:movement():m_head_pos())
 	local max_dis = 150
 	if target_dis >= max_dis then
 		return
@@ -327,7 +364,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 
-	local defense_data = self._attention.unit:character_damage():damage_melee({
+	local defense_data = self._melee_unit:character_damage():damage_melee({
 		variant = "melee",
 		damage = (self._w_usage_tweak.melee_dmg or 10) * (1 + self._unit:base():get_total_buff("base_damage")),
 		weapon_unit = self._weapon_unit,
@@ -337,7 +374,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		col_ray = {
 			position = self._shoot_from_pos + fwd * 50,
 			ray = mvector3.copy(target_vec),
-			body = self._attention.unit:body("body")
+			body = self._melee_unit:body("body")
 		}
 	})
 
@@ -347,7 +384,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 			damage_effect = 1,
 			damage = 0,
 			variant = "counter_spooc",
-			attacker_unit = self._strike_unit,
+			attacker_unit = self._melee_unit,
 			col_ray = {
 				body = self._unit:body("body"),
 				position = self._common_data.pos + math.UP * 100
