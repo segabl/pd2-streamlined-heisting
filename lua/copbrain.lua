@@ -1,3 +1,10 @@
+-- Fix spamming of grenades by units that dodge with grenades (Cloaker)
+Hooks:PostHook(CopBrain, "init", "sh_init", function (self)
+	self._flashbang_cover_expire_t = 0
+	self._next_cover_grenade_chk_t = 0
+end)
+
+
 -- Always make enemies with special attack logics important
 Hooks:PostHook(CopBrain, "post_init", "sh_post_init", function (self)
 	if self._logics.attack ~= CopLogicAttack then
