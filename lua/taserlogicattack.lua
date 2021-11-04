@@ -25,7 +25,7 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 		end
 
 		if not data.unit:anim_data().reload and not data.unit:movement():chk_action_forbidden("action") then
-			if tase and not focus_enemy.unit:movement():zipline_unit() then
+			if tase and not my_data.tasing and not focus_enemy.unit:movement():zipline_unit() then
 				-- Stop moving when we're about to tase
 				if not data.unit:movement():chk_action_forbidden("walk") then
 					data.unit:brain():action_request({
@@ -49,7 +49,7 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 					CopLogicAttack._cancel_charge(data, my_data)
 					managers.groupai:state():on_tase_start(data.key, focus_enemy.u_key)
 				end
-			elseif not my_data.shooting then
+			elseif not my_data.shooting and not my_data.tasing then
 				my_data.shooting = data.unit:brain():action_request({
 					body_part = 3,
 					type = "shoot"
@@ -57,8 +57,8 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 			end
 		end
 	else
-		if my_data.shooting then
-			my_data.shooting = not data.unit:brain():action_request({
+		if my_data.shooting or my_data.tasing then
+			data.unit:brain():action_request({
 				body_part = 3,
 				type = "idle"
 			})
@@ -71,4 +71,27 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 	end
 
 	CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
+end
+
+
+-- Allow start of tase action while target is not verified (though at much shorter range)
+-- The actual tasing can still only start with line of sight, but Tasers come prepared now
+function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data, stationary)
+	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
+
+	if reaction < AIAttentionObject.REACT_SHOOT or not attention_data.criminal_record or not attention_data.is_person then
+		return reaction
+	end
+
+	if attention_data.is_human_player and not attention_data.unit:movement():is_taser_attack_allowed() then
+		return reaction
+	elseif not attention_data.is_human_player and attention_data.unit:movement():chk_action_forbidden("hurt") then
+		return reaction
+	end
+
+	if attention_data.verified_dis < data.internal_data.tase_distance * (attention_data.verified and 0.9 or 0.3) and data.tase_delay_t < data.t then
+		return AIAttentionObject.REACT_SPECIAL_ATTACK
+	end
+
+	return reaction
 end
