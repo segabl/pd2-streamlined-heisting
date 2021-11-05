@@ -153,8 +153,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_tank.is_rifle.RELOAD_SPEED = 0.5
 	presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 50 }
 	presets.weapon.sh_tank.is_rifle.FALLOFF = {
-		{ dmg_mul = 6 * dmg_mul_lin, r = 0, acc = { 0.3 * acc_mul, 0.7 * acc_mul }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 5 * dmg_mul_lin, r = 1000, acc = { 0.2 * acc_mul, 0.6 * acc_mul }, recoil = { 0.6, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 6 * dmg_mul_lin, r = 0, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 5 * dmg_mul_lin, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.6, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 3 * dmg_mul_lin, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.mini.no_autofire_stop = true
