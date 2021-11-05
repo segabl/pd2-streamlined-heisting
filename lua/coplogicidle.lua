@@ -100,6 +100,10 @@ function CopLogicIdle._chk_relocate(data, ...)
 			end
 		end
 
+		if not target_area then
+			return
+		end
+
 		local grp_objective = objective.grp_objective
 		if grp_objective then
 			for _, u_data in pairs(data.group.units) do
