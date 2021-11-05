@@ -356,6 +356,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			}
 		}
 	}
+	self.enemy_spawn_groups.tac_shield_wall = self.enemy_spawn_groups.tac_shield_wall_ranged
 
 	self.enemy_spawn_groups.tac_shield_wall_charge = {
 		amount = { 4, 5 },
@@ -484,22 +485,21 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.cs_grenade_lifetime = math.lerp(18, 36, f)
 
 	-- Spawn Groups
-	local special_weight = difficulty_index * 0.5 + 3
-	local bulldozer_weight = difficulty_index * 0.5 + 1
+	local special_weight = math.lerp(3, 5, f)
 	self.besiege.assault.groups = {
 		tac_swat_shotgun_rush = { 1, 1.5, 2 },
 		tac_swat_shotgun_rush_no_medic = { 1, 0.5, 0 },
 		tac_swat_shotgun_flank = { 0.5, 0.75, 1 },
 		tac_swat_shotgun_flank_no_medic = { 0.5, 0.25, 0 },
-		tac_swat_rifle = { 8, 12, 16 },
-		tac_swat_rifle_no_medic = { 8, 4, 0 },
-		tac_swat_rifle_flank = { 4, 6, 8 },
-		tac_swat_rifle_flank_no_medic = { 4, 2, 0 },
+		tac_swat_rifle = { 7, 10.5, 14 },
+		tac_swat_rifle_no_medic = { 7, 3.5, 0 },
+		tac_swat_rifle_flank = { 5, 7.5, 10 },
+		tac_swat_rifle_flank_no_medic = { 5, 2.5, 0 },
 		tac_shield_wall_ranged = { 0, special_weight * 0.5, special_weight },
 		tac_shield_wall_charge = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_flanking = { 0, special_weight * 0.5, special_weight },
 		tac_tazer_charge = { 0, special_weight * 0.5, special_weight },
-		tac_bull_rush = { 0, bulldozer_weight * 0.5, bulldozer_weight },
+		tac_bull_rush = { 0, special_weight * 0.5, special_weight },
 		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
 		single_spooc = { 0, 0, 0 },
 		Phalanx = { 0, 0, 0 }
