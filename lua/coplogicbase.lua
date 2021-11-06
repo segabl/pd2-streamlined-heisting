@@ -26,8 +26,8 @@ Hooks:PreHook(CopLogicBase, "on_new_objective", "sh_on_new_objective", function 
 	end
 
 	local shielding_units = {}
-	if old_objective and alive(old_objective.follow_unit) then
-		table.insert(shielding_units, old_objective.follow_unit)
+	if old_objective and alive(old_objective.shield_cover_unit) then
+		table.insert(shielding_units, old_objective.shield_cover_unit)
 	else
 		local logic_data
 		for _, u_data in pairs(data.group.units) do
@@ -40,7 +40,8 @@ Hooks:PreHook(CopLogicBase, "on_new_objective", "sh_on_new_objective", function 
 
 	if #shielding_units > 0 then
 		data.objective.type = "follow"
-		data.objective.follow_unit = table.random(shielding_units)
+		data.objective.shield_cover_unit = table.random(shielding_units)
+		data.objective.follow_unit = data.objective.shield_cover_unit
 		data.objective.path_data = nil
 		data.objective.distance = 300
 	end
