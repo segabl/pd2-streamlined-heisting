@@ -33,7 +33,6 @@
 			<post :hook_id="groupaitweakdata"/>
 			<post :hook_id="playertweakdata"/>
 			<post :hook_id="skirmishtweakdata"/>
-			<post :hook_id="upgradestweakdata"/>
 			<post :hook_id="weapontweakdata"/>
 		</group>
 		<group hook_id="lib/units/">
