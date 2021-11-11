@@ -241,22 +241,23 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 		hit_chance = hit_chance * self._common_data.active_actions[2]:accuracy_multiplier()
 	end
 
-	if math_random() >= hit_chance then
-		mvec3_set(temp_vec1, pos)
-		mvec3_sub(temp_vec1, self._shoot_from_pos)
+	local hit = math_random() < hit_chance
 
-		mvec3_cross(temp_vec2, temp_vec1, math.UP)
-		mrot_axis_angle(temp_rot1, temp_vec1, math_random(360))
-		mvec3_rot(temp_vec2, temp_rot1)
+	mvec3_set(temp_vec1, pos)
+	mvec3_sub(temp_vec1, self._shoot_from_pos)
 
-		local miss_min_dis = shooting_local_player and 31 or 150
-		local error_vec_len = miss_min_dis + 100 * (1 - hit_chance) * (2 - focus_prog) * math_random()
+	mvec3_cross(temp_vec2, temp_vec1, math.UP)
+	mrot_axis_angle(temp_rot1, temp_vec1, math_random(360))
+	mvec3_rot(temp_vec2, temp_rot1)
 
-		mvec3_set_l(temp_vec2, error_vec_len)
-		mvec3_add(temp_vec2, pos)
+	local miss_min_dis = shooting_local_player and 31 or 150
+	local hit_max_dis = shooting_local_player and 25 or 7
+	local error_vec_len = hit and hit_max_dis * math_random() or miss_min_dis + 100 * (1 - hit_chance) * (2 - focus_prog) * math_random()
 
-		return temp_vec2
-	end
+	mvec3_set_l(temp_vec2, error_vec_len)
+	mvec3_add(temp_vec2, pos)
+
+	return temp_vec2
 end
 
 
