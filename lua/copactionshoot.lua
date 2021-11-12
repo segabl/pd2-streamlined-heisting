@@ -33,8 +33,6 @@ end
 
 -- Set some values needed for fixed focus and aim delay
 Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self)
-	self._clear_los = false
-	self._next_vis_ray_t = -100
 	self._common_data._line_of_sight_t = self._common_data._line_of_sight_t or -100
 	local same_att = self._attention and self._common_data._old_att_unit == self._attention.unit
 	if not same_att and not self._w_usage_tweak.no_autofire_stop then
@@ -45,9 +43,7 @@ Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self
 		-- Preserve old line of sight timer and attention unit to avoid redoing focus and aim delay on target change to same unit
 		self._common_data._line_of_sight_t = same_att and self._common_data._line_of_sight_t or -100
 		self._common_data._old_att_unit = self._attention.unit
-		if self._shoot_history then
-			self._shoot_history.focus_delay = nil
-		end
+		self._shoot_history.focus_delay = nil
 	end
 end)
 
@@ -66,10 +62,10 @@ function CopActionShoot:update(t)
 
 	local shoot_from_pos = self._shoot_from_pos
 	local ext_anim = self._ext_anim
-	local target_vec, target_dis, autotarget, target_pos
+	local target_vec, target_dis, target_pos
 
 	if self._attention then
-		target_pos, target_vec, target_dis, autotarget = self:_get_target_pos(shoot_from_pos, self._attention, t)
+		target_pos, target_vec, target_dis = self:_get_target_pos(shoot_from_pos, self._attention, t)
 		local tar_vec_flat = temp_vec1
 		mvec3_set(tar_vec_flat, target_vec)
 		mvec3_set_z(tar_vec_flat, 0)
@@ -105,15 +101,12 @@ function CopActionShoot:update(t)
 				local dmg_buff = self._unit:base():get_total_buff("base_damage")
 				local dmg_mul = (1 + dmg_buff) * falloff.dmg_mul
 
-				local new_target_pos = self._shoot_history and self:_get_unit_shoot_pos(t, target_pos, target_dis, self._w_usage_tweak, falloff, i_range, autotarget)
-				mvec3_dir(target_vec, shoot_from_pos, new_target_pos or target_pos)
+				target_pos = self:_get_unit_shoot_pos(t, target_pos, target_dis, self._w_usage_tweak, falloff, i_range, self._shooting_player)
+				mvec3_dir(target_vec, shoot_from_pos, target_pos)
 
-				local fired
-				if self._is_single_shot then
-					fired = self._weapon_base:singleshot(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
-				else
-					fired = self._weapon_base:trigger_held(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
-				end
+				-- Pick and run the right shooting function
+				local fire_func = self._is_single_shot and self._weapon_base.singleshot or self._weapon_base.trigger_held
+				local fired = fire_func(self._weapon_base, shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
 				if fired then
 					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
@@ -131,49 +124,34 @@ function CopActionShoot:update(t)
 				end
 			end
 		elseif target_vec and self._common_data.allow_fire and self._shoot_t < t and self._mod_enable_t < t then
-			-- The original code didn't really do what it was supposed to do, as the target_pos gets updated to the
-			-- last seen pos after a while of no line of sight to the target. This breaks focus_delay and aim_delay as it only makes
-			-- sense to apply them based on line of sight to the real target position
+			-- Greatly simplify the shooting check, just base it on wether we have an attention unit
+			-- Additionaly, do focus and aim delay checks here based on line of sight instead of on attention
+			-- Handle all situations the same, independent of what our target is, to keep behavior synced with other players
 			local shoot = true
-			if autotarget or self._shooting_husk_player or Network:is_server() then
-				if self._next_vis_ray_t < t then
-					if self._shooting_husk_player then
-						self._next_vis_ray_t = t + 2
+			local shoot_hist = self._shoot_history
+			local no_los_duration = t - self._common_data._line_of_sight_t
+			if shoot_hist and no_los_duration > 1 and self._attention.unit then
+				-- Apply aim delay after 3 seconds of no los
+				if no_los_duration > 3 and not self._waiting_for_aim_delay then
+					local aim_delay_minmax = self._w_usage_tweak.aim_delay
+					local lerp_dis = math_min(1, target_dis / self._falloff[#self._falloff].r)
+					local aim_delay = math_lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
+					if self._common_data.is_suppressed then
+						aim_delay = aim_delay * 1.5
 					end
+					self._shoot_t = t + aim_delay
+					self._waiting_for_aim_delay = true
+					shoot = false
+				end
 
-					self._clear_los = self._attention.unit and true
-
-					local shoot_hist = self._shoot_history
-					local no_los_dur = t - self._common_data._line_of_sight_t
-					if self._clear_los and shoot_hist then
-						-- Apply aim delay after 3 seconds of no los
-						if no_los_dur > 3 and not self._waiting_for_aim_delay then
-							local aim_delay_minmax = self._w_usage_tweak.aim_delay
-							local lerp_dis = math_min(1, target_dis / self._falloff[#self._falloff].r)
-							local aim_delay = math_lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
-							if self._common_data.is_suppressed then
-								aim_delay = aim_delay * 1.5
-							end
-							self._shoot_t = t + aim_delay
-							self._waiting_for_aim_delay = true
-							if self._shooting_husk_player then
-								self._next_vis_ray_t = self._shoot_t
-							end
-							shoot = false
-						end
-						-- Apply focus delay after 1 second of no los
-						if no_los_dur > 1 and not shoot_hist.focus_delay then
-							shoot_hist.focus_start_t = self._waiting_for_aim_delay and self._shoot_t or t
-							shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
-						end
-					end
-					self._last_vis_check_status = shoot
-				else
-					shoot = self._last_vis_check_status
+				-- Apply focus delay after 1 second of no los
+				if not shoot_hist.focus_delay then
+					shoot_hist.focus_start_t = self._waiting_for_aim_delay and self._shoot_t or t
+					shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
 				end
 			end
 
-			if self._common_data.char_tweak.no_move_and_shoot and self._common_data.ext_anim and self._common_data.ext_anim.move then
+			if self._common_data.char_tweak.no_move_and_shoot and ext_anim.move then
 				shoot = false
 				self._shoot_t = math_max(self._shoot_t, t + (self._common_data.char_tweak.move_and_shoot_cooldown or 1))
 			end
@@ -205,7 +183,8 @@ function CopActionShoot:update(t)
 		end
 	end
 
-	if self._clear_los then
+	-- Having an attention unit means we have line of sight
+	if self._attention and self._attention.unit then
 		self._common_data._line_of_sight_t = t
 	end
 
@@ -216,12 +195,11 @@ end
 
 
 -- Remove pseudrandom hitchance and hit chance interpolation (interpolation is already done in _get_shoot_falloff)
-function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_range, shooting_local_player)
+function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_range, shooting_player)
 	local shoot_hist = self._shoot_history
 	local focus_delay, focus_prog
-
-	if shoot_hist.focus_delay then
-		focus_delay = (shooting_local_player and self._attention.unit:character_damage():focus_delay_mul() or 1) * shoot_hist.focus_delay
+	if shoot_hist and shoot_hist.focus_delay then
+		focus_delay = (shooting_player and self._attention.unit:character_damage():focus_delay_mul() or 1) * shoot_hist.focus_delay
 		focus_prog = focus_delay > 0 and (t - shoot_hist.focus_start_t) / focus_delay
 		if not focus_prog or focus_prog >= 1 then
 			shoot_hist.focus_delay = nil
@@ -250,8 +228,8 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 	mrot_axis_angle(temp_rot1, temp_vec1, math_random(360))
 	mvec3_rot(temp_vec2, temp_rot1)
 
-	local miss_min_dis = shooting_local_player and 31 or 150
-	local hit_max_dis = shooting_local_player and 25 or 7
+	local miss_min_dis = shooting_player and 31 or 150
+	local hit_max_dis = shooting_player and 25 or 7
 	local error_vec_len = hit and hit_max_dis * math_random() or miss_min_dis + 100 * (1 - hit_chance) * (2 - focus_prog) * math_random()
 
 	mvec3_set_l(temp_vec2, error_vec_len)
@@ -278,10 +256,16 @@ function CopActionShoot:_get_shoot_falloff(target_dis, falloff)
 		local prev_data = falloff[i - 1]
 		local t = (target_dis - prev_data.r) / (data.r - prev_data.r)
 		local n_data = {
-			dmg_mul = math_lerp(prev_data.dmg_mul, data.dmg_mul, t),
 			r = target_dis,
-			acc = { math_lerp(prev_data.acc[1], data.acc[1], t), math_lerp(prev_data.acc[2], data.acc[2], t) },
-			recoil = { math_lerp(prev_data.recoil[1], data.recoil[1], t), math_lerp(prev_data.recoil[2], data.recoil[2], t) },
+			dmg_mul = math_lerp(prev_data.dmg_mul, data.dmg_mul, t),
+			acc = {
+				math_lerp(prev_data.acc[1], data.acc[1], t),
+				math_lerp(prev_data.acc[2], data.acc[2], t)
+			},
+			recoil = {
+				math_lerp(prev_data.recoil[1], data.recoil[1], t),
+				math_lerp(prev_data.recoil[2], data.recoil[2], t)
+			},
 			autofire_rounds = prev_data.autofire_rounds and data.autofire_rounds and {
 				math_lerp(prev_data.autofire_rounds[1], data.autofire_rounds[1], t),
 				math_lerp(prev_data.autofire_rounds[2], data.autofire_rounds[2], t)
@@ -316,10 +300,7 @@ function CopActionShoot:_chk_start_melee(t, target_dis)
 	end
 
 	if not is_weapon then
-		local anim_attack_vars = self._common_data.char_tweak.melee_anims or {
-			"var1",
-			"var2"
-		}
+		local anim_attack_vars = self._common_data.char_tweak.melee_anims or { "var1", "var2" }
 		local melee_var = self:_pseudorandom(#anim_attack_vars)
 		self._common_data.machine:set_parameter(state, anim_attack_vars[melee_var], 1)
 
