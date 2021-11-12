@@ -58,10 +58,14 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 		end
 	else
 		if my_data.shooting or my_data.tasing then
-			data.unit:brain():action_request({
+			local success = data.unit:brain():action_request({
 				body_part = 3,
 				type = "idle"
 			})
+			if success then
+				my_data.shooting = nil
+				my_data.tasing = nil
+			end
 		end
 
 		if my_data.attention_unit then
@@ -71,27 +75,4 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 	end
 
 	CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
-end
-
-
--- Allow start of tase action while target is not verified (though at much shorter range)
--- The actual tasing can still only start with line of sight, but Tasers come prepared now
-function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data, stationary)
-	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
-
-	if reaction < AIAttentionObject.REACT_SHOOT or not attention_data.criminal_record or not attention_data.is_person then
-		return reaction
-	end
-
-	if attention_data.is_human_player and not attention_data.unit:movement():is_taser_attack_allowed() then
-		return reaction
-	elseif not attention_data.is_human_player and attention_data.unit:movement():chk_action_forbidden("hurt") then
-		return reaction
-	end
-
-	if attention_data.verified_dis < data.internal_data.tase_distance * (attention_data.verified and 0.9 or 0.3) and data.tase_delay_t < data.t then
-		return AIAttentionObject.REACT_SPECIAL_ATTACK
-	end
-
-	return reaction
 end

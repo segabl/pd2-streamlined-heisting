@@ -5,10 +5,15 @@ local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
 
 
--- Let tasers tase through other enemies again
-Hooks:PostHook(CopActionTase, "on_attention", "sh_on_attention", function (self)
-	self._line_of_fire_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
-end)
+-- Make tasers more consistent by allowing to tase through enemies and ignoring attention when already discharging
+local on_attention_original = CopActionTase.on_attention
+function CopActionTase:on_attention(attention, ...)
+	if self._expired or not self._discharging then
+		on_attention_original(self, attention, ...)
+
+		self._line_of_fire_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
+	end
+end
 
 
 -- Fix some general issues with turning
