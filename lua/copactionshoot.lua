@@ -22,11 +22,7 @@ local temp_vec2 = Vector3()
 -- Helper function to reset variables when shooting is stopped
 function CopActionShoot:_stop_firing()
 	self._is_single_shot = nil
-	if not self._autofiring then
-		return
-	end
 	self._autofiring = nil
-	self._autoshots_fired = nil
 	self._weapon_base:stop_autofire()
 end
 
@@ -112,14 +108,15 @@ function CopActionShoot:update(t)
 					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
 						self._unit:unit_data().mission_element:event("killshot", self._unit)
 					end
+
 					if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
 						self._ext_movement:play_redirect("recoil_single")
 					end
-					if not self._autofiring or self._autoshots_fired >= self._autofiring - 1 then
+
+					self._autofiring = self._autofiring - 1
+					if self._autofiring <= 0 then
 						self:_stop_firing()
 						self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
-					else
-						self._autoshots_fired = self._autoshots_fired + 1
 					end
 				end
 			end
@@ -174,7 +171,6 @@ function CopActionShoot:update(t)
 
 					self._is_single_shot = number_of_rounds == 1
 					self._autofiring = number_of_rounds
-					self._autoshots_fired = 0
 					if number_of_rounds > 1 then
 						self._weapon_base:start_autofire(number_of_rounds < 4 and number_of_rounds)
 					end
