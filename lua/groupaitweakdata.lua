@@ -515,7 +515,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.force = { difficulty_index, difficulty_index + 3, difficulty_index + 6 }
 	self.besiege.assault.force_pool = table.collect(self.besiege.assault.force, function (val) return val * 7 end)
 	self.besiege.assault.force_balance_mul = { 1, 1.75, 2.5, 3.25 }
-	self.besiege.assault.force_pool_balance_mul = { 1, 2, 3, 4 }
+	self.besiege.assault.force_pool_balance_mul = { 1, 1.75, 2.5, 3.25 }
 	self.besiege.assault.sustain_duration_min = { math.lerp(60, 120, f), math.lerp(120, 210, f), math.lerp(180, 300, f) }
 	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
 	self.besiege.assault.fade_settings = {
