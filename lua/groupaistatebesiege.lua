@@ -556,7 +556,8 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 		if num_player_criminals > 0 then
 			mvector3.divide(detonate_pos, num_player_criminals + 1)
 			mvector3.set_z(detonate_pos, area.pos.z)
-			use_teargas = true
+			-- If detonate pos is a roofed area, use teargas
+			use_teargas = World:raycast("ray", detonate_pos, detonate_pos + math.UP * 1000, "slot_mask", managers.slot:get_mask("world_geometry"))
 		end
 	end
 
