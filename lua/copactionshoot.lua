@@ -105,18 +105,18 @@ function CopActionShoot:update(t)
 				local fired = fire_func(self._weapon_base, shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
 				if fired then
-					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
-						self._unit:unit_data().mission_element:event("killshot", self._unit)
+					self._autofiring = self._autofiring - 1
+					if self._autofiring <= 0 then
+						self:_stop_firing()
+						self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
 					end
 
 					if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
 						self._ext_movement:play_redirect("recoil_single")
 					end
 
-					self._autofiring = self._autofiring - 1
-					if self._autofiring <= 0 then
-						self:_stop_firing()
-						self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
+					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
+						self._unit:unit_data().mission_element:event("killshot", self._unit)
 					end
 				end
 			end
