@@ -105,7 +105,7 @@ function CopActionShoot:update(t)
 				local fired = fire_func(self._weapon_base, shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
 				if fired then
-					self._autofiring = self._autofiring - 1
+					self._autofiring = self._autofiring and self._autofiring - 1 or 0
 					if self._autofiring <= 0 then
 						self:_stop_firing()
 						self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
