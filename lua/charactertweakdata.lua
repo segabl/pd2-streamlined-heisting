@@ -35,7 +35,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local dmg_mul_tbl = { 0.3, 0.4, 0.55, 0.75, 1, 1.5, 3, 6 }
 	local dmg_mul_str_tbl = { 0.8125, 0.875, 1, 1.25, 1.75, 2.5, 3.5, 5 }
 	local dmg_mul_lin_tbl = { 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 }
-	local acc_mul_tbl = { 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0 }
 	local focus_delay_tbl = { 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2 }
 	local aim_delay_tbl = { 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2 }
 	local melee_dmg_tbl = { 6, 8, 10, 12, 14, 16, 18, 20 }
@@ -47,7 +46,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	local dmg_mul = dmg_mul_tbl[diff_i]
 	local dmg_mul_str = dmg_mul_str_tbl[diff_i]
 	local dmg_mul_lin = dmg_mul_lin_tbl[diff_i]
-	local acc_mul = acc_mul_tbl[diff_i]
 
 	-- Setup weapon presets
 	presets.weapon.sh_base = based_on(presets.weapon.expert, {
@@ -59,66 +57,66 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	})
 	presets.weapon.sh_base.is_pistol.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.is_pistol.FALLOFF = {
-		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.akimbo_pistol.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.akimbo_pistol.FALLOFF = {
-		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.4 * acc_mul }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_revolver.range = { optimal = 2000, far = 4000, close = 1000 }
 	presets.weapon.sh_base.is_revolver.FALLOFF = {
-		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 3 * dmg_mul_str, r = 3000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8, 1 }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 3 * dmg_mul_str, r = 3000, acc = { 0.3, 0.6 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_sniper = deep_clone(presets.weapon.sh_base.is_revolver)
 	presets.weapon.sh_base.is_sniper.FALLOFF = {
-		{ dmg_mul = 4 * dmg_mul_str, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_str, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 4 * dmg_mul_str, r = 0, acc = { 0, 0.5 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_str, r = 4000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_shotgun_pump.RELOAD_SPEED = 1.5
 	presets.weapon.sh_base.is_shotgun_pump.range = { optimal = 1000, far = 2000, close = 500 }
 	presets.weapon.sh_base.is_shotgun_pump.FALLOFF = {
-		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 0.8, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.7 * acc_mul, 0.9 * acc_mul }, recoil = { 1, 1.4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 1.2, 1.8 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8, 1 }, recoil = { 0.8, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.7, 0.9 }, recoil = { 1, 1.4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.6, 0.8 }, recoil = { 1.2, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_shotgun_mag = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
 	presets.weapon.sh_base.is_shotgun_mag.RELOAD_SPEED = 1
 	presets.weapon.sh_base.is_shotgun_mag.autofire_rounds = { 1, 5 }
 	presets.weapon.sh_base.is_shotgun_mag.FALLOFF = {
-		{ dmg_mul = 3 * dmg_mul_str, r = 0, acc = { 0.6 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 2 * dmg_mul_str, r = 1000, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.3 * acc_mul, 0.6 * acc_mul }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 3 * dmg_mul_str, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.4, 0.7 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 2 * dmg_mul_str, r = 1000, acc = { 0.5, 0.8 }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.3, 0.6 }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_rifle.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.is_rifle.autofire_rounds = { 3, 9 }
 	presets.weapon.sh_base.is_rifle.FALLOFF = {
-		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.2 * acc_mul, 0.5 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.2, 0.5 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_bullpup = deep_clone(presets.weapon.sh_base.is_rifle)
 	presets.weapon.sh_base.is_smg = deep_clone(presets.weapon.sh_base.is_rifle)
 	presets.weapon.sh_base.is_smg.autofire_rounds = { 5, 14 }
 	presets.weapon.sh_base.is_smg.FALLOFF = {
-		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5 * acc_mul, 0.8 * acc_mul }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_lmg = deep_clone(presets.weapon.sh_base.is_smg)
 	presets.weapon.sh_base.is_lmg.autofire_rounds = { 20, 50 }
 	presets.weapon.sh_base.is_lmg.FALLOFF = {
-		{ dmg_mul = 1 * dmg_mul, r = 0, acc = { 0.3 * acc_mul, 0.7 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.2 * acc_mul, 0.6 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 1 * dmg_mul, r = 0, acc = { 0.3, 0.7 }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.2, 0.6 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.mini = deep_clone(presets.weapon.sh_base.is_lmg)
 	presets.weapon.sh_base.mini.autofire_rounds = { 50, 200 }
 	presets.weapon.sh_base.mini.FALLOFF = {
-		{ dmg_mul = 1 * dmg_mul, r = 0, acc = { 0.15 * acc_mul, 0.35 * acc_mul }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0, 0.15 * acc_mul }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 1 * dmg_mul, r = 0, acc = { 0.15, 0.35 }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.1, 0.3 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0, 0.15 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	-- Heavy preset (deal less damage in exchange for being bulkier)
@@ -141,30 +139,30 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	})
 	presets.weapon.sh_tank.is_shotgun_pump.RELOAD_SPEED = 1
 	presets.weapon.sh_tank.is_shotgun_pump.FALLOFF = {
-		{ dmg_mul = 30 * dmg_mul_lin, r = 0, acc = { 0.8 * acc_mul, 1 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 20 * dmg_mul_lin, r = 1000, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 3 * dmg_mul_lin, r = 2000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 30 * dmg_mul_lin, r = 0, acc = { 0.8, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 20 * dmg_mul_lin, r = 1000, acc = { 0.6, 0.8 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 3 * dmg_mul_lin, r = 2000, acc = { 0.4, 0.6 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.is_shotgun_mag.RELOAD_SPEED = 0.9
 	presets.weapon.sh_tank.is_shotgun_mag.FALLOFF = {
-		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.7 * acc_mul, 0.9 * acc_mul }, recoil = { 0.4, 0.6 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 6 } },
-		{ dmg_mul = 8 * dmg_mul_lin, r = 1000, acc = { 0.5 * acc_mul, 0.7 * acc_mul }, recoil = { 0.6, 0.9 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 2, 4 } },
-		{ dmg_mul = 3 * dmg_mul_lin, r = 2000, acc = { 0.3 * acc_mul, 0.5 * acc_mul }, recoil = { 0.8, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 2 } }
+		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.7, 0.9 }, recoil = { 0.4, 0.6 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 6 } },
+		{ dmg_mul = 8 * dmg_mul_lin, r = 1000, acc = { 0.5, 0.7 }, recoil = { 0.6, 0.9 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 2, 4 } },
+		{ dmg_mul = 3 * dmg_mul_lin, r = 2000, acc = { 0.3, 0.5 }, recoil = { 0.8, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 2 } }
 	}
 	presets.weapon.sh_tank.is_rifle.RELOAD_SPEED = 0.5
 	presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 50 }
 	presets.weapon.sh_tank.is_rifle.FALLOFF = {
-		{ dmg_mul = 7 * dmg_mul_lin, r = 0, acc = { 0.6 * acc_mul, 0.8 * acc_mul }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 6 * dmg_mul_lin, r = 1000, acc = { 0.4 * acc_mul, 0.6 * acc_mul }, recoil = { 0.6, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_lin, r = 3000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 7 * dmg_mul_lin, r = 0, acc = { 0.6, 0.8 }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 6 * dmg_mul_lin, r = 1000, acc = { 0.4, 0.6 }, recoil = { 0.6, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_lin, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.mini.no_autofire_stop = true
 	presets.weapon.sh_tank.mini.RELOAD_SPEED = 0.5
 	presets.weapon.sh_tank.mini.autofire_rounds = { 50, 500 }
 	presets.weapon.sh_tank.mini.FALLOFF = {
-		{ dmg_mul = 5 * dmg_mul_lin, r = 0, acc = { 0.15 * acc_mul, 0.35 * acc_mul }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_lin, r = 1000, acc = { 0.1 * acc_mul, 0.3 * acc_mul }, recoil = { 0.6, 1 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 2 * dmg_mul_lin, r = 3000, acc = { 0, 0.15 * acc_mul }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 5 * dmg_mul_lin, r = 0, acc = { 0.15, 0.35 }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_lin, r = 1000, acc = { 0.1, 0.3 }, recoil = { 0.6, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 2 * dmg_mul_lin, r = 3000, acc = { 0, 0.15 }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	-- Sniper presets
@@ -173,9 +171,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		aim_delay = { 0, aim_delay * 3 },
 	})
 	presets.weapon.sh_sniper.is_rifle.FALLOFF = {
-		{ dmg_mul = 23 * dmg_mul_lin, r = 0, acc = { 0, 0.5 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 23 * dmg_mul_lin, r = 1000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 23 * dmg_mul_lin, r = 4000, acc = { 0.5 * acc_mul, 1 * acc_mul }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 23 * dmg_mul_lin, r = 0, acc = { 0, 0.5 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 23 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 23 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
 		aim_delay = { 0, aim_delay * 1.5 },

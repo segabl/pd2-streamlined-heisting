@@ -23,7 +23,7 @@ The way the game determines how NPCs shoot their guns is ancient code that is no
 
 The vanilla game uses multiple base presets that are assigned based on difficulty, but not every difficulty has its own preset and instead reuses other presets. Presets are further manipulated in different functions which leads to a lot of oversights and inconsistencies, like some enemy types being left out when difficulty presets are applied. The preset system has been simplified to avoid changing preset values at times other than when they are created.
 
-- Creates and uses a single base weapon preset which scales damage multipliers, accuracy, melee damage, focus delay and aim delay based on difficulty
+- Creates and uses a single base weapon preset which scales damage, focus delay and aim delay based on difficulty
 - Makes use of aim and focus delays (which were mostly set to 0 in vanilla) which affects how long cops take to shoot and reach their full accuracy
 - Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
 - Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as an Car-4)
