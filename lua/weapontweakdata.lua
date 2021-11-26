@@ -42,8 +42,8 @@ end)
 
 -- Scale swat turret stats and standardize NPC weapon damage
 local turret_damage_mul = {
-	{ 0, 2 },
-	{ 1500, 1 },
+	{ 0, 1 },
+	{ 1500, 0.5 },
 	{ 3000, 0.1 }
 }
 local turret_hp_mul = {
@@ -55,7 +55,7 @@ local function set_presets(weap_tweak_data)
 
 	for k, v in pairs(weap_tweak_data) do
 		if k:match("_turret_module") then
-			v.DAMAGE = diff_i * 0.5
+			v.DAMAGE = diff_i
 			v.DAMAGE_MUL_RANGE = turret_damage_mul
 			v.HEALTH_INIT = math.ceil(math.lerp(500, 10000, diff_i_norm)) * (turret_hp_mul[k] or 1)
 			v.SHIELD_HEALTH_INIT = math.ceil(math.lerp(25, 200, diff_i_norm)) * (turret_hp_mul[k] or 1)
