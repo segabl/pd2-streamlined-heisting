@@ -58,9 +58,10 @@ local function set_presets(weap_tweak_data)
 			v.DAMAGE = diff_i * 0.5
 			v.DAMAGE_MUL_RANGE = turret_damage_mul
 			v.HEALTH_INIT = math.ceil(math.lerp(500, 10000, diff_i_norm)) * (turret_hp_mul[k] or 1)
-			v.SHIELD_HEALTH_INIT = math.ceil(math.lerp(50, 400, diff_i_norm)) * (turret_hp_mul[k] or 1)
+			v.SHIELD_HEALTH_INIT = math.ceil(math.lerp(25, 200, diff_i_norm)) * (turret_hp_mul[k] or 1)
 			v.CLIP_SIZE = math.ceil(math.lerp(400, 800, diff_i_norm))
 			v.BAG_DMG_MUL = 50
+			v.SHIELD_DMG_MUL = 0.5
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
 		end
