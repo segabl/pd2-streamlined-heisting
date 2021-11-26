@@ -54,7 +54,7 @@ local function set_presets(weap_tweak_data)
 	local diff_i_norm = math.max(0, diff_i - 2) / (#weap_tweak_data.tweak_data.difficulties - 2)
 
 	for k, v in pairs(weap_tweak_data) do
-		if k:match("_turret_module$") then
+		if k:match("_turret_module") then
 			v.DAMAGE = diff_i * 0.5
 			v.DAMAGE_MUL_RANGE = turret_damage_mul
 			v.HEALTH_INIT = math.ceil(math.lerp(500, 10000, diff_i_norm)) * (turret_hp_mul[k] or 1)
