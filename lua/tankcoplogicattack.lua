@@ -104,6 +104,8 @@ function TankCopLogicAttack.update(data)
 		end
 
 		if my_data.chase_path then
+			-- Fix incorrect path starting position
+			CopLogicAttack._correct_path_start_pos(data, my_data.chase_path)
 			TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, walk and "walk" or "run")
 		end
 	else

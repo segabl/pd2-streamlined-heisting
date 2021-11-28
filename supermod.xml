@@ -54,6 +54,7 @@
 				<post :hook_id="copdamage"/>
 				<post :hook_id="copmovement"/>
 			</group>
+			<post :hook_id="enemies/shield/logics/shieldlogicattack"/>
 			<post :hook_id="enemies/spooc/actions/lower_body/actionspooc"/>
 			<post :hook_id="enemies/spooc/logics/spooclogicattack"/>
 			<post :hook_id="enemies/tank/logics/tankcoplogicattack"/>
