@@ -92,16 +92,16 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.3, 0.6 }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_rifle.range = { optimal = 1500, far = 3000, close = 750 }
-	presets.weapon.sh_base.is_rifle.autofire_rounds = { 3, 9 }
+	presets.weapon.sh_base.is_rifle.autofire_rounds = { 2, 8 }
 	presets.weapon.sh_base.is_rifle.FALLOFF = {
-		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.2, 0.5 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_bullpup = deep_clone(presets.weapon.sh_base.is_rifle)
 	presets.weapon.sh_base.is_smg = deep_clone(presets.weapon.sh_base.is_rifle)
-	presets.weapon.sh_base.is_smg.autofire_rounds = { 5, 14 }
+	presets.weapon.sh_base.is_smg.autofire_rounds = { 3, 12 }
 	presets.weapon.sh_base.is_smg.FALLOFF = {
-		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.25, 0.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_lmg = deep_clone(presets.weapon.sh_base.is_smg)
