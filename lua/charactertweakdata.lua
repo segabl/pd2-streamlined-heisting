@@ -145,9 +145,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 	presets.weapon.sh_tank.is_shotgun_mag.RELOAD_SPEED = 0.9
 	presets.weapon.sh_tank.is_shotgun_mag.FALLOFF = {
-		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.7, 0.9 }, recoil = { 0.4, 0.6 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 6 } },
-		{ dmg_mul = 8 * dmg_mul_lin, r = 1000, acc = { 0.5, 0.7 }, recoil = { 0.6, 0.9 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 2, 4 } },
-		{ dmg_mul = 3 * dmg_mul_lin, r = 2000, acc = { 0.3, 0.5 }, recoil = { 0.8, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 2 } }
+		{ dmg_mul = 10 * dmg_mul_lin, r = 0, acc = { 0.7, 0.9 }, recoil = { 0.4, 0.6 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 3, 6 } },
+		{ dmg_mul = 7 * dmg_mul_lin, r = 1000, acc = { 0.5, 0.7 }, recoil = { 0.6, 0.9 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 2, 4 } },
+		{ dmg_mul = 4 * dmg_mul_lin, r = 2000, acc = { 0.3, 0.5 }, recoil = { 0.8, 1.2 }, mode = { 1, 0, 0, 0 }, autofire_rounds = { 1, 2 } }
 	}
 	presets.weapon.sh_tank.is_rifle.RELOAD_SPEED = 0.5
 	presets.weapon.sh_tank.is_rifle.autofire_rounds = { 20, 50 }
