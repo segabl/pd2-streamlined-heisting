@@ -143,7 +143,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"provide_coverfire",
 		"provide_support",
 		"deathguard",
-		"smoke_grenade"
+		"smoke_grenade",
+		"flash_grenade"
 	}
 	self._tactics.swat_shotgun_flank = {
 		"charge",
@@ -157,7 +158,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"ranged_fire",
 		"provide_coverfire",
 		"provide_support",
-		"smoke_grenade"
+		"smoke_grenade",
+		"flash_grenade"
 	}
 	self._tactics.swat_rifle_flank = {
 		"provide_coverfire",
