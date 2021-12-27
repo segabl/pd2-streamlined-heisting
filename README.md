@@ -71,6 +71,7 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Properly scales enemy health, damage, accuracy, aim and focus delay values according to difficulty
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
+- Gives each difficulty custom suspicion settings (smoother increase in stealth difficulty)
 - Reduces the amount of active cops (especially on DS) and scales it with difficulty, DS keeps being difficult through other changes
 - Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS)
 - Scales assault duration with difficulty and reduces spawn pool so it's actually possible to end the assault earlier when spawns are exhausted
