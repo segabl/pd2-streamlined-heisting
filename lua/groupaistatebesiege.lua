@@ -667,6 +667,7 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	end
 
 	if not next(valid_spawn_group_distances) then
+		managers.chat:_receive_message(1, "spawns", "no spawns available", Color("ff6666"))
 		return
 	end
 
@@ -685,6 +686,17 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	end
 
 	return self:_choose_best_group(candidate_groups, total_weight)
+end
+
+
+-- Vanilla mostly only spawns enemies every 2 secs, since police activity is changed to update every second, skip every other group spawning call
+local _upd_group_spawning_original = GroupAIStateBesiege._upd_group_spawning
+function GroupAIStateBesiege:_upd_group_spawning(...)
+	self._group_spawn_toggle = not self._group_spawn_toggle
+
+	if self._group_spawn_toggle then
+		return _upd_group_spawning_original(self, ...)
+	end
 end
 
 
