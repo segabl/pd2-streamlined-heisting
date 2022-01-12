@@ -68,7 +68,7 @@ There are some inconsistencies with various enemy factions in the game that lead
 
 The vanilla difficulty curve is all over the place with some difficulties feeling exactly the same while others introduce a major jump. Enemy spawns are highly exaggerated, especially on Death Sentence, because issues in the weapon presets and shooting behaviour prevent them from actually being a threat. Heist difficulty progression is unused and enemies will swarm you in full force as soon as a heist goes loud instead of the intended increasing force as time progresses. Difficulty dependent values have all been rebalanced to create a smoother curve and gradually increasing difficulties.
 
-- Properly scales enemy health, damage, accuracy, aim and focus delay values according to difficulty
+- Properly scales enemy health, damage, aim and focus delay values according to difficulty
 - Reduces player grace period times scaling with difficulty (from 0.3s on normal down to 0.15s on DS) but makes it always use the full duration
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
 - Gives each difficulty custom suspicion settings (smoother increase in stealth difficulty)
