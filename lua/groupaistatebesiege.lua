@@ -8,6 +8,10 @@ local mvec_dis = mvector3.distance
 local mvec_dis_sq = mvector3.distance_sq
 
 
+-- Increase simultaneous spawn limit (this is just an upper bound, usually less enemies are spawned per group spawn update)
+GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 5
+
+
 -- Make hostage count affect hesitation delay
 local _begin_assault_task_original = GroupAIStateBesiege._begin_assault_task
 function GroupAIStateBesiege:_begin_assault_task(...)
@@ -667,7 +671,6 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	end
 
 	if not next(valid_spawn_group_distances) then
-		managers.chat:_receive_message(1, "spawns", "no spawns available", Color("ff6666"))
 		return
 	end
 
