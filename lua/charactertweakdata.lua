@@ -374,6 +374,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_hw.headshot_dmg_mul = 4
 	self.tank_medic.headshot_dmg_mul = 4
 	self.tank_mini.headshot_dmg_mul = 4
+	self.mobster_boss.headshot_dmg_mul = 1
+	self.chavez_boss.damage.headshot_dmg_mul = 1
+	self.hector_boss.damage.headshot_dmg_mul = 1
+	self.drug_lord_boss.damage.headshot_dmg_mul = 1
+	self.biker_boss.damage.headshot_dmg_mul = 1
 
 	-- Fix/set explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
