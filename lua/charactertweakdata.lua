@@ -276,6 +276,48 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		pose.run = deep_clone(pose.walk)
 	end
 
+	-- custom hurt severity for heavies
+	presets.hurt_severities.no_heavy_hurt = {
+		tase = true,
+		bullet = {
+			health_reference = "current",
+			zones = {
+				{
+					health_limit = 0.4,
+					none = 0.5,
+					light = 0.5
+				},
+				{
+					health_limit = 0.7,
+					light = 0.7,
+					moderate = 0.3
+				},
+				{
+					light = 0.5,
+					moderate = 0.5
+				}
+			}
+		},
+		fire = {
+			health_reference = "current",
+			zones = {
+				{
+					fire = 1
+				}
+			}
+		},
+		poison = {
+			health_reference = "current",
+			zones = {
+				{
+					poison = 1
+				}
+			}
+		}
+	}
+	presets.hurt_severities.no_heavy_hurt.melee = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
+	presets.hurt_severities.no_heavy_hurt.explosion = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
+
 	return presets
 end
 
@@ -313,9 +355,9 @@ end)
 -- Set specific character preset settings
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Set hurt severities for heavies and bosses
-	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
-	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
-	self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.light_hurt_fire_poison
+	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
+	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
+	self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts

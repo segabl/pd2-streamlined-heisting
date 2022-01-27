@@ -29,7 +29,7 @@ The vanilla game uses multiple base presets that are assigned based on difficult
 - Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as an Car-4)
 - Makes snipers more accurate but take longer to aim before shooting, avoiding cheap instant snipes due to bad RNG
 - Improves the surrender presets, different enemies have different chances to surrender
-- Removes heavy and medium hurt animations from heavy SWAT but scales their damage slightly lower than their light counterparts
+- Removes heavy hurt animations from heavy SWAT but scales their damage slightly lower than their light counterparts
 
 ### Overhauls spawn groups and enemy behaviour
 
