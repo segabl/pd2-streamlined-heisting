@@ -3,7 +3,7 @@
 local hit_dir = Vector3()
 local shield_slot_mask = World:make_slot_mask(8)
 local criminal_names = table.list_to_set(CriminalsManager.character_names())
-function ExplosionManager:_damage_characters(detect_results, params, variant, damage_func_name)
+Hooks:OverrideFunction(ExplosionManager, "_damage_characters", function (self, detect_results, params, variant, damage_func_name)
 	local user_unit = params.user
 	local owner = params.owner
 	local damage = params.damage
@@ -109,4 +109,4 @@ function ExplosionManager:_damage_characters(detect_results, params, variant, da
 	}
 
 	return results
-end
+end)

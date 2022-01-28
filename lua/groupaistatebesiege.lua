@@ -8,10 +8,6 @@ local mvec_dis = mvector3.distance
 local mvec_dis_sq = mvector3.distance_sq
 
 
--- Increase simultaneous spawn limit (this is just an upper bound, usually less enemies are spawned per group spawn update)
-GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 5
-
-
 -- Make hostage count affect hesitation delay
 local _begin_assault_task_original = GroupAIStateBesiege._begin_assault_task
 function GroupAIStateBesiege:_begin_assault_task(...)
@@ -167,7 +163,7 @@ end
 
 
 -- Fix more cases of stuck enemies
-function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
+Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", function (self, group, phase)
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
 	local approach, open_fire, push, pull_back, charge
@@ -506,7 +502,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			self:_set_objective_to_enemy_group(group, new_grp_objective)
 		end
 	end
-end
+end)
 
 
 -- Add custom grenade usage function
@@ -599,7 +595,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 	end
 
 	local timeout = tweak_data.group_ai[grenade_type .. "_timeout"] or tweak_data.group_ai.smoke_and_flash_grenade_timeout
-	task_data.use_smoke_push_t = self._t + timeout[1] * 0.15
+	task_data.use_smoke_push_t = self._t + timeout[1] * 0.1
 	task_data.use_smoke_timer = self._t + math_lerp(timeout[1], timeout[2], math_random())
 	task_data.use_smoke = false
 
@@ -692,17 +688,6 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 end
 
 
--- Vanilla mostly only spawns enemies every 2 secs, since police activity is changed to update every second, skip every other group spawning call
-local _upd_group_spawning_original = GroupAIStateBesiege._upd_group_spawning
-function GroupAIStateBesiege:_upd_group_spawning(...)
-	self._group_spawn_toggle = not self._group_spawn_toggle
-
-	if self._group_spawn_toggle then
-		return _upd_group_spawning_original(self, ...)
-	end
-end
-
-
 -- Reorder task updates so groups that have finished spawning immediately get their objectives instead of waiting for the next update
 function GroupAIStateBesiege:_upd_police_activity()
 	self._police_upd_task_queued = false
@@ -742,3 +727,7 @@ function GroupAIStateBesiege:_queue_police_upd_task()
 		managers.enemy:queue_task("GroupAIStateBesiege._upd_police_activity", self._upd_police_activity, self, self._t + 1)
 	end
 end
+
+
+-- Slow down spawns to balance out increased police activity update rate
+GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 2

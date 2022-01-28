@@ -3,7 +3,7 @@ local tmp_vec2 = Vector3()
 
 
 -- Make flashbangs scale with look direction instead of a flat reduction at some certain angle
-function CoreEnvironmentControllerManager:test_line_of_sight(test_pos, min_distance, dot_distance, max_distance)
+Hooks:OverrideFunction(CoreEnvironmentControllerManager, "test_line_of_sight", function (self, test_pos, min_distance, dot_distance, max_distance)
 	local vp = managers.viewport:first_active_viewport()
 
 	if not vp then
@@ -31,4 +31,4 @@ function CoreEnvironmentControllerManager:test_line_of_sight(test_pos, min_dista
 	local flash = (1 - math.max(dis - min_distance, 0) / (max_distance - min_distance)) * (dot_mul ^ dot_effect)
 
 	return flash
-end
+end)
