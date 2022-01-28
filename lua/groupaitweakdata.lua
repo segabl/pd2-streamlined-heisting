@@ -509,7 +509,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	-- Winters damage reduction settings
 	self.phalanx.vip.damage_reduction.start = 0.05
-	self.phalanx.vip.damage_reduction.increase = 0.025
+	self.phalanx.vip.damage_reduction.increase = 0.05
+	self.phalanx.vip.damage_reduction.increase_intervall = 10
 
 	-- Assault phases settings
 	self.besiege.assault.delay = { math.lerp(50, 25, f), math.lerp(40, 20, f), math.lerp(30, 15, f) }
