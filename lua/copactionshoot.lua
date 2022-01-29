@@ -27,21 +27,57 @@ function CopActionShoot:_stop_firing()
 end
 
 
+-- Initialize time
+Hooks:PostHook(CopActionShoot, "init", "sh_init", function (self)
+	self._t = 0
+end)
+
+
 -- Set some values needed for fixed focus and aim delay
 Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self)
-	self._common_data._line_of_sight_t = self._common_data._line_of_sight_t or -100
-	local same_att = self._attention and self._common_data._old_att_unit == self._attention.unit
-	if not same_att and not self._w_usage_tweak.no_autofire_stop then
-		-- Stop autofiring on target change so aim delay isn't skipped
+	-- Stop autofiring on target change
+	if not self._w_usage_tweak.no_autofire_stop then
 		self:_stop_firing()
 	end
+
+	-- Reset focus delay on target change
 	if self._attention and self._attention.unit then
-		-- Preserve old line of sight timer and attention unit to avoid redoing focus and aim delay on target change to same unit
-		self._common_data._line_of_sight_t = same_att and self._common_data._line_of_sight_t or -100
-		self._common_data._old_att_unit = self._attention.unit
-		self._shoot_history.focus_delay = nil
+		self._shoot_history.focus_start_t = math.max(TimerManager:game():time(), self._shoot_t)
+		self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
 	end
 end)
+
+
+-- Add a custom callback for the allow fire change, whenever we're allowed to shoot again,
+-- apply aim and focus delay if sufficient time has passed since we last shot
+function CopActionShoot:allow_fire_clbk(state)
+	if not self._common_data.allow_fire == not state then
+		return
+	end
+
+	local t = TimerManager:game():time()
+	if not state then
+		self._common_data._last_allow_fire_t = t
+	elseif self._attention and self._attention.unit then
+		local _, _, target_dis = self:_get_target_pos(self._shoot_from_pos, self._attention, t)
+		local no_fire_duration = t - (self._common_data._last_allow_fire_t or -100)
+
+		-- Apply aim delay if we haven't shot for more than 2 seconds
+		if no_fire_duration > 2 then
+			local aim_delay_minmax = self._w_usage_tweak.aim_delay
+			local lerp_dis = math_min(1, target_dis / self._falloff[#self._falloff].r)
+			local aim_delay = math_lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
+			if self._common_data.is_suppressed then
+				aim_delay = aim_delay * 1.5
+			end
+			self._shoot_t = math.max(t + aim_delay, self._shoot_t)
+		end
+
+		-- Reset focus delay when we're allowed to shoot again
+		self._shoot_history.focus_start_t = math.max(t, self._shoot_t)
+		self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
+	end
+end
 
 
 -- Thanks to the messy implementation of this function, we have to replace it completely, no hook can save us here
@@ -121,33 +157,7 @@ function CopActionShoot:update(t)
 				end
 			end
 		elseif target_vec and self._common_data.allow_fire and self._shoot_t < t and self._mod_enable_t < t then
-			-- Greatly simplify the shooting check, just base it on wether we have an attention unit
-			-- Additionaly, do focus and aim delay checks here based on line of sight instead of on attention
-			-- Handle all situations the same, independent of what our target is, to keep behavior synced with other players
 			local shoot = true
-			local shoot_hist = self._shoot_history
-			local no_los_duration = t - self._common_data._line_of_sight_t
-			if shoot_hist and no_los_duration > 1 and self._attention.unit then
-				-- Apply aim delay after 3 seconds of no los
-				if no_los_duration > 3 and not self._waiting_for_aim_delay then
-					local aim_delay_minmax = self._w_usage_tweak.aim_delay
-					local lerp_dis = math_min(1, target_dis / self._falloff[#self._falloff].r)
-					local aim_delay = math_lerp(aim_delay_minmax[1], aim_delay_minmax[2], lerp_dis)
-					if self._common_data.is_suppressed then
-						aim_delay = aim_delay * 1.5
-					end
-					self._shoot_t = t + aim_delay
-					self._waiting_for_aim_delay = true
-					shoot = false
-				end
-
-				-- Apply focus delay after 1 second of no los
-				if not shoot_hist.focus_delay then
-					shoot_hist.focus_start_t = self._waiting_for_aim_delay and self._shoot_t or t
-					shoot_hist.focus_delay = self._w_usage_tweak.focus_delay
-				end
-			end
-
 			if self._common_data.char_tweak.no_move_and_shoot and ext_anim.move then
 				shoot = false
 				self._shoot_t = math_max(self._shoot_t, t + (self._common_data.char_tweak.move_and_shoot_cooldown or 1))
@@ -177,11 +187,6 @@ function CopActionShoot:update(t)
 				end
 			end
 		end
-	end
-
-	-- Having an attention unit means we have line of sight
-	if self._attention and self._attention.unit then
-		self._common_data._line_of_sight_t = t
 	end
 
 	if self._ext_anim.base_need_upd then
