@@ -436,7 +436,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				if used_grenade then
 					self:_voice_move_in_start(group)
 				elseif not group.ignore_grenade_check_t then
-					group.ignore_grenade_check_t = self._t + 3
+					group.ignore_grenade_check_t = self._t + 6
 				end
 			end
 
