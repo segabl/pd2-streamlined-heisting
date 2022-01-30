@@ -729,5 +729,5 @@ function GroupAIStateBesiege:_queue_police_upd_task()
 end
 
 
--- Slow down spawns to balance out increased police activity update rate
-GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 2
+-- Slow down spawns to balance out increased police activity update rate and faster enemies
+GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 1
