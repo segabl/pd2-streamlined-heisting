@@ -166,7 +166,7 @@ end
 Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", function (self, group, phase)
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
-	local approach, open_fire, push, pull_back, charge
+	local approach, open_fire, pull_back, charge
 	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
 	local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
@@ -246,29 +246,10 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			-- If we run into enemies while moving out, open fire (if we aren't already doing that)
 			open_fire = not current_objective.open_fire
 		elseif not current_objective.pushed or charge and not current_objective.charge then
-			-- If we run into enemies and haven't pushed yet, push
-			push = true
+			-- If we run into enemies and haven't pushed yet, approach
+			approach = true
 		end
 	elseif not current_objective.moving_out then
-		-- Check if there are any criminals close to our objective area
-		local has_criminals_close = next(objective_area.criminal.units) and true
-		if not has_criminals_close then
-			local objective_pos = objective_area.pos
-			local max_dis_sq = charge and 1000000 or 4000000
-			for _, neighbour in pairs(objective_area.neighbours) do
-				for _, c_data in pairs(neighbour.criminal.units) do
-					-- Don't just check for neighboring areas, also check for distance (in case areas are very large)
-					if math_abs(c_data.m_pos.z - objective_pos.z) < 500 and mvec_dis_sq(c_data.m_pos, objective_pos) < max_dis_sq then
-						has_criminals_close = true
-						break
-					end
-				end
-				if has_criminals_close then
-					break
-				end
-			end
-		end
-
 		-- Check if any of our group members can see an enemy
 		local has_visible_target, logic_data, focus_enemy
 		for _, u_data in pairs(group.units) do
@@ -280,20 +261,8 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			end
 		end
 
-		if charge then
-			-- When we are charging, always move closer, push if enemies are already close
-			approach = not has_criminals_close
-			push = not approach
-		elseif not has_criminals_close or not group.in_place_t then
-			-- If no criminals are close or if we just spawned, approach if we can't see any enemy, are not using ranged fire or have been in place for a while
-			-- Open fire otherwise (if we aren't already doing that)
-			approach = not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10
-			open_fire = not approach and not current_objective.open_fire
-		else
-			-- If none of the above applies, push if we can't see any enemy or if we're chasing, open fire otherwise (if we aren't already doing that)
-			push = not has_visible_target or group.is_chasing or not tactics_map.ranged_fire
-			open_fire = not push and not current_objective.open_fire
-		end
+		approach = charge or not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10 or group.is_chasing
+		open_fire = not approach and not current_objective.open_fire
 	else
 		-- If we see an enemy while moving out and have the ranged_fire tactics, open fire and stay in position for a bit
 		if tactics_map.ranged_fire and not current_objective.open_fire then
@@ -334,7 +303,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 
 		self:_set_objective_to_enemy_group(group, grp_objective)
 		self:_voice_open_fire_start(group)
-	elseif approach or push then
+	elseif approach then
 		local assault_area, alternate_assault_area, alternate_assault_area_from, assault_path, alternate_assault_path
 		local to_search_areas = {
 			objective_area
@@ -350,7 +319,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			if next(search_area.criminal.units) then
 				local assault_from_here = true
 
-				if not push and tactics_map.flank then
+				if tactics_map.flank then
 					local assault_from_area = found_areas[search_area]
 
 					if assault_from_area ~= objective_area then
@@ -409,34 +378,37 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 		end
 
 		if assault_area and assault_path then
-			-- If we aren't pushing we're not going to the actual criminal area, but one area before that (if that area isn't our current one)
-			if not push and found_areas[assault_area] ~= objective_area then
+			local push = found_areas[assault_area] == objective_area
+			local used_grenade
+
+			if push then
+				-- Put a soft cap on how many enemies can push into one area
+				if table.size(assault_area.police.units) < (1 + table.size(assault_area.criminal.units)) * 4 then
+					local detonate_pos
+					if charge then
+						for _, c_data in pairs(assault_area.criminal.units) do
+							if not c_data.ai then
+								detonate_pos = c_data.unit:movement():m_pos()
+								break
+							end
+						end
+					end
+
+					-- Check which grenade to use to push, grenade use is required for the push to be initiated
+					-- If grenade isn't available, push regardless anyway after a short delay
+					used_grenade = self:_chk_group_use_grenade(group, detonate_pos) or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t
+
+					if used_grenade then
+						self:_voice_move_in_start(group)
+					elseif not group.ignore_grenade_check_t then
+						group.ignore_grenade_check_t = self._t + 6
+					end
+				end
+			else
+				-- If we aren't pushing, we go to one area before the criminal area
 				assault_area = found_areas[assault_area]
 				if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path - 1][1]] then
 					table_remove(assault_path)
-				end
-			end
-
-			local used_grenade
-			if push then
-				local detonate_pos
-				if charge then
-					for _, c_data in pairs(assault_area.criminal.units) do
-						if not c_data.ai then
-							detonate_pos = c_data.unit:movement():m_pos()
-							break
-						end
-					end
-				end
-
-				-- Check which grenade to use to push, grenade use is required for the push to be initiated
-				-- If grenade isn't available, push regardless anyway after a short delay
-				used_grenade = self:_chk_group_use_grenade(group, detonate_pos) or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t
-
-				if used_grenade then
-					self:_voice_move_in_start(group)
-				elseif not group.ignore_grenade_check_t then
-					group.ignore_grenade_check_t = self._t + 6
 				end
 			end
 
@@ -448,11 +420,11 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 					coarse_path = assault_path,
 					pose = push and "crouch" or "stand",
 					attitude = push and "engage" or "avoid",
-					moving_in = push and true or nil,
-					open_fire = push or nil,
-					pushed = push or nil,
+					moving_in = push,
+					open_fire = push,
+					pushed = push,
 					charge = charge,
-					interrupt_dis = charge and 0 or nil
+					interrupt_dis = charge and 0
 				}
 				group.is_chasing = group.is_chasing or push
 
