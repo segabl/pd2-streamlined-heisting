@@ -3,7 +3,7 @@
 -- If it contains any of these, it is considered the escape zone/loot secure trigger
 local function check_executed_objects(area_trigger, current, recursion_depth)
 	current = current or area_trigger
-	recursion_depth = recursion_depth or 1
+	recursion_depth = recursion_depth or 2
 
 	if (area_trigger._values.enabled and true or false) == (area_trigger._reinforce_point_enabled and true or false) then
 		return
