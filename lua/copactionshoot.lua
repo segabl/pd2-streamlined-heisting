@@ -27,12 +27,6 @@ function CopActionShoot:_stop_firing()
 end
 
 
--- Initialize time
-Hooks:PostHook(CopActionShoot, "init", "sh_init", function (self)
-	self._t = 0
-end)
-
-
 -- Set some values needed for fixed focus and aim delay
 Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self)
 	-- Stop autofiring on target change
