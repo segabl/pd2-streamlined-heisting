@@ -48,6 +48,7 @@
 				<post :hook_id="logics/coplogicbase"/>
 				<post :hook_id="logics/coplogicidle"/>
 				<post :hook_id="logics/coplogicinactive"/>
+				<post :hook_id="logics/coplogicphalanxminion"/>
 				<post :hook_id="logics/coplogicsniper"/>
 				<post :hook_id="logics/coplogictravel"/>
 				<post :hook_id="copbrain"/>

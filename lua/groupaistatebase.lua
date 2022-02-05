@@ -94,6 +94,20 @@ Hooks:PreHook(GroupAIStateBase, "on_criminal_nav_seg_change", "sh_on_criminal_na
 end)
 
 
+-- Register Winters and minions as soon as they spawn, not just after they reach their objective or take damage
+-- This fixes instances of Winters not leaving the map because the phalanx is broken up before he is registered
+Hooks:PostHook(GroupAIStateBase, "on_enemy_registered", "sh_on_enemy_registered", function (self, unit)
+	if self._phalanx_spawn_group and not self._phalanx_spawn_group.has_spawned then
+		local logics = unit:brain()._logics
+		if logics == CopBrain._logic_variants.phalanx_minion then
+			self:register_phalanx_minion(unit)
+		elseif logics == CopBrain._logic_variants.phalanx_vip then
+			self:register_phalanx_vip(unit)
+		end
+	end
+end)
+
+
 -- Delay spawn points when enemies die close to them
 Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function (self, unit)
 	if not Network:is_server() or not unit:character_damage():dead() then
