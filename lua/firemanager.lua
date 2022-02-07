@@ -1,5 +1,11 @@
+local mvec_add = mvector3.add
+local mvec_dir = mvector3.direction
+local mvec_mul = mvector3.multiply
+local mvec_set = mvector3.set
+local mvec_set_z = mvector3.set_z
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
+local offset_vec = Vector3(0, 0, 30)
 
 -- Fix fire damage update resetting DoT grace and not triggering DoT damage until no more fire DoT is added
 -- Instead of updating the damage received time, update the DoT duration with the difference between new and old received time
@@ -26,14 +32,13 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 	local dmg = params.damage
 	local player_dmg = params.player_damage or dmg
 	local range = params.range
+	local damage_range = params.damage_range or range
 	local alert_filter = params.alert_filter or managers.groupai:state():get_unit_type_filter("civilians_enemies")
 	local owner = params.owner
-	local push_units = params.push_units ~= nil and params.push_units
 	local fire_dot_data = params.fire_dot_data
 	local alert_radius = params.alert_radius or 3000
 	local is_molotov = params.is_molotov
-	local ignore_units = {}
-	local obstruction_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
+	local obstruction_slotmask = managers.slot:get_mask("molotov_raycasts")
 	local count_cops = 0
 	local count_gangsters = 0
 	local count_civilians = 0
@@ -42,7 +47,6 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 	local count_civilian_kills = 0
 	local results = {}
 	local characters_hit = {}
-	local units_to_push = {}
 	local hit_units = {}
 	local splinters = {
 		hit_pos
@@ -53,7 +57,7 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 		player:character_damage():damage_fire({
 			variant = "fire",
 			position = hit_pos,
-			range = range,
+			range = damage_range,
 			damage = player_dmg,
 			ignite_character = params.ignite_character
 		})
@@ -72,33 +76,30 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 		alert_unit
 	})
 
-	mvector3.set(tmp_vec1, hit_pos)
-	mvector3.set(tmp_vec2, hit_pos)
-	mvector3.set_z(tmp_vec1, tmp_vec1.z - range)
-	mvector3.set_z(tmp_vec2, tmp_vec2.z + math.min(100, range))
-	local bodies = World:find_bodies("intersect", "cylinder", tmp_vec1, tmp_vec2, range, slotmask)
+	mvec_set(tmp_vec1, hit_pos)
+	mvec_set(tmp_vec2, hit_pos)
+	mvec_set_z(tmp_vec1, tmp_vec1.z - damage_range)
+	mvec_set_z(tmp_vec2, tmp_vec2.z + range)
+	local bodies = World:find_bodies("intersect", "cylinder", tmp_vec1, tmp_vec2, damage_range, slotmask)
 
-	for _, hit_body in ipairs(bodies) do
-		local character = hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_fire
-		if character then
-			table.insert(ignore_units, hit_body:unit())
-		end
-	end
-
-	for _, hit_body in ipairs(bodies) do
+	local dir, hit_pos_clamped = tmp_vec1, tmp_vec2
+	for _, hit_body in pairs(bodies) do
 		local hit_unit = hit_body:unit()
 		local hit_unit_key = hit_unit:key()
 		local character = not characters_hit[hit_unit_key] and hit_unit:character_damage() and hit_unit:character_damage().damage_fire
 		local apply_dmg = hit_body:extension() and hit_body:extension().damage
 
-		if character or apply_dmg or hit_body:dynamic() then
-			local dir = hit_body:center_of_mass()
+		if character or apply_dmg then
+			local body_pos = hit_body:center_of_mass()
+			mvec_add(body_pos, offset_vec)
+			local len = mvec_dir(dir, body_pos, hit_pos)
+			mvec_set(hit_pos_clamped, dir)
+			mvec_mul(hit_pos_clamped, math.max(0, len - math.min(range, 100)))
+			mvec_add(hit_pos_clamped, body_pos)
 
-			if not World:raycast("ray", hit_pos, dir, "slot_mask", obstruction_slotmask, "ignore_unit", ignore_units, "report") then
-				units_to_push[hit_unit_key] = hit_unit
+			if not World:raycast("ray", body_pos, hit_pos_clamped, "slot_mask", obstruction_slotmask, "report") then
 				hit_units[hit_unit_key] = hit_unit
 
-				mvector3.direction(dir, hit_pos, dir)
 				if apply_dmg then
 					self:_apply_body_damage(true, hit_body, user_unit, dir, dmg)
 				end
@@ -146,10 +147,6 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 				end
 			end
 		end
-	end
-
-	if push_units and push_units == true then
-		managers.explosion:units_to_push(units_to_push, hit_pos, range)
 	end
 
 	if owner then
