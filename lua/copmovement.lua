@@ -1,9 +1,11 @@
 -- Fix enemies playing the suppressed stand-to-crouch animation when shot even if they are already crouching
-local action_request_original = CopMovement.action_request
-function CopMovement:action_request(action_desc, ...)
-	if action_desc.variant ~= "suppressed_reaction" or not self._ext_anim.crouch then
-		return action_request_original(self, action_desc, ...)
+local play_redirect_original = CopMovement.play_redirect
+function CopMovement:play_redirect(redirect_name, ...)
+	local result = play_redirect_original(self, redirect_name, ...)
+	if result and redirect_name == "suppressed_reaction" and self._ext_anim.crouch then
+		self._machine:set_parameter(result, "from_stand", 0)
 	end
+	return result
 end
 
 
