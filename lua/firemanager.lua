@@ -96,6 +96,7 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 			mvec_set(hit_pos_clamped, dir)
 			mvec_mul(hit_pos_clamped, math.max(0, len - math.min(range, 100)))
 			mvec_add(hit_pos_clamped, body_pos)
+			mvec_set_z(hit_pos_clamped, hit_pos.z)
 
 			if not World:raycast("ray", body_pos, hit_pos_clamped, "slot_mask", obstruction_slotmask, "report") then
 				hit_units[hit_unit_key] = hit_unit
