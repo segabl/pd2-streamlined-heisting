@@ -1,11 +1,17 @@
-local math_abs = math.abs
 local math_min = math.min
 local math_lerp = math.lerp
 local math_random = math.random
 local table_insert = table.insert
 local table_remove = table.remove
+local mvec_add = mvector3.add
 local mvec_dis = mvector3.distance
 local mvec_dis_sq = mvector3.distance_sq
+local mvec_set = mvector3.set
+local mvec_set_l = mvector3.set_length
+local mvec_set_z = mvector3.set_z
+local mvec_sub = mvector3.subtract
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
 
 
 -- Make hostage count affect hesitation delay
@@ -385,13 +391,9 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				-- Put a soft cap on how many enemies can push into one area
 				if table.size(assault_area.police.units) < (1 + table.size(assault_area.criminal.units)) * 4 then
 					local detonate_pos
-					if charge then
-						for _, c_data in pairs(assault_area.criminal.units) do
-							if not c_data.ai then
-								detonate_pos = c_data.unit:movement():m_pos()
-								break
-							end
-						end
+					local c_key = charge and table.random_key(assault_area.criminal.units)
+					if c_key then
+						detonate_pos = assault_area.criminal.units[c_key].unit:movement():m_pos()
 					end
 
 					-- Check which grenade to use to push, grenade use is required for the push to be initiated
@@ -509,7 +511,24 @@ function GroupAIStateBesiege:_chk_group_use_grenade(group, detonate_pos)
 	local grenade_user = candidate[2]
 
 	local area
-	if detonate_pos then
+	local detonate_offset, detonate_offset_pos = tmp_vec1, tmp_vec2
+	if detonate_pos and grenade_type == "flash_grenade" then
+		-- Offset grenade a bit to avoid spawning exactly on the player
+		mvec_set(detonate_offset, grenade_user.m_pos)
+		mvec_sub(detonate_offset, detonate_pos)
+		mvec_set_z(detonate_offset, 0)
+		mvec_set_l(detonate_offset, math.random(100, 300))
+		mvec_set(detonate_offset_pos, detonate_pos)
+		mvec_add(detonate_offset_pos, detonate_offset)
+
+		local ray = World:raycast("ray", detonate_pos, detonate_offset_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+		if ray then
+			mvec_set_l(detonate_offset, math.max(0, ray.distance - 50))
+			mvec_set(detonate_offset_pos, detonate_pos)
+			mvec_add(detonate_offset_pos, detonate_offset)
+		end
+
+		detonate_pos = detonate_offset_pos
 		area = self:get_area_from_nav_seg_id(managers.navigation:get_nav_seg_from_pos(detonate_pos, true))
 	else
 		local nav_seg = managers.navigation._nav_segments[grenade_user.tracker:nav_segment()]
