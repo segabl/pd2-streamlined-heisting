@@ -26,7 +26,7 @@ The vanilla game uses multiple base presets that are assigned based on difficult
 - Creates and uses a single base weapon preset which scales damage, focus delay and aim delay based on difficulty
 - Makes use of aim and focus delays (which were mostly set to 0 in vanilla) which affects how long cops take to shoot and reach their full accuracy
 - Changes shotgun preset significantly, giving them very good accuracy to simulate multiple pellets but very harsh damage falloff
-- Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as an Car-4)
+- Changes cop weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as a Car-4)
 - Makes snipers more accurate but take longer to aim before shooting, avoiding cheap instant snipes due to bad RNG
 - Improves the surrender presets, different enemies have different chances to surrender
 - Removes heavy hurt animations from heavy SWAT but scales their damage slightly lower than their light counterparts
@@ -95,7 +95,7 @@ These are minor changes and fixes that don't fit any of the above categories.
 - Fixes Cloakers being stuck in the beatdown animation and ignoring threats after a charge attack
 - Fixes the Crime Spree "Heavies" modifier to replace the correct units
 - Fixes the assault fade phase almost always ending after the minimum amount of time
-- Increases the time it takes for Cpt. Winters to reach the maximum damage reduction (10-50% in 40s to 5-50% in 90s)
+- Increases the time it takes for Cpt. Winters to reach the maximum damage reduction (from 10-50% in 40s to 5-50% in 90s)
 - Makes Shield knockdown animations not stackable, no new animation triggers while there's already one playing
 - Fixes some spawn points being unavailable on certain maps due to incorrect pathing checks
 - Makes flashbangs more consistent and less penalizing when looking away in time
@@ -108,5 +108,5 @@ These are minor changes and fixes that don't fit any of the above categories.
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
 - [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code and providing code snippets
 - [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
-- [creepyyy](https://modworkshop.net/user/54264) for testing and providing feedback
+- [creepyyy](https://modworkshop.net/user/54264), ERO, [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
 - Inspired by the early days of [fuglore's Hyper Heisting](https://modworkshop.net/mod/24337)
