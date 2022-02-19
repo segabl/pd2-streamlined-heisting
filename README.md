@@ -101,6 +101,7 @@ These are miscellaneous changes and fixes that don't fit any of the above catego
 - Fixes fire damage over time not triggering when a new damage over time instance is applied within a second
 - Fixes and optimizes fire spawned from molotovs and tripmines
 - Fixes instances of Winters not leaving the map when the formation was told to break up before Winters was registered
+- Fixes various synchronization issues where incorrect or incomplete data was sent to clients
 
 ## Credits
 
