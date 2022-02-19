@@ -351,7 +351,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		col_ray = {
 			position = self._shoot_from_pos + fwd * 50,
 			ray = mvector3.copy(target_vec),
-			body = self._melee_unit:body("body")
+			body = self._melee_unit:body(0)
 		}
 	})
 
@@ -363,7 +363,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 			variant = "counter_spooc",
 			attacker_unit = self._melee_unit,
 			col_ray = {
-				body = self._unit:body("body"),
+				body = self._unit:body(0),
 				position = self._common_data.pos + math.UP * 100
 			},
 			attack_dir = -1 * target_vec:normalized(),
