@@ -114,11 +114,6 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 		return
 	end
 
-	local fs_settings = FullSpeedSwarm and FullSpeedSwarm.final_settings or {}
-	if fs_settings.spawn_delay then
-		return
-	end
-
 	local e_data = self._police[unit:key()]
 	if not e_data.group or not e_data.group.has_spawned then
 		return
