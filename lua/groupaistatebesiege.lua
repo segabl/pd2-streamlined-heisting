@@ -443,6 +443,32 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 
 				self:_set_objective_to_enemy_group(group, grp_objective)
 			end
+		elseif in_place_duration > 5 then
+			-- If no assault path was found, check if the group is stuck, which can happen when certain units are not allowed to use navlinks
+			-- Ultimately this should be fixed per map that has these issues, this is a temporary solution that removes stuck groups
+			for _, u_data in pairs(group.units) do
+				if u_data.unit:brain()._current_logic_name ~= "idle" then
+					return
+				end
+			end
+
+			for _, other_area in pairs(objective_area.neighbours) do
+				local path = managers.navigation:search_coarse({
+					id = "GroupAI_assault",
+					from_seg = objective_area.pos_nav_seg,
+					to_seg = other_area.pos_nav_seg,
+					access_pos = group_access_mask
+				})
+				if path then
+					return
+				end
+			end
+
+			StreamHeist:log("[Warning] Group", group.id, "had no valid path to any of its neighboring areas for 5s, removing group!")
+			for _, u_data in pairs(group.units) do
+				u_data.unit:brain():set_active(false)
+				u_data.unit:set_slot(0)
+			end
 		end
 	elseif pull_back then
 		local retreat_area
