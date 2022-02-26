@@ -33,6 +33,17 @@ function GroupAIStateBesiege:_begin_assault_task(...)
 end
 
 
+-- Fix reenforce group delay
+local _begin_reenforce_task_original = GroupAIStateBesiege._begin_reenforce_task
+function GroupAIStateBesiege:_begin_reenforce_task(...)
+	local next_dispatch_t = self._task_data.reenforce.next_dispatch_t or 0
+
+	_begin_reenforce_task_original(self, ...)
+
+	self._task_data.reenforce.next_dispatch_t = next_dispatch_t
+end
+
+
 -- Improve ending condition for assault fade
 -- The hardcoded amount of minimum enemies left was way too high and would lead to fade being instantly over after its minimum duration
 local _upd_assault_task_original = GroupAIStateBesiege._upd_assault_task
