@@ -1,5 +1,6 @@
 -- Clones a weapon preset and optionally sets values for all weapons contained in that preset
 -- if the value is a function, it calls the function with the data of the value name instead
+local nil_value = {}
 local function based_on(preset, values)
 	local p = deep_clone(preset)
 	if not values then
@@ -10,7 +11,7 @@ local function based_on(preset, values)
 			if type(val) == "function" then
 				val(entry[val_name])
 			else
-				entry[val_name] = val
+				entry[val_name] = val ~= nil_value and val
 			end
 		end
 	end
@@ -101,7 +102,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base.is_smg = deep_clone(presets.weapon.sh_base.is_rifle)
 	presets.weapon.sh_base.is_smg.autofire_rounds = { 3, 9 }
 	presets.weapon.sh_base.is_smg.FALLOFF = {
-		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.4, 0.7 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_base.is_lmg = deep_clone(presets.weapon.sh_base.is_smg)
@@ -191,24 +192,24 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	})
 
 	-- Shield preset
-	presets.weapon.sh_shield = based_on(presets.weapon.sh_heavy)
-	for _, weapon in pairs(presets.weapon.sh_shield) do
-		weapon.melee_speed = nil
-		weapon.melee_dmg = nil
-		weapon.melee_retry_delay = nil
-	end
+	presets.weapon.sh_shield = based_on(presets.weapon.sh_base, {
+		melee_speed = nil_value,
+		melee_dmg = nil_value,
+		melee_retry_delay = nil_value,
+		FALLOFF = function (falloff)
+			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
+		end
+	})
 
 	-- Give team ai more reasonable preset values
 	local dmg_mul_team = math.lerp(1, 5, diff_i_norm)
 	presets.weapon.gang_member = based_on(presets.weapon.sh_base, {
-		no_autofire_stop = true
-	})
-	for _, weapon in pairs(presets.weapon.gang_member) do
-		local reference = weapon.FALLOFF[1].dmg_mul
-		for _, falloff in pairs(weapon.FALLOFF) do
-			falloff.dmg_mul = (falloff.dmg_mul / reference) * dmg_mul_team
+		no_autofire_stop = true,
+		FALLOFF = function (falloff)
+			local ref = falloff[1].dmg_mul
+			manipulate_entries(falloff, "dmg_mul", function (val) return (val / ref) * dmg_mul_team end)
 		end
-	end
+	})
 	presets.gang_member_damage.HEALTH_INIT = 100 * diff_i
 	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.15
 	presets.gang_member_damage.REGENERATE_TIME = 2
