@@ -179,7 +179,8 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
 end
 
 
--- Fix more cases of stuck enemies
+-- Improve and heavily simplify objective assignment code, fix pull back and open fire objectives
+-- Basically, a lot of this function was needlessly complex and had oversights or incorrect conditions
 Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", function (self, group, phase)
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
@@ -222,13 +223,12 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				end
 
 				if closest_crim_u_data then
-					local search_params = {
+					local coarse_path = managers.navigation:search_coarse({
 						id = "GroupAI_deathguard",
 						from_tracker = group_leader_u_data.unit:movement():nav_tracker(),
 						to_tracker = closest_crim_u_data.tracker,
 						access_pos = self._get_group_acces_mask(group)
-					}
-					local coarse_path = managers.navigation:search_coarse(search_params)
+					})
 
 					if coarse_path then
 						local grp_objective = {
@@ -267,36 +267,15 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			approach = true
 		end
 	elseif not current_objective.moving_out then
-		-- Check if any of our group members can see an enemy
-		local has_visible_target, logic_data, focus_enemy
-		for _, u_data in pairs(group.units) do
-			logic_data = u_data.unit:brain()._logic_data
-			focus_enemy = logic_data and logic_data.attention_obj
-			if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_AIM and focus_enemy.verified then
-				has_visible_target = true
-				break
-			end
-		end
-
-		approach = charge or not has_visible_target or not tactics_map.ranged_fire or in_place_duration > 10 or group.is_chasing
+		-- If we aren't moving out to an objective, approach or open fire if we have ranged_fire tactics and see an enemy
+		approach = charge or not tactics_map.ranged_fire or in_place_duration > 10 or group.is_chasing or not self:_can_group_see_target(group)
 		open_fire = not approach and not current_objective.open_fire
-	else
+	elseif tactics_map.ranged_fire and not current_objective.open_fire and self:_can_group_see_target(group, true) then
 		-- If we see an enemy while moving out and have the ranged_fire tactics, open fire and stay in position for a bit
-		if tactics_map.ranged_fire and not current_objective.open_fire then
-			for _, u_data in pairs(group.units) do
-				local logic_data = u_data.unit:brain()._logic_data
-				local focus_enemy = logic_data and logic_data.attention_obj
-				if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_AIM and focus_enemy.verified then
-					if focus_enemy.verified_dis < (logic_data.internal_data.weapon_range and logic_data.internal_data.weapon_range.far or 3000) then
-						local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
-						if forwardmost_i_nav_point then
-							open_fire = true
-							objective_area = self:get_area_from_nav_seg_id(current_objective.coarse_path[forwardmost_i_nav_point][1])
-						end
-					end
-					break
-				end
-			end
+		local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
+		if forwardmost_i_nav_point then
+			open_fire = true
+			objective_area = self:get_area_from_nav_seg_id(current_objective.coarse_path[forwardmost_i_nav_point][1])
 		end
 	end
 
@@ -514,6 +493,21 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 		end
 	end
 end)
+
+
+-- Helper to check if any group member has visuals on their focus target
+function GroupAIStateBesiege:_can_group_see_target(group, limit_range)
+	local logic_data, focus_enemy
+	for _, u_data in pairs(group.units) do
+		logic_data = u_data.unit:brain()._logic_data
+		focus_enemy = logic_data and logic_data.attention_obj
+		if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_AIM and focus_enemy.verified then
+			if not limit_range or focus_enemy.verified_dis < (logic_data.internal_data.weapon_range and logic_data.internal_data.weapon_range.far or 3000) then
+				return true
+			end
+		end
+	end
+end
 
 
 -- Add custom grenade usage function

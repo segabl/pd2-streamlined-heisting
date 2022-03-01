@@ -72,7 +72,7 @@ function CopLogicIdle._chk_relocate(data, ...)
 		return _chk_relocate_original(data, ...)
 	elseif objective_type == "hunt" then
 		local objective_area = objective.area
-		if not objective_area or next(objective_area.criminal.units) or not CopLogicTravel.chk_group_ready_to_move(data, data.internal_data) then
+		if not objective_area or next(objective_area.criminal.units) then
 			return
 		end
 
@@ -104,26 +104,13 @@ function CopLogicIdle._chk_relocate(data, ...)
 			return
 		end
 
-		local grp_objective = objective.grp_objective
-		if grp_objective then
-			for _, u_data in pairs(data.group.units) do
-				u_data.unit:brain():set_objective(nil)
-			end
+		objective.in_place = nil
+		objective.path_data = nil
+		objective.area = target_area
+		objective.nav_seg = target_area.pos_nav_seg
 
-			grp_objective.coarse_path = nil
-			grp_objective.area = target_area
-			grp_objective.nav_seg = target_area.pos_nav_seg
+		data.logic._exit(data.unit, "travel")
 
-			managers.groupai:state():_set_objective_to_enemy_group(data.group, grp_objective)
-		else
-			objective.in_place = nil
-			objective.path_data = nil
-			objective.area = target_area
-			objective.nav_seg = target_area.pos_nav_seg
-
-			data.logic._exit(data.unit, "travel")
-
-			return true
-		end
+		return true
 	end
 end
