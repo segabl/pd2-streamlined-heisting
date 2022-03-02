@@ -174,3 +174,15 @@ function GroupAIStateBase:set_importance_weight(u_key, ...)
 	end
 	return set_importance_weight_original(self, u_key, ...)
 end
+
+
+-- Check nav segment safety directly instead of area safety
+function GroupAIStateBase:is_nav_seg_safe(nav_seg)
+	for _, u_data in pairs(self._criminals) do
+		if u_data.tracker:nav_segment() == nav_seg then
+			return
+		end
+	end
+
+	return true
+end
