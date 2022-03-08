@@ -1,3 +1,12 @@
+local level_id = Global.game_settings and Global.game_settings.level_id
+
+
+-- Disable reinforce points on No Mercy (it's already crowded enough and they tend to get stuck in the ceiling)
+if level_id == "nmh" then
+	function ElementAreaMinPoliceForce:operation_add() end
+end
+
+
 -- Add custom reinforce locations to specific levels (trigger that has just a name disables previously enabled reinforcement with that id)
 local level_reinforce_triggers = {
 	des = {
@@ -24,7 +33,7 @@ local level_reinforce_triggers = {
 		}
 	}
 }
-local reinforce_triggers = level_reinforce_triggers[Global.game_settings and Global.game_settings.level_id]
+local reinforce_triggers = level_reinforce_triggers[level_id]
 if not reinforce_triggers then
 	return
 end
