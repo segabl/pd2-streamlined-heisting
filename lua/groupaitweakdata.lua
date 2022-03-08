@@ -486,6 +486,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.cs_grenade_timeout = { 20, 25 }
 	self.cs_grenade_lifetime = math.lerp(18, 36, f)
 
+	self.spawn_cooldown_mul = math.lerp(2, 1, f)
+
 	-- Spawn Groups
 	local special_weight = math.lerp(3, 5, f)
 	self.besiege.assault.groups = {

@@ -892,5 +892,5 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_perform_group_spawning", function 
 	end
 
 	-- Set a cooldown before new units can be spawned via regular spawn tasks
-	self._next_group_spawn_t = self._t + spawn_task.group.size
+	self._next_group_spawn_t = self._t + spawn_task.group.size * tweak_data.group_ai.spawn_cooldown_mul
 end)
