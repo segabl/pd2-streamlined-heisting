@@ -48,6 +48,14 @@ Hooks:PreHook(CopLogicBase, "on_new_objective", "sh_on_new_objective", function 
 end)
 
 
+-- Remove follow unit as soon as it dies, not just after the body despawned
+function CopLogicBase.on_objective_unit_damaged(data, unit, attacker_unit)
+	if unit:character_damage()._dead then
+		data.objective_failed_clbk(data.unit, data.objective)
+	end
+end
+
+
 -- Allow more dodge directions
 local math_random = math.random
 local mvec3_add = mvector3.add
