@@ -119,6 +119,12 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.1, 0.3 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0, 0.15 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
+	presets.weapon.sh_base.is_flamethrower.range = { optimal = 900, far = 1800, close = 450 }
+	presets.weapon.sh_base.is_flamethrower.FALLOFF = {
+		{ dmg_mul = 1 * dmg_mul_str, r = 0, acc = { 0.15, 0.35 }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0.65 * dmg_mul_str, r = 1000, acc = { 0.1, 0.3 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 0, r = 2000, acc = { 0, 0.15 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
+	}
 
 	-- Heavy preset (deal less damage in exchange for being bulkier)
 	presets.weapon.sh_heavy = based_on(presets.weapon.sh_base, {
@@ -407,6 +413,8 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.drug_lord_boss.HEALTH_INIT = 200
 	self.drug_lord_boss_stealth.HEALTH_INIT = 4
 	self.biker_boss.HEALTH_INIT = 200
+	self.triad_boss.HEALTH_INIT = 400
+	self.triad_boss_no_armor.HEALTH_INIT = 8
 	self.fbi.HEALTH_INIT = 4
 
 	-- Tweak headshot multipliers
