@@ -99,7 +99,8 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 			mvec3_neg(dodge_dir)
 		end
 	else
-		mvector3.random_orthogonal(dodge_dir, math.UP)
+		mvector3.set(dodge_dir, math.UP)
+		mvector3.random_orthogonal(dodge_dir)
 	end
 
 	local dis
