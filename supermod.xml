@@ -68,6 +68,7 @@
 			<post :hook_id="player_team/teamaimovement"/>
 			<post :hook_id="weapons/grenades/quickflashgrenade"/>
 			<post :hook_id="weapons/projectiles/projectilebase"/>
+			<post :hook_id="weapons/akimboweaponbase"/>
 			<post :hook_id="weapons/raycastweaponbase"/>
 		</group>
 
