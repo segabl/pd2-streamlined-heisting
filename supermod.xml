@@ -37,6 +37,7 @@
 		</group>
 		<group hook_id="lib/units/">
 			<post :hook_id="beings/player/playerdamage"/>
+			<post :hook_id="enemies/boss/logics/bosslogicattack"/>
 			<group :hook_id="enemies/cop/">
 				<post :hook_id="actions/full_body/copactiondodge"/>
 				<post :hook_id="actions/full_body/copactionhurt"/>
@@ -66,6 +67,7 @@
 			<post :hook_id="equipment/sentry_gun/sentrygundamage"/>
 			<post :hook_id="player_team/teamaimovement"/>
 			<post :hook_id="weapons/grenades/quickflashgrenade"/>
+			<post :hook_id="weapons/projectiles/projectilebase"/>
 			<post :hook_id="weapons/raycastweaponbase"/>
 		</group>
 

@@ -406,13 +406,13 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_mini.HEALTH_INIT = 400
 	self.phalanx_minion.HEALTH_INIT = 100
 	self.phalanx_vip.HEALTH_INIT = 200
-	self.mobster_boss.HEALTH_INIT = 200
-	self.chavez_boss.HEALTH_INIT = 200
-	self.hector_boss.HEALTH_INIT = 200
-	self.hector_boss_no_armor.HEALTH_INIT = 4
-	self.drug_lord_boss.HEALTH_INIT = 200
-	self.drug_lord_boss_stealth.HEALTH_INIT = 4
-	self.biker_boss.HEALTH_INIT = 200
+	self.mobster_boss.HEALTH_INIT = 400
+	self.chavez_boss.HEALTH_INIT = 400
+	self.hector_boss.HEALTH_INIT = 400
+	self.hector_boss_no_armor.HEALTH_INIT = 8
+	self.drug_lord_boss.HEALTH_INIT = 400
+	self.drug_lord_boss_stealth.HEALTH_INIT = 8
+	self.biker_boss.HEALTH_INIT = 400
 	self.triad_boss.HEALTH_INIT = 400
 	self.triad_boss_no_armor.HEALTH_INIT = 8
 	self.fbi.HEALTH_INIT = 4
@@ -426,10 +426,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_medic.headshot_dmg_mul = 4
 	self.tank_mini.headshot_dmg_mul = 4
 	self.mobster_boss.headshot_dmg_mul = 1
-	self.chavez_boss.damage.headshot_dmg_mul = 1
-	self.hector_boss.damage.headshot_dmg_mul = 1
-	self.drug_lord_boss.damage.headshot_dmg_mul = 1
-	self.biker_boss.damage.headshot_dmg_mul = 1
+	self.chavez_boss.headshot_dmg_mul = 1
+	self.hector_boss.headshot_dmg_mul = 1
+	self.drug_lord_boss.headshot_dmg_mul = 1
+	self.biker_boss.headshot_dmg_mul = 1
+	self.triad_boss.headshot_dmg_mul = 1
 
 	-- Fix/set explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
@@ -440,6 +441,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.shield.damage.explosion_damage_mul = 1
 	self.phalanx_minion.damage.explosion_damage_mul = 1
 	self.phalanx_vip.damage.explosion_damage_mul = 1
+	self.mobster_boss.damage.explosion_damage_mul = 0.5
+	self.chavez_boss.damage.explosion_damage_mul = 0.5
+	self.hector_boss.damage.explosion_damage_mul = 0.5
+	self.drug_lord_boss.damage.explosion_damage_mul = 0.5
+	self.biker_boss.damage.explosion_damage_mul = 0.5
 
 	-- Fix/tweak suppression settings
 	self.medic.suppression = nil
@@ -466,6 +472,25 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.phalanx_minion.DAMAGE_CLAMP_EXPLOSION = 100
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 40
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = 100
+
+	-- Set Body Expertise exceptions
+	self.mobster_boss.no_headshot_add_mul = true
+	self.chavez_boss.no_headshot_add_mul = true
+	self.hector_boss.no_headshot_add_mul = true
+	self.drug_lord_boss.no_headshot_add_mul = true
+	self.biker_boss.no_headshot_add_mul = true
+
+	-- Set player scaling
+	self.mobster_boss.player_health_scaling_mul = 1.5
+	self.chavez_boss.player_health_scaling_mul = 1.5
+	self.hector_boss.player_health_scaling_mul = 1.5
+	self.drug_lord_boss.player_health_scaling_mul = 1.5
+	self.biker_boss.player_health_scaling_mul = 1.5
+
+	-- Set boss throwable data
+	self.drug_lord_boss.throwable = "launcher_m203"
+	self.drug_lord_boss.throwable_on_sight = true
+	self.drug_lord_boss.throwable_cooldown = 10
 end)
 
 
