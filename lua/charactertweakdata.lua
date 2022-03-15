@@ -61,6 +61,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } }
 	}
+	presets.weapon.sh_base.akimbo_pistol.melee_dmg = nil
+	presets.weapon.sh_base.akimbo_pistol.melee_speed = nil
+	presets.weapon.sh_base.akimbo_pistol.melee_retry_delay = nil
 	presets.weapon.sh_base.akimbo_pistol.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.akimbo_pistol.FALLOFF = {
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
@@ -119,6 +122,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.1, 0.3 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0, 0.15 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
+	presets.weapon.sh_base.is_flamethrower.melee_dmg = nil
+	presets.weapon.sh_base.is_flamethrower.melee_speed = nil
+	presets.weapon.sh_base.is_flamethrower.melee_retry_delay = nil
 	presets.weapon.sh_base.is_flamethrower.range = { optimal = 900, far = 1800, close = 450 }
 	presets.weapon.sh_base.is_flamethrower.FALLOFF = {
 		{ dmg_mul = 1 * dmg_mul_str, r = 0, acc = { 0.15, 0.35 }, recoil = { 0.4, 0.8 }, mode = { 1, 0, 0, 0 } },
