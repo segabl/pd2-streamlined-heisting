@@ -64,6 +64,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base.akimbo_pistol.melee_dmg = nil
 	presets.weapon.sh_base.akimbo_pistol.melee_speed = nil
 	presets.weapon.sh_base.akimbo_pistol.melee_retry_delay = nil
+	presets.weapon.sh_base.akimbo_pistol.RELOAD_SPEED = 0.8
 	presets.weapon.sh_base.akimbo_pistol.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.akimbo_pistol.FALLOFF = {
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
