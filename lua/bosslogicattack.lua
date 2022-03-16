@@ -67,7 +67,9 @@ function BossLogicAttack._upd_aim(data, my_data, ...)
 end
 
 
--- Adjust throwable code to allow for non throwable projectiles and tweak
+-- Adjust throwable code to allow for non throwable projectiles
+-- Also make the throwing use an actual action so it properly interrupts shooting
+-- We're adjusting the throwing vector to always throw at player's feet and add z compensation depending on projectile speed
 function BossLogicAttack._chk_use_throwable(data)
 	local throwable = data.char_tweak.throwable
 	local throwable_tweak = tweak_data.projectiles[throwable]
@@ -100,7 +102,7 @@ function BossLogicAttack._chk_use_throwable(data)
 	end
 
 	local throw_dis = focus.verified_dis
-	if throw_dis < 400 or throw_dis > 2000 then
+	if throw_dis < 400 or throw_dis > (throwable_tweak.launch_speed or 600) * 3 then
 		return
 	end
 
@@ -121,11 +123,10 @@ function BossLogicAttack._chk_use_throwable(data)
 	if not ray then
 		return
 	end
-
-	local launch_speed = throwable_tweak.launch_speed or 250
-	local adjust_z = throwable_tweak.adjust_z or 100
 	throw_to = ray.hit_position
-	mvec3_set_z(throw_to, throw_to.z + adjust_z * ((throw_dis - 400) / launch_speed))
+
+	local compensation = throwable_tweak.adjust_z ~= 0 and (((throw_dis - 400) / 10) ^ 2) / ((throwable_tweak.launch_speed or 250) / 10) or 0
+	mvec3_set_z(throw_to, throw_to.z + compensation)
 	mvec3_lerp(tmp_vec, throw_from, throw_to, 0.5)
 	if data.unit:raycast("ray", throw_from, tmp_vec, "sphere_cast_radius", 15, "slot_mask", slotmask, "report") then
 		return
