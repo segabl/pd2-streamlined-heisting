@@ -52,3 +52,67 @@ Hooks:PreHook(SpoocLogicAttack, "_chk_request_action_spooc_attack", "sh___chk_re
 		type = "stand"
 	})
 end)
+
+
+-- Update logic every frame
+Hooks:PostHook(SpoocLogicAttack, "enter", "sh_enter", function (data)
+	data.brain:set_update_enabled_state(true)
+end)
+
+function SpoocLogicAttack.update(data)
+	local my_data = data.internal_data
+
+	if my_data.has_old_action then
+		CopLogicAttack._upd_stop_old_action(data, my_data)
+		return
+	end
+
+	if my_data.spooc_attack then
+		if my_data.spooc_attack.action:complete() and focus_enemy and (not focus_enemy.criminal_record or not focus_enemy.criminal_record.status) and (focus_enemy.verified or focus_enemy.nearly_visible) and focus_enemy.dis < my_data.weapon_range.close then
+			SpoocLogicAttack._cancel_spooc_attempt(data, my_data)
+		end
+
+		CopLogicBase._report_detections(data.detected_attention_objects)
+		return
+	end
+
+	if CopLogicIdle._chk_relocate(data) then
+		return
+	end
+
+	if my_data.wants_stop_old_walk_action then
+		if not data.unit:anim_data().to_idle and not data.unit:movement():chk_action_forbidden("walk") then
+			data.unit:movement():action_request({
+				body_part = 2,
+				type = "idle"
+			})
+
+			my_data.wants_stop_old_walk_action = nil
+		end
+		return
+	end
+
+	CopLogicAttack._process_pathing_results(data, my_data)
+
+	local focus_enemy = data.attention_obj
+	if not focus_enemy or focus_enemy.reaction < AIAttentionObject.REACT_AIM then
+		CopLogicAttack._upd_enemy_detection(data, true)
+		return
+	end
+
+	if SpoocLogicAttack._upd_spooc_attack(data, my_data) then
+		return
+	end
+
+	if focus_enemy.reaction >= AIAttentionObject.REACT_COMBAT then
+		my_data.want_to_take_cover = CopLogicAttack._chk_wants_to_take_cover(data, my_data)
+
+		CopLogicAttack._update_cover(data)
+		CopLogicAttack._upd_combat_movement(data)
+	end
+
+	CopLogicBase._report_detections(data.detected_attention_objects)
+end
+
+function SpoocLogicAttack.queued_update() end
+function SpoocLogicAttack.queue_update() end

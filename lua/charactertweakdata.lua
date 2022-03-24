@@ -201,7 +201,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_taser = based_on(presets.weapon.sh_base, {
 		tase_sphere_cast_radius = 15,
 		tase_distance = 1300,
-		aim_delay_tase = { 0, 0 }
+		aim_delay_tase = { 0, aim_delay }
 	})
 
 	-- Shield preset

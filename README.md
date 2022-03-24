@@ -86,7 +86,7 @@ These are miscellaneous changes and fixes that don't fit any of the above catego
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
 - Fixes enemies playing full body crouching animations when suppressed when they are already crouching
-- Makes important enemies more responsive and always treats specials as important
+- Makes special enemies and bosses more responsive by detaching their attack logic updates from the enemy task scheduler
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes sentry guns not count as criminals which stops enemies from pathing to them and ultimately get stuck
 - Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats

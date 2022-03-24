@@ -283,3 +283,39 @@ function BossLogicAttack._upd_combat_movement(data, my_data)
 		end
 	end
 end
+
+
+-- Update logic every frame
+function BossLogicAttack.update(data)
+	local my_data = data.internal_data
+
+	if my_data.has_old_action then
+		CopLogicAttack._upd_stop_old_action(data, my_data)
+		return
+	end
+
+	if CopLogicAttack._chk_exit_non_walkable_area(data) or CopLogicIdle._chk_relocate(data) then
+		return
+	end
+
+	local focus_enemy = data.attention_obj
+	if not focus_enemy or focus_enemy.reaction < AIAttentionObject.REACT_AIM then
+		BossLogicAttack._upd_enemy_detection(data, true)
+		return
+	end
+
+	BossLogicAttack._process_pathing_results(data, my_data)
+
+	if focus_enemy and AIAttentionObject.REACT_COMBAT <= focus_enemy.reaction then
+		BossLogicAttack._upd_combat_movement(data, my_data)
+	else
+		BossLogicAttack._cancel_chase_attempt(data, my_data)
+	end
+
+	if not data.logic.action_taken then
+		BossLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
+	end
+end
+
+function BossLogicAttack.queued_update() end
+function BossLogicAttack.queue_update() end

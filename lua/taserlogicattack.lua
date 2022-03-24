@@ -76,3 +76,56 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 
 	CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 end
+
+
+-- Update logic every frame
+Hooks:PostHook(TaserLogicAttack, "enter", "sh_enter", function (data)
+	data.brain:set_update_enabled_state(true)
+
+	local my_data = data.internal_data
+	my_data.detection_task_key = "TaserLogicAttack._upd_enemy_detection" .. tostring(data.key)
+	CopLogicBase.queue_task(my_data, my_data.detection_task_key, TaserLogicAttack._upd_enemy_detection, data, data.t + 0.2)
+end)
+
+Hooks:PostHook(TaserLogicAttack, "_upd_enemy_detection", "sh__upd_enemy_detection", function (data, is_synchronous)
+	if not is_synchronous then
+		local my_data = data.internal_data
+		CopLogicBase.queue_task(my_data, my_data.detection_task_key, TaserLogicAttack._upd_enemy_detection, data, data.t + 0.2, data.important)
+	end
+end)
+
+function TaserLogicAttack.update(data)
+	local my_data = data.internal_data
+
+	if my_data.has_old_action then
+		CopLogicAttack._upd_stop_old_action(data, my_data)
+		return
+	end
+
+	if my_data.tasing then
+		CopLogicBase._report_detections(data.detected_attention_objects)
+		return
+	end
+
+	if CopLogicIdle._chk_relocate(data) then
+		return
+	end
+
+	local focus_enemy = data.attention_obj
+	if not focus_enemy or focus_enemy.reaction < AIAttentionObject.REACT_AIM then
+		TaserLogicAttack._upd_enemy_detection(data, true)
+		return
+	end
+
+	CopLogicAttack._process_pathing_results(data, my_data)
+
+	if data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT then
+		CopLogicAttack._update_cover(data)
+		CopLogicAttack._upd_combat_movement(data)
+	end
+
+	CopLogicBase._report_detections(data.detected_attention_objects)
+end
+
+function TaserLogicAttack.queued_update() end
+function TaserLogicAttack.queue_update() end

@@ -7,23 +7,11 @@ CopBrain._logic_variants.biker_boss = CopBrain._logic_variants.triad_boss
 
 
 -- Fix spamming of grenades by units that dodge with grenades (Cloaker)
-Hooks:PostHook(CopBrain, "init", "sh_init", function (self)
-	self._flashbang_cover_expire_t = 0
-	self._next_cover_grenade_chk_t = 0
-end)
-
-
--- Always make enemies with special attack logics important
-Hooks:PostHook(CopBrain, "post_init", "sh_post_init", function (self)
-	if self._logics.attack ~= CopLogicAttack then
-		self._forced_important = true
-		self:set_important(true)
+local _chk_use_cover_grenade_original = CopBrain._chk_use_cover_grenade
+function CopBrain:_chk_use_cover_grenade(...)
+	if not self._next_cover_grenade_chk_t or self._next_cover_grenade_chk_t < TimerManager:game():time() then
+		return _chk_use_cover_grenade_original(self, ...)
 	end
-end)
-
-local set_important_original = CopBrain.set_important
-function CopBrain:set_important(state, ...)
-	return set_important_original(self, self._forced_important and true or state, ...)
 end
 
 

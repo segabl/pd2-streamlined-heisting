@@ -9,16 +9,6 @@ function CopLogicBase._create_detected_attention_object_data(...)
 end
 
 
--- Make important enemies more reactive
-local queue_task_original = CopLogicBase.queue_task
-function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap, ...)
-	if asap and exec_t and data.important then
-		exec_t = math.min(exec_t, data.t + 0.1)
-	end
-	return queue_task_original(internal_data, id, func, data, exec_t, asap, ...)
-end
-
-
 -- Make shield_cover tactics stick closer to their shield tactics providers
 Hooks:PreHook(CopLogicBase, "on_new_objective", "sh_on_new_objective", function (data, old_objective)
 	if not data.objective or data.objective.type ~= "defend_area" or not data.group or not data.tactics or not data.tactics.shield_cover then
@@ -212,16 +202,23 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 end
 
 
+-- Check for minimum objective interruption distance
 local is_obstructed_original = CopLogicBase.is_obstructed
-function CopLogicBase.is_obstructed(data, objective, ...)
+function CopLogicBase.is_obstructed(data, objective, strictness, attention, ...)
 	local min_obj_interrupt_dis = data.char_tweak.min_obj_interrupt_dis
 	if not min_obj_interrupt_dis or not objective or not objective.interrupt_dis or objective.interrupt_dis < 0 then
-		return is_obstructed_original(data, objective, ...)
+		return is_obstructed_original(data, objective, strictness, attention, ...)
+	end
+
+	attention = attention or data.attention_obj
+	if not attention or not attention.verified then
+		-- This is an additional multiplier, is_obstructed already halves when not visible, but for larger ranges thats not enough
+		min_obj_interrupt_dis = min_obj_interrupt_dis * 0.25
 	end
 
 	local interrupt_dis = objective.interrupt_dis
 	objective.interrupt_dis = math.max(interrupt_dis, min_obj_interrupt_dis)
-	local allow_trans, obj_failed = is_obstructed_original(data, objective, ...)
+	local allow_trans, obj_failed = is_obstructed_original(data, objective, strictness, attention, ...)
 	objective.interrupt_dis = interrupt_dis
 
 	return allow_trans, obj_failed

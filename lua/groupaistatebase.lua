@@ -166,16 +166,6 @@ function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
 end
 
 
--- Make specials not take up importance slots (they're already always counted as important)
-local set_importance_weight_original = GroupAIStateBase.set_importance_weight
-function GroupAIStateBase:set_importance_weight(u_key, ...)
-	if self._police[u_key] and self._police[u_key].unit:brain()._forced_important then
-		return
-	end
-	return set_importance_weight_original(self, u_key, ...)
-end
-
-
 -- Check nav segment safety directly instead of area safety
 function GroupAIStateBase:is_nav_seg_safe(nav_seg)
 	for _, u_data in pairs(self._criminals) do
