@@ -498,6 +498,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.drug_lord_boss.throwable = "launcher_m203"
 	self.drug_lord_boss.throwable_on_sight = true
 	self.drug_lord_boss.throwable_cooldown = 10
+
+	-- Set custom objective interrupt distance
+	self.taser.min_obj_interrupt_dis = 1000
+	self.spooc.min_obj_interrupt_dis = 800
+	self.shadow_spooc.min_obj_interrupt_dis = 800
 end)
 
 

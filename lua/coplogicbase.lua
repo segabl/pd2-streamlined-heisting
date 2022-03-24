@@ -210,3 +210,19 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 
 	return action
 end
+
+
+local is_obstructed_original = CopLogicBase.is_obstructed
+function CopLogicBase.is_obstructed(data, objective, ...)
+	local min_obj_interrupt_dis = data.char_tweak.min_obj_interrupt_dis
+	if not min_obj_interrupt_dis or not objective or not objective.interrupt_dis or objective.interrupt_dis < 0 then
+		return is_obstructed_original(data, objective, ...)
+	end
+
+	local interrupt_dis = objective.interrupt_dis
+	objective.interrupt_dis = math.max(interrupt_dis, min_obj_interrupt_dis)
+	local allow_trans, obj_failed = is_obstructed_original(data, objective, ...)
+	objective.interrupt_dis = interrupt_dis
+
+	return allow_trans, obj_failed
+end

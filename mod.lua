@@ -22,11 +22,14 @@ if not StreamHeist then
 
 end
 
-if RequiredScript then
+local required = {}
+if RequiredScript and not required[RequiredScript] then
 
 	local fname = StreamHeist.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
 	if io.file_is_readable(fname) then
 		dofile(fname)
 	end
+
+	required[RequiredScript] = true
 
 end
