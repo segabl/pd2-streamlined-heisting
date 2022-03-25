@@ -20,7 +20,9 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.saiga_npc.auto.fire_rate = 0.18
 
 	self.m249_npc.usage = "is_lmg"
+	self.m249_npc.anim_usage = "is_rifle"
 	self.rpk_lmg_npc.usage = "is_lmg"
+	self.rpk_lmg_npc.anim_usage = "is_rifle"
 
 	-- Fix existing weapons sounds
 	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
