@@ -78,6 +78,19 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 end
 
 
+-- Save taser charge sound cooldown to data to persist over logic changes
+function TaserLogicAttack._chk_play_charge_weapon_sound(data, my_data, focus_enemy)
+	if my_data.tasing or data.last_charge_snd_play_t and data.t - data.last_charge_snd_play_t < 10 then
+		return
+	end
+
+	if focus_enemy.verified_dis < 2000 and math.abs(data.m_pos.z - focus_enemy.m_pos.z) < 300 then
+		data.last_charge_snd_play_t = data.t
+		data.unit:sound():play("taser_charge", nil, true)
+	end
+end
+
+
 -- Update logic every frame
 Hooks:PostHook(TaserLogicAttack, "enter", "sh_enter", function (data)
 	data.brain:set_update_enabled_state(true)
