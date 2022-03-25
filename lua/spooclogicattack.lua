@@ -67,8 +67,9 @@ function SpoocLogicAttack.update(data)
 		return
 	end
 
+	local focus_enemy = data.attention_obj
 	if my_data.spooc_attack then
-		if my_data.spooc_attack.action:complete() and focus_enemy and (not focus_enemy.criminal_record or not focus_enemy.criminal_record.status) and (focus_enemy.verified or focus_enemy.nearly_visible) and focus_enemy.dis < my_data.weapon_range.close then
+		if my_data.spooc_attack.action:complete() and focus_enemy and focus_enemy.verified and (not focus_enemy.criminal_record or not focus_enemy.criminal_record.status) and focus_enemy.dis < my_data.weapon_range.close then
 			SpoocLogicAttack._cancel_spooc_attempt(data, my_data)
 		end
 
@@ -94,7 +95,6 @@ function SpoocLogicAttack.update(data)
 
 	CopLogicAttack._process_pathing_results(data, my_data)
 
-	local focus_enemy = data.attention_obj
 	if not focus_enemy or focus_enemy.reaction < AIAttentionObject.REACT_AIM then
 		CopLogicAttack._upd_enemy_detection(data, true)
 		return
