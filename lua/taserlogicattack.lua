@@ -100,12 +100,16 @@ Hooks:PostHook(TaserLogicAttack, "enter", "sh_enter", function (data)
 	CopLogicBase.queue_task(my_data, my_data.detection_task_key, TaserLogicAttack._upd_enemy_detection, data, data.t + 0.2)
 end)
 
-Hooks:PostHook(TaserLogicAttack, "_upd_enemy_detection", "sh__upd_enemy_detection", function (data, is_synchronous)
-	if not is_synchronous then
-		local my_data = data.internal_data
+local _upd_enemy_detection_original = TaserLogicAttack._upd_enemy_detection
+function TaserLogicAttack._upd_enemy_detection(data, is_synchronous, ...)
+	local my_data = data.internal_data
+
+	_upd_enemy_detection_original(data, is_synchronous, ...)
+
+	if not is_synchronous and my_data == data.internal_data then
 		CopLogicBase.queue_task(my_data, my_data.detection_task_key, TaserLogicAttack._upd_enemy_detection, data, data.t + 0.2, data.important)
 	end
-end)
+end
 
 function TaserLogicAttack.update(data)
 	local my_data = data.internal_data
