@@ -503,10 +503,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.taser.min_obj_interrupt_dis = 1000
 	self.spooc.min_obj_interrupt_dis = 800
 	self.shadow_spooc.min_obj_interrupt_dis = 800
-	self.tank.min_obj_interrupt_dis = 500
-	self.tank_hw.min_obj_interrupt_dis = 500
-	self.tank_medic.min_obj_interrupt_dis = 500
-	self.tank_mini.min_obj_interrupt_dis = 500
+	self.tank.min_obj_interrupt_dis = 600
+	self.tank_hw.min_obj_interrupt_dis = 600
+	self.tank_medic.min_obj_interrupt_dis = 600
+	self.tank_mini.min_obj_interrupt_dis = 600
+	self.shield.min_obj_interrupt_dis = 300
 end)
 
 
