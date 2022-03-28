@@ -46,6 +46,7 @@
 				<post :hook_id="actions/upper_body/copactionreload"/>
 				<post :hook_id="actions/upper_body/copactionshoot"/>
 				<post :hook_id="actions/upper_body/copactiontase"/>
+				<post :hook_id="logics/coplogicarrest"/>
 				<post :hook_id="logics/coplogicattack"/>
 				<post :hook_id="logics/coplogicbase"/>
 				<post :hook_id="logics/coplogicidle"/>
