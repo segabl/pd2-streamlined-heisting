@@ -62,6 +62,7 @@
 			<post :hook_id="enemies/spooc/actions/lower_body/actionspooc"/>
 			<post :hook_id="enemies/spooc/logics/spooclogicattack"/>
 			<post :hook_id="enemies/tank/logics/tankcoplogicattack"/>
+			<post :hook_id="enemies/tank/tankcopdamage"/>
 			<post :hook_id="enemies/taser/logics/taserlogicattack"/>
 			<post :hook_id="environment/environmentfire"/>
 			<post :hook_id="equipment/sentry_gun/sentrygunbase"/>

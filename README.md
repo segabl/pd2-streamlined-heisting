@@ -59,7 +59,7 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
 - Gives each difficulty custom suspicion settings (smoother increase in stealth difficulty)
 - Reduces the amount of active enemies (especially on DS) and scales it with difficulty, DS keeps being difficult through other changes
-- Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS)
+- Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS) and behave like Heavy SWAT armor
 - Scales assault duration with difficulty and reduces spawn pool so it's actually possible to end the assault earlier when spawns are exhausted
 - Makes use of and smoothes out heist difficulty progression such that enemy force and special frequency increases as the heist progresses
 - Reduces player grace period time but makes it always use the full duration (0.2s)
