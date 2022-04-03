@@ -4,16 +4,12 @@ if TheFixes then
 end
 
 
--- Check if the current chase pos is too far from our focus enemy and if so, cancel chase to get a better pos
-Hooks:PreHook(TankCopLogicAttack, "queued_update", "sh_queued_update", function (data)
-	local my_data = data.internal_data
-	local focus_enemy = data.attention_obj
-	if my_data.walking_to_chase_pos and focus_enemy then
-		if mvector3.distance_sq(my_data.walking_to_chase_pos:get_destination_pos(), focus_enemy.m_pos) > 1440000 then
-			TankCopLogicAttack._cancel_chase_attempt(data, my_data)
-		end
+-- Don't exit attack logic while chasing
+function TankCopLogicAttack._chk_exit_attack_logic(data, ...)
+	if not data.internal_data.walking_to_chase_pos then
+		CopLogicAttack._chk_exit_attack_logic(data, ...)
 	end
-end)
+end
 
 
 -- Update logic every frame and fix Dozers sprinting when they shouldn't
@@ -68,7 +64,13 @@ function TankCopLogicAttack.update(data)
 	end
 
 	if chase then
-		if my_data.walking_to_chase_pos or my_data.pathing_to_chase_pos then
+		if my_data.walking_to_chase_pos then
+			-- Check if the current chase pos is too far from our focus enemy and if so, cancel chase to get a better pos
+			if mvector3.distance_sq(my_data.walking_to_chase_pos:get_destination_pos(), focus_enemy.m_pos) > 1440000 then
+				TankCopLogicAttack._cancel_chase_attempt(data, my_data)
+			end
+			return
+		elseif my_data.pathing_to_chase_pos then
 			return
 		elseif my_data.chase_path then
 			-- Fix incorrect path starting position
