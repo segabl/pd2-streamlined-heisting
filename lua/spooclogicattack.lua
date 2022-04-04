@@ -21,6 +21,13 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 		return
 	end
 
+	if not data.spooc_attack_delay_t then
+		data.spooc_attack_delay_t = focus_enemy.verified_t + 0.2
+		return
+	elseif data.spooc_attack_delay_t > data.t then
+		return
+	end
+
 	local flying_strike
 	if ActionSpooc.chk_can_start_flying_strike(data.unit, focus_enemy.unit) then
 		flying_strike = true
@@ -35,6 +42,8 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 
 	local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data, flying_strike)
 	if action then
+		data.spooc_attack_delay_t = nil
+
 		my_data.spooc_attack = {
 			start_t = data.t,
 			target_u_data = focus_enemy,
