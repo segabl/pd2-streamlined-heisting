@@ -113,22 +113,13 @@ function CopActionTase:update(t)
 						if not self._tasing_local_unit:base().is_local_player then
 							self._tasered_sound = self._unit:sound():play("tasered_3rd", nil)
 						end
-
-						local redir_res = self._ext_movement:play_redirect("recoil")
-						if redir_res then
-							self._machine:set_parameter(redir_res, "hvy", 0)
-						end
-
+						self._ext_movement:play_redirect("recoil_auto")
 						self._shoot_t = nil
 					end
 				end
 			elseif not self._tasing_local_unit then
 				self._tasered_sound = self._unit:sound():play("tasered_3rd", nil)
-				local redir_res = self._ext_movement:play_redirect("recoil")
-				if redir_res then
-					self._machine:set_parameter(redir_res, "hvy", 0)
-				end
-
+				self._ext_movement:play_redirect("recoil_auto")
 				self._shoot_t = nil
 			end
 		end
