@@ -42,11 +42,12 @@ Hooks:OverrideFunction(ExplosionManager, "_damage_characters", function (self, d
 	end
 
 	local hit_body, hit_body_pos, len, can_damage, tweak_table, count_table
+	local do_self_damage = not user_unit:base() or not user_unit:base()._tweak_table
 	for key, unit in pairs(detect_results.characters_hit) do
 		hit_body = get_first_body_hit(detect_results.bodies_hit[key])
 		hit_body_pos = hit_body and hit_body:center_of_mass() or alive(unit) and unit:position()
 		len = mvector3.direction(hit_dir, hit_pos, hit_body_pos)
-		can_damage = not verify_callback or verify_callback(unit)
+		can_damage = (do_self_damage or user_unit ~= unit) and (not verify_callback or verify_callback(unit))
 
 		if alive(unit) and can_damage then
 			if unit:character_damage()[damage_func_name] then

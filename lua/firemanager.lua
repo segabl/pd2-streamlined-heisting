@@ -83,13 +83,14 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 	local bodies = World:find_bodies("intersect", "cylinder", tmp_vec1, tmp_vec2, damage_range, slotmask)
 
 	local dir, hit_pos_clamped = tmp_vec1, tmp_vec2
+	local do_self_damage = not user_unit:base() or not user_unit:base()._tweak_table
 	for _, hit_body in pairs(bodies) do
 		local hit_unit = hit_body:unit()
 		local hit_unit_key = hit_unit:key()
 		local character = not characters_hit[hit_unit_key] and hit_unit:character_damage() and hit_unit:character_damage().damage_fire
 		local apply_dmg = hit_body:extension() and hit_body:extension().damage
 
-		if character or apply_dmg then
+		if (character or apply_dmg) and (do_self_damage or hit_unit ~= user_unit) then
 			local body_pos = hit_body:center_of_mass()
 			mvec_add(body_pos, offset_vec)
 			local len = mvec_dir(dir, body_pos, hit_pos)

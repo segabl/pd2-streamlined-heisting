@@ -82,16 +82,15 @@ function BossLogicAttack._chk_use_throwable(data)
 	end
 
 	local focus = data.attention_obj
-	local throw_on_sight = data.char_tweak.throwable_on_sight
-	if not focus.criminal_record or focus.is_deployable or focus.verified and not throw_on_sight then
+	if not focus.criminal_record or focus.is_deployable or (not focus.verified) == data.char_tweak.throwable_target_verified then
 		return
 	end
 
-	if not focus.last_verified_pos or not focus.identified_t or data.t - focus.identified_t < 2 then
+	if not focus.verified_t or not focus.last_verified_pos or not focus.identified_t or data.t - focus.identified_t < 2 then
 		return
 	end
 
-	if not focus.verified_t or not throw_on_sight and data.t - focus.verified_t < 2 then
+	if not focus.verified and (data.t - focus.verified_t < 2 or data.t - focus.verified_t > 8) then
 		return
 	end
 
@@ -108,9 +107,12 @@ function BossLogicAttack._chk_use_throwable(data)
 
 	local throw_from
 	if is_throwable then
-		throw_from = mov_ext:m_head_rot():y()
-		mvec3_mul(throw_from, 50)
+		throw_from = mov_ext:m_rot():y()
+		mvec3_mul(throw_from, 40)
 		mvec3_add(throw_from, mov_ext:m_head_pos())
+		local offset = mov_ext:m_rot():x()
+		mvec3_mul(offset, -20)
+		mvec3_add(throw_from, offset)
 	else
 		throw_from = data.unit:inventory():equipped_unit():position()
 	end
