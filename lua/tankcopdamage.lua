@@ -1,4 +1,6 @@
 -- Make Bulldozer armor prevent damage
+TankCopDamage.IS_TANK = true
+
 local armor_body_names = {
 	[Idstring("body_armor_back"):key()] = true,
 	[Idstring("body_armor_chest"):key()] = true,

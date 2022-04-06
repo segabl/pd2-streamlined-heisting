@@ -59,10 +59,17 @@
 				<post :hook_id="copmovement"/>
 			</group>
 			<post :hook_id="enemies/shield/logics/shieldlogicattack"/>
-			<post :hook_id="enemies/spooc/actions/lower_body/actionspooc"/>
-			<post :hook_id="enemies/spooc/logics/spooclogicattack"/>
-			<post :hook_id="enemies/tank/logics/tankcoplogicattack"/>
-			<post :hook_id="enemies/tank/tankcopdamage"/>
+			<group :hook_id="enemies/spooc/">
+				<post :hook_id="enemies/spooc/actions/lower_body/actionspooc"/>
+				<post :hook_id="enemies/spooc/logics/spooclogicattack"/>
+			</group>
+			<group :hook_id="enemies/tank/">
+				<post :hook_id="logics/tankcoplogicattack"/>
+				<post :hook_id="husktankcopdamage"/>
+				<post :hook_id="husktankmediccopdamage"/>
+				<post :hook_id="tankcopdamage"/>
+				<post :hook_id="tankmediccopdamage"/>
+			</group>
 			<post :hook_id="enemies/taser/logics/taserlogicattack"/>
 			<post :hook_id="environment/environmentfire"/>
 			<post :hook_id="equipment/sentry_gun/sentrygunbase"/>
