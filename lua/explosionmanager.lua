@@ -42,7 +42,7 @@ Hooks:OverrideFunction(ExplosionManager, "_damage_characters", function (self, d
 	end
 
 	local hit_body, hit_body_pos, len, can_damage, tweak_table, count_table
-	local do_self_damage = not user_unit:base() or not user_unit:base()._tweak_table
+	local do_self_damage = not alive(user_unit) or not user_unit:base() or not user_unit:base()._tweak_table
 	for key, unit in pairs(detect_results.characters_hit) do
 		hit_body = get_first_body_hit(detect_results.bodies_hit[key])
 		hit_body_pos = hit_body and hit_body:center_of_mass() or alive(unit) and unit:position()

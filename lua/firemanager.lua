@@ -83,7 +83,7 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 	local bodies = World:find_bodies("intersect", "cylinder", tmp_vec1, tmp_vec2, damage_range, slotmask)
 
 	local dir, hit_pos_clamped = tmp_vec1, tmp_vec2
-	local do_self_damage = not user_unit:base() or not user_unit:base()._tweak_table
+	local do_self_damage = not alive(user_unit) or not user_unit:base() or not user_unit:base()._tweak_table
 	for _, hit_body in pairs(bodies) do
 		local hit_unit = hit_body:unit()
 		local hit_unit_key = hit_unit:key()
