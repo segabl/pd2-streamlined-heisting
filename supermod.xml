@@ -444,6 +444,19 @@
 			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass_husk.unit"/>
 		</group>
 
+		<!-- character fixes -->
+		<group name="units/" dyn_package="false">
+			<!-- sosa hitboxes and footsteps -->
+			<group :name="pd2_dlc_friend/characters/">
+				<file :name="ene_drug_lord_boss/ene_drug_lord_boss.object"/>
+				<file :name="ene_drug_lord_boss/ene_drug_lord_boss.unit"/>
+				<file :name="ene_drug_lord_boss/ene_drug_lord_boss_husk.unit"/>
+			</group>
+
+			<!-- yufu wang hitboxes -->
+			<file :name="pd2_dlc_pent/characters/npc_male_yufuwang_armored/npc_male_yufuwang_armored.object"/>
+		</group>
+
 	</assets>
 
 </mod>
