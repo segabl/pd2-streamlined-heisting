@@ -241,14 +241,13 @@ function BossLogicAttack._upd_combat_movement(data, my_data)
 			return
 		end
 
-		local enemy_dis = enemy_visible and focus_enemy.dis or focus_enemy.verified_dis
-		local run_dist = (enemy_visible and weapon_range.optimal or weapon_range.close) * 0.5
 		local change_speed
-
+		local enemy_dis = enemy_visible and focus_enemy.dis or focus_enemy.verified_dis
+		local run_dist = enemy_visible and weapon_range.optimal or weapon_range.close
 		if current_haste == "run" then
-			change_speed = enemy_dis < run_dist and "walk"
+			change_speed = enemy_dis < run_dist * 0.5 and "walk"
 		else
-			change_speed = run_dist <= enemy_dis and "run"
+			change_speed = enemy_dis > run_dist and "run"
 		end
 
 		if not change_speed then
