@@ -19,10 +19,12 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.saiga_npc.auto.fire_rate = 0.18
 
+	-- Workarounds for bulldozer animations
 	self.m249_npc.usage = "is_lmg"
 	self.m249_npc.anim_usage = "is_rifle"
 	self.rpk_lmg_npc.usage = "is_lmg"
 	self.rpk_lmg_npc.anim_usage = "is_rifle"
+	self.contraband_npc.anim_usage = "is_shotgun_mag"
 
 	-- Fix existing weapons sounds
 	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
