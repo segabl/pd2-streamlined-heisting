@@ -81,13 +81,10 @@ function CopLogicSniper._upd_aim(data, my_data)
 		end
 	else
 		if my_data.shooting then
-			local success = data.unit:brain():action_request({
+			data.unit:brain():action_request({
 				body_part = 3,
 				type = "idle"
 			})
-			if success then
-				my_data.shooting = nil
-			end
 		end
 
 		if my_data.attention_unit then

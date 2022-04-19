@@ -6,13 +6,58 @@ local temp_vec2 = Vector3()
 
 
 -- Make tasers more consistent by allowing to tase through enemies and ignoring attention when already discharging
-local on_attention_original = CopActionTase.on_attention
-function CopActionTase:on_attention(attention, ...)
-	if self._expired or not self._discharging then
-		on_attention_original(self, attention, ...)
-
-		self._line_of_fire_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
+function CopActionTase:on_attention(attention)
+	if not attention then
+		self._expired = self._expired or Network:is_server()
+		self._attention = attention
+		self.update = self._upd_empty
+		return
+	elseif self._attention then
+		return
 	end
+
+	local weap_tweak = self._ext_inventory:equipped_unit():base():weapon_tweak_data()
+	local weapon_usage_tweak = self._common_data.char_tweak.weapon[weap_tweak.usage]
+
+	self._weap_tweak = weap_tweak
+	self._w_usage_tweak = weapon_usage_tweak
+	self._falloff = weapon_usage_tweak.FALLOFF
+	self._attention = attention
+	self._line_of_fire_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
+
+	local target_pos = attention.handler and attention.handler:get_attention_m_pos() or attention.unit:movement():m_head_pos()
+	local target_vec = target_pos - self._ext_movement:m_head_pos()
+	local lerp_dis = math.min(1, target_vec:length() / self._w_usage_tweak.tase_distance)
+	local aim_delay = weapon_usage_tweak.aim_delay_tase or weapon_usage_tweak.aim_delay
+	local shoot_delay = math.lerp(aim_delay[1], aim_delay[2], lerp_dis)
+
+	self._modifier:set_target_y(target_vec)
+	self._mod_enable_t = TimerManager:game():time() + shoot_delay
+	self._tasing_local_unit = nil
+	self._tasing_player = nil
+
+	if Network:is_server() then
+		self._common_data.ext_network:send("action_tase_event", 1)
+		if not attention.unit:base().is_husk_player then
+			self._shoot_t = TimerManager:game():time() + shoot_delay
+			self._tasing_local_unit = attention.unit
+			self._tasing_player = attention.unit:base().is_local_player
+		end
+	elseif attention.unit:base().is_local_player then
+		self._shoot_t = TimerManager:game():time() + shoot_delay
+		self._tasing_local_unit = attention.unit
+		self._tasing_player = true
+	end
+
+	if self._tasing_local_unit and self._tasing_player then
+		self._tasing_local_unit:movement():on_targetted_for_attack(true, self._unit)
+	end
+end
+
+
+-- Helper function
+function CopActionTase:_obstructed(from, to)
+	return self._unit:raycast("ray", from, to, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._w_usage_tweak.tase_sphere_cast_radius, "ignore_unit", self._tasing_local_unit, "report")
 end
 
 
@@ -67,9 +112,7 @@ function CopActionTase:update(t)
 
 	if not self._ext_anim.reload and not self._ext_anim.equip then
 		if self._discharging then
-			local vis_ray = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._w_usage_tweak.tase_sphere_cast_radius, "ignore_unit", self._tasing_local_unit, "report")
-
-			if not self._tasing_local_unit:movement():tased() or vis_ray then
+			if not self._tasing_local_unit:movement():tased() or self:_obstructed(shoot_from_pos, target_pos) then
 				if Network:is_server() then
 					self._expired = true
 				else
@@ -96,26 +139,19 @@ function CopActionTase:update(t)
 			if self._tasing_local_unit and mvector3.distance(shoot_from_pos, target_pos) < self._w_usage_tweak.tase_distance then
 				local record = managers.groupai:state():criminal_record(self._tasing_local_unit:key())
 				if not record or record.status or self._tasing_local_unit:movement():chk_action_forbidden("hurt") or self._tasing_local_unit:movement():zipline_unit() then
-					if Network:is_server() then
-						self._expired = true
+					self._expired = Network:is_server()
+				elseif not self:_obstructed(shoot_from_pos, target_pos) then
+					self._common_data.ext_network:send("action_tase_event", 3)
+
+					self._attention.unit:character_damage():damage_tase({ attacker_unit = self._unit })
+					CopDamage._notify_listeners("on_criminal_tased", self._unit, self._attention.unit)
+
+					if not self._tasing_local_unit:base().is_local_player then
+						self._tasered_sound = self._unit:sound():play("tasered_3rd", nil)
 					end
-				else
-					local vis_ray = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._w_usage_tweak.tase_sphere_cast_radius, "ignore_unit", self._tasing_local_unit, "report")
-
-					if not vis_ray then
-						self._common_data.ext_network:send("action_tase_event", 3)
-
-						self._attention.unit:character_damage():damage_tase({ attacker_unit = self._unit })
-						CopDamage._notify_listeners("on_criminal_tased", self._unit, self._attention.unit)
-
-						self._discharging = true
-
-						if not self._tasing_local_unit:base().is_local_player then
-							self._tasered_sound = self._unit:sound():play("tasered_3rd", nil)
-						end
-						self._ext_movement:play_redirect("recoil_auto")
-						self._shoot_t = nil
-					end
+					self._ext_movement:play_redirect("recoil_auto")
+					self._shoot_t = nil
+					self._discharging = true
 				end
 			elseif not self._tasing_local_unit then
 				self._tasered_sound = self._unit:sound():play("tasered_3rd", nil)
