@@ -12,6 +12,7 @@ function CopActionTase:on_attention(attention)
 		self._attention = attention
 		self._tasing_local_unit = nil
 		self._tasing_player = nil
+		self._discharging = nil
 		self.update = self._upd_empty
 		return
 	elseif self._attention then
