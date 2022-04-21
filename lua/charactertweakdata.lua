@@ -224,9 +224,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		end
 	})
 	presets.gang_member_damage.HEALTH_INIT = 100 * diff_i
-	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.15
+	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.2
 	presets.gang_member_damage.REGENERATE_TIME = 2
-	presets.gang_member_damage.REGENERATE_TIME_AWAY = 1
+	presets.gang_member_damage.REGENERATE_TIME_AWAY = 2
 
 	-- Setup surrender presets
 	local surrender_factors = {
@@ -377,6 +377,8 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 	self.biker_boss.damage.explosion_damage_mul = 0.5
 	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.biker_boss.move_speed = presets.move_speed.slow
+	self.biker_boss.no_run_start = true
+	self.biker_boss.no_run_stop = true
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", function (self, presets)
@@ -389,6 +391,8 @@ Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", 
 	self.chavez_boss.damage.explosion_damage_mul = 0.5
 	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.chavez_boss.move_speed = presets.move_speed.very_fast
+	self.chavez_boss.no_run_start = true
+	self.chavez_boss.no_run_stop = true
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_boss", function (self, presets)
@@ -401,6 +405,8 @@ Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_b
 	self.drug_lord_boss.damage.explosion_damage_mul = 0.5
 	self.drug_lord_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.drug_lord_boss.move_speed = presets.move_speed.normal
+	self.drug_lord_boss.no_run_start = true
+	self.drug_lord_boss.no_run_stop = true
 	self.drug_lord_boss.throwable = "launcher_m203"
 	self.drug_lord_boss.throwable_target_verified = true
 	self.drug_lord_boss.throwable_cooldown = 10
@@ -416,6 +422,8 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 	self.hector_boss.damage.explosion_damage_mul = 0.5
 	self.hector_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.hector_boss.move_speed = presets.move_speed.slow
+	self.hector_boss.no_run_start = true
+	self.hector_boss.no_run_stop = true
 	self.hector_boss.throwable = "frag"
 	self.hector_boss.throwable_cooldown = 15
 end)
@@ -430,6 +438,8 @@ Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss"
 	self.mobster_boss.damage.explosion_damage_mul = 0.5
 	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.mobster_boss.move_speed = presets.move_speed.fast
+	self.mobster_boss.no_run_start = true
+	self.mobster_boss.no_run_stop = true
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", function (self, presets)
@@ -442,6 +452,8 @@ Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", fu
 	self.triad_boss.damage.explosion_damage_mul = 0.5
 	self.triad_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.triad_boss.move_speed = presets.move_speed.slow
+	self.triad_boss.no_run_start = true
+	self.triad_boss.no_run_stop = true
 	self.triad_boss.bullet_damage_only_from_front = nil
 	self.triad_boss.throwable_target_verified = false
 	self.triad_boss.throwable_cooldown = 20
@@ -578,25 +590,25 @@ local function set_presets(char_tweak_data)
 	local hp_mul = hp_muls[diff_i]
 
 	local char_preset, weapon_preset_name
-	for _, name in ipairs(char_tweak_data._enemy_list) do
+	for _, name in pairs(char_tweak_data._enemy_list) do
 		char_preset = char_tweak_data[name]
 
-		if not char_preset._sh_modified then
-			if not no_hp_scale_access[char_preset.access] then
-				char_preset.HEALTH_INIT = char_preset.HEALTH_INIT * hp_mul
-			end
+		if not no_hp_scale_access[char_preset.access] then
+			char_preset.BASE_HEALTH_INIT = char_preset.BASE_HEALTH_INIT or char_preset.HEALTH_INIT
+			char_preset.HEALTH_INIT = char_preset.BASE_HEALTH_INIT * hp_mul
+		end
 
-			char_preset.headshot_dmg_mul = char_preset.headshot_dmg_mul and char_preset.headshot_dmg_mul * 2
+		if char_preset.headshot_dmg_mul then
+			char_preset.base_headshot_dmg_mul = char_preset.base_headshot_dmg_mul or char_preset.headshot_dmg_mul
+			char_preset.headshot_dmg_mul = char_preset.base_headshot_dmg_mul * 2
+		end
 
-			weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
-			if weapon_preset_name then
-				char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
-				StreamHeist:log("Using", weapon_preset_name, "weapon preset for", name)
-			else
-				StreamHeist:log("[Warning] No weapon preset for", name)
-			end
-
-			char_preset._sh_modified = true
+		weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
+		if weapon_preset_name then
+			char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
+			StreamHeist:log("Using", weapon_preset_name, "weapon preset for", name)
+		else
+			StreamHeist:log("[Warning] No weapon preset for", name)
 		end
 	end
 
