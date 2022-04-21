@@ -7,4 +7,9 @@ Hooks:PreHook(ProjectileBase, "throw_projectile_npc", "sh_throw_projectile_npc",
 		StreamHeist:log("Loading projectile unit", projectile_type)
 		managers.dyn_resource:load(unit_ids, unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
 	end
+	local sprint_unit_name = tweak_entry.sprint_unit and Idstring(tweak_entry.sprint_unit)
+	if sprint_unit_name and not PackageManager:has(unit_ids, sprint_unit_name) then
+		StreamHeist:log("Loading projectile sprint unit", projectile_type)
+		managers.dyn_resource:load(unit_ids, sprint_unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
+	end
 end)
