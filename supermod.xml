@@ -444,8 +444,14 @@
 			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass_husk.unit"/>
 		</group>
 
-		<!-- character fixes -->
+		<!-- character fixes and changes -->
 		<group name="units/" dyn_package="false">
+			<!-- biker boss weapon -->
+			<group :name="pd2_dlc_born/characters/">
+				<file :name="ene_gang_biker_boss/ene_gang_biker_boss.unit"/>
+				<file :name="ene_gang_biker_boss/ene_gang_biker_boss_husk.unit"/>
+			</group>
+
 			<!-- sosa hitboxes and footsteps -->
 			<group :name="pd2_dlc_friend/characters/">
 				<file :name="ene_drug_lord_boss/ene_drug_lord_boss.object"/>
