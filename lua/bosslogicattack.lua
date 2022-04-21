@@ -12,14 +12,14 @@ local tmp_vec = Vector3()
 
 -- Boss should basically always be in shooting action
 function BossLogicAttack._upd_aim(data, my_data, ...)
-	if BossLogicAttack._chk_use_throwable(data) then
-		return
-	end
-
 	local focus_enemy = data.attention_obj
 	local visible = focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible)
 	local aim, shoot, expected_pos
 	if focus_enemy then
+		if BossLogicAttack._chk_use_throwable(data) then
+			return
+		end
+
 		local time_since_verification = focus_enemy.verified_t and data.t - focus_enemy.verified_t or math.huge
 		local time_since_damaged = focus_enemy.dmg_t and data.t - focus_enemy.dmg_t or math.huge
 		aim = focus_enemy.verified_dis < my_data.weapon_range.far
