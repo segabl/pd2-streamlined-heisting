@@ -54,6 +54,7 @@
 				<post :hook_id="logics/coplogicphalanxminion"/>
 				<post :hook_id="logics/coplogicsniper"/>
 				<post :hook_id="logics/coplogictravel"/>
+				<post :hook_id="copbase"/>
 				<post :hook_id="copbrain"/>
 				<post :hook_id="copdamage"/>
 				<post :hook_id="copmovement"/>
@@ -76,7 +77,6 @@
 			<post :hook_id="equipment/sentry_gun/sentrygundamage"/>
 			<post :hook_id="player_team/teamaimovement"/>
 			<post :hook_id="weapons/grenades/quickflashgrenade"/>
-			<post :hook_id="weapons/projectiles/projectilebase"/>
 			<post :hook_id="weapons/akimboweaponbase"/>
 			<post :hook_id="weapons/raycastweaponbase"/>
 		</group>
