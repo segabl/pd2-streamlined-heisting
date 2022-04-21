@@ -379,6 +379,8 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 	self.biker_boss.move_speed = presets.move_speed.slow
 	self.biker_boss.no_run_start = true
 	self.biker_boss.no_run_stop = true
+	self.biker_boss.throwable = "concussion"
+	self.biker_boss.throwable_cooldown = 10
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", function (self, presets)
