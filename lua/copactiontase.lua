@@ -8,12 +8,23 @@ local temp_vec2 = Vector3()
 -- Make tasers more consistent by allowing to tase through enemies and ignoring attention when already discharging
 function CopActionTase:on_attention(attention)
 	if not attention then
-		self._expired = self._expired or Network:is_server()
-		self._attention = attention
-		self._tasing_local_unit = nil
-		self._tasing_player = nil
-		self._discharging = nil
-		self.update = self._upd_empty
+		if self._attention then
+			if self._tasing_local_unit then
+				if self._discharging then
+					self._tasing_local_unit:movement():on_tase_ended()
+				end
+				if self._tasing_player then
+					self._tasing_local_unit:movement():on_targetted_for_attack(false, self._unit)
+				end
+			end
+
+			self._expired = self._expired or Network:is_server()
+			self._attention = nil
+			self._tasing_local_unit = nil
+			self._tasing_player = nil
+			self._discharging = nil
+			self.update = self._upd_empty
+		end
 		return
 	elseif self._attention then
 		return
