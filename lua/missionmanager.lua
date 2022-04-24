@@ -5,12 +5,6 @@ if Global.editor_mode then
 end
 
 
--- Disable reinforce points on No Mercy (it's already crowded enough and they tend to get stuck in the ceiling)
-if level_id == "nmh" then
-	function ElementAreaMinPoliceForce:operation_add() end
-end
-
-
 -- Add custom mission script changes and triggers for specific levels
 -- Execution of mission scripts can trigger reinforce locations (trigger that has just a name disables previously enabled reinforcement with that id)
 -- Mission script elements can be disabled or enabled
@@ -52,6 +46,29 @@ local level_mission_script_elements = {
 		[101612] = {
 			enabled = false -- Sosa retreat spot SO selection
 		}
+	},
+	nmh = { -- Disable most reinforce points on No Mercy
+		[103706] = {
+			enabled = false
+		},
+		[103707] = {
+			enabled = false
+		},
+		[103847] = {
+			enabled = false
+		}
+	},
+	pent = {
+		[103595] = {
+			reinforce = {
+				{ name = "main_room", force = 3, position = Vector3(300, -1600, 12100) }
+			}
+		},
+		[103831] = {
+			reinforce = {
+				{ name = "helipad", force = 3, position = Vector3(1600, -1600, 13100) }
+			}
+		}
 	}
 }
 local mission_script_elements = level_mission_script_elements[level_id]
@@ -68,18 +85,18 @@ Hooks:PostHook(MissionManager, "_activate_mission", "sh__activate_mission", func
 			-- Check if this element is supposed to trigger reinforce points
 			if data.reinforce then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_" .. element_id, function ()
-					StreamHeist:log("Mission script element", string.format("%u (%s)", element_id, element:editor_name()), "executed, toggled", #data, "reinforce point(s)")
+					StreamHeist:log(string.format("Mission script element %u (%s) executed, toggled %u reinforce point(s)", element_id, element:editor_name(), #data.reinforce))
 					for _, v in pairs(data.reinforce) do
 						managers.groupai:state():set_area_min_police_force(v.name, v.force, v.position)
 					end
 				end)
-				StreamHeist:log("Mission script element", string.format("%u (%s)", element_id, element:editor_name()), "hooked as reinforce trigger for", #data, "area(s)")
+				StreamHeist:log(string.format("Mission script element %u (%s) hooked as reinforce trigger for %u area(s)", element_id, element:editor_name(), #data.reinforce))
 			end
 
 			-- Check if this element is supposed to be turned on or off
 			if data.enabled ~= nil then
 				element:set_enabled(data.enabled)
-				StreamHeist:log("Mission script element", string.format("%u (%s)", element_id, element:editor_name()), "has been", data.enabled and "enabled" or "disabled")
+				StreamHeist:log(string.format("Mission script element %u (%s) has been %s", element_id, element:editor_name(), data.enabled and "enabled" or "disabled"))
 			end
 		end
 	end
