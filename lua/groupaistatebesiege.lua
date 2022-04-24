@@ -63,10 +63,10 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 	if not self._hunt_mode then
 		local end_assault
 		local is_skirmish = managers.skirmish:is_skirmish()
-		local enemies_defeated_time_limit = is_skirmish and 0 or self._tweak_data.assault.fade_settings.enemies_defeated_time_limit or 30
-		local drama_engagement_time_limit = is_skirmish and 0 or self._tweak_data.assault.fade_settings.drama_engagement_time_limit or 30
+		local enemies_defeated_time_limit = is_skirmish and 0 or 30
+		local drama_engagement_time_limit = is_skirmish and 0 or 20
+		local min_enemies_left = task_data.force * 0.5
 		local enemies_left = self:_count_police_force("assault")
-		local min_enemies_left = task_data.force * (self._tweak_data.assault.fade_settings.enemies_defeated_percentage or 0.5)
 		local enemies_defeated = enemies_left < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time_limit
 		if enemies_defeated then
 			if not task_data.said_retreat then

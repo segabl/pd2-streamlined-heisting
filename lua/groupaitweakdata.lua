@@ -524,11 +524,6 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.sustain_duration_min = { math.lerp(60, 120, f), math.lerp(120, 180, f), math.lerp(180, 240, f) }
 	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
 	self.besiege.assault.sustain_duration_balance_mul = { 1, 1, 1, 1 }
-	self.besiege.assault.fade_settings = {
-		enemies_defeated_percentage = 0.5,
-		enemies_defeated_time_limit = 30,
-		drama_engagement_time_limit = 20
-	}
 
 	self.besiege.reenforce.groups = {
 		tac_swat_shotgun_rush_no_medic = { 1, 1, 1 },
