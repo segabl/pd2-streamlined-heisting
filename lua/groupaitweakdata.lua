@@ -124,7 +124,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	local limits_shield = { 0, 2, 2, 3, 3, 4, 4, 5 }
 	local limits_medic = { 0, 0, 0, 0, 1, 2, 3, 4 }
 	local limits_taser = { 0, 0, 1, 1, 2, 2, 3, 3 }
-	local limits_tank = { 0, 0, 0, 1, 2, 2, 3, 3 }
+	local limits_tank = { 0, 0, 0, 1, 1, 2, 2, 3 }
 	local limits_spooc = { 0, 0, 0, 1, 1, 2, 2, 3 }
 	self.special_unit_spawn_limits = {
 		shield = limits_shield[difficulty_index],
