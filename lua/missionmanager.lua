@@ -42,6 +42,19 @@ local level_mission_script_elements = {
 			}
 		}
 	},
+	pent = {
+		[103595] = {
+			reinforce = {
+				{ name = "main_room", force = 3, position = Vector3(300, -1600, 12100) }
+			}
+		},
+		[103831] = {
+			reinforce = {
+				{ name = "main_room" },
+				{ name = "helipad", force = 3, position = Vector3(1600, -1600, 13100) }
+			}
+		}
+	},
 	friend = {
 		[101612] = {
 			enabled = false -- Sosa retreat spot SO selection
@@ -56,18 +69,6 @@ local level_mission_script_elements = {
 		},
 		[103847] = {
 			enabled = false
-		}
-	},
-	pent = {
-		[103595] = {
-			reinforce = {
-				{ name = "main_room", force = 3, position = Vector3(300, -1600, 12100) }
-			}
-		},
-		[103831] = {
-			reinforce = {
-				{ name = "helipad", force = 3, position = Vector3(1600, -1600, 13100) }
-			}
 		}
 	}
 }
