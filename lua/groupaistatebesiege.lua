@@ -422,28 +422,12 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 
 				self:_set_objective_to_enemy_group(group, grp_objective)
 			end
-		elseif in_place_duration > 5 then
-			-- If no assault path was found, check if the group is stuck, which can happen when certain units are not allowed to use navlinks
-			-- Ultimately this should be fixed per map that has these issues, this is a temporary solution that removes stuck groups
-			for _, u_data in pairs(group.units) do
-				if u_data.unit:brain()._current_logic_name ~= "idle" then
-					return
-				end
-			end
+		elseif in_place_duration > 10 and not self:_can_group_see_target(group) then
+			-- Log and remove groups that get stuck
+			local element_id = group.spawn_group_element and group.spawn_group_element._id or 0
+			local element_name = group.spawn_group_element and group.spawn_group_element._editor_name or ""
+			StreamHeist:log(string.format("[Warning] Group %s spawned from element %u (%s) is stuck, removing it!", group.id, element_id, element_name))
 
-			for _, other_area in pairs(objective_area.neighbours) do
-				local path = managers.navigation:search_coarse({
-					id = "GroupAI_assault",
-					from_seg = objective_area.pos_nav_seg,
-					to_seg = other_area.pos_nav_seg,
-					access_pos = group_access_mask
-				})
-				if path then
-					return
-				end
-			end
-
-			StreamHeist:log("[Warning] Group", group.id, "had no valid path to any of its neighboring areas for 5s, removing group!")
 			for _, u_data in pairs(group.units) do
 				u_data.unit:brain():set_active(false)
 				u_data.unit:set_slot(0)
@@ -898,3 +882,14 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_perform_group_spawning", function 
 	-- Set a cooldown before new units can be spawned via regular spawn tasks
 	self._next_group_spawn_t = self._t + spawn_task.group.size * tweak_data.group_ai.spawn_cooldown_mul
 end)
+
+
+-- Save spawn group element in group description for debugging stuck groups
+local _spawn_in_group_original = GroupAIStateBesiege._spawn_in_group
+function GroupAIStateBesiege:_spawn_in_group(spawn_group, ...)
+	local group = _spawn_in_group_original(self, spawn_group, ...)
+	if group then
+		group.spawn_group_element = spawn_group.mission_element
+		return group
+	end
+end

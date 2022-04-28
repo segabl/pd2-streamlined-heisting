@@ -6,6 +6,13 @@ if not StreamHeist then
 		logging = io.file_is_readable("mods/developer.txt")
 	}
 
+	function StreamHeist:mission_script_patches()
+		if not self._mission_script_patches then
+			self._mission_script_patches = blt.vm.dofile(self.mod_path .. "req/mission_script_patches.lua") or {}
+		end
+		return self._mission_script_patches[Global.game_settings and Global.game_settings.level_id]
+	end
+
 	function StreamHeist:log(...)
 		if self.logging then
 			log("[StreamlinedHeisting] " .. table.concat({...}, " "))

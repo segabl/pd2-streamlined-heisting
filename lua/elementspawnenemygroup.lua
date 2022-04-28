@@ -60,6 +60,9 @@ group_mapping.tac_shield_wall_ranged = group_mapping.tac_shield_wall
 group_mapping.tac_shield_wall_charge = group_mapping.tac_shield_wall
 group_mapping.tac_tazer_charge = group_mapping.tac_tazer_flanking
 
+-- Level specific group mappings to fix issues with nav link access flags
+local mission_script_elements = StreamHeist:mission_script_patches()
+
 Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values", function (self)
 	if not self._values.preferred_spawn_groups then
 		return
@@ -70,7 +73,7 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 			local spawn_point = self:get_mission_element(id)
 			if spawn_point and spawn_point._values.spawn_action then
 				self._values.interval = 5
-				StreamHeist:log(self:editor_name(), "0s -> 5s interval, spawn action", tostring(CopActionAct._act_redirects.enemy_spawn[spawn_point._values.spawn_action]))
+				StreamHeist:log(self._editor_name, "0s -> 5s interval, spawn action", tostring(CopActionAct._act_redirects.enemy_spawn[spawn_point._values.spawn_action]))
 				break
 			end
 		end
@@ -87,10 +90,18 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 			new_groups[initial_group] = true
 		end
 	end
+
+	local element_mapping = mission_script_elements and mission_script_elements[self._id]
+	if element_mapping and element_mapping.groups then
+		for group, enabled in pairs(element_mapping.groups) do
+			new_groups[group] = enabled or nil
+		end
+	end
+
 	new_groups = table.map_keys(new_groups)
 
 	if #self._values.preferred_spawn_groups ~= #new_groups then
-		StreamHeist:log(self:editor_name(), "preferred_spawn_groups", #self._values.preferred_spawn_groups, "->", #new_groups, "entries")
+		StreamHeist:log(self._editor_name, "preferred_spawn_groups", #self._values.preferred_spawn_groups, "->", #new_groups, "entries")
 		self._values.preferred_spawn_groups = new_groups
 	end
 end)
