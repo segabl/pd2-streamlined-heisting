@@ -223,7 +223,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			manipulate_entries(falloff, "dmg_mul", function (val) return (val / ref) * dmg_mul_team end)
 		end
 	})
-	presets.gang_member_damage.HEALTH_INIT = 100 * diff_i
+	presets.gang_member_damage.HEALTH_INIT = 75 * diff_i
 	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.2
 	presets.gang_member_damage.REGENERATE_TIME = 2
 	presets.gang_member_damage.REGENERATE_TIME_AWAY = 2
