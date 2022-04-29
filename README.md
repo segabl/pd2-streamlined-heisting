@@ -109,4 +109,4 @@ These are miscellaneous changes and fixes that don't fit any of the above catego
 - [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code and providing code snippets
 - [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
 - [creepyyy](https://modworkshop.net/user/54264), ERO, [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
-- Inspired by the early days of [fuglore's Hyper Heisting](https://modworkshop.net/mod/24337)
+- [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes

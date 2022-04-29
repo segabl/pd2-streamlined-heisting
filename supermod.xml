@@ -39,6 +39,7 @@
 			<post :hook_id="beings/player/playerdamage"/>
 			<post :hook_id="enemies/boss/logics/bosslogicattack"/>
 			<group :hook_id="enemies/cop/">
+				<post :hook_id="actions/full_body/copactionact"/>
 				<post :hook_id="actions/full_body/copactiondodge"/>
 				<post :hook_id="actions/full_body/copactionhurt"/>
 				<post :hook_id="actions/lower_body/copactionidle"/>
