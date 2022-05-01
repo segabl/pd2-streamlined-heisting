@@ -20,13 +20,22 @@ Hooks:PostHook(MissionManager, "_activate_mission", "sh__activate_mission", func
 		else
 			-- Check if this element is supposed to trigger reinforce points
 			if data.reinforce then
-				Hooks:PostHook(element, "on_executed", "sh_on_executed_" .. element_id, function ()
+				Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element_id, function ()
 					StreamHeist:log(string.format("Mission script element %u (%s) executed, toggled %u reinforce point(s)", element_id, element:editor_name(), #data.reinforce))
 					for _, v in pairs(data.reinforce) do
 						managers.groupai:state():set_area_min_police_force(v.name, v.force, v.position)
 					end
 				end)
 				StreamHeist:log(string.format("Mission script element %u (%s) hooked as reinforce trigger for %u area(s)", element_id, element:editor_name(), #data.reinforce))
+			end
+
+			-- Check if this element is supposed to trigger a difficulty change
+			if data.difficulty then
+				Hooks:PostHook(element, "on_executed", "sh_on_executed_difficulty_" .. element_id, function ()
+					StreamHeist:log(string.format("Mission script element %u (%s) executed, set difficulty to %.2f", element_id, element:editor_name(), data.difficulty))
+					managers.groupai:state():set_difficulty(data.difficulty)
+				end)
+				StreamHeist:log(string.format("Mission script element %u (%s) hooked as difficulty change trigger", element_id, element:editor_name()))
 			end
 
 			-- Check if this element is supposed to be turned on or off
