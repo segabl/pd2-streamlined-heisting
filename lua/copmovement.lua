@@ -12,14 +12,14 @@ end
 -- Fix attention synch not providing the old attention
 function CopMovement:synch_attention(attention)
 	if attention and self._unit:character_damage():dead() then
-		StreamHeist:log("[Warning] Attention synch to dead unit")
+		StreamHeist:warn("Attention synch to dead unit")
 	end
 
 	self:_remove_attention_destroy_listener(self._attention)
 	self:_add_attention_destroy_listener(attention)
 
 	if attention and attention.unit and not attention.destroy_listener_key then
-		StreamHeist:log("[Warning] Attention synch with invalid data")
+		StreamHeist:warn("Attention synch with invalid data")
 		return self:synch_attention(nil)
 	end
 

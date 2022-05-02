@@ -16,7 +16,7 @@ Hooks:PostHook(MissionManager, "_activate_mission", "sh__activate_mission", func
 	for element_id, data in pairs(mission_script_elements) do
 		local element = self:get_element_by_id(element_id)
 		if not element then
-			StreamHeist:log("[Error] Mission script element", element_id, "could not be found")
+			StreamHeist:error("Mission script element", element_id, "could not be found")
 		else
 			-- Check if this element is supposed to trigger reinforce points
 			if data.reinforce then

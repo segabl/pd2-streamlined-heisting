@@ -837,7 +837,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_perform_group_spawning", function 
 		end
 
 		if hopeless then
-			StreamHeist:log("[Warning] Spawn group", spawn_task.spawn_group.id, "failed to spawn unit", u_type_name)
+			StreamHeist:warn("Spawn group", spawn_task.spawn_group.id, "failed to spawn unit", u_type_name)
 			return true
 		end
 	end

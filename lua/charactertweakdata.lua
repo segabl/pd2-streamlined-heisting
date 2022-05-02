@@ -610,7 +610,7 @@ local function set_presets(char_tweak_data)
 			char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
 			StreamHeist:log("Using", weapon_preset_name, "weapon preset for", name)
 		else
-			StreamHeist:log("[Warning] No weapon preset for", name)
+			StreamHeist:warn("No weapon preset for", name)
 		end
 	end
 

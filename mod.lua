@@ -26,6 +26,14 @@ if not StreamHeist then
 		end
 	end
 
+	function StreamHeist:warn(...)
+		log("[StreamlinedHeisting][Warning] " .. table.concat({...}, " "))
+	end
+
+	function StreamHeist:error(...)
+		log("[StreamlinedHeisting][Error] " .. table.concat({...}, " "))
+	end
+
 	-- Redirect unit localization for units that can't be auto-detected
 	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
 		loc:add_localized_strings({
