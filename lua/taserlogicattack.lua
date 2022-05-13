@@ -140,3 +140,23 @@ end
 
 function TaserLogicAttack.queued_update() end
 function TaserLogicAttack.queue_update() end
+
+
+-- Add tase delay whenever tase action ends, not just when the tased person is downed
+local action_complete_clbk_original = TaserLogicAttack.action_complete_clbk
+function TaserLogicAttack.action_complete_clbk(data, action, ...)
+	if action:type() == "tase" then
+		local my_data = data.internal_data
+		if not my_data.tasing then
+			return
+		end
+
+		local record = managers.groupai:state():criminal_record(my_data.tasing.target_u_key)
+		data.tase_delay_t = TimerManager:game():time() + (action:expired() and record and record.status and 30 or 8)
+
+		managers.groupai:state():on_tase_end(my_data.tasing.target_u_key)
+		my_data.tasing = nil
+	else
+		return action_complete_clbk_original(data, action, ...)
+	end
+end
