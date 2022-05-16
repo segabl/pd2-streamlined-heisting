@@ -140,42 +140,32 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	-- Improve and fix incorrect tactics
 	self._tactics.swat_shotgun_rush = {
 		"charge",
-		"provide_coverfire",
-		"provide_support",
 		"deathguard",
 		"smoke_grenade",
 		"flash_grenade"
 	}
 	self._tactics.swat_shotgun_flank = {
 		"charge",
-		"provide_coverfire",
-		"provide_support",
 		"flank",
 		"deathguard",
 		"flash_grenade"
 	}
 	self._tactics.swat_rifle = {
 		"ranged_fire",
-		"provide_coverfire",
-		"provide_support",
 		"smoke_grenade",
 		"flash_grenade"
 	}
 	self._tactics.swat_rifle_flank = {
-		"provide_coverfire",
-		"provide_support",
 		"flank",
 		"flash_grenade"
 	}
 	self._tactics.shield_wall_ranged = {
 		"shield",
-		"ranged_fire",
-		"provide_support"
+		"ranged_fire"
 	}
 	self._tactics.shield_wall_charge = {
 		"shield",
-		"charge",
-		"provide_support"
+		"charge"
 	}
 	self._tactics.tank_rush = {
 		"shield",
@@ -185,13 +175,11 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 	self._tactics.tazer_charge = {
 		"charge",
-		"provide_coverfire",
 		"smoke_grenade",
 		"murder"
 	}
 	self._tactics.tazer_flanking = {
 		"flank",
-		"provide_coverfire",
 		"flash_grenade",
 		"murder"
 	}
