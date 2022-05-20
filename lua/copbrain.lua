@@ -15,6 +15,14 @@ function CopBrain:_chk_use_cover_grenade(...)
 end
 
 
+-- Don't trigger damage callback from poison damage as it would make enemies go into shoot action
+-- when they stand inside a poison cloud, regardless of any targets being visible or not
+local clbk_damage_original = CopBrain.clbk_damage
+function CopBrain:clbk_damage(my_unit, damage_info, ...)
+	return damage_info.variant ~= "poison" and clbk_damage_original(self, my_unit, damage_info, ...)
+end
+
+
 -- If Iter is installed and streamlined path option is used, don't make any further changes
 if Iter and Iter.settings and Iter.settings.streamline_path then
 	return
