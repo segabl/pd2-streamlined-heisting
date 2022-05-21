@@ -21,27 +21,29 @@ Hooks:PostHook(MissionManager, "_activate_mission", "sh__activate_mission", func
 			-- Check if this element is supposed to trigger reinforce points
 			if data.reinforce then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element_id, function ()
-					StreamHeist:log(string.format("Mission script element %u (%s) executed, toggled %u reinforce point(s)", element_id, element:editor_name(), #data.reinforce))
+					StreamHeist:log(string.format("%s executed, toggled %u reinforce point(s)", element:editor_name(), #data.reinforce))
 					for _, v in pairs(data.reinforce) do
 						managers.groupai:state():set_area_min_police_force(v.name, v.force, v.position)
 					end
 				end)
-				StreamHeist:log(string.format("Mission script element %u (%s) hooked as reinforce trigger for %u area(s)", element_id, element:editor_name(), #data.reinforce))
+				StreamHeist:log(string.format("%s hooked as reinforce trigger for %u area(s)", element:editor_name(), #data.reinforce))
 			end
 
 			-- Check if this element is supposed to trigger a difficulty change
 			if data.difficulty then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_difficulty_" .. element_id, function ()
-					StreamHeist:log(string.format("Mission script element %u (%s) executed, set difficulty to %.2f", element_id, element:editor_name(), data.difficulty))
+					StreamHeist:log(string.format("%s executed, set difficulty to %.2f", element:editor_name(), data.difficulty))
 					managers.groupai:state():set_difficulty(data.difficulty)
 				end)
-				StreamHeist:log(string.format("Mission script element %u (%s) hooked as difficulty change trigger", element_id, element:editor_name()))
+				StreamHeist:log(string.format("%s hooked as difficulty change trigger", element:editor_name()))
 			end
 
-			-- Check if this element is supposed to be turned on or off
-			if data.enabled ~= nil then
-				element:set_enabled(data.enabled)
-				StreamHeist:log(string.format("Mission script element %u (%s) has been %s", element_id, element:editor_name(), data.enabled and "enabled" or "disabled"))
+			-- Check if this element has custom values set
+			if data.values then
+				for k, v in pairs(data.values) do
+					element._values[k] = v
+					StreamHeist:log(string.format("%s value \"%s\" has been set to \"%s\"", element:editor_name(), k, tostring(v)))
+				end
 			end
 		end
 	end

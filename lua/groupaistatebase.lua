@@ -49,11 +49,11 @@ end
 -- Make difficulty progress smoother
 local set_difficulty_original = GroupAIStateBase.set_difficulty
 function GroupAIStateBase:set_difficulty(value, ...)
-	if not managers.game_play_central or managers.game_play_central:get_heist_timer() < 1 then
+	if not managers.game_play_central or managers.game_play_central:get_heist_timer() < 1 or value < self._difficulty_value then
 		return set_difficulty_original(self, value, ...)
 	end
 
-	self._difficulty_step = 0.05 * math.sign(value - self._difficulty_value)
+	self._difficulty_step = 0.05
 	self._target_difficulty = value
 	self._next_difficulty_step_t = self._next_difficulty_step_t or 0
 end
