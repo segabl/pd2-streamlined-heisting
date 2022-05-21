@@ -79,7 +79,7 @@ There are some inconsistencies with various enemy factions in the game that lead
 
 ### Other changes
 
-These are miscellaneous changes and fixes that don't fit any of the above categories.
+These are miscellaneous changes, fixes and optimizations that don't fit any of the above categories.
 
 - Reduces the effect of health granularity drastically (damage dealt to enemies is closer to the actual weapon damage listed in the inventory)
 - Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
@@ -102,11 +102,16 @@ These are miscellaneous changes and fixes that don't fit any of the above catego
 - Fixes and optimizes fire spawned from molotovs and tripmines
 - Fixes instances of Winters not leaving the map when the formation was told to break up before Winters was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
+- Updates old boss enemies with the new boss logic to make those boss fights more interesting
+
+## Compatibility
+
+AI enhancing mods may be compatible to some degree (personally tested Think Faster, Keepers and Iter, which work fine), though it is advised to disable them, as they may cause undefined behavior or crashes. Mods that drastically change enemies, enemy weapons or spawngroups could cause conflicts and/or crashes.
 
 ## Credits
 
-- [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
-- [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code and providing code snippets
 - [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
 - [creepyyy](https://modworkshop.net/user/54264), ERO, [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
 - [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes
+- [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
+- [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code
