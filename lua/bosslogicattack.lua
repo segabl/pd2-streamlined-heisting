@@ -16,7 +16,7 @@ function BossLogicAttack._upd_aim(data, my_data, ...)
 	local visible = focus_enemy and (focus_enemy.verified or focus_enemy.nearly_visible)
 	local aim, shoot, expected_pos
 	if focus_enemy then
-		if BossLogicAttack._chk_use_throwable(data) then
+		if BossLogicAttack._chk_use_throwable(data, my_data, focus_enemy) then
 			return
 		end
 
@@ -70,7 +70,7 @@ end
 -- Adjust throwable code to allow for non throwable projectiles
 -- Also make the throwing use an actual action so it properly interrupts shooting
 -- We're adjusting the throwing vector to always throw at player's feet and add z compensation depending on projectile speed
-function BossLogicAttack._chk_use_throwable(data)
+function BossLogicAttack._chk_use_throwable(data, my_data, focus)
 	local throwable = data.char_tweak.throwable
 	local throwable_tweak = tweak_data.projectiles[throwable]
 	if not throwable_tweak then
@@ -81,7 +81,6 @@ function BossLogicAttack._chk_use_throwable(data)
 		return
 	end
 
-	local focus = data.attention_obj
 	if not focus.criminal_record or focus.is_deployable or (not focus.verified) == data.char_tweak.throwable_target_verified then
 		return
 	end
