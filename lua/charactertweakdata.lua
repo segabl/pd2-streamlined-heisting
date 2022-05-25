@@ -615,7 +615,7 @@ local function set_presets(char_tweak_data)
 	end
 
 	-- Flashbanged duration
-	char_tweak_data.flashbang_multiplier = math.lerp(1, 2, diff_i_norm)
+	char_tweak_data.flashbang_multiplier = math.lerp(0.9, 1.5, diff_i_norm)
 
 	-- Cloaker attack timeout
 	char_tweak_data.spooc.spooc_attack_timeout = { math.lerp(8, 3, diff_i_norm), math.lerp(10, 4, diff_i_norm) }
