@@ -45,7 +45,7 @@ function TankCopLogicAttack.update(data)
 	local enemy_visible = focus_enemy.verified
 	local engage = my_data.attitude == "engage"
 	local z_dist = math.abs(data.m_pos.z - focus_enemy.m_pos.z)
-	local walk = focus_enemy.verified_dis < (focus_enemy.verified and 800 or 300)
+	local walk = focus_enemy.verified and focus_enemy.verified_dis < 800
 	local chase
 
 	if AIAttentionObject.REACT_COMBAT <= focus_enemy.reaction then
