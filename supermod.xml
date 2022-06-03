@@ -58,6 +58,7 @@
 				<post :hook_id="copbase"/>
 				<post :hook_id="copbrain"/>
 				<post :hook_id="copdamage"/>
+				<post :hook_id="copinventory"/>
 				<post :hook_id="copmovement"/>
 			</group>
 			<post :hook_id="enemies/shield/logics/shieldlogicattack"/>
