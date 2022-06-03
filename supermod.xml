@@ -9,80 +9,120 @@
 			<post :hook_id="managers/coreenvironmentcontrollermanager"/>
 			<post :hook_id="units/coreunitdamage"/>
 		</group>
-		<group hook_id="lib/managers/">
-			<post :hook_id="group_ai_states/groupaistatebase"/>
-			<post :hook_id="group_ai_states/groupaistatebesiege"/>
-			<post :hook_id="mission/elementareatrigger"/>
-			<post :hook_id="mission/elementspawnenemydummy"/>
-			<post :hook_id="mission/elementspawnenemygroup"/>
-			<post :hook_id="mission/elementspecialobjective"/>
-			<post :hook_id="dynamicresourcemanager"/>
-			<post :hook_id="enemymanager"/>
-			<post :hook_id="explosionmanager"/>
-			<post :hook_id="firemanager"/>
-			<post :hook_id="hudmanager"/>
-			<post :hook_id="missionmanager"/>
-		</group>
-		<post hook_id="lib/modifiers/modifierheavies"/>
-		<group hook_id="lib/network/">
-			<post :hook_id="handlers/unitnetworkhandler"/>
-			<post :hook_id="matchmaking/networkmatchmakingsteam"/>
-		</group>
-		<group hook_id="lib/tweak_data/">
-			<post :hook_id="charactertweakdata"/>
-			<post :hook_id="groupaitweakdata"/>
-			<post :hook_id="playertweakdata"/>
-			<post :hook_id="skirmishtweakdata"/>
-			<post :hook_id="weapontweakdata"/>
-		</group>
-		<group hook_id="lib/units/">
-			<post :hook_id="beings/player/playerdamage"/>
-			<post :hook_id="enemies/boss/logics/bosslogicattack"/>
-			<group :hook_id="enemies/cop/">
-				<post :hook_id="actions/full_body/copactionact"/>
-				<post :hook_id="actions/full_body/copactiondodge"/>
-				<post :hook_id="actions/full_body/copactionhurt"/>
-				<post :hook_id="actions/lower_body/copactionidle"/>
-				<post :hook_id="actions/lower_body/copactionwalk"/>
-				<post :hook_id="actions/upper_body/copactionreload"/>
-				<post :hook_id="actions/upper_body/copactionshoot"/>
-				<post :hook_id="actions/upper_body/copactiontase"/>
-				<post :hook_id="logics/coplogicarrest"/>
-				<post :hook_id="logics/coplogicattack"/>
-				<post :hook_id="logics/coplogicbase"/>
-				<post :hook_id="logics/coplogicidle"/>
-				<post :hook_id="logics/coplogicinactive"/>
-				<post :hook_id="logics/coplogicphalanxminion"/>
-				<post :hook_id="logics/coplogicsniper"/>
-				<post :hook_id="logics/coplogictravel"/>
-				<post :hook_id="copbase"/>
-				<post :hook_id="copbrain"/>
-				<post :hook_id="copdamage"/>
-				<post :hook_id="copinventory"/>
-				<post :hook_id="copmovement"/>
-			</group>
-			<post :hook_id="enemies/shield/logics/shieldlogicattack"/>
-			<group :hook_id="enemies/spooc/">
-				<post :hook_id="actions/lower_body/actionspooc"/>
-				<post :hook_id="logics/spooclogicattack"/>
-			</group>
-			<group :hook_id="enemies/tank/">
-				<post :hook_id="logics/tankcoplogicattack"/>
-				<post :hook_id="husktankcopdamage"/>
-				<post :hook_id="husktankmediccopdamage"/>
-				<post :hook_id="tankcopdamage"/>
-				<post :hook_id="tankmediccopdamage"/>
-			</group>
-			<post :hook_id="enemies/taser/logics/taserlogicattack"/>
-			<post :hook_id="environment/environmentfire"/>
-			<post :hook_id="equipment/sentry_gun/sentrygunbase"/>
-			<post :hook_id="equipment/sentry_gun/sentrygundamage"/>
-			<post :hook_id="player_team/teamaimovement"/>
-			<post :hook_id="weapons/grenades/quickflashgrenade"/>
-			<post :hook_id="weapons/akimboweaponbase"/>
-			<post :hook_id="weapons/raycastweaponbase"/>
-		</group>
 
+		<group hook_id="lib/">
+			<group :hook_id="managers/">
+				<group :hook_id="group_ai_states/">
+					<post :hook_id="groupaistatebase"/>
+					<post :hook_id="groupaistatebesiege"/>
+				</group>
+
+				<group :hook_id="mission/">
+					<post :hook_id="elementareatrigger"/>
+					<post :hook_id="elementspawnenemydummy"/>
+					<post :hook_id="elementspawnenemygroup"/>
+					<post :hook_id="elementspecialobjective"/>
+				</group>
+
+				<post :hook_id="dynamicresourcemanager"/>
+				<post :hook_id="enemymanager"/>
+				<post :hook_id="explosionmanager"/>
+				<post :hook_id="firemanager"/>
+				<post :hook_id="hudmanager"/>
+				<post :hook_id="missionmanager"/>
+			</group>
+
+			<post :hook_id="modifiers/modifierheavies"/>
+
+			<group :hook_id="network/">
+				<post :hook_id="handlers/unitnetworkhandler"/>
+				<post :hook_id="matchmaking/networkmatchmakingsteam"/>
+			</group>
+
+			<group :hook_id="tweak_data/">
+				<post :hook_id="charactertweakdata"/>
+				<post :hook_id="groupaitweakdata"/>
+				<post :hook_id="playertweakdata"/>
+				<post :hook_id="skirmishtweakdata"/>
+				<post :hook_id="weapontweakdata"/>
+			</group>
+
+			<group :hook_id="units/">
+				<post :hook_id="beings/player/playerdamage"/>
+
+				<group :hook_id="enemies/">
+					<post :hook_id="boss/logics/bosslogicattack"/>
+
+					<group :hook_id="cop/">
+						<group :hook_id="actions/full_body/">
+							<post :hook_id="copactionact"/>
+							<post :hook_id="copactiondodge"/>
+							<post :hook_id="copactionhurt"/>
+						</group>
+
+						<group :hook_id="actions/lower_body/">
+							<post :hook_id="copactionidle"/>
+							<post :hook_id="copactionwalk"/>
+						</group>
+
+						<group :hook_id="actions/upper_body/">
+							<post :hook_id="copactionreload"/>
+							<post :hook_id="copactionshoot"/>
+							<post :hook_id="copactiontase"/>
+						</group>
+
+						<group :hook_id="logics/">
+							<post :hook_id="coplogicarrest"/>
+							<post :hook_id="coplogicattack"/>
+							<post :hook_id="coplogicbase"/>
+							<post :hook_id="coplogicidle"/>
+							<post :hook_id="coplogicinactive"/>
+							<post :hook_id="coplogicphalanxminion"/>
+							<post :hook_id="coplogicsniper"/>
+							<post :hook_id="coplogictravel"/>
+						</group>
+
+						<post :hook_id="copbase"/>
+						<post :hook_id="copbrain"/>
+						<post :hook_id="copdamage"/>
+						<post :hook_id="copinventory"/>
+						<post :hook_id="copmovement"/>
+					</group>
+
+					<post :hook_id="shield/logics/shieldlogicattack"/>
+
+					<group :hook_id="spooc/">
+						<post :hook_id="actions/lower_body/actionspooc"/>
+						<post :hook_id="logics/spooclogicattack"/>
+					</group>
+
+					<group :hook_id="tank/">
+						<post :hook_id="logics/tankcoplogicattack"/>
+						<post :hook_id="husktankcopdamage"/>
+						<post :hook_id="husktankmediccopdamage"/>
+						<post :hook_id="tankcopdamage"/>
+						<post :hook_id="tankmediccopdamage"/>
+					</group>
+
+					<post :hook_id="taser/logics/taserlogicattack"/>
+				</group>
+
+				<post :hook_id="environment/environmentfire"/>
+
+				<group :hook_id="equipment/sentry_gun/">
+					<post :hook_id="sentrygunbase"/>
+					<post :hook_id="sentrygundamage"/>
+				</group>
+
+				<post :hook_id="player_team/teamaimovement"/>
+
+				<group :hook_id="weapons/">
+					<post :hook_id="grenades/quickflashgrenade"/>
+					<post :hook_id="akimboweaponbase"/>
+					<post :hook_id="raycastweaponbase"/>
+				</group>
+			</group>
+		</group>
 	</hooks>
 
 	<assets base_path="assets/">
@@ -449,16 +489,16 @@
 		<!-- character fixes and changes -->
 		<group name="units/" dyn_package="false">
 			<!-- biker boss weapon -->
-			<group :name="pd2_dlc_born/characters/">
-				<file :name="ene_gang_biker_boss/ene_gang_biker_boss.unit"/>
-				<file :name="ene_gang_biker_boss/ene_gang_biker_boss_husk.unit"/>
+			<group :name="pd2_dlc_born/characters/ene_gang_biker_boss/">
+				<file :name="ene_gang_biker_boss.unit"/>
+				<file :name="ene_gang_biker_boss_husk.unit"/>
 			</group>
 
 			<!-- sosa hitboxes and footsteps -->
-			<group :name="pd2_dlc_friend/characters/">
-				<file :name="ene_drug_lord_boss/ene_drug_lord_boss.object"/>
-				<file :name="ene_drug_lord_boss/ene_drug_lord_boss.unit"/>
-				<file :name="ene_drug_lord_boss/ene_drug_lord_boss_husk.unit"/>
+			<group :name="pd2_dlc_friend/characters/ene_drug_lord_boss/">
+				<file :name="ene_drug_lord_boss.object"/>
+				<file :name="ene_drug_lord_boss.unit"/>
+				<file :name="ene_drug_lord_boss_husk.unit"/>
 			</group>
 
 			<!-- yufu wang hitboxes -->
