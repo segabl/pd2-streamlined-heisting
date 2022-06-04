@@ -171,7 +171,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 4 * dmg_mul_lin, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.mini.no_autofire_stop = true
-	presets.weapon.sh_tank.mini.RELOAD_SPEED = 0.5
+	presets.weapon.sh_tank.mini.RELOAD_SPEED = 0.2
 	presets.weapon.sh_tank.mini.autofire_rounds = { 50, 500 }
 	presets.weapon.sh_tank.mini.FALLOFF = {
 		{ dmg_mul = 5 * dmg_mul_lin, r = 0, acc = { 0.15, 0.35 }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
