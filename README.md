@@ -62,7 +62,7 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS) and behave like Heavy SWAT armor
 - Scales assault duration with difficulty and reduces spawn pool so it's actually possible to end the assault earlier when spawns are exhausted
 - Makes use of and smoothes out heist difficulty progression such that enemy force and special frequency increases as the heist progresses
-- Reduces player grace period time but makes it always use the full duration (0.2s)
+- Reduces player grace period time but makes it always use the full duration (0.25s)
 - Makes the assault delay caused by having hostages scale with the amount of hostages (minimum of 5s per hostage, up to 4 hostages)
 
 ### Standardizes enemy visuals

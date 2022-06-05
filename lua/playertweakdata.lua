@@ -1,6 +1,6 @@
 -- Give each difficulty a unique grace period time, revive health and suspicion multipliers
 Hooks:PostHook(PlayerTweakData, "_set_normal", "sh__set_normal", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.65 }
 
 	self.suspicion.max_value = 6
@@ -9,7 +9,7 @@ Hooks:PostHook(PlayerTweakData, "_set_normal", "sh__set_normal", function (self)
 end)
 
 Hooks:PostHook(PlayerTweakData, "_set_hard", "sh__set_hard", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.55 }
 
 	self.suspicion.max_value = 7
@@ -18,7 +18,7 @@ Hooks:PostHook(PlayerTweakData, "_set_hard", "sh__set_hard", function (self)
 end)
 
 Hooks:PostHook(PlayerTweakData, "_set_overkill", "sh__set_overkill", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.45 }
 
 	self.suspicion.max_value = 8
@@ -27,7 +27,7 @@ Hooks:PostHook(PlayerTweakData, "_set_overkill", "sh__set_overkill", function (s
 end)
 
 Hooks:PostHook(PlayerTweakData, "_set_overkill_145", "sh__set_overkill_145", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.35 }
 
 	self.suspicion.max_value = 9
@@ -36,7 +36,7 @@ Hooks:PostHook(PlayerTweakData, "_set_overkill_145", "sh__set_overkill_145", fun
 end)
 
 Hooks:PostHook(PlayerTweakData, "_set_easy_wish", "sh__set_easy_wish", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.25 }
 
 	self.suspicion.max_value = 10
@@ -45,7 +45,7 @@ Hooks:PostHook(PlayerTweakData, "_set_easy_wish", "sh__set_easy_wish", function 
 end)
 
 Hooks:PostHook(PlayerTweakData, "_set_overkill_290", "sh__set_overkill_290", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.15 }
 
 	self.suspicion.max_value = 11
@@ -54,7 +54,7 @@ Hooks:PostHook(PlayerTweakData, "_set_overkill_290", "sh__set_overkill_290", fun
 end)
 
 Hooks:PostHook(PlayerTweakData, "_set_sm_wish", "sh__set_sm_wish", function (self)
-	self.damage.MIN_DAMAGE_INTERVAL = 0.2
+	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.damage.REVIVE_HEALTH_STEPS = { 0.05 }
 
 	self.suspicion.max_value = 12

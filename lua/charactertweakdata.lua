@@ -224,7 +224,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		end
 	})
 	presets.gang_member_damage.HEALTH_INIT = 75 * diff_i
-	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.2
+	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.25
 	presets.gang_member_damage.REGENERATE_TIME = 2
 	presets.gang_member_damage.REGENERATE_TIME_AWAY = 2
 
