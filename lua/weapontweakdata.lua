@@ -50,22 +50,21 @@ local turret_damage_mul = {
 	{ 1500, 0.5 },
 	{ 3000, 0.1 }
 }
-local turret_hp_mul = {
-	swat_van_turret_module = 2
-}
 local function set_presets(weap_tweak_data)
 	local diff_i = weap_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local diff_i_norm = math.max(0, diff_i - 2) / (#weap_tweak_data.tweak_data.difficulties - 2)
-
 	for k, v in pairs(weap_tweak_data) do
 		if k:match("_turret_module") then
 			v.DAMAGE = diff_i
 			v.DAMAGE_MUL_RANGE = turret_damage_mul
-			v.HEALTH_INIT = math.ceil(math.lerp(200, 4000, diff_i_norm)) * (turret_hp_mul[k] or 1)
-			v.SHIELD_HEALTH_INIT = math.ceil(math.lerp(20, 400, diff_i_norm)) * (turret_hp_mul[k] or 1)
-			v.CLIP_SIZE = math.ceil(math.lerp(300, 600, diff_i_norm))
+			v.HEALTH_INIT = (v.CAN_GO_IDLE and v.AUTO_REPAIR and 500 or 1000) * diff_i
+			v.SHIELD_HEALTH_INIT = 100 * diff_i
+			v.CLIP_SIZE = 300 + 25 * diff_i
 			v.BAG_DMG_MUL = 20
 			v.SHIELD_DMG_MUL = 1
+			v.FIRE_DMG_MUL = 1
+			v.EXPLOSION_DMG_MUL = 5
+			v.SHIELD_DAMAGE_CLAMP = nil
+			v.BODY_DAMAGE_CLAMP = nil
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
 		end
