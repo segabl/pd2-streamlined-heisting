@@ -166,6 +166,14 @@
 			<file :name="wpn_npc_shepheard/wpn_npc_shepheard.unit"/>
 		</group>
 
+		<group name="units/pd2_dlc_mad/weapons/">
+			<!-- rpk retexture/model -->
+			<file :name="wpn_npc_rpk/rpk_df.texture"/>
+			<file :name="wpn_npc_rpk/rpk_nm.texture"/>
+			<file :name="wpn_npc_rpk/wpn_npc_rpk.material_config"/>
+			<file :name="wpn_npc_rpk/wpn_npc_rpk.model"/>
+		</group>
+
 		<!-- swat -->
 		<group name="units/payday2/characters/" dyn_package="false">
 			<file :name="shared_textures/ene_acc_shield_city_df.texture"/>
