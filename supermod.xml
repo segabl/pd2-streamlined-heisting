@@ -265,13 +265,12 @@
 
 		<!-- murkies -->
 		<group name="units/pd2_dlc_bph/characters/" dyn_package="false">
-			<file :name="ene_murkywater_light/material_df.texture"/>
-			<file :name="ene_murkywater_light/material_nm.texture"/>
-			<file :name="ene_murkywater_light/glasses_df.texture"/>
-			<file :name="ene_murkywater_light/glasses_op.texture"/>
-			<file :name="ene_murkywater_heavy/material_df.texture"/>
-			<file :name="ene_murkywater_heavy/material_nm.texture"/>
-			<file :name="ene_acc_murkywater_hat/ene_acc_murkywater_hat.model"/>
+			<file :name="shared_textures/glasses_df.texture"/>
+			<file :name="shared_textures/glasses_op.texture"/>
+			<file :name="shared_textures/heavy_df.texture"/>
+			<file :name="shared_textures/heavy_nm.texture"/>
+			<file :name="shared_textures/light_df.texture"/>
+			<file :name="shared_textures/light_nm.texture"/>
 
 			<!-- make light distinct and use scar -->
 			<file :name="ene_murkywater_light/ene_murkywater_light.material_config"/>
@@ -334,13 +333,6 @@
 			<file :name="ene_murkywater_medic/ene_murkywater_medic_husk.unit"/>
 			<file :name="ene_murkywater_medic_r870/ene_murkywater_medic_r870.unit"/>
 			<file :name="ene_murkywater_medic_r870/ene_murkywater_medic_r870_husk.unit"/>
-		</group>
-
-		<!-- murky prop -->
-		<group name="units/pd2_dlc_bph/props/" dyn_package="false">
-			<!-- fix uvs -->
-			<file :name="bph_prop_body_light_01/bph_prop_body_light_01.model"/>
-			<file :name="bph_prop_body_light_table_03/bph_prop_body_light_table_03.model"/>
 		</group>
 
 		<!-- zeals -->
@@ -421,11 +413,11 @@
 			<file :name="shared_textures/ene_acc_shield_lights_df.texture"/>
 			<file :name="shared_textures/ene_acc_shield_lights_nm.texture"/>
 			<file :name="shared_textures/ene_acc_shield_lights_op.texture"/>
+			<file :name="shared_textures/heads_atlas_df.texture"/>
+			<file :name="shared_textures/helmets_atlas_df.texture"/>
+			<file :name="shared_textures/swat_body_df.texture"/>
 
 			<!-- base for material config and textures -->
-			<file :name="ene_swat_policia_federale/ene_swat_policia_federale_body_df.texture"/>
-			<file :name="ene_swat_policia_federale/ene_swat_policia_federale_heads_df.texture"/>
-			<file :name="ene_swat_policia_federale/ene_swat_policia_federale_helmets_df.texture"/>
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale.material_config"/>
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale_contour.material_config"/>
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale.model"/>

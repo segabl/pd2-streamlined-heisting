@@ -1,67 +1,66 @@
 <materials version="3" group="ene_murkywater_light">
+	<material name="mtr_head" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="mtr_head" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture    file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm"/>
-        <diffuse_texture        file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>
+	<material name="mtr_head_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm" mip="4"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df" mip="4"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="mtr_head_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm" mip="4"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df" mip="4"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>
+	<material name="mtr_glass" render_template="opacity:CUBE_ENVIRONMENT_MAPPING:CUBE_FRESNEL:DIFFUSE_TEXTURE" version="2" unique="true">
+		<variable type="vector3" name="fresnel_settings" value="0 1 0.66999995708466"/>
+		<opacity_texture file="units/pd2_dlc_bph/characters/shared_textures/glasses_op"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/glasses_df"/>
+		<reflection_texture type="cube" global_texture="current_global_texture"/>
+	</material>
 
-    <material name="mtr_glass" render_template="opacity:CUBE_ENVIRONMENT_MAPPING:CUBE_FRESNEL:DIFFUSE_TEXTURE" version="2"  unique="true">
-        <variable type="vector3" name="fresnel_settings" value="0 1 0.66999995708466"/>
-        <opacity_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/glasses_op"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/glasses_df"/>
-        <reflection_texture type="cube" global_texture="current_global_texture"/>
-    </material>
+	<material name="mtr_body" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/shared_textures/light_nm"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/light_df"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="mtr_body" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>   
-    
-    <material name="mtr_body_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="4"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="4"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>
+	<material name="mtr_body_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/shared_textures/light_nm" mip="4"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/light_df" mip="4"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="mtr_frame" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>   
-    
-    <material name="mtr_frame_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2" >
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="4"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="4"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>
+	<material name="mtr_frame" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/shared_textures/light_nm"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/light_df"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="mtr_hat" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP" unique="true" version="2">
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>
+	<material name="mtr_frame_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/shared_textures/light_nm" mip="4"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/light_df" mip="4"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="mtr_hat_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP" unique="true" version="2">
-        <bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="1"/>
-        <diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="1"/>
-        <variable value="1 1 1" type="vector3" name="contour_color"/>
-        <variable value="0" type="scalar" name="contour_opacity"/>
-    </material>
+	<material name="mtr_hat" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/shared_textures/light_nm"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/light_df"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
 
-    <material name="shadow_caster" render_template="shadow_caster_only:SKINNED_1WEIGHT" version="2"/>
+	<material name="mtr_hat_lod" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP" unique="true" version="2">
+		<bump_normal_texture file="units/pd2_dlc_bph/characters/shared_textures/light_nm" mip="1"/>
+		<diffuse_texture file="units/pd2_dlc_bph/characters/shared_textures/light_df" mip="1"/>
+		<variable value="1 1 1" type="vector3" name="contour_color"/>
+		<variable value="0" type="scalar" name="contour_opacity"/>
+	</material>
+
+	<material name="shadow_caster" render_template="shadow_caster_only:SKINNED_1WEIGHT" version="2"/>
 </materials>

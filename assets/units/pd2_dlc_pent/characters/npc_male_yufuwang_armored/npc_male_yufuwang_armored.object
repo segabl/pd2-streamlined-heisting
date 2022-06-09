@@ -3,6 +3,7 @@
 	<diesel materials="units/pd2_dlc_pent/characters/npc_male_yufuwang_armored/npc_male_yufuwang_armored" orientation_object="root_point"/>
 	<sequence_manager file="units/pd2_dlc_pent/characters/npc_male_yufuwang_armored/npc_male_yufuwang_armored"/>
 	<animation_def name="anims/units/enemies/cop/cop_def"/>
+
 	<bodies>
 		<body name="body" enabled="true" template="character" collision_class="ragdoll" friction="0.60000002">
 			<object name="Spine1"/>
@@ -16,7 +17,7 @@
 			<object name="root_point"/>
 			<object name="c_capsule_mover_blocker" collision_type="capsule"/>
 		</body>
-		
+
 		<body name="rag_Head" template="corpse" collision_class="ragdoll" collision_script_quiet_time="0.5" collision_script_tag="small" ray="block" tag="flesh" lin_damping="0.60000002" ang_damping="20" friction="0.0099999998" restitution="0" sweep="true" collides_with="0">
 			<object name="Neck"/>
 			<object name="c_sphere_head_ragdoll" padding="-15" mass="4" collision_type="sphere"/>
