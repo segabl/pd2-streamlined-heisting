@@ -511,7 +511,11 @@
 			</group>
 
 			<!-- yufu wang hitboxes -->
-			<file :name="pd2_dlc_pent/characters/npc_male_yufuwang_armored/npc_male_yufuwang_armored.object"/>
+			<group :name="pd2_dlc_pent/characters/npc_male_yufuwang_armored/">
+				<file :name="npc_male_yufuwang_armored.object"/>
+				<file :name="npc_male_yufuwang_armored.unit"/>
+				<file :name="npc_male_yufuwang_armored_husk.unit"/>
+			</group>
 		</group>
 
 	</assets>
