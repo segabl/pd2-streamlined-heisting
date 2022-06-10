@@ -581,10 +581,6 @@ local preset_overrides = {
 	medic = "sh_heavy",
 	tank_medic = "sh_heavy"
 }
-local no_hp_scale_access = {
-	cop = true,
-	security = true
-}
 local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
 local function set_presets(char_tweak_data)
 	local diff_i = char_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
@@ -595,10 +591,8 @@ local function set_presets(char_tweak_data)
 	for _, name in pairs(char_tweak_data._enemy_list) do
 		char_preset = char_tweak_data[name]
 
-		if not no_hp_scale_access[char_preset.access] then
-			char_preset.BASE_HEALTH_INIT = char_preset.BASE_HEALTH_INIT or char_preset.HEALTH_INIT
-			char_preset.HEALTH_INIT = char_preset.BASE_HEALTH_INIT * hp_mul
-		end
+		char_preset.BASE_HEALTH_INIT = char_preset.BASE_HEALTH_INIT or char_preset.HEALTH_INIT
+		char_preset.HEALTH_INIT = char_preset.BASE_HEALTH_INIT * hp_mul
 
 		if char_preset.headshot_dmg_mul then
 			char_preset.base_headshot_dmg_mul = char_preset.base_headshot_dmg_mul or char_preset.headshot_dmg_mul
