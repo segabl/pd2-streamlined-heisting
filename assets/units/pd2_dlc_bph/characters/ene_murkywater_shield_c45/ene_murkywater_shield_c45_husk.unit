@@ -15,7 +15,7 @@
 			<var name="_default_weapon_id" value="c45"/>
 		</extension>
 		<extension name="inventory" class="HuskCopInventory">
-			<var name="_shield_unit_name" value="units/pd2_dlc_bph/characters/shield_lights/shield_lights"/>
+			<var name="_shield_unit_name" value="units/pd2_dlc_bph/characters/ene_acc_shield_lights/ene_acc_shield_lights"/>
 		</extension>
 		<extension name="brain" class="HuskCopBrain"/>
 		<extension name="anim_data" class="PlayerAnimationData"/>
