@@ -103,6 +103,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes instances of Winters not leaving the map when the formation was told to break up before Winters was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
 - Updates old boss enemies with the new boss logic to make those boss fights more interesting
+- Tweaks some heist mission scripts to play better or fix issues
 
 ## Compatibility
 
