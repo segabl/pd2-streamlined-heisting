@@ -4,6 +4,20 @@ Hooks:PostHook(GroupAITweakData, "init", "sh_init", function (self)
 end)
 
 
+-- Fix retreat chatter using the wrong voiceline and make voiclines used for pushing unique
+Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", function (self)
+	self.enemy_chatter.retreat.queue = "m01"
+	self.enemy_chatter.push = {
+		radius = 1000,
+		max_nr = 0,
+		queue = "pus",
+		group_min = 0,
+		duration = { 10, 10 },
+		interval = { 0.75, 1.2 }
+	}
+end)
+
+
 -- We're using the same unit categories for all difficulties for the sake of making the code more readable and not having
 -- to do all that if-else crap that Overkill originally did. While unit categories are the same, the units they contain still
 -- depend on the difficulty, for instance FBI_heavy_G36 will spawn normal M4 heavies on overkill despite the unit category name

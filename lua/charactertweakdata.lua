@@ -332,6 +332,10 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.hurt_severities.no_heavy_hurt.melee = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
 	presets.hurt_severities.no_heavy_hurt.explosion = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
 
+	-- Enemy chatter
+	presets.enemy_chatter.swat.push = true
+	presets.enemy_chatter.swat.flash_grenade = true
+
 	return presets
 end
 
