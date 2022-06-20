@@ -50,9 +50,17 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		self.unit_categories.FBI_heavy_G36 = self.unit_categories.CS_heavy_M4
 		self.unit_categories.FBI_heavy_R870 = self.unit_categories.CS_heavy_R870
 		self.unit_categories.FBI_shield = self.unit_categories.CS_shield
+		self.unit_categories.FBI_suit_C45_M4.unit_types.america = {
+			Idstring("units/payday2/characters/ene_cop_1/ene_cop_1"),
+			Idstring("units/payday2/characters/ene_cop_4/ene_cop_4")
+		}
 		self.unit_categories.FBI_suit_M4_MP5.unit_types.america = {
 			Idstring("units/payday2/characters/ene_cop_3/ene_cop_3"),
 			Idstring("units/payday2/characters/ene_cop_4/ene_cop_4")
+		}
+		self.unit_categories.FBI_suit_C45_M4.unit_types.zombie = {
+			Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_1/ene_cop_hvh_1"),
+			Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_4/ene_cop_hvh_4")
 		}
 		self.unit_categories.FBI_suit_M4_MP5.unit_types.zombie = {
 			Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_3/ene_cop_hvh_3"),
@@ -72,6 +80,10 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	}
 	self.unit_categories.FBI_heavy_R870.unit_types.russia = {
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
+	}
+	self.unit_categories.FBI_suit_C45_M4.unit_types.russia = {
+		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
+		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
 	}
 	self.unit_categories.FBI_suit_M4_MP5.unit_types.russia = {
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
@@ -102,6 +114,10 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		}
 	end
 	-- temp fix till I have proper murky HRT
+	self.unit_categories.FBI_suit_C45_M4.unit_types.murkywater = {
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light"),
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
+	}
 	self.unit_categories.FBI_suit_M4_MP5.unit_types.murkywater = {
 		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light"),
 		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870")
@@ -121,9 +137,13 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870")
 	}
 	-- temp fix till I have proper federal police HRT
+	self.unit_categories.FBI_suit_C45_M4.unit_types.federales = {
+		Idstring("units/pd2_dlc_bex/characters/ene_policia_01/ene_policia_01"),
+		Idstring("units/pd2_dlc_bex/characters/ene_policia_02/ene_policia_02")
+	}
 	self.unit_categories.FBI_suit_M4_MP5.unit_types.federales = {
-		Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale"),
-		Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870")
+		Idstring("units/pd2_dlc_bex/characters/ene_policia_01/ene_policia_01"),
+		Idstring("units/pd2_dlc_bex/characters/ene_policia_02/ene_policia_02")
 	}
 
 	-- Skulldozers on Mayhem
@@ -219,7 +239,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.swat_shotgun_rush
 			},
 			{
-				amount_min = 0,
 				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 2,
@@ -252,7 +271,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.swat_shotgun_flank
 			},
 			{
-				amount_min = 0,
 				freq = difficulty_index / 20,
 				amount_max = 1,
 				rank = 1,
@@ -285,7 +303,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.swat_rifle
 			},
 			{
-				amount_min = 0,
 				freq = difficulty_index / 16,
 				amount_max = 1,
 				rank = 1,
@@ -318,7 +335,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.swat_rifle_flank
 			},
 			{
-				amount_min = 0,
 				freq = difficulty_index / 20,
 				amount_max = 1,
 				rank = 1,
@@ -351,7 +367,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.shield_wall_ranged
 			},
 			{
-				amount_min = 0,
 				freq = difficulty_index / 32,
 				amount_max = 1,
 				rank = 1,
@@ -382,7 +397,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.shield_wall_charge
 			},
 			{
-				amount_min = 0,
 				freq = difficulty_index / 32,
 				amount_max = 1,
 				rank = 1,
@@ -430,7 +444,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.tazer_flanking
 			},
 			{
-				amount_min = 0,
 				freq = 1,
 				amount_max = 3,
 				rank = 2,
@@ -452,7 +465,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.tazer_charge
 			},
 			{
-				amount_min = 0,
 				freq = 1,
 				amount_max = 3,
 				rank = 2,
@@ -466,11 +478,16 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		amount = { 2, 3 },
 		spawn = {
 			{
-				amount_min = 2,
 				freq = 1,
-				amount_max = 3,
 				rank = 1,
 				unit = "FBI_suit_M4_MP5",
+				tactics = self._tactics.swat_rifle_flank
+			},
+			{
+				freq = 0.35,
+				amount_max = 1,
+				rank = 2,
+				unit = "FBI_suit_C45_M4",
 				tactics = self._tactics.swat_rifle_flank
 			}
 		}
