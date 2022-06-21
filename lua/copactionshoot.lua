@@ -38,6 +38,7 @@ Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self
 	if self._attention and self._attention.unit then
 		self._shoot_history.focus_start_t = math.max(TimerManager:game():time(), self._shoot_t)
 		self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
+		self._shooting_husk_player =  self._attention.unit:base() and  self._attention.unit:base().is_husk_player
 	end
 end)
 
@@ -212,6 +213,12 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, w_tweak, falloff, i_ran
 
 	if self._common_data.active_actions[2] and self._common_data.active_actions[2]:type() == "dodge" then
 		hit_chance = hit_chance * self._common_data.active_actions[2]:accuracy_multiplier()
+	end
+
+	if self._miss_first_player_shot and (shooting_player or self._shooting_husk_player) then
+		self._miss_first_player_shot = nil
+		self._ext_movement.missed_first_shot = true
+		hit_chance = 0
 	end
 
 	local hit = math_random() < hit_chance

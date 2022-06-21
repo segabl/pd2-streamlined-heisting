@@ -19,6 +19,9 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.saiga_npc.auto.fire_rate = 0.18
 
+	-- Use PD:TH sniper trail
+	self.dmr_npc.trail = nil
+
 	-- Set proper usage
 	self.m249_npc.usage = "is_lmg"
 	self.rpk_lmg_npc.usage = "is_lmg"

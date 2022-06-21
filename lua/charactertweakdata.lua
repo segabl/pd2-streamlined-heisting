@@ -196,6 +196,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
 		end
 	})
+	presets.weapon.sh_marshal = based_on(presets.weapon.sh_sniper, {
+		aim_delay = { 0, aim_delay * 1.5 },
+		FALLOFF = function (falloff)
+			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
+			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.25, val[2] * 0.25 } end)
+		end
+	})
 
 	-- Taser preset
 	presets.weapon.sh_taser = based_on(presets.weapon.sh_base, {
@@ -482,6 +489,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.fbi_heavy_swat.surrender = self.presets.surrender.hard
 	self.city_swat.surrender = self.presets.surrender.normal
 	self.heavy_swat_sniper.surrender = self.presets.surrender.hard
+	self.marshal_marksman.surrender = self.presets.surrender.hard
 
 	-- Restore special entrance announcements
 	self.tank.spawn_sound_event = self.tank.speech_prefix_p1 .. "_entrance"
@@ -511,6 +519,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.hector_boss_no_armor.HEALTH_INIT = 8
 	self.drug_lord_boss_stealth.HEALTH_INIT = 8
 	self.triad_boss_no_armor.HEALTH_INIT = 8
+	self.marshal_marksman.HEALTH_INIT = 8
 	self.fbi.HEALTH_INIT = 4
 
 	-- Tweak headshot multipliers
@@ -582,6 +591,7 @@ local preset_overrides = {
 	fbi_heavy_swat = "sh_heavy",
 	heavy_swat = "sh_heavy",
 	heavy_swat_sniper = "sh_sniper_heavy",
+	marshal_marksman = "sh_marshal",
 	medic = "sh_heavy",
 	tank_medic = "sh_heavy"
 }
