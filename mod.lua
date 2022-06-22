@@ -6,17 +6,18 @@ if not StreamHeist then
 		logging = io.file_is_readable("mods/developer.txt")
 	}
 
+	function StreamHeist:require(file)
+		local path = self.mod_path .. "req/" .. file
+		return io.file_is_readable(path) and blt.vm.dofile(path)
+	end
+
 	function StreamHeist:mission_script_patches()
 		if self._mission_script_patches == nil then
 			local level_id = Global.game_settings and Global.game_settings.level_id
-			if not level_id then
-				return
+			if level_id then
+				self._mission_script_patches = self:require("mission_script/" .. level_id:gsub("_night$", ""):gsub("_day$", "") .. ".lua") or false
 			end
-
-			local path = self.mod_path .. "req/mission_script/" .. level_id:gsub("_night$", "") .. ".lua"
-			self._mission_script_patches = io.file_is_readable(path) and blt.vm.dofile(path) or false
 		end
-
 		return self._mission_script_patches
 	end
 
@@ -48,17 +49,8 @@ if not StreamHeist then
 			return
 		end
 
-		local conflicting_mods = {
-			["Assault Tweaks Standalone"] = true,
-			["Assault Tweaks Standalone Lite"] = true,
-			["Full Speed Swarm"] = true,
-			["Ire and Fist"] = true,
-			["LIES"] = true,
-			["Mildly Alarming Enemy Spawngroups"] = true,
-			["Snap's Spawngroups"] = true,
-			["United Offensive"] = true
-		}
 		Global.sh_mod_conflicts = {}
+		local conflicting_mods = StreamHeist:require("mod_conflicts.lua") or {}
 		for _, mod in pairs(BLT.Mods:Mods()) do
 			if mod:IsEnabled() and conflicting_mods[mod:GetName()] then
 				table.insert(Global.sh_mod_conflicts, mod:GetName())
@@ -89,11 +81,13 @@ if not StreamHeist then
 	end)
 
 	-- Notify about required game restart
-	ModInstance.SetEnabled = function (self, enable, ...)
-		BLTMod.SetEnabled(self, enable, ...)
-		QuickMenu:new("Information", "A game restart is required to fully " .. (enable and "enable" or "disable") .. " all parts of Streamlined Heisting!", {}, true)
-	end
-
+	Hooks:Add("MenuManagerPostInitialize", "MenuManagerPostInitializeStreamlinedHeisting", function ()
+		Hooks:PostHook(BLTViewModGui, "clbk_toggle_enable_state", "sh_clbk_toggle_enable_state", function (self)
+			if self._mod:GetName() == "Streamlined Heisting" then
+				QuickMenu:new("Information", "A game restart is required to fully " .. (self._mod:IsEnabled() and "enable" or "disable") .. " all parts of Streamlined Heisting!", {}, true)
+			end
+		end)
+	end)
 end
 
 local required = {}
