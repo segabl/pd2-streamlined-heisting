@@ -1,7 +1,6 @@
 -- Disable "The Fixes" dozer walk fix, we have our own
-if TheFixes then
-	TheFixes.dozers_walk = false
-end
+TheFixesPreventer = TheFixesPreventer or {}
+TheFixesPreventer.tank_walk_near_players  = true
 
 
 -- Don't exit attack logic while chasing
