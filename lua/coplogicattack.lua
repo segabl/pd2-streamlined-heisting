@@ -90,11 +90,37 @@ function CopLogicAttack._check_aim_shoot(data, my_data, focus_enemy, verified, n
 end
 
 
--- Only return retreat pos if its different from current pos (to fix spamming of walk actions)
+-- Pathing related fixes to stop spamming walk actions when the new position is the same as the current position
 local _find_retreat_position_original = CopLogicAttack._find_retreat_position
 function CopLogicAttack._find_retreat_position(from_pos, ...)
-	local pos = _find_retreat_position_original(from_pos, ...)
-	if pos and mvector3.not_equal(from_pos, pos) then
-		return pos
+	local to_pos = _find_retreat_position_original(from_pos, ...)
+	if to_pos and (from_pos.x ~= to_pos.x or from_pos.y ~= to_pos.y) then
+		return to_pos
 	end
 end
+
+function CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
+	local from_pos = data.m_pos
+	local reservation = {
+		radius = 30,
+		position =  from_pos,
+		filter = data.pos_rsrv_id
+	}
+	if managers.navigation:is_pos_free(reservation) then
+		return
+	end
+
+	local to_pos = CopLogicTravel._get_pos_on_wall(from_pos, 500)
+	if from_pos.x == to_pos.x and from_pos.y == to_pos.y then
+		return
+	end
+
+	local path = {
+		mvector3.copy(from_pos),
+		to_pos
+	}
+	CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path, "run")
+end
+
+-- Empty this function (path starting position is corrected in CopActionWalk as it covers all cases)
+function CopLogicAttack._correct_path_start_pos() end

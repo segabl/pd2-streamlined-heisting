@@ -6,12 +6,14 @@ local mvec3_cross = mvector3.cross
 local mvec3_dir = mvector3.direction
 local mvec3_dis = mvector3.distance
 local mvec3_dis_sq = mvector3.distance_sq
+local mvec3_lerp = mvector3.lerp
 local mvec3_mul = mvector3.multiply
 local mvec3_neg = mvector3.negate
 local mvec3_normalize = mvector3.normalize
 local mvec3_set = mvector3.set
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
+local tmp_vec3 = Vector3()
 
 
 -- Reuse function of idle logic to make enemies in an area aware of a player entering the area
@@ -190,12 +192,12 @@ function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
 		end
 
 		-- Get a random vector between main threat direction and side threat direction
-		local lerped = math.lerp(tmp_vec1, tmp_vec2, math_random() * 0.5)
-		mvec3_normalize(lerped)
-		mvec3_mul(lerped, offset + math_random(min_dis, max_dis))
-		mvec3_add(lerped, unit_pos)
+		mvec3_lerp(tmp_vec3, tmp_vec1, tmp_vec2, math_random() * 0.5)
+		mvec3_normalize(tmp_vec3)
+		mvec3_mul(tmp_vec3, offset + math_random(min_dis, max_dis))
+		mvec3_add(tmp_vec3, unit_pos)
 
-		ray_params.pos_to = lerped
+		ray_params.pos_to = tmp_vec3
 		if not nav_manager:raycast(ray_params) or mvec3_dis_sq(ray_params.trace[1], unit_pos) > min_dis_sq then
 			rsrv_desc.position = ray_params.trace[1]
 			if nav_manager:is_pos_free(rsrv_desc) then

@@ -3,7 +3,6 @@ local mvec3_cpy = mvector3.copy
 local mvec3_dir = mvector3.direction
 local mvec3_lerp = mvector3.lerp
 local mvec3_mul = mvector3.multiply
-local mvec3_not_equal = mvector3.not_equal
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
 local math_abs = math.abs
@@ -192,7 +191,7 @@ function BossLogicAttack._upd_combat_movement(data, my_data)
 			my_data.chase_pos = nil
 			local chase_pos = focus_enemy.nav_tracker:field_position()
 			local new_chase_pos = CopLogicTravel._get_pos_on_wall(chase_pos, weapon_range.close, nil, nil)
-			if mvec3_not_equal(chase_pos, new_chase_pos) then
+			if chase_pos.x ~= new_chase_pos.x or chase_pos.y ~= new_chase_pos.y then
 				my_data.chase_pos = new_chase_pos
 
 				local my_pos = data.unit:movement():nav_tracker():field_position()
@@ -287,32 +286,35 @@ end
 
 -- Check new position for being different than the current one
 function BossLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
+	local from_pos = data.m_pos
 	local reservation = {
 		radius = 30,
-		position = data.m_pos,
+		position = from_pos,
 		filter = data.pos_rsrv_id
 	}
+	if managers.navigation:is_pos_free(reservation) then
+		return
+	end
 
-	if not managers.navigation:is_pos_free(reservation) then
-		local to_pos = CopLogicTravel._get_pos_on_wall(data.m_pos, 500, nil, nil, data.pos_rsrv_id)
+	local to_pos = CopLogicTravel._get_pos_on_wall(from_pos, 500)
+	if from_pos.x == to_pos.x and from_pos.y == to_pos.y then
+		return
+	end
 
-		if to_pos and mvec3_not_equal(data.m_pos, to_pos) then
-			my_data.advancing = data.brain:action_request({
-				variant = "run",
-				body_part = 2,
-				type = "walk",
-				nav_path = {
-					mvec3_cpy(data.m_pos),
-					to_pos
-				}
-			})
+	my_data.advancing = data.brain:action_request({
+		variant = "run",
+		body_part = 2,
+		type = "walk",
+		nav_path = {
+			mvec3_cpy(from_pos),
+			to_pos
+		}
+	})
 
-			if my_data.advancing then
-				my_data.moving_out_of_the_way = my_data.advancing
-				BossLogicAttack._cancel_chase_attempt(data, my_data)
-				return true
-			end
-		end
+	if my_data.advancing then
+		my_data.moving_out_of_the_way = my_data.advancing
+		BossLogicAttack._cancel_chase_attempt(data, my_data)
+		return true
 	end
 end
 
