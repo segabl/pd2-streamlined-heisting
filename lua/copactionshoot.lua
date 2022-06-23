@@ -142,7 +142,7 @@ function CopActionShoot:update(t)
 						self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math_lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
 					end
 
-					if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
+					if vis_state == 1 and not ext_anim.base_no_recoil then
 						self._ext_movement:play_redirect("recoil_single")
 					end
 

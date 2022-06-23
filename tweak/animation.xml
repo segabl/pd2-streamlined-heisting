@@ -81,7 +81,7 @@
 			<anim name="tank_recoil_saiga"/>
 		</search>
 		<target mode="attributes">
-			<attr name="weight" value="tank * (is_shotgun_mag + is_rifle + is_lmg + mini)"/>
+			<attr name="weight" value="tank * (1 - is_shotgun_pump)"/>
 		</target>
 	</tweak>
 </tweaks>
