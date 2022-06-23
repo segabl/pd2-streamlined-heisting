@@ -45,14 +45,13 @@ function TankCopLogicAttack.update(data)
 	local enemy_visible = focus_enemy.verified
 	local engage = my_data.attitude == "engage"
 	local z_dist = math.abs(data.m_pos.z - focus_enemy.m_pos.z)
-	local walk = focus_enemy.verified and focus_enemy.verified_dis < 800
 	local chase
 
 	if AIAttentionObject.REACT_COMBAT <= focus_enemy.reaction then
 		if enemy_visible then
 			chase = z_dist < 300 or focus_enemy.verified_dis > 2000 or engage and focus_enemy.verified_dis > 500
 
-			if walk and unit:anim_data().run then
+			if focus_enemy.verified_dis < 400 and unit:anim_data().run then
 				unit:brain():action_request({
 					body_part = 2,
 					type = "idle"
@@ -73,6 +72,7 @@ function TankCopLogicAttack.update(data)
 		elseif my_data.pathing_to_chase_pos then
 			return
 		elseif my_data.chase_path then
+			local walk = enemy_visible and focus_enemy.verified_dis < 800
 			TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, walk and "walk" or "run")
 		elseif my_data.chase_pos then
 			local from_pos = unit:movement():nav_tracker():field_position()
