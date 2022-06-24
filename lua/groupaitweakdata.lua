@@ -525,7 +525,9 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		tac_bull_rush = { 0, special_weight * 0.5, special_weight },
 		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
 		single_spooc = { 0, 0, 0 },
-		Phalanx = { 0, 0, 0 }
+		Phalanx = { 0, 0, 0 },
+		marshal_squad = { 0, 0, 0 },
+		custom_assault = { 0, 0, 0 } -- Catches all scripted spawns during assault participating to group ai
 	}
 
 	-- Winters damage reduction settings
@@ -556,7 +558,9 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.recon.groups = {
 		hostage_rescue = { 1, 1, 1 },
 		single_spooc = { 0, 0, 0 },
-		Phalanx = { 0, 0, 0 }
+		Phalanx = { 0, 0, 0 },
+		marshal_squad = { 0, 0, 0 },
+		custom_recon = { 0, 0, 0 } -- Catches all scripted spawns during recon participating to group ai
 	}
 
 	self.besiege.recon.force = { 2, 4, 6 }

@@ -912,3 +912,32 @@ end
 Hooks:PostHook(GroupAIStateBesiege, "_assign_group_to_retire", "sh__assign_group_to_retire", function (self, group)
 	self:_voice_retreat(group)
 end)
+
+
+-- When scripted spawns are assigned to group ai, use a generic group type instead of using their category as type
+-- This ensures they are not retired immediatley cause they are not part of assault/recon group types
+Hooks:OverrideFunction(GroupAIStateBesiege, "assign_enemy_to_group_ai", function (self, unit, team_id)
+	local area = self:get_area_from_nav_seg_id(unit:movement():nav_tracker():nav_segment())
+	local grp_objective = {
+		type = self._task_data.assault.active and "assault_area" or "recon_area",
+		area = area,
+		moving_out = false
+	}
+
+	local objective = unit:brain():objective()
+	if objective then
+		grp_objective.area = objective.area or objective.nav_seg and self:get_area_from_nav_seg_id(objective.nav_seg) or grp_objective.area
+		objective.grp_objective = grp_objective
+	end
+
+	local group = self:_create_group({
+		size = 1,
+		type = self._task_data.assault.active and "custom_assault" or "custom_recon"
+	})
+	group.team = self._teams[team_id]
+	group.objective = grp_objective
+	group.has_spawned = true
+
+	self:_add_group_member(group, unit:key())
+	self:set_enemy_assigned(area, unit:key())
+end)
