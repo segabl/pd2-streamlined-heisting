@@ -36,10 +36,11 @@ function GroupAIStateBase:unregister_special_unit(u_key, category_name, ...)
 end
 
 
--- Fix cloaker spawn noise for host
+-- Restore scripted cloaker spawn noise
 local _process_recurring_grp_SO_original = GroupAIStateBase._process_recurring_grp_SO
 function GroupAIStateBase:_process_recurring_grp_SO(...)
 	if _process_recurring_grp_SO_original(self, ...) then
+		managers.network:session():send_to_peers_synched("group_ai_event", self:get_sync_event_id("cloaker_spawned"), 0)
 		managers.hud:post_event("cloaker_spawn")
 		return true
 	end

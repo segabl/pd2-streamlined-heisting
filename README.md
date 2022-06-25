@@ -82,7 +82,7 @@ There are some inconsistencies with various enemy factions in the game that lead
 These are miscellaneous changes, fixes and optimizations that don't fit any of the above categories.
 
 - Reduces the effect of health granularity drastically (damage dealt to enemies is closer to the actual weapon damage listed in the inventory)
-- Restores spawning voicelines for Bulldozers and Tasers and fixes Cloaker spawn noise for hosts
+- Restores spawning voicelines for Bulldozers and Tasers and spawn noise for scripted Cloaker spawns
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
 - Fixes enemies playing full body crouching animations when suppressed when they are already crouching
