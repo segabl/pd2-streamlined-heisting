@@ -19,11 +19,6 @@ local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
 
 
--- Disable "The Fixes" dozer recoil fix
-TheFixesPreventer = TheFixesPreventer or {}
-TheFixesPreventer.tank_remove_recoil_anim = true
-
-
 -- Helper function to reset variables when shooting is stopped
 function CopActionShoot:_stop_firing()
 	self._is_single_shot = nil

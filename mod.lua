@@ -88,6 +88,12 @@ if not StreamHeist then
 			end
 		end)
 	end)
+
+	-- Disable some of "The Fixes"
+	TheFixesPreventer = TheFixesPreventer or {}
+	TheFixesPreventer.crash_upd_aim_coplogicattack = true
+	TheFixesPreventer.tank_remove_recoil_anim = true
+	TheFixesPreventer.tank_walk_near_players  = true
 end
 
 local required = {}

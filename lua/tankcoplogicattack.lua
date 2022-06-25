@@ -1,8 +1,3 @@
--- Disable "The Fixes" dozer walk fix, we have our own
-TheFixesPreventer = TheFixesPreventer or {}
-TheFixesPreventer.tank_walk_near_players  = true
-
-
 -- Don't exit attack logic while chasing
 function TankCopLogicAttack._chk_exit_attack_logic(data, ...)
 	if not data.internal_data.walking_to_chase_pos then
