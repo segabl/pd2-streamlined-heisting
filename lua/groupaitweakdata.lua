@@ -182,7 +182,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"charge",
 		"flank",
 		"deathguard",
-		"flash_grenade"
+		"flash_grenade",
+		"rescue_hostages"
 	}
 	self._tactics.swat_rifle = {
 		"ranged_fire",
@@ -191,7 +192,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 	self._tactics.swat_rifle_flank = {
 		"flank",
-		"flash_grenade"
+		"flash_grenade",
+		"rescue_hostages"
 	}
 	self._tactics.shield_wall_ranged = {
 		"shield",
@@ -548,9 +550,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	self.besiege.reenforce.groups = {
 		tac_swat_shotgun_rush_no_medic = { 1, 1, 1 },
-		tac_swat_shotgun_flank_no_medic = { 1, 1, 1 },
-		tac_swat_rifle_no_medic = { 4, 4, 4 },
-		tac_swat_rifle_flank_no_medic = { 4, 4, 4 }
+		tac_swat_rifle_no_medic = { 4, 4, 4 }
 	}
 
 	self.besiege.reenforce.interval = { 20, 20, 20 }
