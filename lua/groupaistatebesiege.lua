@@ -941,3 +941,12 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "assign_enemy_to_group_ai", function
 	self:_add_group_member(group, unit:key())
 	self:set_enemy_assigned(area, unit:key())
 end)
+
+
+-- Fix for potential crash when a group objective does not have a coarse path
+local _get_group_forwardmost_coarse_path_index_original = GroupAIStateBesiege._get_group_forwardmost_coarse_path_index
+function GroupAIStateBesiege:_get_group_forwardmost_coarse_path_index(group, ...)
+	if group.objective and group.objective.coarse_path then
+		return _get_group_forwardmost_coarse_path_index_original(self, group, ...)
+	end
+end
