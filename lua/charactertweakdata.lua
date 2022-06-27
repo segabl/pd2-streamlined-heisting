@@ -571,6 +571,9 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_medic.min_obj_interrupt_dis = 600
 	self.tank_mini.min_obj_interrupt_dis = 600
 	self.shield.min_obj_interrupt_dis = 300
+
+	-- Disable cloaker smoke drop after attack (they already have a chance to drop one when they dodge)
+	self.spooc.spooc_attack_use_smoke_chance = 0
 end)
 
 
