@@ -1,3 +1,17 @@
+local math_random = math.random
+local mrot_y = mrotation.y
+local mvec3_add = mvector3.add
+local mvec3_dir = mvector3.direction
+local mvec3_dot = mvector3.dot
+local mvec3_mul = mvector3.multiply
+local mvec3_neg = mvector3.negate
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
+local mvec3_sub = mvector3.subtract
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
+
+
 -- Instant detection outside of stealth
 local _create_detected_attention_object_data_original = CopLogicBase._create_detected_attention_object_data
 function CopLogicBase._create_detected_attention_object_data(...)
@@ -47,16 +61,6 @@ end
 
 
 -- Allow more dodge directions
-local math_random = math.random
-local mvec3_add = mvector3.add
-local mvec3_dot = mvector3.dot
-local mvec3_mul = mvector3.multiply
-local mvec3_neg = mvector3.negate
-local mvec3_set = mvector3.set
-local mvec3_set_z = mvector3.set_z
-local mvec3_sub = mvector3.subtract
-local tmp_vec1 = Vector3()
-local tmp_vec2 = Vector3()
 function CopLogicBase.chk_start_action_dodge(data, reason)
 	if not data.char_tweak.dodge or not data.char_tweak.dodge.occasions[reason] then
 		return
@@ -222,4 +226,28 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention, ...)
 	objective.interrupt_dis = interrupt_dis
 
 	return allow_trans, obj_failed
+end
+
+
+-- Fix function not working accurately for clients/NPCs
+function CopLogicBase.chk_am_i_aimed_at(data, attention_obj, max_dot)
+	if not attention_obj.is_person then
+		return
+	end
+
+	if attention_obj.dis < 1000 then
+		max_dot = math.lerp(0.5, max_dot, attention_obj.dis / 1000)
+	end
+
+	if attention_obj.is_local_player then
+		mrot_y(attention_obj.unit:movement():m_head_rot(), tmp_vec1)
+	elseif attention_obj.is_husk_player then
+		mvec3_set(tmp_vec1, attention_obj.unit:movement():detect_look_dir())
+	else
+		mvec3_set(tmp_vec1, attention_obj.unit:movement()._action_common_data.look_vec)
+	end
+
+	mvec3_dir(tmp_vec2, attention_obj.m_head_pos, data.unit:movement():m_com())
+
+	return max_dot < mvec3_dot(tmp_vec2, tmp_vec1)
 end
