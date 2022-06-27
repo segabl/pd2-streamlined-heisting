@@ -553,7 +553,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		tac_swat_rifle_no_medic = { 4, 4, 4 }
 	}
 
-	self.besiege.reenforce.interval = { 20, 20, 20 }
+	self.besiege.reenforce.interval = { 60, 45, 30 }
 
 	self.besiege.recon.groups = {
 		hostage_rescue = { 1, 1, 1 },
