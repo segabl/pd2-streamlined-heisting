@@ -339,6 +339,15 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.hurt_severities.no_heavy_hurt.melee = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
 	presets.hurt_severities.no_heavy_hurt.explosion = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
 
+	-- Make cloakers more likely to dodge and reduce side step dodge variant chance
+	presets.dodge.ninja.speed = 2
+	for _, occasion in pairs(presets.dodge.ninja.occasions) do
+		occasion.chance = 1
+		if occasion.variations.side_step then
+			occasion.variations.side_step.chance = 1
+		end
+	end
+
 	-- Enemy chatter
 	presets.enemy_chatter.swat.push = true
 	presets.enemy_chatter.swat.flash_grenade = true
