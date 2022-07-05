@@ -31,6 +31,7 @@
 				<post :hook_id="firemanager"/>
 				<post :hook_id="hudmanager"/>
 				<post :hook_id="missionmanager"/>
+				<post :hook_id="skirmishmanager"/>
 			</group>
 
 			<post :hook_id="modifiers/modifierheavies"/>
@@ -43,6 +44,7 @@
 			<group :hook_id="tweak_data/">
 				<post :hook_id="charactertweakdata"/>
 				<post :hook_id="groupaitweakdata"/>
+				<post :hook_id="levelstweakdata"/>
 				<post :hook_id="playertweakdata"/>
 				<post :hook_id="skirmishtweakdata"/>
 				<post :hook_id="weapontweakdata"/>
