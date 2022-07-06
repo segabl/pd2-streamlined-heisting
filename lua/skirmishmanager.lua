@@ -46,6 +46,19 @@ local wave_unit_categories = {
 	}
 }
 
+Hooks:PostHook(SkirmishManager, "init_finalize", "sh_init_finalize", function (self)
+	if not self:is_skirmish() then
+		return
+	end
+
+	local unit_categories = tweak_data.group_ai.unit_categories
+	local first = wave_unit_categories[2]
+	for k, v in pairs(first) do
+		unit_categories[k].unit_types.america = {
+			v
+		}
+	end
+end)
 
 Hooks:PostHook(SkirmishManager, "_apply_modifiers_for_wave", "sh__apply_modifiers_for_wave", function (self, wave_number)
 	self._unit_wave_index = wave_unit_categories[wave_number] and wave_number or self._unit_wave_index or 2
