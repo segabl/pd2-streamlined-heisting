@@ -40,7 +40,11 @@ local enemy_replacements = {
 		sniper = "units/pd2_dlc_gitgud/characters/ene_zeal_sniper/ene_zeal_sniper",
 		dozer_1 = "units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2",
 		dozer_2 = "units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3",
-		dozer_3 = "units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"
+		dozer_3 = "units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer",
+		medic_1 = "units/pd2_dlc_gitgud/characters/ene_zeal_medic_m4/ene_zeal_medic_m4",
+		medic_2 = "units/pd2_dlc_gitgud/characters/ene_zeal_medic_r870/ene_zeal_medic_r870",
+		taser = "units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer",
+		cloaker = "units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker"
 	}
 }
 enemy_replacements.hard = enemy_replacements.normal
@@ -69,6 +73,10 @@ local enemy_mapping = {
 	[Idstring("units/payday2/characters/ene_swat_2/ene_swat_2"):key()] = "swat_2",
 	[Idstring("units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"):key()] = "heavy_1",
 	[Idstring("units/payday2/characters/ene_swat_heavy_r870/ene_swat_heavy_r870"):key()] = "heavy_2",
+	[Idstring("units/payday2/characters/ene_medic_m4/ene_medic_m4"):key()] = "medic_1",
+	[Idstring("units/payday2/characters/ene_medic_r870/ene_medic_r870"):key()] = "medic_2",
+	[Idstring("units/payday2/characters/ene_tazer_1/ene_tazer_1"):key()] = "taser",
+	[Idstring("units/payday2/characters/ene_spook_1/ene_spook_1"):key()] = "cloaker",
 	[Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"):key()] = "heavy_1",
 	[Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"):key()] = "shield",
 	[Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat"):key()] = "swat_1"
