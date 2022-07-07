@@ -71,6 +71,13 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 		return
 	end
 
+	if data.dodge_chk_timeout_t and data.t < data.dodge_chk_timeout_t and reason ~= "hit" then
+		return
+	end
+
+	-- Consistent dodge check cooldown
+	data.dodge_chk_timeout_t = TimerManager:game():time() + 0.5
+
 	local dodge_tweak = data.char_tweak.dodge.occasions[reason]
 	if dodge_tweak.chance == 0 or dodge_tweak.chance < math_random() then
 		return
@@ -254,7 +261,7 @@ function CopLogicBase.chk_am_i_aimed_at(data, attention_obj, max_dot)
 	end
 
 	if attention_obj.dis < 1000 then
-		max_dot = math.lerp(0.5, max_dot, attention_obj.dis / 1000)
+		max_dot = math.lerp(max_dot * 0.75, max_dot, attention_obj.dis / 1000)
 	end
 
 	if attention_obj.is_local_player then
