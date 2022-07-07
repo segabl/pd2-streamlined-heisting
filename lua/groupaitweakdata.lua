@@ -1,9 +1,3 @@
--- Slightly increase default tickrate to allow more responsive enemies
-Hooks:PostHook(GroupAITweakData, "init", "sh_init", function (self)
-	self.ai_tick_rate = 1 / 90
-end)
-
-
 -- Fix retreat chatter using the wrong voiceline and make voiclines used for pushing unique
 Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", function (self)
 	self.enemy_chatter.retreat.queue = "m01"
