@@ -105,6 +105,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Updates old boss enemies with the new boss logic to make those boss fights more interesting
 - Tweaks some heist mission scripts to play better or fix issues
 - Fixes scripted enemies sometimes immediatley leaving the map after they spawn
+- Fixes enemies only being allowed to dodge when they are close to walls and allows them to dodge in more directions
 
 ## Compatibility
 
