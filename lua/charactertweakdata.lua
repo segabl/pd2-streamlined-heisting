@@ -182,7 +182,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	-- Sniper presets
 	presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
 		focus_delay = focus_delay,
-		aim_delay = { 0, aim_delay * 3 },
+		aim_delay = { 0, aim_delay * 3 }
 	})
 	presets.weapon.sh_sniper.is_rifle.FALLOFF = {
 		{ dmg_mul = 23 * dmg_mul_lin, r = 0, acc = { 0, 0.5 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
@@ -191,6 +191,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
 		aim_delay = { 0, aim_delay * 1.5 },
+		range = { optimal = 2000, far = 4000, close = 1000 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
@@ -198,6 +199,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	})
 	presets.weapon.sh_marshal = based_on(presets.weapon.sh_sniper, {
 		aim_delay = { 0, aim_delay * 1.5 },
+		range = { optimal = 2000, far = 4000, close = 1000 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.25, val[2] * 0.25 } end)
