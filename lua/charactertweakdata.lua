@@ -299,7 +299,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		pose.run = deep_clone(pose.walk)
 	end
 
-	-- custom hurt severity for heavies
+	-- Create custom hurt severity for heavies
 	presets.hurt_severities.no_heavy_hurt = {
 		tase = true,
 		bullet = {
@@ -341,7 +341,10 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.hurt_severities.no_heavy_hurt.melee = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
 	presets.hurt_severities.no_heavy_hurt.explosion = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
 
-	-- Make cloakers more likely to dodge and reduce side step dodge variant chance
+	-- Tweak dodge presets
+	presets.dodge.heavy.occasions.preemptive.chance = 0.25
+	presets.dodge.athletic.occasions.preemptive.chance = 0.5
+
 	presets.dodge.ninja.speed = 2
 	for _, occasion in pairs(presets.dodge.ninja.occasions) do
 		occasion.chance = 1
@@ -486,12 +489,13 @@ end)
 
 -- Set specific character preset settings
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
-	-- Set hurt severities for heavies and bosses
+	-- Set hurt severities
 	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.shadow_spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
+	self.medic.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
