@@ -48,6 +48,18 @@ end
 
 
 -- Make difficulty progress smoother
+function GroupAIStateBase:_update_difficulty_value()
+	if self._target_difficulty and self._t >= self._next_difficulty_step_t then
+		self._difficulty_value = math.min(self._difficulty_value + self._difficulty_step, self._target_difficulty)
+		if self._difficulty_value >= self._target_difficulty then
+			self._target_difficulty = nil
+		else
+			self._next_difficulty_step_t = self._t + 15
+		end
+		self:_calculate_difficulty_ratio()
+	end
+end
+
 local set_difficulty_original = GroupAIStateBase.set_difficulty
 function GroupAIStateBase:set_difficulty(value, ...)
 	if not managers.game_play_central or managers.game_play_central:get_heist_timer() < 1 or value < self._difficulty_value then
@@ -56,21 +68,12 @@ function GroupAIStateBase:set_difficulty(value, ...)
 
 	self._difficulty_step = 0.05
 	self._target_difficulty = value
-	self._next_difficulty_step_t = self._next_difficulty_step_t or 0
+	self._next_difficulty_step_t = self._next_difficulty_step_t or self._t
+
+	self:_update_difficulty_value()
 end
 
-Hooks:PostHook(GroupAIStateBase, "update", "sh_update", function (self, t)
-	if self._target_difficulty and t >= self._next_difficulty_step_t then
-		self._difficulty_value = self._difficulty_value + self._difficulty_step
-		if self._difficulty_step > 0 and self._difficulty_value >= self._target_difficulty or self._difficulty_step < 0 and self._difficulty_value <= self._target_difficulty then
-			self._difficulty_value = self._target_difficulty
-			self._target_difficulty = nil
-		else
-			self._next_difficulty_step_t = t + 15
-		end
-		self:_calculate_difficulty_ratio()
-	end
-end)
+Hooks:PostHook(GroupAIStateBase, "update", "sh_update", GroupAIStateBase._update_difficulty_value)
 
 
 -- Log time when criminals enter an area to use for the teargas check
@@ -176,4 +179,17 @@ function GroupAIStateBase:is_nav_seg_safe(nav_seg)
 	end
 
 	return true
+end
+
+
+-- Don't count recon as assault force and vice versa
+function GroupAIStateBase:_count_police_force(task_name)
+	local amount = 0
+	local objective_type = task_name .. "_area"
+	for _, group in pairs(self._groups) do
+		if group.objective.type == objective_type then
+			amount = amount + (group.has_spawned and group.size or group.initial_size)
+		end
+	end
+	return amount
 end
