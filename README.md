@@ -85,7 +85,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Restores spawning voicelines for Bulldozers and Tasers and spawn noise for scripted Cloaker spawns
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
-- Fixes enemies playing full body crouching animations when suppressed when they are already crouching
+- Fixes various animation issues, like enemies playing full body crouching animations when suppressed when they are already crouching
 - Makes special enemies and bosses more responsive by detaching their attack logic updates from the enemy task scheduler
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes sentry guns not count as criminals which stops enemies from pathing to them and ultimately get stuck
@@ -117,4 +117,4 @@ AI enhancing mods may be compatible to some degree (personally tested Think Fast
 - [creepyyy](https://modworkshop.net/user/54264), ERO, [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
 - [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
-- [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code
+- [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code and providing animation fixes
