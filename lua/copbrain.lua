@@ -1,9 +1,10 @@
--- Set up boss logics
+-- Set up logics
 CopBrain._logic_variants.mobster_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.chavez_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.hector_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.drug_lord_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.biker_boss = CopBrain._logic_variants.triad_boss
+CopBrain._logic_variants.heavy_swat_sniper = CopBrain._logic_variants.marshal_marksman
 
 
 -- Fix spamming of grenades by units that dodge with grenades (Cloaker)
