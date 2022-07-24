@@ -353,6 +353,22 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		end
 	end
 
+	-- Tweak suppression presets
+	presets.suppression.easy.panic_chance_mul = 1
+	presets.suppression.easy.duration = { 7, 9 }
+	presets.suppression.easy.react_point = { 0, 2 }
+	presets.suppression.easy.brown_point = { 3, 5 }
+
+	presets.suppression.hard_def.panic_chance_mul = 0.8
+	presets.suppression.hard_def.duration = { 5, 7 }
+	presets.suppression.hard_def.react_point = { 2, 4 }
+	presets.suppression.hard_def.brown_point = { 5, 7 }
+
+	presets.suppression.hard_agg.panic_chance_mul = 0.6
+	presets.suppression.hard_agg.duration = { 3, 5 }
+	presets.suppression.hard_agg.react_point = { 4, 6 }
+	presets.suppression.hard_agg.brown_point = { 7, 9 }
+
 	-- Enemy chatter
 	presets.enemy_chatter.swat.push = true
 	presets.enemy_chatter.swat.flash_grenade = true

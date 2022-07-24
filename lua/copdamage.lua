@@ -18,3 +18,10 @@ function CopDamage:_sync_dismember(attacker_unit, ...)
 		return _sync_dismember_original(self, attacker_unit, ...)
 	end
 end
+
+
+-- Don't set suppression to maximum on hit, increase by a static value instead
+local build_suppression_original = CopDamage.build_suppression
+function CopDamage:build_suppression(amount, ...)
+	return build_suppression_original(self, amount == "max" and 2 or amount, ...)
+end
