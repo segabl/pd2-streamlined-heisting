@@ -1,17 +1,22 @@
--- Reduce the amount of enemies in Holdout as the mission area is small and it is wave based
-Hooks:PostHook(SkirmishTweakData, "_init_group_ai_data", "sh__init_group_ai_data", function (self, tweak_data)
+-- Scale assault duration based on wave number and shorten time in between assaults
+Hooks:PostHook(SkirmishTweakData, "init", "sh_init", function (self, tweak_data)
 	local skirmish_data = tweak_data.group_ai.skirmish
-	skirmish_data.assault.force = { 8, 8, 8 }
-	skirmish_data.assault.force_pool = { 100, 100, 100 }
-	skirmish_data.recon.force = { 0, 0, 0 }
-end)
+	skirmish_data.assault.build_duration = 10
+	skirmish_data.assault.fade_duration = 0
+	skirmish_data.assault.delay = { 15, 15, 15 }
+	skirmish_data.assault.sustain_duration_min = nil
+	skirmish_data.assault.sustain_duration_max = nil
 
+	local skirmish_assault_meta = getmetatable(skirmish_data.assault)
+	local __index_original = skirmish_assault_meta.__index
 
--- Start damage/health scaling at 1 and scale health lower (nobody likes bullet sponges)
-Hooks:PostHook(SkirmishTweakData, "_init_wave_modifiers", "sh__init_wave_modifiers", function (self)
-	for i, wave_data in ipairs(self.wave_modifiers[1][1].data.waves) do
-		wave_data.damage = 1 + (i - 1) * 0.5
-		wave_data.health = 1 + (i - 1) * 0.375
+	skirmish_assault_meta.__index = function (t, key)
+		if key == "sustain_duration_min" or key == "sustain_duration_max" then
+			local sustain_duration = 60 + 7.5 * (managers.skirmish:current_wave_number() - 1)
+			return { sustain_duration, sustain_duration, sustain_duration }
+		else
+			return __index_original(t, key)
+		end
 	end
 end)
 
@@ -26,6 +31,24 @@ Hooks:PostHook(SkirmishTweakData, "_init_special_unit_spawn_limits", "sh__init_s
 			tank = math.floor(1 + 0.25 * i),
 			spooc = math.floor(1 + 0.25 * i)
 		}
+	end
+end)
+
+
+-- Reduce the amount of enemies in Holdout as the mission area is small and it is wave based
+Hooks:PostHook(SkirmishTweakData, "_init_group_ai_data", "sh__init_group_ai_data", function (self, tweak_data)
+	local skirmish_data = tweak_data.group_ai.skirmish
+	skirmish_data.assault.force = { 8, 8, 8 }
+	skirmish_data.assault.force_pool = { 100, 100, 100 }
+	skirmish_data.recon.force = { 0, 0, 0 }
+end)
+
+
+-- Start damage/health scaling at 1 and scale health lower (nobody likes bullet sponges)
+Hooks:PostHook(SkirmishTweakData, "_init_wave_modifiers", "sh__init_wave_modifiers", function (self)
+	for i, wave_data in ipairs(self.wave_modifiers[1][1].data.waves) do
+		wave_data.damage = 1 + (i - 1) * 0.5
+		wave_data.health = 1 + (i - 1) * 0.375
 	end
 end)
 
