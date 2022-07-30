@@ -107,6 +107,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Tweaks some heist mission scripts to play better or fix issues
 - Fixes scripted enemies sometimes immediatley leaving the map after they spawn
 - Makes enemies use more varied dodge directions
+- Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
 
 ## Compatibility
 

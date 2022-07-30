@@ -18,6 +18,8 @@
 					<post :hook_id="groupaistatebesiege"/>
 				</group>
 
+				<post :hook_id="menu/stageendscreentabcrimespree"/>
+
 				<group :hook_id="mission/">
 					<post :hook_id="elementareatrigger"/>
 					<post :hook_id="elementspawnenemydummy"/>
@@ -25,6 +27,7 @@
 					<post :hook_id="elementspecialobjective"/>
 				</group>
 
+				<post :hook_id="crimespreemanager"/>
 				<post :hook_id="dynamicresourcemanager"/>
 				<post :hook_id="enemymanager"/>
 				<post :hook_id="explosionmanager"/>
