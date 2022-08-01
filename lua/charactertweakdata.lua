@@ -413,8 +413,6 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 	self.biker_boss.player_health_scaling_mul = 1.5
 	self.biker_boss.headshot_dmg_mul = 0.5
 	self.biker_boss.no_headshot_add_mul = true
-	self.biker_boss.DAMAGE_CLAMP_BULLET = 100
-	self.biker_boss.DAMAGE_CLAMP_EXPLOSION = 200
 	self.biker_boss.damage.explosion_damage_mul = 0.5
 	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.biker_boss.move_speed = presets.move_speed.slow
@@ -429,8 +427,6 @@ Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", 
 	self.chavez_boss.player_health_scaling_mul = 1.5
 	self.chavez_boss.headshot_dmg_mul = 0.75
 	self.chavez_boss.no_headshot_add_mul = true
-	self.chavez_boss.DAMAGE_CLAMP_BULLET = 100
-	self.chavez_boss.DAMAGE_CLAMP_EXPLOSION = 200
 	self.chavez_boss.damage.explosion_damage_mul = 0.5
 	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.chavez_boss.move_speed = presets.move_speed.very_fast
@@ -443,8 +439,6 @@ Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_b
 	self.drug_lord_boss.player_health_scaling_mul = 1.5
 	self.drug_lord_boss.headshot_dmg_mul = 0.75
 	self.drug_lord_boss.no_headshot_add_mul = true
-	self.drug_lord_boss.DAMAGE_CLAMP_BULLET = 100
-	self.drug_lord_boss.DAMAGE_CLAMP_EXPLOSION = 200
 	self.drug_lord_boss.damage.explosion_damage_mul = 0.5
 	self.drug_lord_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.drug_lord_boss.move_speed = presets.move_speed.normal
@@ -460,8 +454,6 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 	self.hector_boss.player_health_scaling_mul = 1.5
 	self.hector_boss.headshot_dmg_mul = 0.5
 	self.hector_boss.no_headshot_add_mul = true
-	self.hector_boss.DAMAGE_CLAMP_BULLET = 100
-	self.hector_boss.DAMAGE_CLAMP_EXPLOSION = 200
 	self.hector_boss.damage.explosion_damage_mul = 0.5
 	self.hector_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.hector_boss.move_speed = presets.move_speed.slow
@@ -476,8 +468,6 @@ Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss"
 	self.mobster_boss.player_health_scaling_mul = 1.5
 	self.mobster_boss.headshot_dmg_mul = 0.75
 	self.mobster_boss.no_headshot_add_mul = true
-	self.mobster_boss.DAMAGE_CLAMP_BULLET = 100
-	self.mobster_boss.DAMAGE_CLAMP_EXPLOSION = 200
 	self.mobster_boss.damage.explosion_damage_mul = 0.5
 	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.mobster_boss.move_speed = presets.move_speed.fast
@@ -490,8 +480,6 @@ Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", fu
 	self.triad_boss.player_health_scaling_mul = 1.5
 	self.triad_boss.headshot_dmg_mul = 0.5
 	self.triad_boss.no_headshot_add_mul = true
-	self.triad_boss.DAMAGE_CLAMP_BULLET = 100
-	self.triad_boss.DAMAGE_CLAMP_EXPLOSION = 200
 	self.triad_boss.damage.explosion_damage_mul = 0.5
 	self.triad_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
 	self.triad_boss.move_speed = presets.move_speed.slow
@@ -587,12 +575,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Tweak move speeds
 	self.tank_mini.move_speed = self.presets.move_speed.very_slow
 
-	-- Set damage clamps
-	self.phalanx_minion.DAMAGE_CLAMP_BULLET = 40
-	self.phalanx_minion.DAMAGE_CLAMP_EXPLOSION = 100
-	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 40
-	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = 100
-
 	-- Set custom objective interrupt distance
 	self.taser.min_obj_interrupt_dis = 1000
 	self.spooc.min_obj_interrupt_dis = 800
@@ -641,6 +623,10 @@ local function set_presets(char_tweak_data)
 
 		char_preset.BASE_HEALTH_INIT = char_preset.BASE_HEALTH_INIT or char_preset.HEALTH_INIT
 		char_preset.HEALTH_INIT = char_preset.BASE_HEALTH_INIT * hp_mul
+
+		-- Remove damage clamps, they are not a fun or intuitive mechanic
+		char_preset.DAMAGE_CLAMP_BULLET = nil
+		char_preset.DAMAGE_CLAMP_EXPLOSION = nil
 
 		if char_preset.headshot_dmg_mul then
 			char_preset.base_headshot_dmg_mul = char_preset.base_headshot_dmg_mul or char_preset.headshot_dmg_mul
