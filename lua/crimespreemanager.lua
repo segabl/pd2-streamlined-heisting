@@ -20,6 +20,11 @@ Hooks:OverrideFunction(CrimeSpreeManager, "on_mission_completed", function (self
 		local spree_add = mission_data.add
 		self._mission_completion_gain = mission_data.add
 
+		local bonus_bags = math.min(managers.loot:get_secured_bonus_bags_amount(), 10)
+		if bonus_bags > 0 then
+			spree_add = spree_add + bonus_bags
+		end
+
 		if not self:_is_host() and self._global.start_data and self._global.start_data.server_spree_level then
 			local server_level = self._global.start_data and self._global.start_data.server_spree_level or -1
 			if server_level < 0 then
@@ -37,11 +42,6 @@ Hooks:OverrideFunction(CrimeSpreeManager, "on_mission_completed", function (self
 		if not self:_is_host() and self:server_spree_level() < self:spree_level() then
 			local diff = self:spree_level() - self:server_spree_level()
 			spree_add = spree_add - diff
-		end
-
-		local bonus_bags = math.min(managers.loot:get_secured_bonus_bags_amount(), 10)
-		if bonus_bags > 0 then
-			spree_add = spree_add + bonus_bags
 		end
 
 		spree_add = math.max(math.floor(spree_add), 0)
