@@ -1,4 +1,3 @@
-local math_max = math.max
 local math_min = math.min
 local math_lerp = math.lerp
 local math_random = math.random
@@ -57,48 +56,47 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 		return
 	end
 
-	if task_data.phase ~= "fade" then
+	if task_data.phase ~= "fade" or self._hunt_mode then
 		return _upd_assault_task_original(self, ...)
 	end
 
 	self:_assign_recon_groups_to_retire()
 
-	if not self._hunt_mode then
-		local end_assault
-		local is_skirmish = managers.skirmish:is_skirmish()
-		local enemies_defeated_time_limit = is_skirmish and 0 or 30
-		local drama_engagement_time_limit = is_skirmish and 0 or 20
-		local min_enemies_left = task_data.force * 0.5
-		local enemies_left = self:_count_police_force("assault")
-		local enemies_defeated = enemies_left < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time_limit
-		if enemies_defeated then
-			if not task_data.said_retreat then
-				task_data.said_retreat = true
-				self:_police_announce_retreat()
-			elseif task_data.phase_end_t < self._t then
-				local drama_pass = self._drama_data.amount < tweak_data.drama.assault_fade_end
-				local engagement_pass = self:_count_criminals_engaged_force(11) <= 10
-				local taking_too_long = self._t > task_data.phase_end_t + drama_engagement_time_limit
-				end_assault = drama_pass and engagement_pass or taking_too_long
-			end
+	local end_assault
+	local is_skirmish = managers.skirmish:is_skirmish()
+	local enemies_defeated_time_limit = is_skirmish and 0 or 30
+	local engagement_time_limit = is_skirmish and 0 or 20
+	local drama_time_limit = is_skirmish and 0 or 10
+	local min_enemies_left = math.max(task_data.force * 0.5)
+	local enemies_left = self:_count_police_force("assault")
+	local enemies_defeated = enemies_left < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time_limit
+	if enemies_defeated then
+		if not task_data.said_retreat then
+			task_data.said_retreat = true
+			self:_police_announce_retreat()
+		elseif task_data.phase_end_t < self._t then
+			local min_enemies_engaged = math.max(math.ceil(task_data.force * 0.25), 3)
+			local engagement_pass = self:_count_criminals_engaged_force(min_enemies_engaged) < min_enemies_engaged
+			local drama_pass = self._drama_data.amount < tweak_data.drama.assault_fade_end
+			end_assault = self._t > task_data.phase_end_t + (not engagement_pass and engagement_time_limit or not drama_pass and drama_time_limit or 0)
+		end
+	end
+
+	if task_data.force_end or end_assault then
+		task_data.active = nil
+		task_data.phase = nil
+		task_data.said_retreat = nil
+		task_data.force_end = nil
+		local force_regroup = task_data.force_regroup
+		task_data.force_regroup = nil
+
+		if self._draw_drama then
+			self._draw_drama.assault_hist[#self._draw_drama.assault_hist][2] = self._t
 		end
 
-		if task_data.force_end or end_assault then
-			task_data.active = nil
-			task_data.phase = nil
-			task_data.said_retreat = nil
-			task_data.force_end = nil
-			local force_regroup = task_data.force_regroup
-			task_data.force_regroup = nil
-
-			if self._draw_drama then
-				self._draw_drama.assault_hist[#self._draw_drama.assault_hist][2] = self._t
-			end
-
-			managers.mission:call_global_event("end_assault")
-			self:_begin_regroup_task(force_regroup)
-			return
-		end
+		managers.mission:call_global_event("end_assault")
+		self:_begin_regroup_task(force_regroup)
+		return
 	end
 
 	if self._drama_data.amount <= tweak_data.drama.low then
@@ -567,14 +565,14 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 
 	if not use_teargas then
 		-- Offset grenade a bit to avoid spawning exactly on the player/door
-		mvec_set_z(detonate_offset, math_max(detonate_offset.z, 0))
+		mvec_set_z(detonate_offset, math.max(detonate_offset.z, 0))
 		mvec_set_l(detonate_offset, math_random(100, 300))
 		mvec_set(detonate_offset_pos, detonate_pos)
 		mvec_add(detonate_offset_pos, detonate_offset)
 
 		local ray = World:raycast("ray", detonate_pos, detonate_offset_pos, "slot_mask", ray_mask)
 		if ray then
-			mvec_set_l(detonate_offset, math_max(0, ray.distance - 50))
+			mvec_set_l(detonate_offset, math.max(0, ray.distance - 50))
 			mvec_set(detonate_offset_pos, detonate_pos)
 			mvec_add(detonate_offset_pos, detonate_offset)
 		end
