@@ -300,46 +300,25 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	end
 
 	-- Create custom hurt severity for heavies
-	presets.hurt_severities.no_heavy_hurt = {
-		tase = true,
-		bullet = {
-			health_reference = "current",
-			zones = {
-				{
-					health_limit = 0.4,
-					none = 0.5,
-					light = 0.5
-				},
-				{
-					health_limit = 0.7,
-					light = 0.7,
-					moderate = 0.3
-				},
-				{
-					light = 0.5,
-					moderate = 0.5
-				}
-			}
+	presets.hurt_severities.no_heavy_hurt = deep_clone(presets.hurt_severities.base)
+	presets.hurt_severities.no_heavy_hurt.bullet.zones = {
+		{
+			health_limit = 0.4,
+			none = 0.5,
+			light = 0.5
 		},
-		fire = {
-			health_reference = "current",
-			zones = {
-				{
-					fire = 1
-				}
-			}
+		{
+			health_limit = 0.7,
+			light = 0.7,
+			moderate = 0.3
 		},
-		poison = {
-			health_reference = "current",
-			zones = {
-				{
-					poison = 1
-				}
-			}
+		{
+			light = 0.5,
+			moderate = 0.5
 		}
 	}
-	presets.hurt_severities.no_heavy_hurt.melee = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
-	presets.hurt_severities.no_heavy_hurt.explosion = deep_clone(presets.hurt_severities.no_heavy_hurt.bullet)
+	presets.hurt_severities.no_heavy_hurt.melee = presets.hurt_severities.no_heavy_hurt.bullet
+	presets.hurt_severities.no_heavy_hurt.explosion = presets.hurt_severities.no_heavy_hurt.bullet
 
 	-- Tweak dodge presets
 	presets.dodge.heavy.occasions.preemptive.chance = 0.25
@@ -423,7 +402,7 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", function (self, presets)
-	self.chavez_boss.HEALTH_INIT = 400
+	self.chavez_boss.HEALTH_INIT = 300
 	self.chavez_boss.player_health_scaling_mul = 1.5
 	self.chavez_boss.headshot_dmg_mul = 0.75
 	self.chavez_boss.no_headshot_add_mul = true
@@ -574,6 +553,8 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 
 	-- Tweak move speeds
 	self.tank_mini.move_speed = self.presets.move_speed.very_slow
+	self.swat.move_speed = self.presets.move_speed.very_fast
+	self.cop.move_speed = self.presets.move_speed.fast
 
 	-- Set custom objective interrupt distance
 	self.taser.min_obj_interrupt_dis = 1000
