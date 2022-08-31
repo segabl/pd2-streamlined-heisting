@@ -488,6 +488,25 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			}
 		}
 	}
+
+	local is_ranc = Global.game_settings and Global.game_settings.level_id == "ranc"
+	self.enemy_spawn_groups.marshal_squad = {
+		spawn_cooldown = is_ranc and 60 or 120,
+		max_nr_simultaneous_groups = 2,
+		initial_spawn_delay = is_ranc and 120 or 600,
+		amount = { 1, 1 },
+		spawn = {
+			{
+				rank = 1,
+				freq = 1,
+				unit = "marshal_marksman",
+				tactics = self._tactics.marshal_marksman
+			}
+		},
+		spawn_point_chk_ref = {
+			tac_swat_rifle_flank = true
+		}
+	}
 end)
 
 
