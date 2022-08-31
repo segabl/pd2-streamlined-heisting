@@ -61,3 +61,13 @@ Hooks:PostHook(PlayerTweakData, "_set_sm_wish", "sh__set_sm_wish", function (sel
 	self.suspicion.range_mul = 1.4
 	self.suspicion.buildup_mul = 1.4
 end)
+
+
+-- Slightly increase bleed out health
+Hooks:PostHook(PlayerTweakData, "init", "sh_init", function (self)
+	self.damage.BLEED_OUT_HEALTH_INIT = 15
+end)
+
+
+-- No faster armor recovery in SP
+function PlayerTweakData:_set_singleplayer() end
