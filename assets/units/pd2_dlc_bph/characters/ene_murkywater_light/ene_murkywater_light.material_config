@@ -1,36 +1,36 @@
 <materials version="3" group="ene_murkywater_light">
-	<material name="mtr_head" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_head" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df"/>
 	</material>
-	<material name="mtr_head_lod" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_head_lod" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_nm" mip="3"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_head_df" mip="3"/>
 	</material>
 
-	<material name="mtr_body" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_body" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df"/>
 	</material>
-	<material name="mtr_body_lod" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_body_lod" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="3"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="3"/>
 	</material>
 
-	<material name="mtr_gadgets" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_gadgets" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/payday2/characters/shared_textures/swat_body_nm"/>
 		<diffuse_texture file="units/payday2/characters/shared_textures/swat_fbi_body_df"/>
 	</material>
-	<material name="mtr_gadgets_lod" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_gadgets_lod" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/payday2/characters/shared_textures/swat_body_nm" mip="3"/>
 		<diffuse_texture file="units/payday2/characters/shared_textures/swat_fbi_body_df" mip="3"/>
 	</material>
 
-	<material name="mtr_frame" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_frame" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df"/>
 	</material>
-	<material name="mtr_frame_lod" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_frame_lod" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="3"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="3"/>
 	</material>
@@ -39,12 +39,12 @@
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df"/>
 	</material>
-	<material name="mtr_hat_lod" unique="true" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP" version="2">
+	<material name="mtr_hat_lod" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP" version="2">
 		<bump_normal_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_nm" mip="3"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/material_df" mip="3"/>
 	</material>
 
-	<material name="mtr_glass" unique="true" render_template="opacity:CUBE_ENVIRONMENT_MAPPING:CUBE_FRESNEL:DIFFUSE_TEXTURE" version="2">
+	<material name="mtr_glass" render_template="opacity:CUBE_ENVIRONMENT_MAPPING:CUBE_FRESNEL:DIFFUSE_TEXTURE" version="2">
 		<opacity_texture file="units/glass/vehicle_glass_op"/>
 		<diffuse_texture file="units/pd2_dlc_bph/characters/ene_murkywater_light/glasses_df"/>
 		<reflection_texture type="cube" global_texture="current_global_texture"/>
