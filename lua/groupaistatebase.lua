@@ -1,3 +1,9 @@
+-- Set up needed variables
+Hooks:PostHook(GroupAIStateBase, "init", "sh_init", function (self)
+	self._next_police_upd_task = 0
+end)
+
+
 -- Make medic and minigun dozer register as specials
 local function register_special_types(gstate)
 	gstate._special_unit_types.tank_medic = true
