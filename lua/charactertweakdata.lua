@@ -182,7 +182,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	-- Sniper presets
 	presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
 		focus_delay = focus_delay,
-		aim_delay = { 0, aim_delay * 3 }
+		aim_delay = { 0, aim_delay * 3 },
+		range = { optimal = 10000, far = 15000, close = 5000 }
 	})
 	presets.weapon.sh_sniper.is_rifle.FALLOFF = {
 		{ dmg_mul = 23 * dmg_mul_lin, r = 0, acc = { 0, 0.5 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
@@ -191,7 +192,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
 		aim_delay = { 0, aim_delay * 1.5 },
-		range = { optimal = 2000, far = 4000, close = 1000 },
+		range = { optimal = 3000, far = 4500, close = 1500 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
@@ -199,10 +200,10 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	})
 	presets.weapon.sh_marshal = based_on(presets.weapon.sh_sniper, {
 		aim_delay = { 0, aim_delay * 1.5 },
-		range = { optimal = 2000, far = 4000, close = 1000 },
+		range = { optimal = 3000, far = 4500, close = 1500 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
-			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.25, val[2] * 0.25 } end)
+			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.3, val[2] * 0.3 } end)
 		end
 	})
 
@@ -517,7 +518,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.hector_boss_no_armor.HEALTH_INIT = 8
 	self.drug_lord_boss_stealth.HEALTH_INIT = 8
 	self.triad_boss_no_armor.HEALTH_INIT = 8
-	self.marshal_marksman.HEALTH_INIT = 8
+	self.marshal_marksman.HEALTH_INIT = 16
 	self.fbi.HEALTH_INIT = 4
 
 	-- Tweak headshot multipliers
