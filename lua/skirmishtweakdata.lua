@@ -38,7 +38,7 @@ end)
 -- Reduce the amount of enemies in Holdout as the mission area is small and it is wave based
 Hooks:PostHook(SkirmishTweakData, "_init_group_ai_data", "sh__init_group_ai_data", function (self, tweak_data)
 	local skirmish_data = tweak_data.group_ai.skirmish
-	skirmish_data.assault.force = { 8, 8, 8 }
+	skirmish_data.assault.force = { 12, 12, 12 }
 	skirmish_data.assault.force_pool = { 100, 100, 100 }
 	skirmish_data.recon.force = { 0, 0, 0 }
 end)
@@ -56,7 +56,7 @@ end)
 -- Create custom wave group weights
 Hooks:PostHook(SkirmishTweakData, "_init_spawn_group_weights", "sh__init_spawn_group_weights", function (self, tweak_data)
 	local base_groups = deep_clone(tweak_data.group_ai.besiege.assault.groups)
-	local special_weights = { 3, 4.5, 6 }
+	local special_weights = { 4, 5, 6 }
 	base_groups.tac_shield_wall_ranged = special_weights
 	base_groups.tac_shield_wall_charge = special_weights
 	base_groups.tac_tazer_flanking = special_weights
