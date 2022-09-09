@@ -20,3 +20,10 @@ Hooks:PostHook(CopBase, "init", "sh_init", function (self)
 		managers.dyn_resource:load(unit_ids, sprint_unit_name, managers.dyn_resource.DYN_RESOURCES_PACKAGE)
 	end
 end)
+
+
+-- Check for weapon changes
+local weapon_mapping = StreamHeist:require("unit_weapons")
+Hooks:PreHook(CopBase, "post_init", "sh_post_init", function (self)
+	self._default_weapon_id = weapon_mapping[self._unit:name():key()] or self._default_weapon_id
+end)

@@ -3,6 +3,7 @@
 
 	<tweak definition="tweak/animation.xml"/>
 	<tweak definition="tweak/network.xml"/>
+	<tweak definition="tweak/units.xml"/>
 
 	<hooks script_path="mod.lua">
 
@@ -147,9 +148,6 @@
 			<file :name="wpn_npc_saiga/saiga_nm.texture"/>
 			<file :name="wpn_npc_saiga/wpn_npc_saiga.model"/>
 
-			<!-- ump correct sound -->
-			<file :name="wpn_npc_ump/wpn_npc_ump.unit"/>
-
 			<!-- spas12 -->
 			<file :name="wpn_npc_spas12/spas12_df.texture"/>
 			<file :name="wpn_npc_spas12/spas12_nm.texture"/>
@@ -204,7 +202,7 @@
 			<file :name="ene_city_shield/ene_city_shield.unit"/>
 			<file :name="ene_city_shield/ene_city_shield_husk.unit"/>
 
-			<!-- make city heavy r870 distinct and use benelli -->
+			<!-- make city heavy r870 distinct -->
 			<file :name="ene_city_heavy_r870/ene_city_heavy_r870.material_config"/>
 			<file :name="ene_city_heavy_r870/ene_city_heavy_r870_contour.material_config"/>
 			<file :name="ene_city_heavy_r870/ene_city_heavy_r870.model"/>
@@ -224,12 +222,10 @@
 			<!-- make fbi shield use unique model -->
 			<file :name="ene_shield_1/ene_shield_1.model"/>
 
-			<!-- make fbi shotgunner use spas12 -->
+			<!-- fix fbi shotgunner lod -->
 			<file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
-			<file :name="ene_fbi_swat_2/ene_fbi_swat_2.unit"/>
-			<file :name="ene_fbi_swat_2/ene_fbi_swat_2_husk.unit"/>
 
-			<!-- make fbi heavy r870 distinct and use spas12 -->
+			<!-- make fbi heavy r870 distinct -->
 			<file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.cooked_physics"/>
 			<file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.material_config"/>
 			<file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_contour.material_config"/>
@@ -237,10 +233,6 @@
 			<file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.object"/>
 			<file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870.unit"/>
 			<file :name="ene_fbi_heavy_r870/ene_fbi_heavy_r870_husk.unit"/>
-
-			<!-- fix fbi_3 _tweak_table and make him use spas12 -->
-			<file :name="ene_fbi_3/ene_fbi_3.unit"/>
-			<file :name="ene_fbi_3/ene_fbi_3_husk.unit"/>
 
 			<!-- give swat shotgunner badges and shell strap -->
 			<file :name="ene_swat_2/ene_swat_2.model"/>
@@ -250,39 +242,25 @@
 			<file :name="ene_shield_2/ene_shield_2.unit"/>
 			<file :name="ene_shield_2/ene_shield_2_husk.unit"/>
 
-			<!-- make heavy swat rifleman use mp5 and give body plate -->
+			<!-- give heavy swat rifleman body plate -->
 			<file :name="ene_swat_heavy_1/ene_swat_heavy_1.model"/>
 			<file :name="ene_swat_heavy_1/ene_swat_heavy_1.object"/>
-			<file :name="ene_swat_heavy_1/ene_swat_heavy_1.unit"/>
-			<file :name="ene_swat_heavy_1/ene_swat_heavy_1_husk.unit"/>
 
-			<!-- give heavy swat r870 bodyplate -->
+			<!-- make heavy swat r870 distinct and give bodyplate -->
 			<file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.cooked_physics"/>
 			<file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.model"/>
 			<file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.object"/>
 			<file :name="ene_swat_heavy_r870/ene_swat_heavy_r870.unit"/>
 			<file :name="ene_swat_heavy_r870/ene_swat_heavy_r870_husk.unit"/>
-
-			<!-- switch cop 3 and cop 4 weapons -->
-			<file :name="ene_cop_3/ene_cop_3.unit"/>
-			<file :name="ene_cop_3/ene_cop_3_husk.unit"/>
-			<file :name="ene_cop_4/ene_cop_4.unit"/>
-			<file :name="ene_cop_4/ene_cop_4_husk.unit"/>
-
-			<!-- assign faction weapons to medic -->
-			<file :name="ene_medic_r870/ene_medic_r870.unit"/>
-			<file :name="ene_medic_r870/ene_medic_r870_husk.unit"/>
 		</group>
 
 		<!-- murkies -->
 		<group name="units/pd2_dlc_bph/characters/" dyn_package="false">
-			<!-- make light distinct and use scar -->
+			<!-- make light distinct -->
 			<file :name="ene_murkywater_light/ene_murkywater_light.material_config"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light_contour.material_config"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light.model"/>
 			<file :name="ene_murkywater_light/ene_murkywater_light.object"/>
-			<file :name="ene_murkywater_light/ene_murkywater_light.unit"/>
-			<file :name="ene_murkywater_light/ene_murkywater_light_husk.unit"/>
 
 			<!-- redirect other lights to use same model -->
 			<file :name="ene_murkywater_light_fbi/ene_murkywater_light_fbi.unit"/>
@@ -290,7 +268,7 @@
 			<file :name="ene_murkywater_light_city/ene_murkywater_light_city.unit"/>
 			<file :name="ene_murkywater_light_city/ene_murkywater_light_city_husk.unit"/>
 
-			<!-- make light r870 distinct and use spas12 -->
+			<!-- make light r870 distinct -->
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.cooked_physics"/>
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.model"/>
 			<file :name="ene_murkywater_light_r870/ene_murkywater_light_r870.object"/>
@@ -313,7 +291,7 @@
 			<file :name="ene_murkywater_shield_c45/ene_murkywater_shield_c45.unit"/>
 			<file :name="ene_murkywater_shield_c45/ene_murkywater_shield_c45_husk.unit"/>
 
-			<!-- make heavy use scar -->
+			<!-- fix heavy body plate -->
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.model"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.object"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
@@ -323,19 +301,13 @@
 			<file :name="ene_murkywater_heavy_g36/ene_murkywater_heavy_g36.unit"/>
 			<file :name="ene_murkywater_heavy_g36/ene_murkywater_heavy_g36_husk.unit"/>
 
-			<!-- make heavy shotgunner use spas12 -->
+			<!-- make heavy shotgunner distinct and fix body plate -->
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.material_config"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_contour.material_config"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.model"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.object"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.unit"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_husk.unit"/>
-
-			<!-- assign faction weapons to medic -->
-			<file :name="ene_murkywater_medic/ene_murkywater_medic.unit"/>
-			<file :name="ene_murkywater_medic/ene_murkywater_medic_husk.unit"/>
-			<file :name="ene_murkywater_medic_r870/ene_murkywater_medic_r870.unit"/>
-			<file :name="ene_murkywater_medic_r870/ene_murkywater_medic_r870_husk.unit"/>
 		</group>
 
 		<!-- zeals -->
@@ -355,12 +327,10 @@
 			<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.material_config"/>
 			<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model"/>
 
-			<!-- make original zeal swat use mpx -->
+			<!-- make original zeal swat distinct -->
 			<file :name="ene_zeal_swat/ene_zeal_swat.material_config"/>
 			<file :name="ene_zeal_swat/ene_zeal_swat_contour.material_config"/>
 			<file :name="ene_zeal_swat/ene_zeal_swat.model"/>
-			<file :name="ene_zeal_swat/ene_zeal_swat.unit"/>
-			<file :name="ene_zeal_swat/ene_zeal_swat_husk.unit"/>
 
 			<!-- add zeal shotgunner -->
 			<file :name="ene_zeal_swat_2/ene_zeal_swat_2.cooked_physics"/>
@@ -374,12 +344,10 @@
 			<file :name="ene_zeal_swat_shield/ene_zeal_swat_shield_contour.material_config"/>
 			<file :name="ene_zeal_swat_shield/ene_zeal_swat_shield.model"/>
 
-			<!-- make heavy zeal use mpx -->
+			<!-- make heavy zeal distinct -->
 			<file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.material_config"/>
 			<file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy_contour.material_config"/>
 			<file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.model"/>
-			<file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy.unit"/>
-			<file :name="ene_zeal_swat_heavy/ene_zeal_swat_heavy_husk.unit"/>
 
 			<!-- add heavy zeal shotgunner -->
 			<file :name="ene_zeal_swat_heavy_2/ene_zeal_swat_heavy_2.cooked_physics"/>
@@ -472,7 +440,7 @@
 			<file :name="ene_swat_heavy_policia_federale_g36/ene_swat_heavy_policia_federale_g36.unit"/>
 			<file :name="ene_swat_heavy_policia_federale_g36/ene_swat_heavy_policia_federale_g36_husk.unit"/>
 
-			<!-- add improved shield -->
+			<!-- add custom shield -->
 			<file :name="ene_acc_shield_lights/ene_acc_shield_lights.material_config"/>
 			<file :name="ene_acc_shield_lights/ene_acc_shield_lights.model"/>
 			<file :name="ene_acc_shield_lights/ene_acc_shield_lights.object"/>
@@ -491,12 +459,6 @@
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper_contour.material_config"/>
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.model"/>
 			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.object"/>
-			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper.unit"/>
-			<file :name="ene_swat_policia_sniper/ene_swat_policia_sniper_husk.unit"/>
-
-			<!-- assign faction weapons to medic -->
-			<file :name="ene_swat_medic_policia_federale/ene_swat_medic_policia_federale.unit"/>
-			<file :name="ene_swat_medic_policia_federale/ene_swat_medic_policia_federale_husk.unit"/>
 		</group>
 
 		<!-- russian mercs -->
@@ -504,20 +466,10 @@
 			<!-- make shotgunner use heavy model for better distinction -->
 			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870.unit"/>
 			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870_husk.unit"/>
-
-			<!-- assign faction weapons to medic -->
-			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass.unit"/>
-			<file :name="ene_akan_medic_ak47_ass/ene_akan_medic_ak47_ass_husk.unit"/>
 		</group>
 
 		<!-- character fixes and changes -->
 		<group name="units/" dyn_package="false">
-			<!-- biker boss weapon -->
-			<group :name="pd2_dlc_born/characters/ene_gang_biker_boss/">
-				<file :name="ene_gang_biker_boss.unit"/>
-				<file :name="ene_gang_biker_boss_husk.unit"/>
-			</group>
-
 			<!-- sosa hitboxes and footsteps -->
 			<group :name="pd2_dlc_friend/characters/ene_drug_lord_boss/">
 				<file :name="ene_drug_lord_boss.object"/>

@@ -7,7 +7,7 @@ if not StreamHeist then
 	}
 
 	function StreamHeist:require(file)
-		local path = self.mod_path .. "req/" .. file
+		local path = self.mod_path .. "req/" .. file .. ".lua"
 		return io.file_is_readable(path) and blt.vm.dofile(path)
 	end
 
@@ -15,7 +15,7 @@ if not StreamHeist then
 		if self._mission_script_patches == nil then
 			local level_id = Global.game_settings and Global.game_settings.level_id
 			if level_id then
-				self._mission_script_patches = self:require("mission_script/" .. level_id:gsub("_night$", ""):gsub("_day$", "") .. ".lua") or false
+				self._mission_script_patches = self:require("mission_script/" .. level_id:gsub("_night$", ""):gsub("_day$", "")) or false
 			end
 		end
 		return self._mission_script_patches
@@ -50,7 +50,7 @@ if not StreamHeist then
 		end
 
 		Global.sh_mod_conflicts = {}
-		local conflicting_mods = StreamHeist:require("mod_conflicts.lua") or {}
+		local conflicting_mods = StreamHeist:require("mod_conflicts") or {}
 		for _, mod in pairs(BLT.Mods:Mods()) do
 			if mod:IsEnabled() and conflicting_mods[mod:GetName()] then
 				table.insert(Global.sh_mod_conflicts, mod:GetName())
