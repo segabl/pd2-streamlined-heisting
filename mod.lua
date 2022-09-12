@@ -2,8 +2,19 @@ if not StreamHeist then
 
 	StreamHeist = {
 		mod_path = ModPath,
+		save_path = SavePath .. "streamlined_heisting.json",
 		mod_instance = ModInstance,
-		logging = io.file_is_readable("mods/developer.txt")
+		logging = io.file_is_readable("mods/developer.txt"),
+		settings = {
+			faction_tweaks = {
+				swat = true,
+				fbi = true,
+				gensec = true,
+				murkywater = true,
+				federales = true,
+				russia = true
+			}
+		}
 	}
 
 	function StreamHeist:require(file)
@@ -41,6 +52,12 @@ if not StreamHeist then
 			ene_zeal_medic = loc:exists("ene_medic") and loc:text("ene_medic"),
 			ene_zeal_sniper = loc:exists("ene_sniper") and loc:text("ene_sniper")
 		})
+
+		if HopLib then
+			HopLib:load_localization(StreamHeist.mod_path .. "loc/", loc)
+		else
+			loc:load_localization_file(StreamHeist.mod_path .. "loc/english.txt")
+		end
 	end)
 
 	-- Check for common mod conflicts
@@ -58,10 +75,10 @@ if not StreamHeist then
 		end
 
 		if #Global.sh_mod_conflicts > 0 then
-			local message = "The following mod(s) are likely to cause unintended behavior or crashes in combination with Streamlined Heisting:\n\n"
+			local message = managers.localization:text("sh_menu_conflicts") .. "\n\n" .. table.concat(Global.sh_mod_conflicts, "\n")
 			local buttons = {
 				{
-					text = "Disable conflicting mods",
+					text = managers.localization:text("sh_menu_conflicts_disable"),
 					callback = function ()
 						for _, mod_name in pairs(Global.sh_mod_conflicts) do
 							local mod = BLT.Mods:GetModByName(mod_name)
@@ -73,21 +90,61 @@ if not StreamHeist then
 					end
 				},
 				{
-					text = "Keep enabled (not recommended)"
+					text = managers.localization:text("sh_menu_conflicts_ignore")
 				},
 			}
-			QuickMenu:new("Warning", message .. table.concat(Global.sh_mod_conflicts, "\n"), buttons, true)
+			QuickMenu:new(managers.localization:text("sh_menu_warning"), message, buttons, true)
 		end
 	end)
 
-	-- Notify about required game restart
-	Hooks:Add("MenuManagerPostInitialize", "MenuManagerPostInitializeStreamlinedHeisting", function ()
-		Hooks:PostHook(BLTViewModGui, "clbk_toggle_enable_state", "sh_clbk_toggle_enable_state", function (self)
-			if self._mod:GetName() == "Streamlined Heisting" then
-				QuickMenu:new("Information", "A game restart is required to fully " .. (self._mod:IsEnabled() and "enable" or "disable") .. " all parts of Streamlined Heisting!", {}, true)
-			end
-		end)
+	-- Create settings menu
+	Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusStreamlinedHeisting", function(_, nodes)
+
+		local menu_id = "sh_menu"
+		MenuHelper:NewMenu(menu_id)
+
+		MenuCallbackHandler.sh_faction_toggle = function(self, item)
+			StreamHeist.settings.faction_tweaks[item:name()] = (item:value() == "on")
+		end
+
+		MenuCallbackHandler.sh_save = function()
+			io.save_as_json(StreamHeist.settings, StreamHeist.save_path)
+		end
+
+		for i, faction in ipairs({ "swat", "fbi", "gensec", "russia", "federales", "murkywater" }) do
+			MenuHelper:AddToggle({
+				id = faction,
+				title = "sh_menu_" .. faction,
+				desc = "sh_menu_faction_tweak_desc",
+				callback = "sh_faction_toggle",
+				value = StreamHeist.settings.faction_tweaks[faction],
+				menu_id = menu_id,
+				priority = 10 - i
+			})
+		end
+
+		nodes[menu_id] = MenuHelper:BuildMenu(menu_id, { back_callback = "sh_save" })
+		MenuHelper:AddMenuItem(nodes["blt_options"], menu_id, "sh_menu_main")
 	end)
+
+	-- Load settings
+	if io.file_is_readable(StreamHeist.save_path) then
+		local data = io.load_as_json(StreamHeist.save_path)
+		if data then
+			local function merge(tbl1, tbl2)
+				for k, v in pairs(tbl2) do
+					if type(tbl1[k]) == type(v) then
+						if type(v) == "table" then
+							merge(tbl1[k], v)
+						else
+							tbl1[k] = v
+						end
+					end
+				end
+			end
+			merge(StreamHeist.settings, data)
+		end
+	end
 
 	-- Disable some of "The Fixes"
 	TheFixesPreventer = TheFixesPreventer or {}
@@ -95,6 +152,16 @@ if not StreamHeist then
 	TheFixesPreventer.fix_copmovement_aim_state_discarded = true
 	TheFixesPreventer.tank_remove_recoil_anim = true
 	TheFixesPreventer.tank_walk_near_players  = true
+
+	-- Check faction tweaks
+	if not Global.sh_faction_tweaks_check then
+		Global.sh_faction_tweaks_check = true
+		for faction, enabled in pairs(StreamHeist.settings.faction_tweaks) do
+			if enabled then
+				StreamHeist.mod_instance.supermod:GetAssetLoader():LoadAssetGroup(faction)
+			end
+		end
+	end
 end
 
 local required = {}

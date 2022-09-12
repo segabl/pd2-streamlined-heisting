@@ -13,11 +13,6 @@ Hooks:PostHook(DynamicResourceManager, "preload_units", "sh_preload_units", func
 		load_unit("units/payday2/characters/ene_sniper_3/ene_sniper_3")
 	end
 
-	if PackageManager:has(ids_unit, Idstring("units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield")) then
-		StreamHeist:log("Loading custom Murky units...")
-		load_unit("units/pd2_dlc_bph/characters/ene_murkywater_shield_c45/ene_murkywater_shield_c45")
-	end
-
 	if PackageManager:has(ids_unit, Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat")) then
 		StreamHeist:log("Loading custom Zeal units...")
 		load_unit("units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2")
