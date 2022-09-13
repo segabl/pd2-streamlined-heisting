@@ -300,7 +300,47 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		pose.run = deep_clone(pose.walk)
 	end
 
-	-- Create custom hurt severity for heavies
+	-- Tweak hurt severities
+	presets.hurt_severities.base.melee.zones = {
+		{
+			health_limit = 0.2,
+			light = 1
+		},
+		{
+			health_limit = 0.5,
+			light = 0.5,
+			moderate = 0.5
+		},
+		{
+			health_limit = 0.8,
+			moderate = 0.5,
+			heavy = 0.5
+		},
+		{
+			heavy = 1
+		}
+	}
+	presets.hurt_severities.base.explosion.zones = {
+		{
+			health_limit = 0.2,
+			light = 0.5,
+			moderate = 0.5
+		},
+		{
+			health_limit = 0.5,
+			moderate = 0.5,
+			heavy = 0.5
+		},
+		{
+			health_limit = 0.8,
+			heavy = 0.5,
+			explode = 0.5
+		},
+		{
+			explode = 1
+		}
+	}
+
 	presets.hurt_severities.no_heavy_hurt = deep_clone(presets.hurt_severities.base)
 	presets.hurt_severities.no_heavy_hurt.bullet.zones = {
 		{
@@ -318,8 +358,47 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			moderate = 0.5
 		}
 	}
-	presets.hurt_severities.no_heavy_hurt.melee = presets.hurt_severities.no_heavy_hurt.bullet
-	presets.hurt_severities.no_heavy_hurt.explosion = presets.hurt_severities.no_heavy_hurt.bullet
+	presets.hurt_severities.no_heavy_hurt.melee.zones = {
+		{
+			health_limit = 0.2,
+			none = 0.2,
+			light = 0.8
+		},
+		{
+			health_limit = 0.5,
+			light = 0.8,
+			moderate = 0.2
+		},
+		{
+			health_limit = 0.8,
+			light = 0.2,
+			moderate = 0.8
+		},
+		{
+			moderate = 0.8,
+			heavy = 0.2
+		}
+	}
+	presets.hurt_severities.no_heavy_hurt.explosion.zones = {
+		{
+			health_limit = 0.2,
+			light = 1,
+		},
+		{
+			health_limit = 0.5,
+			light = 0.5,
+			moderate = 0.5
+		},
+		{
+			health_limit = 0.8,
+			moderate = 0.5,
+			heavy = 0.5
+		},
+		{
+			heavy = 0.5,
+			explode = 0.5
+		}
+	}
 
 	-- Tweak dodge presets
 	presets.dodge.heavy.occasions.preemptive.chance = 0.25
