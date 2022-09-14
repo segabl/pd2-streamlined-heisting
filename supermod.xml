@@ -36,6 +36,7 @@
 				<post :hook_id="firemanager"/>
 				<post :hook_id="hudmanager"/>
 				<post :hook_id="missionmanager"/>
+				<post :hook_id="playermanager"/>
 				<post :hook_id="skirmishmanager"/>
 			</group>
 
