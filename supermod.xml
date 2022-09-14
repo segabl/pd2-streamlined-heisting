@@ -391,8 +391,9 @@
 			<file :name="shared_textures/heads_atlas_df.texture"/>
 			<file :name="shared_textures/helmets_atlas_df.texture"/>
 			<file :name="shared_textures/swat_body_df.texture"/>
-			<file :name="ene_swat_heavy_policia_federale_fbi_helmet/ene_swat_heavy_policia_federale_fbi_helmet.material_config"/>
-			<file :name="ene_swat_heavy_policia_federale_fbi_helmet/ene_swat_heavy_policia_federale_fbi_helmet.model"/>
+			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.material_config"/>
+			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.model"/>
+			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.object"/>
 
 			<!-- base for material config and textures -->
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale.material_config"/>
