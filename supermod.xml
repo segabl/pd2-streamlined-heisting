@@ -236,6 +236,9 @@
 				<file :name="ene_acc_shield_city/ene_acc_shield_city.object"/>
 				<file :name="ene_acc_shield_city/ene_acc_shield_city.unit"/>
 
+				<!-- fix city rifleman lod -->
+				<file :name="ene_city_swat_1/ene_city_swat_1.model"/>
+
 				<!-- give city shotgunner distinct helmet -->
 				<file :name="ene_city_swat_2/ene_city_swat_2.model"/>
 
@@ -243,7 +246,13 @@
 				<file :name="ene_city_shield/ene_city_shield.unit"/>
 				<file :name="ene_city_shield/ene_city_shield_husk.unit"/>
 
-				<!-- make city heavy r870 distinct -->
+				<!-- make city heavy rifleman distinct -->
+				<file :name="ene_city_heavy_g36/ene_city_heavy_g36.material_config"/>
+				<file :name="ene_city_heavy_g36/ene_city_heavy_g36_contour.material_config"/>
+				<file :name="ene_city_heavy_g36/ene_city_heavy_g36.model"/>
+				<file :name="ene_city_heavy_g36/ene_city_heavy_g36.object"/>
+
+				<!-- make city heavy shotgunner distinct -->
 				<file :name="ene_city_heavy_r870/ene_city_heavy_r870.material_config"/>
 				<file :name="ene_city_heavy_r870/ene_city_heavy_r870_contour.material_config"/>
 				<file :name="ene_city_heavy_r870/ene_city_heavy_r870.model"/>
