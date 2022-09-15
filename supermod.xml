@@ -213,6 +213,9 @@
 				<!-- make fbi shield use unique model -->
 				<file :name="ene_shield_1/ene_shield_1.model"/>
 
+				<!-- fix fbi rifleman weighting -->
+				<file :name="ene_fbi_swat_1/ene_fbi_swat_1.model"/>
+
 				<!-- fix fbi shotgunner lod -->
 				<file :name="ene_fbi_swat_2/ene_fbi_swat_2.model"/>
 
