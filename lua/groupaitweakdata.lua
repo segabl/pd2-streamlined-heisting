@@ -63,18 +63,20 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	end
 
 	-- Use the same russian units on all difficulties since factions are incomplete
-	self.unit_categories.FBI_swat_R870.unit_types.russia = {
-		Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870")
-	}
-	self.unit_categories.FBI_swat_M4.unit_types.russia = {
-		Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass")
-	}
-	self.unit_categories.FBI_heavy_G36.unit_types.russia = {
-		Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
-	}
-	self.unit_categories.FBI_heavy_R870.unit_types.russia = {
-		Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
-	}
+	if StreamHeist.settings.faction_tweaks.russia then
+		self.unit_categories.FBI_swat_R870.unit_types.russia = {
+			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870")
+		}
+		self.unit_categories.FBI_swat_M4.unit_types.russia = {
+			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass")
+		}
+		self.unit_categories.FBI_heavy_G36.unit_types.russia = {
+			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36")
+		}
+		self.unit_categories.FBI_heavy_R870.unit_types.russia = {
+			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
+		}
+	end
 	self.unit_categories.FBI_suit_C45_M4.unit_types.russia = {
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
@@ -90,18 +92,20 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	end
 
 	-- Use the same murky units on all difficulties since their models don't differ
-	self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870")
-	}
-	self.unit_categories.FBI_swat_M4.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")
-	}
-	self.unit_categories.FBI_heavy_G36.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
-	}
-	self.unit_categories.FBI_heavy_R870.unit_types.murkywater = {
-		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
-	}
+	if StreamHeist.settings.faction_tweaks.murkywater then
+		self.unit_categories.FBI_swat_R870.unit_types.murkywater = {
+			Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870")
+		}
+		self.unit_categories.FBI_swat_M4.unit_types.murkywater = {
+			Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi")
+		}
+		self.unit_categories.FBI_heavy_G36.unit_types.murkywater = {
+			Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
+		}
+		self.unit_categories.FBI_heavy_R870.unit_types.murkywater = {
+			Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+		}
+	end
 	-- temp fix till I have proper murky HRT
 	self.unit_categories.FBI_suit_C45_M4.unit_types.murkywater = {
 		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light"),
@@ -113,18 +117,20 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	}
 
 	-- Use the same federal police units on all difficulties since their models don't differ
-	self.unit_categories.FBI_swat_R870.unit_types.federales = {
-		Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870")
-	}
-	self.unit_categories.FBI_swat_M4.unit_types.federales = {
-		Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi")
-	}
-	self.unit_categories.FBI_heavy_G36.unit_types.federales = {
-		Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi/ene_swat_heavy_policia_federale_fbi")
-	}
-	self.unit_categories.FBI_heavy_R870.unit_types.federales = {
-		Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
-	}
+	if StreamHeist.settings.faction_tweaks.federales then
+		self.unit_categories.FBI_swat_R870.unit_types.federales = {
+			Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi_r870/ene_swat_policia_federale_fbi_r870")
+		}
+		self.unit_categories.FBI_swat_M4.unit_types.federales = {
+			Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi")
+		}
+		self.unit_categories.FBI_heavy_G36.unit_types.federales = {
+			Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi/ene_swat_heavy_policia_federale_fbi")
+		}
+		self.unit_categories.FBI_heavy_R870.unit_types.federales = {
+			Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
+		}
+	end
 	-- temp fix till I have proper federal police HRT
 	self.unit_categories.FBI_suit_C45_M4.unit_types.federales = {
 		Idstring("units/pd2_dlc_bex/characters/ene_policia_01/ene_policia_01"),
