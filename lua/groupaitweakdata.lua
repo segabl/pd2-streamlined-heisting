@@ -490,6 +490,66 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		}
 	}
 
+	self.enemy_spawn_groups.reenforce_light = {
+		amount = { 2, 3 },
+		spawn = {
+			{
+				freq = 1,
+				rank = 1,
+				unit = "FBI_swat_R870",
+				tactics = self._tactics.swat_shotgun_rush
+			},
+			{
+				freq = 2,
+				rank = 1,
+				unit = "FBI_swat_M4",
+				tactics = self._tactics.swat_rifle
+			},
+			{
+				freq = 0.2,
+				rank = 1,
+				unit = "FBI_heavy_R870",
+				tactics = self._tactics.swat_shotgun_rush
+			},
+			{
+				freq = 0.4,
+				rank = 1,
+				unit = "FBI_heavy_G36",
+				tactics = self._tactics.swat_rifle
+			}
+		}
+	}
+
+	self.enemy_spawn_groups.reenforce_heavy = {
+		amount = { 2, 3 },
+		spawn = {
+			{
+				freq = 0.2,
+				rank = 1,
+				unit = "FBI_swat_R870",
+				tactics = self._tactics.swat_shotgun_rush
+			},
+			{
+				freq = 0.4,
+				rank = 1,
+				unit = "FBI_swat_M4",
+				tactics = self._tactics.swat_rifle
+			},
+			{
+				freq = 1,
+				rank = 1,
+				unit = "FBI_heavy_R870",
+				tactics = self._tactics.swat_shotgun_rush
+			},
+			{
+				freq = 2,
+				rank = 1,
+				unit = "FBI_heavy_G36",
+				tactics = self._tactics.swat_rifle
+			}
+		}
+	}
+
 	local is_ranc = Global.game_settings and Global.game_settings.level_id == "ranc"
 	self.enemy_spawn_groups.marshal_squad = {
 		spawn_cooldown = is_ranc and 60 or 120,
@@ -563,8 +623,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.sustain_duration_balance_mul = { 1, 1, 1, 1 }
 
 	self.besiege.reenforce.groups = {
-		tac_swat_shotgun_rush_no_medic = { 1, 1, 1 },
-		tac_swat_rifle_no_medic = { 4, 4, 4 }
+		reenforce_light = { 7, 5, 3 },
+		reenforce_heavy = { 1, 3, 5 }
 	}
 
 	self.besiege.reenforce.interval = { 60, 45, 30 }
