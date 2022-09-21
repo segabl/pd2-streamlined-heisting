@@ -558,6 +558,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.shadow_spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.medic.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt
+	self.marshal_marksman.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
@@ -624,6 +625,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.gensec.suppression = self.presets.suppression.easy
 	self.swat.suppression = self.presets.suppression.hard_def
 	self.heavy_swat_sniper.suppression = self.presets.suppression.hard_agg
+	self.marshal_marksman.suppression = self.presets.suppression.hard_agg
 
 	-- Allow arrests
 	self.fbi.no_arrest = nil
