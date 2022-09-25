@@ -379,7 +379,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 
 		if assault_area and assault_path then
 			local push = found_areas[assault_area] == objective_area
-			local used_grenade
+			local move_out = not push
 
 			if push then
 				local detonate_pos
@@ -390,12 +390,16 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 
 				-- Check which grenade to use to push, grenade use is required for the push to be initiated
 				-- If grenade isn't available, push regardless anyway after a short delay
-				used_grenade = self:_chk_group_use_grenade(assault_area, group, detonate_pos) or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t
+				if self:_chk_group_use_grenade(assault_area, group, detonate_pos) then
+					move_out = true
+				elseif charge or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t then
+					move_out = true
+				end
 
-				if used_grenade then
+				if move_out then
 					self:_voice_move_in_start(group)
 				elseif not group.ignore_grenade_check_t then
-					group.ignore_grenade_check_t = self._t + math.map_range_clamped(table.size(assault_area.criminal.units), 1, 4, 6, 1)
+					group.ignore_grenade_check_t = self._t + math.map_range_clamped(table.size(assault_area.criminal.units), 1, 4, 6, 2)
 				end
 			else
 				-- If we aren't pushing, we go to one area before the criminal area
@@ -405,7 +409,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				end
 			end
 
-			if not push or used_grenade then
+			if move_out then
 				local grp_objective = {
 					type = "assault_area",
 					stance = "hos",
