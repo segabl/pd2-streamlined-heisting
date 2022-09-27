@@ -20,7 +20,8 @@ end
 local idstr_base = Idstring("base")
 function CopActionWalk:_adjust_move_anim(side, speed)
 	local anim_data = self._ext_anim
-	if anim_data.haste == speed and anim_data["move_" .. side] then
+	local same_haste = not anim_data.haste and anim_data[speed] or anim_data.haste == speed
+	if same_haste and anim_data["move_" .. side] then
 		return
 	end
 
