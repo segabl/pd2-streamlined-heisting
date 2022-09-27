@@ -304,7 +304,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 		self:_set_objective_to_enemy_group(group, grp_objective)
 		self:_voice_open_fire_start(group)
 	elseif approach then
-		local assault_area, alternate_assault_area, alternate_assault_area_from, assault_path, alternate_assault_path
+		local assault_area, assault_path, assault_from
 		local to_search_areas = {
 			objective_area
 		}
@@ -312,53 +312,33 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			[objective_area] = objective_area
 		}
 		local group_access_mask = self._get_group_acces_mask(group)
+		local flank_chance = 2 -- First is shortest path to criminal, second is first actual flank path
 
 		repeat
 			local search_area = table_remove(to_search_areas, 1)
-
 			if next(search_area.criminal.units) then
-				local assault_from_here = true
-
-				if tactics_map.flank then
-					local assault_from_area = found_areas[search_area]
-
-					if assault_from_area ~= objective_area then
-						assault_from_here = false
-
-						if not alternate_assault_area or math_random() < 0.5 then
-							local new_alternate_assault_path = managers.navigation:search_coarse({
-								id = "GroupAI_assault",
-								from_seg = current_objective.area.pos_nav_seg,
-								to_seg = search_area.pos_nav_seg,
-								access_pos = group_access_mask,
-								verify_clbk = callback(self, self, "is_nav_seg_safe")
-							})
-
-							if new_alternate_assault_path then
-								self:_merge_coarse_path_by_area(new_alternate_assault_path)
-								alternate_assault_path = new_alternate_assault_path
-								alternate_assault_area = search_area
-								alternate_assault_area_from = assault_from_area
-							end
-						end
-
-						found_areas[search_area] = nil
-					end
-				end
-
-				if assault_from_here then
-					assault_path = managers.navigation:search_coarse({
+				local flank = tactics_map.flank and found_areas[search_area] ~= objective_area
+				if not flank or math_random() < flank_chance then
+					local new_assault_path = managers.navigation:search_coarse({
 						id = "GroupAI_assault",
-						from_seg = current_objective.area.pos_nav_seg,
+						from_seg = objective_area.pos_nav_seg,
 						to_seg = search_area.pos_nav_seg,
 						access_pos = group_access_mask,
 						verify_clbk = callback(self, self, "is_nav_seg_safe")
 					})
 
-					if assault_path then
-						self:_merge_coarse_path_by_area(assault_path)
+					if new_assault_path then
+						self:_merge_coarse_path_by_area(new_assault_path)
+						assault_path = new_assault_path
 						assault_area = search_area
-						break
+						assault_from = found_areas[search_area]
+
+						if flank then
+							found_areas[search_area] = nil
+							flank_chance = flank_chance * 0.5
+						else
+							break
+						end
 					end
 				end
 			else
@@ -371,14 +351,8 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			end
 		until #to_search_areas == 0
 
-		if alternate_assault_area then
-			assault_area = alternate_assault_area
-			found_areas[assault_area] = alternate_assault_area_from
-			assault_path = alternate_assault_path
-		end
-
 		if assault_area and assault_path then
-			local push = found_areas[assault_area] == objective_area
+			local push = assault_from == objective_area
 			local move_out = not push
 
 			if push then
@@ -403,10 +377,23 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				end
 			else
 				-- If we aren't pushing, we go to one area before the criminal area
-				assault_area = found_areas[assault_area]
-				if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path - 1][1]] then
+				-- If we are supposed to flank, calculate the path to the area we want to flank from
+				local new_assault_path = tactics_map.flank and managers.navigation:search_coarse({
+					id = "GroupAI_assault",
+					from_seg = objective_area.pos_nav_seg,
+					to_seg = assault_from.pos_nav_seg,
+					access_pos = group_access_mask,
+					verify_clbk = callback(self, self, "is_nav_seg_safe")
+				})
+				if new_assault_path then
+					self:_merge_coarse_path_by_area(new_assault_path)
+					assault_path = new_assault_path
+				elseif tactics_map.flank then
+					StreamHeist:warn(group.id, "failed to find flank path to assault area!")
+				elseif #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path][1]] then
 					table_remove(assault_path)
 				end
+				assault_area = assault_from
 			end
 
 			if move_out then
@@ -431,7 +418,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			-- Log and remove groups that get stuck
 			local element_id = group.spawn_group_element and group.spawn_group_element._id or 0
 			local element_name = group.spawn_group_element and group.spawn_group_element._editor_name or ""
-			StreamHeist:log(string.format("[Warning] Group %s spawned from element %u (%s) is stuck, removing it!", group.id, element_id, element_name))
+			StreamHeist:warn(string.format("Group %s spawned from element %u (%s) is stuck, removing it!", group.id, element_id, element_name))
 
 			for _, u_data in pairs(group.units) do
 				u_data.unit:brain():set_active(false)
@@ -928,9 +915,10 @@ end)
 -- When scripted spawns are assigned to group ai, use a generic group type instead of using their category as type
 -- This ensures they are not retired immediatley cause they are not part of assault/recon group types
 Hooks:OverrideFunction(GroupAIStateBesiege, "assign_enemy_to_group_ai", function (self, unit, team_id)
+	local assault_active = self._task_data.assault.active
 	local area = self:get_area_from_nav_seg_id(unit:movement():nav_tracker():nav_segment())
 	local grp_objective = {
-		type = self._task_data.assault.active and "assault_area" or "recon_area",
+		type = assault_active and "assault_area" or "recon_area",
 		area = area,
 		moving_out = false
 	}
@@ -943,7 +931,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "assign_enemy_to_group_ai", function
 
 	local group = self:_create_group({
 		size = 1,
-		type = self._task_data.assault.active and "custom_assault" or "custom_recon"
+		type = assault_active and "custom_assault" or "custom_recon"
 	})
 	group.team = self._teams[team_id]
 	group.objective = grp_objective

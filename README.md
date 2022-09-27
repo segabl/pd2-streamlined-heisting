@@ -43,6 +43,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Implements missing ``murder`` tactic, enemies with this tactic will focus on finishing off downed and tased players regardless of any aggressive behavior
 - Implements missing ``shield`` and ``shield_cover`` tactics, enemies with ``shield_cover`` tactic will stick closely to group members with ``shield`` tactic
 - Fixes ``ranged_fire`` tactic, enemies with this tactic will properly stop and open fire from a distance for a bit when they encounter players
+- Fixes ``flank`` tactic, enemies will now try to flank properly and more consistently
 - Fixes enemies not pulling back when encountering players during anticipation
 - Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients

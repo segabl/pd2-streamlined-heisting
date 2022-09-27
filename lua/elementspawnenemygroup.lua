@@ -46,7 +46,8 @@ local group_mapping = {
 		"tac_swat_shotgun_flank_no_medic",
 		"hostage_rescue",
 		"reenforce_light",
-		"reenforce_heavy"
+		"reenforce_heavy",
+		"marshal_squad"
 	},
 	tac_shield_wall = {
 		"tac_shield_wall_ranged",
