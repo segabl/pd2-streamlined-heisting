@@ -682,8 +682,9 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	local total_weight = 0
 	local candidate_groups = {}
 	local low_weight = allowed_groups == self._tweak_data.reenforce.groups and 0.1 or allowed_groups == self._tweak_data.recon.groups and 0.4 or 0.7
+	local single_choice = longest_dis == shortest_dis
 	for i, dis in pairs(valid_spawn_group_distances) do
-		local my_wgt = math_map_range(dis, shortest_dis, longest_dis, 1, low_weight)
+		local my_wgt = single_choice and 1 or math_map_range(dis, shortest_dis, longest_dis, 1, low_weight)
 		local my_spawn_group = valid_spawn_groups[i]
 		local my_group_types = my_spawn_group.mission_element:spawn_groups()
 		my_spawn_group.distance = dis
