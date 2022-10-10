@@ -240,9 +240,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Setup surrender presets
 	local surrender_factors = {
-		unaware_of_aggressor = 0.1,
+		unaware_of_aggressor = 0.2,
 		enemy_weap_cold = 0.1,
-		flanked = 0.2,
+		flanked = 0.4,
 		isolated = 0.2,
 		aggressor_dis = {
 			[100.0] = 0.2,
