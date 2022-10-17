@@ -6,6 +6,7 @@ if not StreamHeist then
 		mod_instance = ModInstance,
 		logging = io.file_is_readable("mods/developer.txt"),
 		settings = {
+			auto_faction_tweaks = true,
 			faction_tweaks = {
 				swat = true,
 				fbi = true,
@@ -103,6 +104,15 @@ if not StreamHeist then
 		local menu_id = "sh_menu"
 		MenuHelper:NewMenu(menu_id)
 
+		local faction_menu_elements = {}
+		MenuCallbackHandler.sh_auto_faction_tweaks_toggle = function(self, item)
+			local enabled = (item:value() == "on")
+			StreamHeist.settings.auto_faction_tweaks = enabled
+			for _, element in pairs(faction_menu_elements) do
+				element:set_enabled(not enabled)
+			end
+		end
+
 		MenuCallbackHandler.sh_faction_toggle = function(self, item)
 			StreamHeist.settings.faction_tweaks[item:name()] = (item:value() == "on")
 		end
@@ -111,16 +121,29 @@ if not StreamHeist then
 			io.save_as_json(StreamHeist.settings, StreamHeist.save_path)
 		end
 
+		MenuHelper:AddToggle({
+			id = "auto_faction_tweaks",
+			title = "sh_menu_auto_faction_tweaks",
+			desc = "sh_menu_auto_faction_tweaks_desc",
+			callback = "sh_auto_faction_tweaks_toggle",
+			value = StreamHeist.settings.auto_faction_tweaks,
+			menu_id = menu_id,
+			priority = 100
+		})
+
 		for i, faction in ipairs({ "swat", "fbi", "gensec", "russia", "federales", "murkywater" }) do
-			MenuHelper:AddToggle({
+			local menu_element = MenuHelper:AddToggle({
 				id = faction,
 				title = "sh_menu_" .. faction,
 				desc = "sh_menu_faction_tweak_desc",
 				callback = "sh_faction_toggle",
 				value = StreamHeist.settings.faction_tweaks[faction],
+				disabled = StreamHeist.settings.auto_faction_tweaks,
 				menu_id = menu_id,
 				priority = 10 - i
 			})
+
+			table.insert(faction_menu_elements, menu_element)
 		end
 
 		nodes[menu_id] = MenuHelper:BuildMenu(menu_id, { back_callback = "sh_save" })
@@ -156,10 +179,42 @@ if not StreamHeist then
 	-- Check faction tweaks
 	if not Global.sh_faction_tweaks_check then
 		Global.sh_faction_tweaks_check = true
-		for faction, enabled in pairs(StreamHeist.settings.faction_tweaks) do
-			if enabled then
-				StreamHeist.mod_instance.supermod:GetAssetLoader():LoadAssetGroup(faction)
+
+		local auto_detect = StreamHeist.settings.auto_faction_tweaks
+		local asset_loader = StreamHeist.mod_instance.supermod:GetAssetLoader()
+		local mod_overrides = {}
+		if auto_detect then
+			for modname, data in pairs(DB:mods()) do
+				for _, file in pairs(data.files) do
+					local name, ext = file:match("^(.-)%.(.-)$")
+					if ext == "model" then
+						mod_overrides[name] = modname
+					end
+				end
 			end
+		end
+
+		for faction, enabled in pairs(StreamHeist.settings.faction_tweaks) do
+			if auto_detect then
+				enabled = true
+				local assets = asset_loader.script_loadable_packages[faction].assets
+				for _, spec in pairs(assets) do
+					if mod_overrides[spec.dbpath] then
+						StreamHeist:log("Disabling faction tweak for faction", faction, "due to mod_override", mod_overrides[spec.dbpath])
+						enabled = false
+						break
+					end
+				end
+				StreamHeist.settings.faction_tweaks[faction] = enabled
+			end
+
+			if enabled then
+				asset_loader:LoadAssetGroup(faction)
+			end
+		end
+
+		if auto_detect then
+			io.save_as_json(StreamHeist.settings, StreamHeist.save_path)
 		end
 	end
 end

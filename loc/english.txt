@@ -1,5 +1,7 @@
 {
 	"sh_menu_main" : "Streamlined Heisting",
+	"sh_menu_auto_faction_tweaks" : "Auto-detect faction improvements",
+	"sh_menu_auto_faction_tweaks_desc" : "Automatically disables faction improvements that conflict with mod_overrides mods",
 	"sh_menu_swat" : "Improved SWAT faction",
 	"sh_menu_fbi" : "Improved FBI faction",
 	"sh_menu_gensec" : "Improved GenSec faction",
