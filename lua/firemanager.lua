@@ -9,19 +9,57 @@ local offset_vec = Vector3(0, 0, 30)
 
 -- Fix fire damage update resetting DoT grace and not triggering DoT damage until no more fire DoT is added
 -- Instead of updating the damage received time, update the DoT duration with the difference between new and old received time
-local _add_doted_enemy_original = FireManager._add_doted_enemy
-function FireManager:_add_doted_enemy(enemy_unit, fire_damage_received_time, ...)
-	if self._doted_enemies then
-		for _, dot_info in ipairs(self._doted_enemies) do
-			if dot_info.enemy_unit == enemy_unit then
-				dot_info.dot_length = dot_info.dot_length + fire_damage_received_time - dot_info.fire_damage_received_time
-				return
-			end
+Hooks:OverrideFunction(FireManager, "_add_doted_enemy", function (self, enemy_unit, fire_damage_received_time, weapon_unit, dot_length, dot_damage, user_unit, is_molotov)
+	if not self._doted_enemies then
+		return
+	end
+
+	local dot_info = nil
+	for _, cur_dot_info in ipairs(self._doted_enemies) do
+		if cur_dot_info.enemy_unit == enemy_unit then
+			dot_info = cur_dot_info
+			break
 		end
 	end
 
-	return _add_doted_enemy_original(self, enemy_unit, fire_damage_received_time, ...)
-end
+	if dot_info then
+		dot_info.weapon_unit = weapon_unit
+		dot_info.user_unit = user_unit
+		dot_info.is_molotov = is_molotov
+		dot_info.dot_damage = dot_damage
+		dot_info.dot_length = dot_length + fire_damage_received_time - dot_info.fire_damage_received_time
+	else
+		dot_info = {
+			fire_dot_counter = 0,
+			enemy_unit = enemy_unit,
+			fire_damage_received_time = fire_damage_received_time,
+			weapon_unit = weapon_unit,
+			dot_length = dot_length,
+			dot_damage = dot_damage,
+			user_unit = user_unit,
+			is_molotov = is_molotov
+		}
+
+		table.insert(self._doted_enemies, dot_info)
+
+		local has_delayed_info = false
+		for index, delayed_dot in pairs(self.predicted_dot_info) do
+			if enemy_unit == delayed_dot.enemy_unit then
+				dot_info.sound_source = delayed_dot.sound_source
+				dot_info.fire_effects = delayed_dot.fire_effects
+				table.remove(self.predicted_dot_info, index)
+				has_delayed_info = true
+			end
+		end
+
+		if not has_delayed_info then
+			self:_start_enemy_fire_effect(dot_info)
+			self:start_burn_body_sound(dot_info)
+		end
+	end
+
+	self:check_achievemnts(enemy_unit, fire_damage_received_time)
+end)
 
 
 -- Remove splinter calculation (not really needed for fire) and optimize function

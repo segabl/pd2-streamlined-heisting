@@ -203,7 +203,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		range = { optimal = 3000, far = 4500, close = 1500 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
-			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.3, val[2] * 0.3 } end)
+			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.35, val[2] * 0.35 } end)
 		end
 	})
 
@@ -567,7 +567,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.fbi_heavy_swat.surrender = self.presets.surrender.hard
 	self.city_swat.surrender = self.presets.surrender.normal
 	self.heavy_swat_sniper.surrender = self.presets.surrender.hard
-	self.marshal_marksman.surrender = self.presets.surrender.hard
 
 	-- Restore special entrance announcements
 	self.tank.spawn_sound_event = self.tank.speech_prefix_p1 .. "_entrance"

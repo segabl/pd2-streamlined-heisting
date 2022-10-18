@@ -26,7 +26,6 @@ Vanilla uses multiple presets that are assigned based on difficulty, but not eve
 - Fixes barely working focus delay code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
 - Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls leading to a lot of hits/misses in a row
 - Allows NPCs to use melee attacks against other NPCs
-- Fixes instances of enemies shooting when they shouldn't on clients
 - Improves suppression presets to be more distinct between different enemy types
 
 ### Overhauls spawn groups and enemy behaviour
