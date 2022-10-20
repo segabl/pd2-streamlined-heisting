@@ -111,7 +111,9 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
 		-- Then from there step towards the door we entered from
 		-- The resulting position is the desired cover position before entering through the next door
 		mvector3.step(tmp_vec1, door.center, to_pos, 150)
-		mvector3.step(tmp_vec1, tmp_vec1, coarse_path[nav_index][2], 150)
+		if coarse_path[nav_index][2] then -- Iter sometimes makes coarse paths without positions for some reason
+			mvector3.step(tmp_vec1, tmp_vec1, coarse_path[nav_index][2], 150)
+		end
 		to_pos = tmp_vec1
 	end
 
