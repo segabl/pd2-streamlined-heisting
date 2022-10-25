@@ -18,6 +18,8 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.saiga_npc.auto.fire_rate = 0.18
+	self.sko12_conc_npc.FIRE_MODE = "auto"
+	self.sko12_conc_npc.auto = { fire_rate = 0.22 }
 
 	-- Use PD:TH sniper trail
 	self.dmr_npc.trail = "effects/particles/weapons/sniper_trail"

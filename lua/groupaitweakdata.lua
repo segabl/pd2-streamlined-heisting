@@ -554,11 +554,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		}
 	}
 
-	local is_ranc = Global.game_settings and Global.game_settings.level_id == "ranc"
+	local is_ranc = Global.level_data and Global.level_data.level_id == "ranc" or Global.game_settings and Global.game_settings.level_id == "ranc"
+	local is_trai = Global.level_data and Global.level_data.level_id == "trai" or Global.game_settings and Global.game_settings.level_id == "trai"
 	self.enemy_spawn_groups.marshal_squad = {
-		spawn_cooldown = is_ranc and 60 or 120,
+		spawn_cooldown = (is_ranc or is_trai) and 60 or 120,
 		max_nr_simultaneous_groups = 2,
-		initial_spawn_delay = is_ranc and 120 or 480,
+		initial_spawn_delay = (is_ranc or is_trai) and 120 or 480,
 		amount = { 1, 1 },
 		spawn = {
 			{
@@ -569,6 +570,14 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			}
 		}
 	}
+	if is_trai then
+		table.insert(self.enemy_spawn_groups.marshal_squad.spawn, {
+			rank = 1,
+			freq = 1,
+			unit = "marshal_shield",
+			tactics = self._tactics.marshal_shield
+		})
+	end
 end)
 
 

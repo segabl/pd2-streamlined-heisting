@@ -223,6 +223,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
 		end
 	})
+	presets.weapon.sh_marshal_shield = based_on(presets.weapon.sh_base, {
+		melee_speed = nil_value,
+		melee_dmg = nil_value,
+		melee_retry_delay = nil_value
+	})
 
 	-- Give team ai more reasonable preset values
 	local dmg_mul_team = math.lerp(1, 5, diff_i_norm)
@@ -598,6 +603,8 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.triad_boss_no_armor.HEALTH_INIT = 8
 	self.marshal_marksman.HEALTH_INIT = 16
 	self.fbi.HEALTH_INIT = 4
+	self.marshal_shield.HEALTH_INIT = 16
+	self.marshal_shield_break.HEALTH_INIT = 48
 
 	-- Tweak headshot multipliers
 	self.fbi_swat.headshot_dmg_mul = 2
@@ -673,6 +680,8 @@ local preset_overrides = {
 	heavy_swat = "sh_heavy",
 	heavy_swat_sniper = "sh_sniper_heavy",
 	marshal_marksman = "sh_marshal",
+	marshal_shield = "sh_marshal_shield",
+	marshal_shield_break = "sh_marshal_shield",
 	medic = "sh_heavy",
 	tank_medic = "sh_heavy"
 }
