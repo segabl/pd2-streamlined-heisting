@@ -564,6 +564,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.shadow_spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.medic.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt
 	self.marshal_marksman.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
+	self.marshal_shield_break.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
@@ -601,9 +602,9 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.hector_boss_no_armor.HEALTH_INIT = 8
 	self.drug_lord_boss_stealth.HEALTH_INIT = 8
 	self.triad_boss_no_armor.HEALTH_INIT = 8
-	self.marshal_marksman.HEALTH_INIT = 16
 	self.fbi.HEALTH_INIT = 4
-	self.marshal_shield.HEALTH_INIT = 16
+	self.marshal_marksman.HEALTH_INIT = 24
+	self.marshal_shield.HEALTH_INIT = 24
 	self.marshal_shield_break.HEALTH_INIT = 48
 
 	-- Tweak headshot multipliers
@@ -624,6 +625,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.shield.damage.explosion_damage_mul = 1
 	self.phalanx_minion.damage.explosion_damage_mul = 1
 	self.phalanx_vip.damage.explosion_damage_mul = 1
+	self.marshal_shield.damage.explosion_damage_mul = 1
 
 	-- Fix/tweak suppression settings
 	self.medic.suppression = nil
@@ -631,7 +633,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.gensec.suppression = self.presets.suppression.easy
 	self.swat.suppression = self.presets.suppression.hard_def
 	self.heavy_swat_sniper.suppression = self.presets.suppression.hard_agg
-	self.marshal_marksman.suppression = self.presets.suppression.hard_agg
 
 	-- Allow arrests
 	self.fbi.no_arrest = nil
