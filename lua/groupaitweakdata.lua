@@ -102,10 +102,10 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		self.unit_categories.FBI_heavy_G36.unit_types.murkywater = {
 			Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy")
 		}
-		self.unit_categories.FBI_heavy_R870.unit_types.murkywater = {
-			Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
-		}
 	end
+	self.unit_categories.FBI_heavy_R870.unit_types.murkywater = {
+		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun")
+	}
 	-- temp fix till I have proper murky HRT
 	self.unit_categories.FBI_suit_C45_M4.unit_types.murkywater = {
 		Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light"),
