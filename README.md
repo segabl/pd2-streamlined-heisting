@@ -1,10 +1,14 @@
 # Streamlined Heisting
 
-Streamlined Heisting makes a lot of the gameplay mechanics more consistent. It is intended to build on what I think Overkill tried to accomplish rather than being a complete rebalance mod. As such, the mod doesn't add tons of new features and enemies and doesn't touch player balance or skills. The changes this mod makes are intended to make the game more consistent and replace some of the very outdated code with something that actually works and makes more sense. A lot of features that the vanilla game had at some point were broken or disabled with game updates and have been fixed or re-enabled.  
+Streamlined Heisting makes a lot of the gameplay mechanics more consistent. It is intended to build on what I think Overkill tried to accomplish rather than being a complete rebalance mod. As such, the mod doesn't add tons of new features or enemies and doesn't touch player balance or skills. The changes this mod makes are intended to make the game more consistent by replacing some of the very outdated code and fixing broken and disabled features.  
   
-For a player side balance, check out [Streamlined Heisting Complements](https://github.com/segabl/pd2-sh-complements), a small skill and perk deck tweaks mod specifically made with Streamlined Heisting in mind.  
+For a player side balance, check out [Streamlined Heisting Complements](https://github.com/segabl/pd2-sh-complements), a small tweaks mod specifically made with Streamlined Heisting in mind.  
   
-As with all mods that extensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it.
+As with all mods that extah ensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it.
+
+## Compatibility
+
+Mods that drastically change enemy AI, enemy weapons or spawngroups could cause conflicts or crashes, you will be asked to disable mods that are confirmed to be incompatible automatically. Mods that change enemy visuals are generally supported, most mods will be detected automatically and changes done by this mod will be disabled if they are incompatible, for some more complex mods you might have to turn off the faction improvements for the faction in question in the mod options manually.
 
 ## Features
 
@@ -44,7 +48,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Fixes ``ranged_fire`` tactic, enemies with this tactic will properly stop and open fire from a distance for a bit when they encounter players
 - Fixes ``flank`` tactic, enemies will now try to flank properly and more consistently
 - Fixes enemies not pulling back when encountering players during anticipation
-- Reverts chages made to the Taser's line of sight check to allow them to tase more consistently again
+- Reverts changes made to the Taser's line of sight check to allow them to tase more consistently again
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
 - Makes Medics require line of sight to heal
@@ -59,9 +63,9 @@ The vanilla difficulty curve is all over the place with some difficulties feelin
 - Properly scales enemy health, damage, aim and focus delay values according to difficulty
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
 - Gives each difficulty custom suspicion settings (smoother increase in stealth difficulty)
-- Reduces the amount of active enemies, DS keeps being difficult through other changes
-- Makes Bulldozer armor scale with difficulty (scales with the regular HP multiplier, from 1 on normal up to 8 on DS) and behave like Heavy SWAT armor
-- Scales assault duration with difficulty and reduces spawn pool so it's actually possible to end the assault earlier when spawns are exhausted
+- Reduces the potential maximum amount of active enemies on the map
+- Makes Bulldozer armor block damage and scales its HP with difficulty
+- Scales assault duration with difficulty and reduces spawn pool to make it possible to end the assault earlier when spawns are exhausted
 - Makes use of and smoothes out heist difficulty progression such that enemy force and special frequency increases as the heist progresses
 - Reduces player grace period time but makes it always use the full duration (0.25s)
 - Makes the assault delay caused by having hostages scale with the amount of hostages (minimum of 5s per hostage, up to 4 hostages)
@@ -108,10 +112,6 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes scripted enemies sometimes immediatley leaving the map after they spawn
 - Makes enemies use more varied dodge directions
 - Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
-
-## Compatibility
-
-AI enhancing mods may be compatible to some degree (personally tested Think Faster, Keepers and Iter, which work fine), though it is advised to disable them, as they may cause undefined behavior or crashes. Mods that drastically change enemies, enemy weapons or spawngroups could cause conflicts and/or crashes.
 
 ## Credits
 
