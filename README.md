@@ -4,7 +4,7 @@ Streamlined Heisting makes a lot of the gameplay mechanics more consistent. It i
   
 For a player side balance, check out [Streamlined Heisting Complements](https://github.com/segabl/pd2-sh-complements), a small tweaks mod specifically made with Streamlined Heisting in mind.  
   
-As with all mods that extah ensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it.
+As with all mods that extensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it.
 
 ## Compatibility
 
