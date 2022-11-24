@@ -226,7 +226,10 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_marshal_shield = based_on(presets.weapon.sh_base, {
 		melee_speed = nil_value,
 		melee_dmg = nil_value,
-		melee_retry_delay = nil_value
+		melee_retry_delay = nil_value,
+		FALLOFF = function (falloff)
+			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 2, val[2] * 2 } end)
+		end
 	})
 
 	-- Give team ai more reasonable preset values
@@ -660,6 +663,9 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 
 	-- Disable cloaker smoke drop after attack (they already have a chance to drop one when they dodge)
 	self.spooc.spooc_attack_use_smoke_chance = 0
+
+	-- Reduce invulnerability duration
+	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 2
 end)
 
 
