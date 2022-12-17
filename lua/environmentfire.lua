@@ -47,7 +47,7 @@ function EnvironmentFire:on_spawn(data, normal, user_unit, added_time, range_mul
 	self._curve_pow = data.curve_pow
 	self._damage = data.damage
 	self._player_damage = data.player_damage
-	self._fire_dot_data = deep_clone(data.fire_dot_data)
+	self._fire_dot_data = data.fire_dot_data and deep_clone(data.fire_dot_data)
 	self._fire_alert_radius = data.fire_alert_radius
 	self._is_molotov = data.is_molotov
 	-- Vanilla code spawns fire effect at 2 times the actual range defined in data, so accommodate for that
