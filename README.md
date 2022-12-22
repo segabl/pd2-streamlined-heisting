@@ -119,4 +119,4 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - [creepyyy](https://modworkshop.net/user/54264), ERO, [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
 - [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
-- [RedFlame](https://modworkshop.net/user/78332) for notifying me of problematic vanilla code and providing animation fixes
+- [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and providing animation fixes
