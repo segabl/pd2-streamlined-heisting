@@ -180,7 +180,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 
 	-- Sniper presets
-	presets.weapon.sh_sniper = based_on(presets.weapon.sniper, {
+	presets.weapon.sh_sniper = based_on(presets.weapon.sh_base, {
+		use_laser = true,
 		focus_delay = focus_delay,
 		aim_delay = { 0, aim_delay * 3 },
 		range = { optimal = 10000, far = 15000, close = 5000 }
@@ -192,18 +193,10 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
 		aim_delay = { 0, aim_delay * 1.5 },
-		range = { optimal = 3000, far = 4500, close = 1500 },
+		range = { optimal = 2000, far = 4000, close = 1000 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
-		end
-	})
-	presets.weapon.sh_marshal = based_on(presets.weapon.sh_sniper, {
-		aim_delay = { 0, aim_delay * 1.5 },
-		range = { optimal = 3000, far = 4500, close = 1500 },
-		FALLOFF = function (falloff)
-			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
-			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.35, val[2] * 0.35 } end)
 		end
 	})
 
@@ -223,14 +216,23 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
 		end
 	})
-	presets.weapon.sh_marshal_shield = based_on(presets.weapon.sh_base, {
-		melee_speed = nil_value,
-		melee_dmg = nil_value,
-		melee_retry_delay = nil_value,
+
+	-- Marshal preset
+	presets.weapon.sh_marshal = based_on(presets.weapon.sh_base, {
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 2, val[2] * 2 } end)
 		end
 	})
+	presets.weapon.sh_marshal.is_rifle.aim_delay = { 0, aim_delay * 1.5 }
+	presets.weapon.sh_marshal.is_rifle.range = { optimal = 2000, far = 4000, close = 1000 }
+	presets.weapon.sh_marshal.is_rifle.FALLOFF = {
+		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0, 0.5 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
+	}
+	presets.weapon.sh_marshal.is_pistol.melee_speed = nil
+	presets.weapon.sh_marshal.is_pistol.melee_dmg = nil
+	presets.weapon.sh_marshal.is_pistol.melee_retry_delay = nil
 
 	-- Give team ai more reasonable preset values
 	local dmg_mul_team = math.lerp(1, 5, diff_i_norm)
@@ -687,8 +689,8 @@ local preset_overrides = {
 	heavy_swat = "sh_heavy",
 	heavy_swat_sniper = "sh_sniper_heavy",
 	marshal_marksman = "sh_marshal",
-	marshal_shield = "sh_marshal_shield",
-	marshal_shield_break = "sh_marshal_shield",
+	marshal_shield = "sh_marshal",
+	marshal_shield_break = "sh_marshal",
 	medic = "sh_heavy",
 	tank_medic = "sh_heavy"
 }
