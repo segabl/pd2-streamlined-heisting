@@ -662,6 +662,10 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Set melee weapons
 	self.biker.melee_weapon = "knife_1"
 	self.spooc.melee_weapon = "baton"
+	self.tank.melee_weapon = "weapon"
+	self.tank_hw.melee_weapon = "weapon"
+	self.tank_medic.melee_weapon = "weapon"
+	self.tank_mini.melee_weapon = "weapon"
 
 	-- Disable cloaker smoke drop after attack (they already have a chance to drop one when they dodge)
 	self.spooc.spooc_attack_use_smoke_chance = 0
