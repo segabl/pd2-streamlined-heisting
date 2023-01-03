@@ -116,6 +116,13 @@ function CopActionShoot:update(t)
 		target_vec = self:_upd_ik(target_vec, fwd_dot, t)
 	end
 
+	if self._shield_use_cooldown and target_vec and self._common_data.allow_fire and self._shield_use_cooldown < t and target_dis < self._shield_use_range then
+		local new_cooldown = self._shield_base:request_use(t)
+		if new_cooldown then
+			self._shield_use_cooldown = new_cooldown
+		end
+	end
+
 	if not ext_anim.reload and not ext_anim.equip and not ext_anim.melee then
 		if self._weapon_base:clip_empty() then
 			self:_stop_firing()
