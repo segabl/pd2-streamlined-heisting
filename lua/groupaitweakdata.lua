@@ -613,7 +613,6 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		single_spooc = { 0, 0, 0 },
 		Phalanx = { 0, 0, 0 },
 		marshal_squad = { 0, 0, 0 },
-		snowman_boss = { 0, 0, 0 },
 		custom_assault = { 0, 0, 0 } -- Catches all scripted spawns during assault participating to group ai
 	}
 
@@ -645,7 +644,6 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		single_spooc = { 0, 0, 0 },
 		Phalanx = { 0, 0, 0 },
 		marshal_squad = { 0, 0, 0 },
-		snowman_boss = { 0, 0, 0 },
 		custom_recon = { 0, 0, 0 } -- Catches all scripted spawns during recon participating to group ai
 	}
 
