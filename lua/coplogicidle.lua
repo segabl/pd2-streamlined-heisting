@@ -291,11 +291,13 @@ end
 local on_intimidated_original = CopLogicIdle.on_intimidated
 function CopLogicIdle.on_intimidated(data, amount, aggressor_unit, ...)
 	local surrender = on_intimidated_original(data, amount, aggressor_unit, ...)
-	if surrender then
+	if surrender or data.char_tweak.priority_shout then
 		return surrender
 	end
 
-	if not data.char_tweak.surrender and not data.char_tweak.priority_shout or data.surrender_window and data.surrender_window.window_expire_t < data.t then
+	local surrender_window = data.surrender_window and data.surrender_window.window_expire_t < data.t
+	local too_many_hostages = not managers.groupai:state():has_room_for_police_hostage()
+	if not data.char_tweak.surrender or surrender_window or too_many_hostages then
 		local peer = managers.network:session():peer_by_unit(aggressor_unit)
 		if peer then
 			if peer:id() == managers.network:session():local_peer():id() then
