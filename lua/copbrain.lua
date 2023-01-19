@@ -24,6 +24,12 @@ function CopBrain:clbk_damage(my_unit, damage_info, ...)
 end
 
 
+-- Set Joker owner to keep follow objective correct
+Hooks:PreHook(CopBrain, "convert_to_criminal", "sh_convert_to_criminal", function (self, mastermind_criminal)
+	self._logic_data.minion_owner = mastermind_criminal or managers.player:local_player()
+end)
+
+
 -- If Iter is installed and streamlined path option is used, don't make any further changes
 if Iter and Iter.settings and Iter.settings.streamline_path then
 	return
