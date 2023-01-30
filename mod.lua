@@ -11,6 +11,7 @@ if not StreamHeist then
 				swat = true,
 				fbi = true,
 				gensec = true,
+				zeal = true,
 				murkywater = true,
 				federales = true,
 				russia = true
@@ -131,7 +132,7 @@ if not StreamHeist then
 			priority = 100
 		})
 
-		for i, faction in ipairs({ "swat", "fbi", "gensec", "russia", "federales", "murkywater" }) do
+		for i, faction in ipairs({ "swat", "fbi", "gensec", "zeal", "russia", "federales", "murkywater" }) do
 			local menu_element = MenuHelper:AddToggle({
 				id = faction,
 				title = "sh_menu_" .. faction,

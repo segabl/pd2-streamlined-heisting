@@ -5,6 +5,7 @@
 	"sh_menu_swat" : "Improved SWAT faction",
 	"sh_menu_fbi" : "Improved FBI faction",
 	"sh_menu_gensec" : "Improved GenSec faction",
+	"sh_menu_zeal" : "Improved ZEAL faction",
 	"sh_menu_murkywater" : "Improved Murkywater faction",
 	"sh_menu_federales" : "Improved Federales faction",
 	"sh_menu_russia" : "Improved Russian faction",
