@@ -497,7 +497,7 @@ Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", 
 	self.chavez_boss.no_headshot_add_mul = true
 	self.chavez_boss.damage.explosion_damage_mul = 0.5
 	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
-	self.chavez_boss.move_speed = presets.move_speed.very_fast
+	self.chavez_boss.move_speed = presets.move_speed.fast
 	self.chavez_boss.no_run_start = true
 	self.chavez_boss.no_run_stop = true
 end)
@@ -532,7 +532,7 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss", function (self, presets)
-	self.mobster_boss.HEALTH_INIT = 400
+	self.mobster_boss.HEALTH_INIT = 300
 	self.mobster_boss.player_health_scaling_mul = 1.5
 	self.mobster_boss.headshot_dmg_mul = 0.75
 	self.mobster_boss.no_headshot_add_mul = true
@@ -554,6 +554,7 @@ Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", fu
 	self.triad_boss.no_run_start = true
 	self.triad_boss.no_run_stop = true
 	self.triad_boss.bullet_damage_only_from_front = nil
+	self.triad_boss.invulnerable_to_slotmask = nil
 	self.triad_boss.throwable_target_verified = false
 	self.triad_boss.throwable_cooldown = 20
 end)
