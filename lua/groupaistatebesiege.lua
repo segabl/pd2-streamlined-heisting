@@ -1,4 +1,3 @@
-local math_min = math.min
 local math_lerp = math.lerp
 local math_map_range = math.map_range
 local math_random = math.random

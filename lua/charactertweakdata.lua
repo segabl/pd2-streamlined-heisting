@@ -683,8 +683,6 @@ local access_presets = {
 	security = "sh_strong",
 	shield = "sh_shield",
 	sniper = "sh_sniper",
-	spooc = "sh_base",
-	swat = "sh_base",
 	tank = "sh_tank",
 	taser = "sh_taser"
 }
@@ -704,9 +702,8 @@ local function set_presets(char_tweak_data)
 	local diff_i_norm = math.max(0, diff_i - 2) / (#char_tweak_data.tweak_data.difficulties - 2)
 	local hp_mul = hp_muls[diff_i]
 
-	local char_preset, weapon_preset_name
 	for _, name in pairs(char_tweak_data._enemy_list) do
-		char_preset = char_tweak_data[name]
+		local char_preset = char_tweak_data[name]
 
 		char_preset.BASE_HEALTH_INIT = char_preset.BASE_HEALTH_INIT or char_preset.HEALTH_INIT
 		char_preset.HEALTH_INIT = char_preset.BASE_HEALTH_INIT * hp_mul
@@ -720,13 +717,7 @@ local function set_presets(char_tweak_data)
 			char_preset.headshot_dmg_mul = char_preset.base_headshot_dmg_mul * 2
 		end
 
-		weapon_preset_name = preset_overrides[name] or access_presets[char_preset.access]
-		if weapon_preset_name then
-			char_preset.weapon = char_tweak_data.presets.weapon[weapon_preset_name]
-			StreamHeist:log("Using", weapon_preset_name, "weapon preset for", name)
-		else
-			StreamHeist:warn("No weapon preset for", name)
-		end
+		char_preset.weapon = char_tweak_data.presets.weapon[preset_overrides[name] or access_presets[char_preset.access] or "sh_base"]
 	end
 
 	-- Flashbanged duration

@@ -101,10 +101,5 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 		end
 	end
 
-	new_groups = table.map_keys(new_groups)
-
-	if #self._values.preferred_spawn_groups ~= #new_groups then
-		StreamHeist:log(self._editor_name, "preferred_spawn_groups", #self._values.preferred_spawn_groups, "->", #new_groups, "entries")
-		self._values.preferred_spawn_groups = new_groups
-	end
+	self._values.preferred_spawn_groups = table.map_keys(new_groups)
 end)
