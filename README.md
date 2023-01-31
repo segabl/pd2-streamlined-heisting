@@ -41,6 +41,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
+- Fixes units with hunt objective only moving to player locations once
 - Adds reinforce points to loot secure points and the escape zone
 - Fixes enemies crouch-walking when they are supposed to run
 - Implements missing ``murder`` tactic, enemies with this tactic will focus on finishing off downed and tased players regardless of any aggressive behavior
@@ -81,6 +82,7 @@ There are some inconsistencies with various enemy factions in the game that lead
 - Adds missing enemy types (ZEAL Shotgunners, ZEAL Medic, GenSec and ZEAL Sniper)
 - Adds slight visual variations to murkywater shotgunners (both heavies and lights) to make them more distinct
 - Fixes heavy Murkywater units body armor protecting their back
+- Fixes some broken LOD models and removes some normal seams
 
 ### Other changes
 
@@ -112,12 +114,13 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes scripted enemies sometimes immediatley leaving the map after they spawn
 - Makes enemies use more varied dodge directions
 - Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
+- Adds hints when an enemy can't be intimidated due to temporary cooldown, no surrender preset or maximum amount of hostages reached
 - Fixes Jokers sometimes following the wrong player
 
 ## Credits
 
 - [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
-- [creepyyy](https://modworkshop.net/user/54264), ERO, [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
+- [creepyyy](https://modworkshop.net/user/54264), [moon](https://modworkshop.net/user/55749), [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
 - [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
 - [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and providing animation fixes
