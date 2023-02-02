@@ -920,3 +920,81 @@ function GroupAIStateBesiege:_get_group_forwardmost_coarse_path_index(group, ...
 		return _get_group_forwardmost_coarse_path_index_original(self, group, ...)
 	end
 end
+
+
+-- Simplify reenforce objective assignment and prevent them from being stuck at spawn
+Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group", function (self, group)
+	if not group.has_spawned then
+		return
+	end
+
+	local current_objective = group.objective
+	if not current_objective.target_area or current_objective.moving_out or current_objective.area == current_objective.target_area then
+		return
+	end
+
+	if group.obstructed_t and group.obstructed_t > self._t then
+		return
+	end
+
+	local obstructed
+	local search_params = {
+		id = "GroupAI_reenforce",
+		from_seg = current_objective.area.pos_nav_seg,
+		to_seg = current_objective.target_area.pos_nav_seg,
+		access_pos = self._get_group_acces_mask(group),
+		verify_clbk = callback(self, self, "is_nav_seg_safe")
+	}
+
+	local coarse_path = managers.navigation:search_coarse(search_params)
+	if coarse_path then
+		self:_merge_coarse_path_by_area(coarse_path)
+	elseif current_objective.obstructed then
+		group.obstructed_t = self._t + 6
+		return
+	else
+		search_params.verify_clbk = nil
+		coarse_path = managers.navigation:search_coarse(search_params)
+
+		if coarse_path then
+			self:_merge_coarse_path_by_area(coarse_path)
+
+			local is_safe = true
+			for i = 1, #coarse_path do
+				if is_safe then
+					is_safe = self:is_nav_seg_safe(coarse_path[i][1])
+				else
+					table.remove(coarse_path)
+				end
+			end
+
+			if #coarse_path <= 2 then
+				return
+			end
+
+			obstructed = true
+		else
+			return
+		end
+	end
+
+	local moving_in = current_objective.area.neighbours[current_objective.target_area.id] and true
+	if not moving_in then
+		table.remove(coarse_path)
+	end
+
+	local grp_objective = {
+		scan = true,
+		pose = moving_in and "crouch" or "stand",
+		type = "reenforce_area",
+		stance = "hos",
+		attitude = moving_in and "engage" or "avoid",
+		moving_in = moving_in,
+		obstructed = obstructed,
+		area = self:get_area_from_nav_seg_id(coarse_path[#coarse_path][1]),
+		target_area = current_objective.target_area,
+		coarse_path = coarse_path
+	}
+
+	self:_set_objective_to_enemy_group(group, grp_objective)
+end)
