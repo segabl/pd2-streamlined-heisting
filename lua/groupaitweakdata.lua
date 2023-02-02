@@ -557,8 +557,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	local is_ranc = Global.level_data and Global.level_data.level_id == "ranc" or Global.game_settings and Global.game_settings.level_id == "ranc"
 	local is_trai = Global.level_data and Global.level_data.level_id == "trai" or Global.game_settings and Global.game_settings.level_id == "trai"
 	self.enemy_spawn_groups.marshal_squad = {
-		spawn_cooldown = (is_ranc or is_trai) and 60 or 120,
-		max_nr_simultaneous_groups = 2,
+		spawn_cooldown = 60,
+		max_nr_simultaneous_groups = 1,
 		initial_spawn_delay = (is_ranc or is_trai) and 120 or 480,
 		amount = { 1, 1 },
 		spawn = {
