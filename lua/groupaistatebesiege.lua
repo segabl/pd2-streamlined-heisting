@@ -5,13 +5,11 @@ local table_insert = table.insert
 local table_remove = table.remove
 local mvec_add = mvector3.add
 local mvec_cpy = mvector3.copy
+local mvec_dir = mvector3.direction
 local mvec_dis = mvector3.distance
 local mvec_dis_sq = mvector3.distance_sq
 local mvec_mul = mvector3.multiply
 local mvec_set = mvector3.set
-local mvec_set_l = mvector3.set_length
-local mvec_set_z = mvector3.set_z
-local mvec_sub = mvector3.subtract
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 
@@ -491,75 +489,61 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 		return
 	end
 
-	local candidate = table.random(grenade_candidates)
-	local grenade_type = candidate[1]
-	local grenade_user = candidate[2]
+	local grenade_type, grenade_user = unpack(table.random(grenade_candidates))
 
+	local door_pos
 	local detonate_offset, detonate_offset_pos = tmp_vec1, tmp_vec2
-	if detonate_pos then
-		mvec_set(detonate_offset, grenade_user.m_pos)
-		mvec_sub(detonate_offset, detonate_pos)
-	else
-		local nav_seg = managers.navigation._nav_segments[grenade_user.tracker:nav_segment()]
-		for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
-			local area = self:get_area_from_nav_seg_id(neighbour_nav_seg_id)
-			if task_data.target_areas[1].nav_segs[neighbour_nav_seg_id] or next(area.criminal.units) then
-				local random_door_id = door_list[math_random(#door_list)]
-				if type(random_door_id) == "number" then
-					detonate_pos = managers.navigation._room_doors[random_door_id].center
-				else
-					detonate_pos = random_door_id:script_data().element:nav_link_end_pos()
-				end
-				break
+	local nav_seg = managers.navigation._nav_segments[grenade_user.tracker:nav_segment()]
+	for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
+		if assault_area.nav_segs[neighbour_nav_seg_id] then
+			local random_door_id = door_list[math_random(#door_list)]
+			if type(random_door_id) == "number" then
+				door_pos = managers.navigation._room_doors[random_door_id].center
+			else
+				door_pos = random_door_id:script_data().element:nav_link_end_pos()
 			end
+			break
 		end
-
-		if not detonate_pos then
-			return
-		end
-
-		mvec_set(detonate_offset, assault_area.pos)
-		mvec_sub(detonate_offset, detonate_pos)
 	end
 
-	local ray_mask = managers.slot:get_mask("world_geometry")
+	if detonate_pos then
+		mvec_dir(detonate_offset, detonate_pos, door_pos or grenade_user.m_pos)
+		mvec_mul(detonate_offset, math_random(200, 500))
+	elseif door_pos then
+		detonate_pos = door_pos
+		mvec_dir(detonate_offset, grenade_user.m_pos, detonate_pos)
+		mvec_mul(detonate_offset, math_random(100, 300))
+	else
+		return
+	end
+
+	-- Offset grenade a bit to avoid spawning exactly on the player/door
+	mvec_set(detonate_offset_pos, detonate_pos)
+	mvec_add(detonate_offset_pos, detonate_offset)
 
 	-- If players camp a specific area for too long, turn a smoke grenade into a teargas grenade instead
 	local use_teargas
 	local can_use_teargas = grenade_type == "smoke_grenade" and assault_area.criminal_entered_t and table.size(assault_area.neighbours) <= 2
 	if can_use_teargas and math_random() < (self._t - assault_area.criminal_entered_t - 60) / 180 then
-		mvec_set(detonate_offset_pos, math.UP)
-		mvec_mul(detonate_offset_pos, 1000)
-		mvec_add(detonate_offset_pos, assault_area.pos)
-		if World:raycast("ray", assault_area.pos, detonate_offset_pos, "slot_mask", ray_mask, "report") then
+		mvec_set(detonate_offset, math.UP)
+		mvec_mul(detonate_offset, 1000)
+		mvec_add(detonate_offset, assault_area.pos)
+		if World:raycast("ray", assault_area.pos, detonate_offset, "slot_mask", managers.slot:get_mask("world_geometry"), "report") then
+			mvec_set(detonate_pos, detonate_offset_pos)
 			mvec_set(detonate_offset_pos, assault_area.pos)
-			mvec_set_z(detonate_offset_pos, detonate_offset_pos.z + 100)
 			use_teargas = true
 		end
 	end
 
-	if not use_teargas then
-		-- Offset grenade a bit to avoid spawning exactly on the player/door
-		mvec_set_z(detonate_offset, math.max(detonate_offset.z, 0))
-		mvec_set_l(detonate_offset, math_random(100, 300))
-		mvec_set(detonate_offset_pos, detonate_pos)
-		mvec_add(detonate_offset_pos, detonate_offset)
-
-		local ray = World:raycast("ray", detonate_pos, detonate_offset_pos, "slot_mask", ray_mask)
-		if ray then
-			mvec_set_l(detonate_offset, math.max(0, ray.distance - 50))
-			mvec_set(detonate_offset_pos, detonate_pos)
-			mvec_add(detonate_offset_pos, detonate_offset)
-		end
-	end
-
-	-- Raycast down to place grenade on ground
-	mvec_set(detonate_offset, math.DOWN)
-	mvec_mul(detonate_offset, 1000)
-	mvec_add(detonate_offset, detonate_offset_pos)
-
-	local ground_ray = World:raycast("ray", detonate_offset_pos, detonate_offset, "slot_mask", ray_mask)
-	detonate_pos = ground_ray and ground_ray.hit_position or detonate_offset_pos
+	-- Make sure the grenade stays inside AI navigation (on the ground)
+	local ray_params = {
+		trace = true,
+		allow_entry = true,
+		pos_from = detonate_pos,
+		pos_to = detonate_offset_pos
+	}
+	managers.navigation:raycast(ray_params)
+	mvec_set(detonate_pos, ray_params.trace[1])
 
 	local timeout
 	if use_teargas then
