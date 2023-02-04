@@ -45,6 +45,7 @@ local group_mapping = {
 		"tac_swat_shotgun_flank",
 		"tac_swat_shotgun_flank_no_medic",
 		"hostage_rescue",
+		"reenforce_init",
 		"reenforce_light",
 		"reenforce_heavy",
 		"marshal_squad"
@@ -76,7 +77,6 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 			local spawn_point = self:get_mission_element(id)
 			if spawn_point and spawn_point._values.spawn_action then
 				self._values.interval = 5
-				StreamHeist:log(self._editor_name, "0s -> 5s interval, spawn action", tostring(CopActionAct._act_redirects.enemy_spawn[spawn_point._values.spawn_action]))
 				break
 			end
 		end

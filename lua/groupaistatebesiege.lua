@@ -948,6 +948,9 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 
 	local coarse_path = managers.navigation:search_coarse(search_params)
 	if coarse_path then
+		if not self:is_nav_seg_safe(coarse_path[#coarse_path][1]) then
+			return
+		end
 		self:_merge_coarse_path_by_area(coarse_path)
 	elseif current_objective.obstructed then
 		group.obstructed_t = self._t + 6

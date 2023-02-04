@@ -494,17 +494,38 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		}
 	}
 
+	self.enemy_spawn_groups.reenforce_init = {
+		amount = { 2, 3 },
+		spawn = {
+			{
+				freq = 1,
+				amount_max = 1,
+				rank = 2,
+				unit = "FBI_suit_C45_M4",
+				tactics = self._tactics.swat_rifle_flank
+			},
+			{
+				freq = 1,
+				rank = 1,
+				unit = "FBI_suit_M4_MP5",
+				tactics = self._tactics.swat_rifle_flank
+			}
+		}
+	}
+
 	self.enemy_spawn_groups.reenforce_light = {
 		amount = { 2, 3 },
 		spawn = {
 			{
 				freq = 0.2,
+				amount_max = 1,
 				rank = 2,
 				unit = "FBI_heavy_R870",
 				tactics = self._tactics.swat_shotgun_rush
 			},
 			{
 				freq = 0.4,
+				amount_max = 1,
 				rank = 2,
 				unit = "FBI_heavy_G36",
 				tactics = self._tactics.swat_rifle
@@ -541,12 +562,14 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			},
 			{
 				freq = 0.2,
+				amount_max = 1,
 				rank = 1,
 				unit = "FBI_swat_R870",
 				tactics = self._tactics.swat_shotgun_rush
 			},
 			{
 				freq = 0.4,
+				amount_max = 1,
 				rank = 1,
 				unit = "FBI_swat_M4",
 				tactics = self._tactics.swat_rifle
@@ -633,8 +656,9 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.sustain_duration_balance_mul = { 1, 1, 1, 1 }
 
 	self.besiege.reenforce.groups = {
-		reenforce_light = { 7, 5, 3 },
-		reenforce_heavy = { 1, 3, 5 }
+		reenforce_init = { 1, 0, 0 },
+		reenforce_light = { 0, 1, 0 },
+		reenforce_heavy = { 0, 0, 1 }
 	}
 
 	self.besiege.reenforce.interval = { 60, 45, 30 }
