@@ -39,4 +39,30 @@
 			<attr name="value" value="fbi"/>
 		</target>
 	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_hvh/characters/ene_fbi_hvh_3/ene_fbi_hvh_3" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="base"/>
+			<var name="_tweak_table"/>
+		</search>
+		<target mode="attributes">
+			<attr name="value" value="fbi"/>
+		</target>
+	</tweak>
+
+	<tweak version="2" name="units/pd2_dlc_hvh/characters/ene_fbi_hvh_3/ene_fbi_hvh_3_husk" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<extensions/>
+			<extension name="base"/>
+			<var name="_tweak_table"/>
+		</search>
+		<target mode="attributes">
+			<attr name="value" value="fbi"/>
+		</target>
+	</tweak>
 </tweaks>
