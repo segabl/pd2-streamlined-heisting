@@ -4,6 +4,15 @@
 CopDamage._HEALTH_GRANULARITY = 8192
 
 
+-- Make head hitbox size consistent across enemies
+Hooks:PostHook(CopDamage, "init", "sh_init", function (self)
+	local head_body = self._unit:body(self._head_body_name or "head")
+	if head_body then
+		head_body:set_sphere_radius(18)
+	end
+end)
+
+
 -- Make these functions check that the attacker unit is a player (to make sure NPC vs NPC melee doesn't crash)
 local _dismember_condition_original = CopDamage._dismember_condition
 function CopDamage:_dismember_condition(attack_data, ...)
