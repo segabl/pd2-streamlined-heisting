@@ -34,3 +34,13 @@ local build_suppression_original = CopDamage.build_suppression
 function CopDamage:build_suppression(amount, ...)
 	return build_suppression_original(self, amount == "max" and 2 or amount, ...)
 end
+
+
+-- Fixed critical hit multiplier
+function CopDamage:roll_critical_hit(attack_data)
+	if self:can_be_critical(attack_data) and math.random() < managers.player:critical_hit_chance() then
+		return true, attack_data.damage * 3
+	end
+
+	return false, attack_data.damage
+end
