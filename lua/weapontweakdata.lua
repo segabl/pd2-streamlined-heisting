@@ -54,7 +54,8 @@ end)
 local turret_damage_mul = {
 	{ 0, 1 },
 	{ 1500, 0.5 },
-	{ 3000, 0.1 }
+	{ 3000, 0.1 },
+	{ 10000, 0 }
 }
 local function set_presets(weap_tweak_data)
 	local diff_i = weap_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")

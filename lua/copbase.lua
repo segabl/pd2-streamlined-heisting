@@ -23,6 +23,10 @@ end)
 
 
 -- Check for weapon changes
+if Network:is_client() then
+	return
+end
+
 local weapon_mapping = StreamHeist:require("unit_weapons")
 Hooks:PreHook(CopBase, "post_init", "sh_post_init", function (self)
 	self._default_weapon_id = weapon_mapping[self._unit:name():key()] or self._default_weapon_id

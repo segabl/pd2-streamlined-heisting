@@ -149,13 +149,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Bulldozer preset
 	presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
-		melee_dmg = 30 * dmg_mul_lin
+		melee_dmg = 40 * dmg_mul_lin
 	})
 	presets.weapon.sh_tank.is_shotgun_pump.RELOAD_SPEED = 1
 	presets.weapon.sh_tank.is_shotgun_pump.FALLOFF = {
-		{ dmg_mul = 30 * dmg_mul_lin, r = 0, acc = { 0.8, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 20 * dmg_mul_lin, r = 1000, acc = { 0.6, 0.8 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 3 * dmg_mul_lin, r = 2000, acc = { 0.4, 0.6 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 40 * dmg_mul_lin, r = 0, acc = { 0.8, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 20 * dmg_mul_lin, r = 1000, acc = { 0.7, 0.9 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_lin, r = 2000, acc = { 0.6, 0.8 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.is_shotgun_mag.RELOAD_SPEED = 0.9
 	presets.weapon.sh_tank.is_shotgun_mag.FALLOFF = {
@@ -202,7 +202,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Taser preset
 	presets.weapon.sh_taser = based_on(presets.weapon.sh_base, {
-		tase_sphere_cast_radius = 10,
+		tase_sphere_cast_radius = 15,
 		tase_distance = 1200,
 		aim_delay_tase = { 0, aim_delay }
 	})
