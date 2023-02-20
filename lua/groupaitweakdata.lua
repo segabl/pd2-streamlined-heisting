@@ -77,6 +77,11 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870")
 		}
 	end
+	if difficulty_index > 3 then
+		self.unit_categories.FBI_shield.unit_types.russia = {
+			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_sr2_smg/ene_akan_fbi_shield_sr2_smg")
+		}
+	end
 	self.unit_categories.FBI_suit_C45_M4.unit_types.russia = {
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
@@ -85,11 +90,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"),
 		Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870")
 	}
-	if difficulty_index > 3 then
-		self.unit_categories.FBI_shield.unit_types.russia = {
-			Idstring("units/pd2_dlc_mad/characters/ene_akan_fbi_shield_sr2_smg/ene_akan_fbi_shield_sr2_smg")
-		}
-	end
 
 	-- Use the same murky units on all difficulties since their models don't differ
 	if StreamHeist.settings.faction_tweaks.murkywater then
@@ -129,6 +129,11 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		}
 		self.unit_categories.FBI_heavy_R870.unit_types.federales = {
 			Idstring("units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_r870/ene_swat_heavy_policia_federale_fbi_r870")
+		}
+	end
+	if difficulty_index < 5 then
+		self.unit_categories.FBI_tank.unit_types.federales = {
+			Idstring("units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870")
 		}
 	end
 	-- temp fix till I have proper federal police HRT
