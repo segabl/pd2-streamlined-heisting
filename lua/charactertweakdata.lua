@@ -56,11 +56,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		melee_speed = 1,
 		melee_retry_delay = { 1, 2 }
 	})
+
 	presets.weapon.sh_base.is_pistol.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.is_pistol.FALLOFF = {
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.akimbo_pistol.melee_dmg = nil
 	presets.weapon.sh_base.akimbo_pistol.melee_speed = nil
 	presets.weapon.sh_base.akimbo_pistol.melee_retry_delay = nil
@@ -70,17 +72,20 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_revolver.range = { optimal = 2000, far = 4000, close = 1000 }
 	presets.weapon.sh_base.is_revolver.FALLOFF = {
 		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8, 1 }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 3 * dmg_mul_str, r = 3000, acc = { 0.3, 0.6 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_sniper = deep_clone(presets.weapon.sh_base.is_revolver)
 	presets.weapon.sh_base.is_sniper.FALLOFF = {
 		{ dmg_mul = 4 * dmg_mul_str, r = 0, acc = { 0, 0.5 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 4 * dmg_mul_str, r = 4000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_shotgun_pump.RELOAD_SPEED = 1.5
 	presets.weapon.sh_base.is_shotgun_pump.range = { optimal = 1000, far = 2000, close = 500 }
 	presets.weapon.sh_base.is_shotgun_pump.FALLOFF = {
@@ -88,6 +93,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.7, 0.9 }, recoil = { 1, 1.4 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.6, 0.8 }, recoil = { 1.2, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_shotgun_mag = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
 	presets.weapon.sh_base.is_shotgun_mag.RELOAD_SPEED = 1
 	presets.weapon.sh_base.is_shotgun_mag.autofire_rounds = { 1, 3 }
@@ -96,19 +102,29 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 2 * dmg_mul_str, r = 1000, acc = { 0.5, 0.8 }, recoil = { 0.45, 0.8 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 0.5 * dmg_mul_str, r = 2000, acc = { 0.3, 0.6 }, recoil = { 1, 1.2 }, mode = { 1, 0, 0, 0 } }
 	}
+
+	presets.weapon.sh_base.is_double_barrel = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
+	presets.weapon.sh_base.is_double_barrel.FALLOFF = {
+		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8, 1 }, recoil = { 0.8, 1 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 3 * dmg_mul_str, r = 2000, acc = { 0.6, 0.8 }, recoil = { 1, 1.4 }, mode = { 1, 0, 0, 0 } }
+	}
+
 	presets.weapon.sh_base.is_rifle.range = { optimal = 1500, far = 3000, close = 750 }
 	presets.weapon.sh_base.is_rifle.autofire_rounds = { 1, 5 }
 	presets.weapon.sh_base.is_rifle.FALLOFF = {
 		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.5, 0.8 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.2, 0.5 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_bullpup = deep_clone(presets.weapon.sh_base.is_rifle)
+
 	presets.weapon.sh_base.is_smg = deep_clone(presets.weapon.sh_base.is_rifle)
 	presets.weapon.sh_base.is_smg.autofire_rounds = { 2, 8 }
 	presets.weapon.sh_base.is_smg.FALLOFF = {
 		{ dmg_mul = 2 * dmg_mul, r = 0, acc = { 0.4, 0.7 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_lmg = deep_clone(presets.weapon.sh_base.is_smg)
 	presets.weapon.sh_base.is_lmg.autofire_rounds = { 20, 50 }
 	presets.weapon.sh_base.is_lmg.FALLOFF = {
@@ -116,6 +132,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.2, 0.6 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.mini = deep_clone(presets.weapon.sh_base.is_lmg)
 	presets.weapon.sh_base.mini.autofire_rounds = { 50, 200 }
 	presets.weapon.sh_base.mini.FALLOFF = {
@@ -123,6 +140,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 0.7 * dmg_mul, r = 1000, acc = { 0.1, 0.3 }, recoil = { 0.5, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 0.1 * dmg_mul, r = 3000, acc = { 0, 0.15 }, recoil = { 1, 2 }, mode = { 1, 0, 0, 0 } }
 	}
+
 	presets.weapon.sh_base.is_flamethrower.melee_dmg = nil
 	presets.weapon.sh_base.is_flamethrower.melee_speed = nil
 	presets.weapon.sh_base.is_flamethrower.melee_retry_delay = nil
@@ -212,6 +230,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		melee_speed = nil_value,
 		melee_dmg = nil_value,
 		melee_retry_delay = nil_value,
+		range = { optimal = 1000, far = 2000, close = 500 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
 		end
@@ -233,6 +252,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_marshal.is_pistol.melee_speed = nil
 	presets.weapon.sh_marshal.is_pistol.melee_dmg = nil
 	presets.weapon.sh_marshal.is_pistol.melee_retry_delay = nil
+	presets.weapon.sh_marshal.is_pistol.range = { optimal = 1000, far = 2000, close = 500 }
 
 	-- Give team ai more reasonable preset values
 	local dmg_mul_team = math.lerp(1, 5, diff_i_norm)
@@ -658,7 +678,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_hw.min_obj_interrupt_dis = 600
 	self.tank_medic.min_obj_interrupt_dis = 600
 	self.tank_mini.min_obj_interrupt_dis = 600
-	self.shield.min_obj_interrupt_dis = 300
+	self.shield.min_obj_interrupt_dis = 600
 
 	-- Set melee weapons
 	self.biker.melee_weapon = "knife_1"

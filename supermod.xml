@@ -99,7 +99,6 @@
 						<post :hook_id="copinventory"/>
 						<post :hook_id="copmovement"/>
 					</group>
-
 					<group :hook_id="spooc/">
 						<post :hook_id="actions/lower_body/actionspooc"/>
 						<post :hook_id="logics/spooclogicattack"/>
@@ -150,6 +149,11 @@
 			<file :name="wpn_npc_saiga/saiga_df.texture"/>
 			<file :name="wpn_npc_saiga/saiga_nm.texture"/>
 			<file :name="wpn_npc_saiga/wpn_npc_saiga.model"/>
+
+			<!-- huntsman retexture/model -->
+			<file :name="wpn_npc_sawnoff_shotgun/sawnoff_df.texture"/>
+			<file :name="wpn_npc_sawnoff_shotgun/sawnoff_nm.texture"/>
+			<file :name="wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun.model"/>
 
 			<!-- spas12 -->
 			<file :name="wpn_npc_spas12/spas12_df.texture"/>

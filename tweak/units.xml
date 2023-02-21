@@ -13,6 +13,19 @@
 		</target>
 	</tweak>
 
+	<!-- Fix huntsman soundbank -->
+	<tweak version="2" name="units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun" extension="unit">
+		<search>
+			<?xml version="1.0"?>
+			<unit/>
+			<dependencies/>
+			<depends_on bnk="soundbanks/weapon_reinbeck880"/>
+		</search>
+		<target mode="attributes">
+			<attr name="bnk" value="soundbanks/weapon_huntsman"/>
+		</target>
+	</tweak>
+
 	<!-- Fix fbi_3 _tweak_table -->
 	<tweak version="2" name="units/payday2/characters/ene_fbi_3/ene_fbi_3" extension="unit">
 		<search>

@@ -16,25 +16,25 @@ end
 Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.tweak_data = tweak_data
 
-	self.saiga_npc.CLIP_AMMO_MAX = 20
+	-- Fix some weapon data
+	self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
+	self.dmr_npc.trail = "effects/particles/weapons/sniper_trail"
+	self.m249_npc.usage = "is_lmg"
+	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
+	self.mossberg_npc.anim_usage = "is_shotgun_pump"
+	self.mossberg_npc.CLIP_AMMO_MAX = 2
+	self.mossberg_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
+	self.mossberg_npc.sounds.prefix = self.huntsman_crew.sounds.prefix
+	self.mossberg_npc.usage = "is_double_barrel"
+	self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
+	self.rpk_lmg_npc.usage = "is_lmg"
 	self.saiga_npc.auto.fire_rate = 0.18
-	self.sko12_conc_npc.FIRE_MODE = "auto"
+	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.sko12_conc_npc.auto = { fire_rate = 0.22 }
 	self.sko12_conc_npc.concussion_data.chance = 0.1
-
-	-- Use PD:TH sniper trail
-	self.dmr_npc.trail = "effects/particles/weapons/sniper_trail"
-
-	-- Set proper usage
-	self.m249_npc.usage = "is_lmg"
-	self.rpk_lmg_npc.usage = "is_lmg"
-
-	-- Fix existing weapons sounds
-	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
-	self.ump_npc.sounds.prefix = self.schakal_crew.sounds.prefix
-	self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
+	self.sko12_conc_npc.FIRE_MODE = "auto"
 	self.sr2_smg_npc.sounds.prefix = self.sr2_crew.sounds.prefix
-	self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
+	self.ump_npc.sounds.prefix = self.schakal_crew.sounds.prefix
 
 	-- Make weapons of the same use type have the same stats (damage increase is handled by weapon presets)
 	-- This ensures consistent damage scaling independent of the weapon use of different factions
