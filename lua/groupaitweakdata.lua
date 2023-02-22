@@ -595,17 +595,15 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				freq = 1,
 				unit = "marshal_marksman",
 				tactics = self._tactics.marshal_marksman
+			},
+			{
+				rank = 1,
+				freq = 1,
+				unit = "marshal_shield",
+				tactics = self._tactics.marshal_shield
 			}
 		}
 	}
-	if is_trai then
-		table.insert(self.enemy_spawn_groups.marshal_squad.spawn, {
-			rank = 1,
-			freq = 1,
-			unit = "marshal_shield",
-			tactics = self._tactics.marshal_shield
-		})
-	end
 end)
 
 
