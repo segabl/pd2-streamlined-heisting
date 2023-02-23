@@ -715,9 +715,19 @@ function GroupAIStateBesiege:force_spawn_group(...)
 	self._force_next_group_spawn = nil
 end
 
+function GroupAIStateBesiege:_is_spawn_task_type_on_cooldown(spawn_task)
+	local group_objective_type = spawn_task.group.objective.type
+	return self._next_group_spawn_t[group_objective_type] and self._next_group_spawn_t[group_objective_type] > self._t
+end
+
+function GroupAIStateBesiege:_set_spawn_task_type_cooldown(spawn_task, cooldown)
+	local group_objective_type = spawn_task.group.objective.type
+	self._next_group_spawn_t[group_objective_type] = self._t + cooldown
+end
+
 Hooks:OverrideFunction(GroupAIStateBesiege, "_perform_group_spawning", function (self, spawn_task, force, use_last)
 	-- Prevent regular group spawning if cooldown is active unless it's a forced spawn
-	if self._next_group_spawn_t and self._next_group_spawn_t > self._t and not force and not self._force_next_group_spawn then
+	if self:_is_spawn_task_type_on_cooldown(spawn_task) and not force and not self._force_next_group_spawn then
 		return
 	end
 
@@ -846,7 +856,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_perform_group_spawning", function 
 	end
 
 	-- Set a cooldown before new units can be spawned via regular spawn tasks
-	self._next_group_spawn_t = self._t + spawn_task.group.size * tweak_data.group_ai.spawn_cooldown_mul
+	self:_set_spawn_task_type_cooldown(spawn_task, spawn_task.group.size * tweak_data.group_ai.spawn_cooldown_mul)
 end)
 
 
