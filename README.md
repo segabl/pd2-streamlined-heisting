@@ -4,7 +4,7 @@ Streamlined Heisting makes a lot of the gameplay mechanics more consistent. It i
   
 For a player side balance, check out [Streamlined Heisting Complements](https://github.com/segabl/pd2-sh-complements), a small tweaks mod specifically made with Streamlined Heisting in mind.  
   
-As with all mods that extensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it.
+As with all mods that extensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it. When enabling or disabling the mod from the BLT mods menu make sure to restart the game to avoid issues.
 
 ## Compatibility
 
@@ -44,10 +44,10 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Fixes units with hunt objective only moving to player locations once
 - Adds reinforce points to loot secure points and the escape zone
 - Fixes enemies crouch-walking when they are supposed to run
-- Implements missing ``murder`` tactic, enemies with this tactic will focus on finishing off downed and tased players regardless of any aggressive behavior
-- Implements missing ``shield`` and ``shield_cover`` tactics, enemies with ``shield_cover`` tactic will stick closely to group members with ``shield`` tactic
-- Fixes ``ranged_fire`` tactic, enemies with this tactic will properly stop and open fire from a distance for a bit when they encounter players
-- Fixes ``flank`` tactic, enemies will now try to flank properly and more consistently
+- Implements missing `murder` tactic, enemies with this tactic will focus on finishing off downed and tased players regardless of any aggressive behavior
+- Implements missing `shield` and `shield_cover` tactics, enemies with `shield_cover` tactic will stick closely to group members with `shield` tactic
+- Fixes `ranged_fire` tactic, enemies with this tactic will properly stop and open fire from a distance for a bit when they encounter players
+- Fixes `flank` tactic, enemies will now try to flank properly and more consistently
 - Fixes enemies not pulling back when encountering players during anticipation
 - Reverts changes made to the Taser's line of sight check to allow them to tase more consistently again
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
