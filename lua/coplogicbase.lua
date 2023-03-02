@@ -276,3 +276,11 @@ function CopLogicBase.chk_am_i_aimed_at(data, attention_obj, max_dot)
 
 	return max_dot < mvec3_dot(tmp_vec2, tmp_vec1)
 end
+
+
+-- Reduce maximum update delay
+local _upd_attention_obj_detection_original = CopLogicBase._upd_attention_obj_detection
+function CopLogicBase._upd_attention_obj_detection(...)
+	local delay = _upd_attention_obj_detection_original(...)
+	return math.min(1, delay)
+end
