@@ -74,6 +74,7 @@ local function set_presets(weap_tweak_data)
 			v.BODY_DAMAGE_CLAMP = nil
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
+			v.suppression = v.is_shotgun and 2 or 1
 		end
 	end
 end

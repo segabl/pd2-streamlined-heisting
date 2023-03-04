@@ -63,9 +63,11 @@ Hooks:PostHook(PlayerTweakData, "_set_sm_wish", "sh__set_sm_wish", function (sel
 end)
 
 
--- Slightly increase bleed out health
+-- Slightly increase bleed out health and increase suppression decay speed
 Hooks:PostHook(PlayerTweakData, "init", "sh_init", function (self)
 	self.damage.BLEED_OUT_HEALTH_INIT = 15
+	self.suppression.max_value = 5
+	self.suppression.receive_mul = 1
 end)
 
 

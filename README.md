@@ -21,9 +21,7 @@ Vanilla uses multiple presets that are assigned based on difficulty, but not eve
 - Changes enemy weapon stats to be consistent across their class (on the same difficulty a JP36 will perform the same as a Car-4)
 - Makes snipers more accurate but take longer to aim before shooting, avoiding cheap instant snipes due to bad RNG
 - Improves the surrender presets, different enemies have different chances to surrender
-- Removes heavy hurt animations from heavy SWAT but scales their damage slightly lower than their light counterparts
 - Gives enemies linear damage falloff instead of sudden drops after a distance threshold is reached
-- Removes weapon spread from NPC accuracy calculation as it doesn't affect players and just makes NPC vs NPC situations very inconsistent
 - Fixes accuracy values being ignored for single fire weapons in NPC vs NPC situations
 - Simplifies the clunky fire mode system and interpolates the number of rounds fired based on distance instead (enemies will utilize full auto more)
 - Properly implements and makes use of aim delay, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
@@ -37,7 +35,7 @@ Vanilla uses multiple presets that are assigned based on difficulty, but not eve
 At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. Missing tactics have been implemented and spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
-- Restores original spawn groups that were disabled by Overkill, adding back shotgunners, reinforce groups and hostage rescue units
+- Restores original spawn groups that were disabled, adding back shotgunners, reinforce groups and hostage rescue units
 - Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
@@ -59,7 +57,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 
 ### Improves the difficulty curve
 
-The vanilla difficulty curve is all over the place with some difficulties feeling exactly the same and others introducing major jumps. Enemy spawns are highly exaggerated, especially on Death Sentence, because issues in presets, behaviour and pathing prevent them from actually being a threat. Heist difficulty progression is unused and enemies will swarm you in full force as soon as a heist goes loud instead of the intended increasing force as time progresses. Difficulty dependent values have all been rebalanced to create a smoother curve and gradually increasing difficulties. Less but more responsive enemies will keep you on your toes instead of just staring you down waiting to be shot.
+The vanilla difficulty curve is all over the place with some difficulties feeling exactly the same and others introducing major jumps. Enemy spawns are highly exaggerated because issues in presets, behaviour and pathing prevent them from actually being a threat. Heist difficulty progression is unused and enemies will swarm you in full force as soon as a heist goes loud instead of the intended increasing force as time progresses. Difficulty dependent values have all been rebalanced to create a smoother curve and gradually increasing difficulties. Less but more responsive enemies will keep you on your toes instead of just staring you down waiting to be shot.
 
 - Properly scales enemy health, damage, aim and focus delay values according to difficulty
 - Makes each difficulty have custom player revive health percentages (from 65% on normal to 5% on DS)
@@ -99,15 +97,15 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
 - Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
 - Fixes Cloakers being stuck in the beatdown animation and ignoring threats after a charge attack
-- Fixes the Crime Spree "Heavies" modifier to replace the correct units
+- Fixes the Crime Spree "Heavies" modifier replacing the wrong units
 - Fixes the assault fade phase almost always ending after the minimum amount of time
 - Increases the time it takes for Winters to reach the maximum damage reduction (from 10-50% in 40s to 5-50% in 90s)
-- Makes Shield knockdown animations not stackable, no new animation triggers while there's already one playing
+- Makes hurt and knockdown animations not stackable, no new animation triggers while there's already one playing
 - Fixes some spawn points being unavailable on certain maps due to incorrect pathing checks
 - Makes flashbangs more consistent and less penalizing when looking away in time
 - Fixes fire damage over time not triggering when a new damage over time instance is applied within a second
 - Fixes and optimizes fire spawned from molotovs and tripmines
-- Fixes instances of Winters not leaving the map when the formation was told to break up before Winters was registered
+- Fixes instances of Winters not leaving the map when the formation was told to break up before he was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
 - Updates old boss enemies with the new boss logic to make those boss fights more interesting
 - Tweaks some heist mission scripts to play better or fix issues
