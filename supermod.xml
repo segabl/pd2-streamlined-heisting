@@ -99,6 +99,9 @@
 						<post :hook_id="copinventory"/>
 						<post :hook_id="copmovement"/>
 					</group>
+
+					<post :hook_id="shield/logics/shieldlogicattack"/>
+
 					<group :hook_id="spooc/">
 						<post :hook_id="actions/lower_body/actionspooc"/>
 						<post :hook_id="logics/spooclogicattack"/>
