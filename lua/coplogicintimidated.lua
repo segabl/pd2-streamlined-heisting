@@ -1,7 +1,7 @@
 -- Tweak hostage rescue conditions
 function CopLogicIntimidated.rescue_SO_verification(ignore_this, data, unit, ...)
 	-- Less likely to free hostages during assault
-	if not managers.groupai:state()._rescue_allowed and math.random() < 0.3 then
+	if not managers.groupai:state()._rescue_allowed and math.random() < 0.75 then
 		return
 	end
 

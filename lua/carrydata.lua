@@ -5,7 +5,7 @@ function CarryData:clbk_pickup_SO_verification(unit)
 	end
 
 	-- Less likely to steal bags during assault
-	if not managers.groupai:state()._rescue_allowed and math.random() < 0.3 then
+	if not managers.groupai:state()._rescue_allowed and math.random() < 0.75 then
 		return
 	end
 
