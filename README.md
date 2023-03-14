@@ -114,6 +114,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
 - Adds hints when an enemy can't be intimidated due to temporary cooldown, no surrender preset or maximum amount of hostages reached
 - Fixes Jokers sometimes following the wrong player
+- Makes civilians' reactions to intimidation more consistent
 
 ## Credits
 
