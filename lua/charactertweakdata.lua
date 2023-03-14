@@ -269,52 +269,66 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.gang_member_damage.REGENERATE_TIME_AWAY = 2
 
 	-- Setup surrender presets
-	local surrender_factors = {
-		unaware_of_aggressor = 0.2,
-		enemy_weap_cold = 0.1,
-		flanked = 0.4,
-		isolated = 0.2,
-		aggressor_dis = {
-			[100.0] = 0.2,
-			[1000.0] = 0
-		}
-	}
 	presets.surrender.easy = {
 		base_chance = 0,
 		significant_chance = 0,
-		factors = surrender_factors,
 		reasons = {
 			pants_down = 1,
-			weapon_down = 0.6,
+			weapon_down = 0.7,
+			flanked = 0.6,
+			unaware_of_aggressor = 0.4,
+			isolated = 0.3
+		},
+		factors = {
 			health = {
 				[1.0] = 0,
 				[0.0] = 1
+			},
+			aggressor_dis = {
+				[100] = 0.3,
+				[1000] = 0
 			}
 		}
 	}
 	presets.surrender.normal = {
 		base_chance = 0,
 		significant_chance = 0,
-		factors = surrender_factors,
 		reasons = {
 			pants_down = 0.9,
-			weapon_down = 0.4,
+			weapon_down = 0.5,
+			flanked = 0.5,
+			unaware_of_aggressor = 0.3,
+			isolated = 0.2
+		},
+		factors = {
 			health = {
 				[0.75] = 0,
 				[0.0] = 0.75
+			},
+			aggressor_dis = {
+				[100] = 0.2,
+				[1000] = 0
 			}
 		}
 	}
 	presets.surrender.hard = {
 		base_chance = 0,
 		significant_chance = 0,
-		factors = surrender_factors,
 		reasons = {
 			pants_down = 0.8,
-			weapon_down = 0.2,
+			weapon_down = 0.3,
+			flanked = 0.4,
+			unaware_of_aggressor = 0.2,
+			isolated = 0.1
+		},
+		factors = {
 			health = {
 				[0.5] = 0,
 				[0.0] = 0.5
+			},
+			aggressor_dis = {
+				[100] = 0.1,
+				[1000] = 0
 			}
 		}
 	}
