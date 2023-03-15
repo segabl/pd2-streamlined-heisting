@@ -5,6 +5,7 @@ if not StreamHeist then
 		save_path = SavePath .. "streamlined_heisting.json",
 		mod_instance = ModInstance,
 		logging = io.file_is_readable("mods/developer.txt"),
+		required = {},
 		settings = {
 			auto_faction_tweaks = true,
 			faction_tweaks = {
@@ -220,14 +221,13 @@ if not StreamHeist then
 	end
 end
 
-local required = {}
-if RequiredScript and not required[RequiredScript] then
+if RequiredScript and not StreamHeist.required[RequiredScript] then
 
 	local fname = StreamHeist.mod_path .. RequiredScript:gsub(".+/(.+)", "lua/%1.lua")
 	if io.file_is_readable(fname) then
 		dofile(fname)
 	end
 
-	required[RequiredScript] = true
+	StreamHeist.required[RequiredScript] = true
 
 end
