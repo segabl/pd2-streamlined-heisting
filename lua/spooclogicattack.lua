@@ -1,5 +1,4 @@
 -- More consistent Cloaker attacks, why wouldn't they be allowed to start a sprint attack when another cop is in the way?
--- Also force Cloakers to stand up before starting a charge
 function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 	if my_data.spooc_attack or data.t <= data.spooc_attack_timeout_t or data.unit:movement():chk_action_forbidden("walk") then
 		return
@@ -22,10 +21,10 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 		return
 	end
 
-	if not data.spooc_attack_delay_t then
-		data.spooc_attack_delay_t = focus_enemy.verified_t + 0.35
+	if not my_data.spooc_attack_delay_t then
+		my_data.spooc_attack_delay_t = focus_enemy.verified_t + 0.35
 		return
-	elseif data.spooc_attack_delay_t > data.t then
+	elseif my_data.spooc_attack_delay_t > data.t then
 		return
 	end
 
@@ -41,16 +40,9 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 		my_data.attention_unit = focus_enemy.u_key
 	end
 
-	if not flying_strike then
-		data.unit:movement():action_request({
-			body_part = 4,
-			type = "stand"
-		})
-	end
-
 	local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data, flying_strike)
 	if action then
-		data.spooc_attack_delay_t = nil
+		my_data.spooc_attack_delay_t = nil
 
 		my_data.spooc_attack = {
 			start_t = data.t,
