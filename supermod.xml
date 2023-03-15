@@ -58,7 +58,10 @@
 			</group>
 
 			<group :hook_id="units/">
-				<post :hook_id="beings/player/playerdamage"/>
+				<group :hook_id="beings/player/">
+					<post :hook_id="states/playerdriving"/>
+					<post :hook_id="playerdamage"/>
+				</group>
 
 				<group :hook_id="civilians/logics/">
 					<post :hook_id="civilianlogicflee"/>
