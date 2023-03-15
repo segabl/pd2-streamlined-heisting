@@ -133,7 +133,11 @@
 				</group>
 
 				<post :hook_id="player_team/teamaimovement"/>
-				<post :hook_id="props/carrydata"/>
+
+				<group :hook_id="props/">
+					<post :hook_id="aiattentionobject"/>
+					<post :hook_id="carrydata"/>
+				</group>
 
 				<group :hook_id="weapons/">
 					<group :hook_id="grenades/">
