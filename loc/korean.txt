@@ -1,0 +1,17 @@
+{
+	"sh_menu_main" : "스트림라인드 하이스팅",
+	"sh_menu_auto_faction_tweaks" : "팩션 개선 자동 감지",
+	"sh_menu_auto_faction_tweaks_desc" : "mod_overrides 모드와 충돌하는 팩션 개선을 자동으로 비활성화합니다.",
+	"sh_menu_swat" : "개선된 SWAT 팩션",
+	"sh_menu_fbi" : "개선된 FBI 팩션",
+	"sh_menu_gensec" : "개선된 젠섹 팩션",
+	"sh_menu_zeal" : "개선된 ZEAL 팩션",
+	"sh_menu_murkywater" : "개선된 머키워터 팩션",
+	"sh_menu_federales" : "개선된 연방 경찰 팩션",
+	"sh_menu_russia" : "개선된 러시아 용병 팩션",
+	"sh_menu_faction_tweak_desc" : "적의 차이와 외관을 향상시킵니다.\n적용될려면 게임을 재시작해야 됩니다.",
+	"sh_menu_warning" : "경고",
+	"sh_menu_conflicts" : "다음 모드들은 스트림라인드 하이스팅과 함께 사용할 경우 의도하지 않은 기능이나 충돌을 일으킬 수 있습니다:",
+	"sh_menu_conflicts_disable" : "충돌하는 모드를 비활성화",
+	"sh_menu_conflicts_ignore" : "활성화하도록 유지 (권장하지 않음)"
+}
