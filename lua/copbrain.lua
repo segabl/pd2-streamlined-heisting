@@ -47,7 +47,7 @@ Hooks:OverrideFunction(CopBrain, "on_surrender_chance", function (self)
 	local timeout_duration = 4 + 2 * math.random()
 	local expire_clbk_id = "CopBrain_sur_op" .. tostring(self._unit:key())
 	self._logic_data.surrender_window = {
-		chance_mul = 0.01,
+		chance_mul = 0.05,
 		expire_clbk_id = expire_clbk_id,
 		window_expire_t = t + window_duration,
 		expire_t = t + window_duration + timeout_duration,
