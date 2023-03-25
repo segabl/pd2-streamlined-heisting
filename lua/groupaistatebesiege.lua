@@ -356,7 +356,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				local detonate_pos
 				local c_key = charge and table.random_key(assault_area.criminal.units)
 				if c_key then
-					detonate_pos = assault_area.criminal.units[c_key].unit:movement():m_pos()
+					detonate_pos = mvec_cpy(assault_area.criminal.units[c_key].m_pos)
 				end
 
 				-- Check which grenade to use to push, grenade use is required for the push to be initiated
