@@ -248,3 +248,9 @@ Hooks:PreHook(GroupAIStateBase, "add_special_objective", "sh_add_special_objecti
 	objective_data.objective.interrupt_health = 0.8
 	objective_data.objective.pose = nil
 end)
+
+
+-- Fully count bots for balancing multiplier
+function GroupAIStateBase:_get_balancing_multiplier(balance_multipliers)
+	return balance_multipliers[math.clamp(table.count(self:all_char_criminals(), function (u_data) return not u_data.status end), 1, #balance_multipliers)]
+end

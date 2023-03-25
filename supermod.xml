@@ -146,6 +146,7 @@
 						<post :hook_id="quicksmokegrenade"/>
 					</group>
 					<post :hook_id="akimboweaponbase"/>
+					<post :hook_id="newnpcraycastweaponbase"/>
 					<post :hook_id="raycastweaponbase"/>
 				</group>
 			</group>
