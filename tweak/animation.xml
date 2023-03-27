@@ -349,4 +349,16 @@
 			<key at="exit" set_extension="anim_data" extension_key="base_no_recoil" extension_value="false"/>
 		</target>
 	</tweak>
+
+	<!-- Fix bleedout to fatal transition -->
+	<tweak version="2" name="anims/units/enemies/cop/std" extension="animation_states">
+		<search>
+			<xml/>
+			<state/>
+			<to name="fatal"/>
+		</search>
+		<target mode="attributes" multiple="true">
+			<attr name="redirect" value="std/fatal/enter"/>
+		</target>
+	</tweak>
 </tweaks>
