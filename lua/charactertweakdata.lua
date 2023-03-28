@@ -53,7 +53,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		aim_delay = { 0, aim_delay },
 		melee_dmg = melee_dmg_tbl[diff_i],
 		melee_speed = 1,
-		melee_retry_delay = { 1, 2 }
+		melee_retry_delay = { 1, 2 },
+		RELOAD_SPEED = 1
 	})
 
 	presets.weapon.sh_base.is_pistol.range = { optimal = 1500, far = 3000, close = 750 }
@@ -72,6 +73,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 1.5 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
 	}
 
+	presets.weapon.sh_base.is_revolver.RELOAD_SPEED = 0.9
 	presets.weapon.sh_base.is_revolver.range = { optimal = 2000, far = 4000, close = 1000 }
 	presets.weapon.sh_base.is_revolver.FALLOFF = {
 		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8, 1 }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
@@ -255,20 +257,22 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_marshal.is_pistol.melee_retry_delay = nil
 	presets.weapon.sh_marshal.is_pistol.range = { optimal = 1000, far = 2000, close = 500 }
 
-	-- Give team ai more reasonable preset values
-	local dmg_mul_team = math.map_range(diff_i, 2, #tweak_data.difficulties, 0.5, 5)
+	-- Give team AI more reasonable preset values based on enemy HP multipliers
+	local dmg_mul_team_tbl = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
+	local dmg_mul_team = dmg_mul_team_tbl[diff_i] * 5
 	presets.weapon.gang_member = deep_clone(presets.weapon.sh_base)
 	for _, v in pairs(presets.weapon.gang_member) do
-		v.melee_dmg = dmg_mul_team * 10
+		v.melee_dmg = dmg_mul_team
 		v.FALLOFF = {
 			{ dmg_mul = dmg_mul_team, r = 0, acc = { 0.5, 1 }, recoil = v.FALLOFF[1].recoil, mode = { 1, 0, 0, 0 } },
+			{ dmg_mul = dmg_mul_team * 0.75, r = 1500, acc = { 0.25, 0.75 }, recoil = v.FALLOFF[1].recoil, mode = { 1, 0, 0, 0 } },
 			{ dmg_mul = dmg_mul_team * 0.5, r = 3000, acc = { 0, 0.5 }, recoil = v.FALLOFF[1].recoil, mode = { 1, 0, 0, 0 } }
 		}
 	end
 	presets.weapon.gang_member.is_flamethrower.no_autofire_stop = true
 	presets.weapon.gang_member.is_lmg.no_autofire_stop = true
 	presets.weapon.gang_member.mini.no_autofire_stop = true
-	presets.gang_member_damage.HEALTH_INIT = 75 * diff_i
+	presets.gang_member_damage.HEALTH_INIT = 100 + 50 * diff_i
 	presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.25
 	presets.gang_member_damage.REGENERATE_TIME = 2
 	presets.gang_member_damage.REGENERATE_TIME_AWAY = 2

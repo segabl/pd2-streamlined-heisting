@@ -100,14 +100,18 @@ local function set_presets(weap_tweak_data)
 				v.auto = player_weapon.auto
 			end
 
+			if v.usage == "is_lmg" then
+				v.anim_usage = v.anim_usage or "is_rifle"
+			end
+
 			local usage = crew_presets[v.usage]
 			local is_automatic = v.auto and usage.autofire_rounds
 			local mag = v.CLIP_AMMO_MAX
-			local burst = is_automatic and usage.autofire_rounds[2] or 1
+			local burst = is_automatic and math.min(usage.autofire_rounds[2], mag) or 1
 			local rate = is_automatic and v.auto.fire_rate or 0
 			local recoil = (usage.FALLOFF[1].recoil[1] + usage.FALLOFF[1].recoil[2]) * 0.5
 
-			v.DAMAGE = 7.5 * ((mag / burst) * (burst - 1) * rate + (mag / burst - 1) * recoil + 2) / mag
+			v.DAMAGE = ((mag / burst) * (burst - 1) * rate + (mag / burst - 1) * recoil + 2) / mag
 			v.FIRE_MODE = is_automatic and "auto" or "single"
 		end
 	end
