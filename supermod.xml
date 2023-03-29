@@ -52,6 +52,7 @@
 			<group :hook_id="tweak_data/">
 				<post :hook_id="charactertweakdata"/>
 				<post :hook_id="groupaitweakdata"/>
+				<post :hook_id="levelstweakdata"/>
 				<post :hook_id="playertweakdata"/>
 				<post :hook_id="skirmishtweakdata"/>
 				<post :hook_id="weapontweakdata"/>
