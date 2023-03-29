@@ -33,3 +33,21 @@ function CopMovement:synch_attention(attention)
 		end
 	end
 end
+
+
+-- Fix head position update on suppression
+Hooks:PreHook(CopMovement, "_upd_stance", "sh__upd_stance", function (self, t)
+	if self._stance.transition and self._stance.transition.next_upd_t < t then
+		self._force_head_upd = true
+	elseif self._suppression.transition and self._suppression.transition.next_upd_t < t then
+		self._force_head_upd = true
+	end
+end)
+
+Hooks:PostHook(CopMovement, "_change_stance", "sh__change_stance", function (self)
+	self._force_head_upd = true
+end)
+
+Hooks:PostHook(CopMovement, "on_suppressed", "sh_on_suppressed", function (self)
+	self._force_head_upd = true
+end)
