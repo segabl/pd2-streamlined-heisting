@@ -3,7 +3,7 @@
 Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 	if self._hurt_type == "concussion" then
 		self.update = self._upd_hurt
-	elseif self._hurt_type == "death" then
+	elseif self._hurt_type == "death" and Network:is_server() then
 		self._unit:brain():rem_all_pos_rsrv()
 	end
 end)
