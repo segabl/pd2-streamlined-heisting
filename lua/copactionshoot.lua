@@ -99,11 +99,9 @@ function CopActionShoot:update(t)
 		mvec3_norm(tar_vec_flat)
 		local fwd = self._common_data.fwd
 		local fwd_dot = mvec3_dot(fwd, tar_vec_flat)
-		local active_actions = self._common_data.active_actions
-		local queued_actions = self._common_data.queued_actions
 		-- This originally only executed on client side which causes great inconsistencies in enemy turning behaviour
 		-- between host and client. Reworking the turning condition and enabling it for the host too should fix that.
-		if (not active_actions[2] or active_actions[2]:type() == "idle") and (not queued_actions or not queued_actions[1] and not queued_actions[2]) then
+		if CopActionIdle._can_turn(self) then
 			local spin = tar_vec_flat:to_polar_with_reference(fwd, math.UP).spin
 			if math.abs(spin) > 25 then
 				self._ext_movement:action_request({
