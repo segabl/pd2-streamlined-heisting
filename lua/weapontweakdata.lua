@@ -73,10 +73,10 @@ local crew_weapon_mapping = {
 	raging_bull = "new_raging_bull",
 	x_c45 = "x_g17"
 }
-local function set_presets(weap_tweak_data)
-	local diff_i = weap_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local crew_presets = weap_tweak_data.tweak_data.character.presets.weapon.gang_member
-	for k, v in pairs(weap_tweak_data) do
+function WeaponTweakData:_set_presets()
+	local diff_i = self.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+	local crew_presets = self.tweak_data.character.presets.weapon.gang_member
+	for k, v in pairs(self) do
 		if k:match("_turret_module") then
 			v.DAMAGE = diff_i
 			v.DAMAGE_MUL_RANGE = turret_damage_mul
@@ -94,7 +94,7 @@ local function set_presets(weap_tweak_data)
 			v.suppression = v.is_shotgun and 2 or 1
 		elseif k:match("_crew$") and crew_presets[v.usage] and not v.old_usage then
 			local player_id = k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
-			local player_weapon = crew_weapon_mapping[player_id] and weap_tweak_data[crew_weapon_mapping[player_id]] or weap_tweak_data[player_id]
+			local player_weapon = crew_weapon_mapping[player_id] and self[crew_weapon_mapping[player_id]] or self[player_id]
 			if player_weapon then
 				v.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
 				v.auto = player_weapon.auto
@@ -117,11 +117,11 @@ local function set_presets(weap_tweak_data)
 	end
 end
 
-WeaponTweakData._set_easy = set_presets
-WeaponTweakData._set_normal = set_presets
-WeaponTweakData._set_hard = set_presets
-WeaponTweakData._set_overkill = set_presets
-WeaponTweakData._set_overkill_145 = set_presets
-WeaponTweakData._set_easy_wish = set_presets
-WeaponTweakData._set_overkill_290 = set_presets
-WeaponTweakData._set_sm_wish = set_presets
+WeaponTweakData._set_easy = WeaponTweakData._set_presets
+WeaponTweakData._set_normal = WeaponTweakData._set_presets
+WeaponTweakData._set_hard = WeaponTweakData._set_presets
+WeaponTweakData._set_overkill = WeaponTweakData._set_presets
+WeaponTweakData._set_overkill_145 = WeaponTweakData._set_presets
+WeaponTweakData._set_easy_wish = WeaponTweakData._set_presets
+WeaponTweakData._set_overkill_290 = WeaponTweakData._set_presets
+WeaponTweakData._set_sm_wish = WeaponTweakData._set_presets

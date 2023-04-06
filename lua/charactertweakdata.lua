@@ -55,6 +55,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		melee_speed = 1,
 		melee_retry_delay = { 1, 2 },
 		range = { close = 750, optimal = 1500, far = 3000 },
+		spread = 5,
 		RELOAD_SPEED = 1
 	})
 
@@ -745,13 +746,13 @@ local preset_overrides = {
 	tank_medic = "sh_heavy"
 }
 local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
-local function set_presets(char_tweak_data)
-	local diff_i = char_tweak_data.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
-	local diff_i_norm = math.max(0, diff_i - 2) / (#char_tweak_data.tweak_data.difficulties - 2)
+function CharacterTweakData:_set_presets()
+	local diff_i = self.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
+	local diff_i_norm = math.max(0, diff_i - 2) / (#self.tweak_data.difficulties - 2)
 	local hp_mul = hp_muls[diff_i]
 
-	for _, name in pairs(char_tweak_data._enemy_list) do
-		local char_preset = char_tweak_data[name]
+	for _, name in pairs(self._enemy_list) do
+		local char_preset = self[name]
 
 		char_preset.BASE_HEALTH_INIT = char_preset.BASE_HEALTH_INIT or char_preset.HEALTH_INIT
 		char_preset.HEALTH_INIT = char_preset.BASE_HEALTH_INIT * hp_mul
@@ -765,22 +766,26 @@ local function set_presets(char_tweak_data)
 			char_preset.headshot_dmg_mul = char_preset.base_headshot_dmg_mul * 2
 		end
 
-		char_preset.weapon = char_tweak_data.presets.weapon[preset_overrides[name] or access_presets[char_preset.access] or "sh_base"]
+		char_preset.weapon = self.presets.weapon[preset_overrides[name] or access_presets[char_preset.access] or "sh_base"]
 	end
 
 	-- Flashbanged duration
-	char_tweak_data.flashbang_multiplier = math.lerp(0.9, 1.5, diff_i_norm)
+	self.flashbang_multiplier = math.lerp(0.9, 1.5, diff_i_norm)
 
 	-- Cloaker attack timeout
-	char_tweak_data.spooc.spooc_attack_timeout = { math.lerp(8, 3, diff_i_norm), math.lerp(10, 4, diff_i_norm) }
-	char_tweak_data.shadow_spooc.shadow_spooc_attack_timeout = char_tweak_data.spooc.spooc_attack_timeout
+	self.spooc.spooc_attack_timeout = { math.lerp(8, 3, diff_i_norm), math.lerp(10, 4, diff_i_norm) }
+	self.shadow_spooc.shadow_spooc_attack_timeout = self.spooc.spooc_attack_timeout
+
+	-- Dozer armor damage multiplier
+	self.tank_armor_damage_mul = 1 / hp_mul
+	self.tank_glass_damage_mul = 1 / math.max(1, hp_mul * 0.5)
 end
 
-CharacterTweakData._set_easy = set_presets
-CharacterTweakData._set_normal = set_presets
-CharacterTweakData._set_hard = set_presets
-CharacterTweakData._set_overkill = set_presets
-CharacterTweakData._set_overkill_145 = set_presets
-CharacterTweakData._set_easy_wish = set_presets
-CharacterTweakData._set_overkill_290 = set_presets
-CharacterTweakData._set_sm_wish = set_presets
+CharacterTweakData._set_easy = CharacterTweakData._set_presets
+CharacterTweakData._set_normal = CharacterTweakData._set_presets
+CharacterTweakData._set_hard = CharacterTweakData._set_presets
+CharacterTweakData._set_overkill = CharacterTweakData._set_presets
+CharacterTweakData._set_overkill_145 = CharacterTweakData._set_presets
+CharacterTweakData._set_easy_wish = CharacterTweakData._set_presets
+CharacterTweakData._set_overkill_290 = CharacterTweakData._set_presets
+CharacterTweakData._set_sm_wish = CharacterTweakData._set_presets
