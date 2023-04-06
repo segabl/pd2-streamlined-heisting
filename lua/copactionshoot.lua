@@ -300,13 +300,12 @@ function CopActionShoot:_chk_start_melee(t, target_dis)
 	end
 
 	local melee_weapon = self._unit:base():melee_weapon()
-	local is_weapon = melee_weapon == "weapon"
-	local state = self._ext_movement:play_redirect(is_weapon and "melee" or "melee_item")
+	local state = self._ext_movement:play_redirect(melee_weapon == "weapon" and "melee" or melee_weapon == "bash" and "melee_bayonet" or "melee_item")
 	if not state then
 		return
 	end
 
-	if not is_weapon then
+	if melee_weapon ~= "weapon" and melee_weapon ~= "bash" then
 		local anim_attack_vars = self._common_data.char_tweak.melee_anims or { "var1", "var2" }
 		local melee_var = self:_pseudorandom(#anim_attack_vars)
 		self._common_data.machine:set_parameter(state, anim_attack_vars[melee_var], 1)
