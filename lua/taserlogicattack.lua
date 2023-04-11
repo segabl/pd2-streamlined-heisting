@@ -186,10 +186,9 @@ function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data
 	local reaction = _chk_reaction_to_attention_object_original(data, attention_data, ...)
 
 	if reaction == AIAttentionObject.REACT_SPECIAL_ATTACK then
-		attention_data.unit:character_damage():shoot_pos_mid(to_vec)
 		local my_data = data.internal_data
-		local from = data.unit:movement():m_head_pos()
-		if data.unit:raycast("ray", from, to_vec, "slot_mask", my_data.tase_slot_mask, "sphere_cast_radius", my_data.tase_sphere_cast_radius, "report") then
+		attention_data.unit:character_damage():shoot_pos_mid(to_vec)
+		if CopActionTase.is_obstructed(data.unit:movement():m_head_pos(), to_vec, my_data.tase_slot_mask, my_data.tase_sphere_cast_radius) then
 			return AIAttentionObject.REACT_COMBAT
 		end
 	end
