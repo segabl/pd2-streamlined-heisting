@@ -515,6 +515,12 @@
 			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870_husk.unit"/>
 		</group>
 
+		<!-- zombies textures -->
+		<group name="units/pd2_dlc_hvh/characters/shared_textures/" dyn_package="false">
+			<file :name="swat_city_df.texture"/>
+			<file :name="swat_city_heavy_df.texture"/>
+		</group>
+
 		<!-- character fixes and changes -->
 		<group name="units/" dyn_package="false">
 			<!-- sosa hitboxes and footsteps -->

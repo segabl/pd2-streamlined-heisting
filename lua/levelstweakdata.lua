@@ -1,4 +1,4 @@
--- Enable flashlight state on some night time levels
+-- Enable flashlight state on some night time levels and zombie faction on Lab Rats and Prison Nightmare
 Hooks:PostHook(LevelsTweakData, "init", "sh_init", function (self)
 	self.arm_fac.flashlights_on = true
 	self.arm_und.flashlights_on = true
@@ -9,4 +9,7 @@ Hooks:PostHook(LevelsTweakData, "init", "sh_init", function (self)
 	self.watchdogs_1_night.flashlights_on = true
 	self.watchdogs_2.flashlights_on = true
 	self.welcome_to_the_jungle_1_night.flashlights_on = true
+
+	self.help.ai_group_type = LevelsTweakData.LevelType.Zombie
+	self.nail.ai_group_type = LevelsTweakData.LevelType.Zombie
 end)

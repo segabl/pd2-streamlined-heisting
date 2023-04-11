@@ -34,13 +34,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 		self.unit_categories.medic_R870.unit_types.america = {
 			Idstring("units/pd2_dlc_gitgud/characters/ene_zeal_medic_r870/ene_zeal_medic_r870")
 		}
-		self.unit_categories.FBI_tank.unit_types.zombie = {
-			Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_1/ene_bulldozer_hvh_1"),
-			Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_2/ene_bulldozer_hvh_2"),
-			Idstring("units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_3/ene_bulldozer_hvh_3"),
-			Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"),
-			Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun")
-		}
 	elseif difficulty_index > 5 then
 		self.unit_categories.FBI_swat_R870.unit_types.america = {
 			Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2")
@@ -68,6 +61,13 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 			Idstring("units/pd2_dlc_hvh/characters/ene_cop_hvh_4/ene_cop_hvh_4")
 		}
 	end
+
+	-- Redirect regular zombie assault units
+	self.unit_categories.FBI_swat_M4.unit_types.zombie = self.unit_categories.FBI_swat_M4.unit_types.america
+	self.unit_categories.FBI_swat_R870.unit_types.zombie = self.unit_categories.FBI_swat_R870.unit_types.america
+	self.unit_categories.FBI_heavy_G36.unit_types.zombie = self.unit_categories.FBI_heavy_G36.unit_types.america
+	self.unit_categories.FBI_heavy_R870.unit_types.zombie = self.unit_categories.FBI_heavy_R870.unit_types.america
+	self.unit_categories.FBI_shield.unit_types.zombie = self.unit_categories.FBI_shield.unit_types.america
 
 	-- Use the same russian units on all difficulties since factions are incomplete
 	if StreamHeist.settings.faction_tweaks.russia then
