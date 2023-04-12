@@ -123,6 +123,8 @@ function CopActionTase:update(t)
 				})
 			end
 		end
+
+		target_vec = nil
 	end
 
 	if self._ext_anim.reload or self._ext_anim.equip then
@@ -143,7 +145,7 @@ function CopActionTase:update(t)
 				self.update = self._upd_empty
 			end
 		end
-	elseif not self._ext_anim.turn and self._common_data.allow_fire and self._shoot_t and self._shoot_t < t and self._mod_enable_t < t then
+	elseif target_vec and self._common_data.allow_fire and self._shoot_t and self._shoot_t < t and self._mod_enable_t < t then
 		if self._tase_effect then
 			World:effect_manager():fade_kill(self._tase_effect)
 		end
