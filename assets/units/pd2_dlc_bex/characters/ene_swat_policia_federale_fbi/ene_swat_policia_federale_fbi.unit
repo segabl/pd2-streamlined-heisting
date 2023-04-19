@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <unit type="being" slot="12">
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine"/>
-	<object file="units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi"/>
+	<object file="units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale"/>
 
 	<dependencies>
 		<depends_on bnk="soundbanks/regular_vox"/>
