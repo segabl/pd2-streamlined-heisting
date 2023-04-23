@@ -9,5 +9,11 @@ return {
 		values = {
 			enabled = false
 		}
+	},
+	-- Disable scripted spawn spam
+	[101745] = {
+		values = {
+			enabled = false
+		}
 	}
 }
