@@ -183,7 +183,7 @@ end
 Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", function (self, group, phase)
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
-	local approach, open_fire, pull_back, charge
+	local approach, open_fire, pull_back
 	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
 	local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
@@ -240,15 +240,12 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 							area = self:get_area_from_nav_seg_id(coarse_path[#coarse_path][1]),
 							coarse_path = coarse_path
 						}
-						group.is_chasing = true
 
 						self:_set_objective_to_enemy_group(group, grp_objective)
 						self:_voice_deathguard_start(group)
 						return
 					end
 				end
-			elseif tactic_name == "charge" and not current_objective.moving_out then
-				charge = true
 			end
 		end
 	end
@@ -264,15 +261,15 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				open_fire = true
 				objective_area = obstructed_area
 			end
-		elseif not current_objective.pushed or charge and not current_objective.charge then
+		elseif not current_objective.pushed or tactics_map.charge and not current_objective.charge then
 			-- If we can't see enemies, approach
 			approach = not self:_can_group_see_target(group)
 		end
 	elseif not current_objective.moving_out then
 		-- If we aren't moving out to an objective, open fire if we have ranged_fire tactics and see an enemy, otherwise approach
-		approach = charge or group.is_chasing or not tactics_map.ranged_fire or not current_objective.open_fire or in_place_duration > 10 and not self:_can_group_see_target(group)
+		approach = tactics_map.charge or not tactics_map.ranged_fire or not current_objective.open_fire or in_place_duration > 10 and not self:_can_group_see_target(group)
 		open_fire = not approach and not current_objective.open_fire
-	elseif tactics_map.ranged_fire and not current_objective.open_fire and self:_can_group_see_target(group, true) then
+	elseif tactics_map.ranged_fire and not current_objective.open_fire and self:_can_group_see_target(group, "far") then
 		-- If we see an enemy while moving out and have the ranged_fire tactics, open fire
 		local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group)
 		if forwardmost_i_nav_point then
@@ -352,9 +349,9 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			local push = assault_from == objective_area
 			local move_out = not push
 
-			if push then
+			if push and not phase_is_anticipation then
 				local detonate_pos
-				local c_key = charge and table.random_key(assault_area.criminal.units)
+				local c_key = tactics_map.charge and table.random_key(assault_area.criminal.units)
 				if c_key then
 					detonate_pos = mvec_cpy(assault_area.criminal.units[c_key].m_pos)
 				end
@@ -363,7 +360,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				-- If grenade isn't available, push regardless anyway after a short delay
 				if self:_chk_group_use_grenade(assault_area, group, detonate_pos) then
 					move_out = true
-				elseif charge or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t then
+				elseif tactics_map.charge or group.ignore_grenade_check_t and group.ignore_grenade_check_t <= self._t then
 					move_out = true
 				end
 
@@ -372,7 +369,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				elseif not group.ignore_grenade_check_t then
 					group.ignore_grenade_check_t = self._t + math.map_range_clamped(table.size(assault_area.criminal.units), 1, 4, 8, 4)
 				end
-			else
+			elseif not push then
 				-- If we aren't pushing, we go to one area before the criminal area
 				if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path][1]] then
 					table_remove(assault_path)
@@ -391,10 +388,9 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 					moving_in = push,
 					open_fire = push,
 					pushed = push,
-					charge = charge,
-					interrupt_dis = charge and 0
+					charge = tactics_map.charge,
+					interrupt_dis = tactics_map.charge and 0
 				}
-				group.is_chasing = group.is_chasing or push
 
 				self:_set_objective_to_enemy_group(group, grp_objective)
 			end
@@ -442,7 +438,6 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 					}
 				}
 			}
-			group.is_chasing = nil
 
 			self:_set_objective_to_enemy_group(group, new_grp_objective)
 		end
@@ -457,7 +452,8 @@ function GroupAIStateBesiege:_can_group_see_target(group, limit_range)
 		logic_data = u_data.unit:brain()._logic_data
 		focus_enemy = logic_data and logic_data.attention_obj
 		if focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_AIM and focus_enemy.verified then
-			if not limit_range or focus_enemy.dis < (logic_data.internal_data.weapon_range and logic_data.internal_data.weapon_range.far or 3000) then
+			local weapon_range = logic_data.internal_data.weapon_range
+			if not limit_range or focus_enemy.dis < (weapon_range and weapon_range[limit_range] or 3000) then
 				return true
 			end
 		end
@@ -676,21 +672,25 @@ function GroupAIStateBesiege:_upd_police_activity()
 
 	self:_upd_SO()
 	self:_upd_grp_SO()
+
+	if not self._enemy_weapons_hot then
+		return
+	end
+
+	self:_claculate_drama_value()
+
 	self:_check_spawn_phalanx()
 	self:_check_phalanx_group_has_spawned()
 	self:_check_phalanx_damage_reduction_increase()
 
 	-- Do _upd_group_spawning and _begin_new_tasks before the various task updates
-	if self._enemy_weapons_hot then
-		self:_claculate_drama_value()
-		self:_upd_group_spawning()
-		self:_begin_new_tasks()
-		self:_upd_regroup_task()
-		self:_upd_reenforce_tasks()
-		self:_upd_recon_tasks()
-		self:_upd_assault_task()
-		self:_upd_groups()
-	end
+	self:_upd_group_spawning()
+	self:_begin_new_tasks()
+	self:_upd_regroup_task()
+	self:_upd_reenforce_tasks()
+	self:_upd_recon_tasks()
+	self:_upd_assault_task()
+	self:_upd_groups()
 end
 
 
