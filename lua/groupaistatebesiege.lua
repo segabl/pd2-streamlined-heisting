@@ -8,6 +8,7 @@ local mvec_cpy = mvector3.copy
 local mvec_dir = mvector3.direction
 local mvec_dis = mvector3.distance
 local mvec_dis_sq = mvector3.distance_sq
+local mvec_lerp = mvector3.lerp
 local mvec_mul = mvector3.multiply
 local mvec_set = mvector3.set
 local tmp_vec1 = Vector3()
@@ -502,13 +503,16 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 		end
 	end
 
-	if detonate_pos then
+	if detonate_pos and grenade_type == "flash_grenade" then
 		mvec_dir(detonate_offset, detonate_pos, door_pos or grenade_user.m_pos)
-		mvec_mul(detonate_offset, math_random(200, 500))
+		mvec_mul(detonate_offset, math_random(200, 400))
 	elseif door_pos then
 		detonate_pos = door_pos
-		mvec_dir(detonate_offset, grenade_user.m_pos, detonate_pos)
-		mvec_mul(detonate_offset, math_random(100, 300))
+		mvec_dir(detonate_offset_pos, detonate_pos, assault_area.pos)
+		mvec_mul(detonate_offset_pos, math_random(50, 150))
+		mvec_dir(detonate_offset, grenade_user.m_pos, assault_area.pos)
+		mvec_mul(detonate_offset, math_random(150))
+		mvec_add(detonate_offset, detonate_offset_pos)
 	else
 		return
 	end
@@ -519,32 +523,32 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 
 	-- If players camp a specific area for too long, turn a smoke grenade into a teargas grenade instead
 	local use_teargas
-	local can_use_teargas = grenade_type == "smoke_grenade" and assault_area.criminal_entered_t and table.size(assault_area.neighbours) <= 2
-	if can_use_teargas and math_random() < (self._t - assault_area.criminal_entered_t - 60) / 180 then
-		mvec_set(detonate_offset, math.UP)
-		mvec_mul(detonate_offset, 1000)
-		mvec_add(detonate_offset, assault_area.pos)
-		if World:raycast("ray", assault_area.pos, detonate_offset, "slot_mask", managers.slot:get_mask("world_geometry"), "report") then
-			mvec_set(detonate_pos, detonate_offset_pos)
-			mvec_set(detonate_offset_pos, assault_area.pos)
-			use_teargas = true
+	if grenade_type == "smoke_grenade" and assault_area.criminal_entered_t and table.size(assault_area.neighbours) <= 2 then
+		local teargas_chance_times = tweak_data.group_ai.cs_grenade_chance_times or { 60, 240 }
+		local teargas_chance = math.map_range(self._t - assault_area.criminal_entered_t, teargas_chance_times[1], teargas_chance_times[2], 0, 1)
+		if math_random() < teargas_chance then
+			local teargas_pos = managers.navigation:find_random_position_in_segment(assault_area.pos_nav_seg)
+			mvec_lerp(teargas_pos, teargas_pos, assault_area.pos, 0.5)
+
+			mvec_set(detonate_offset, math.UP)
+			mvec_mul(detonate_offset, 1000)
+			mvec_add(detonate_offset, teargas_pos)
+
+			if World:raycast("ray", teargas_pos, detonate_offset, "slot_mask", managers.slot:get_mask("world_geometry"), "report") then
+				assault_area.criminal_entered_t = assault_area.criminal_entered_t - teargas_chance_times[2]
+				detonate_offset_pos = teargas_pos
+				use_teargas = true
+			end
 		end
 	end
 
 	-- Make sure the grenade stays inside AI navigation (on the ground)
-	local ray_params = {
-		trace = true,
-		allow_entry = true,
-		pos_from = detonate_pos,
-		pos_to = detonate_offset_pos
-	}
-	managers.navigation:raycast(ray_params)
-	mvec_set(detonate_pos, ray_params.trace[1])
+	local grenade_tracker = managers.navigation:create_nav_tracker(detonate_offset_pos)
+	detonate_pos = grenade_tracker:field_position()
+	managers.navigation:destroy_nav_tracker(grenade_tracker)
 
 	local timeout
 	if use_teargas then
-		assault_area.criminal_entered_t = nil
-
 		self:detonate_cs_grenade(detonate_pos, mvec_cpy(grenade_user.m_pos), tweak_data.group_ai.cs_grenade_lifetime or 10)
 
 		timeout = tweak_data.group_ai.cs_grenade_timeout or tweak_data.group_ai.smoke_and_flash_grenade_timeout
@@ -567,6 +571,12 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 	task_data[grenade_type .. "_next_t"] = self._t + math_lerp(timeout[1], timeout[2], math_random())
 
 	return true
+end
+
+
+-- Fix grenades being synced twice (sync is already done in GroupAIStateBase:detonate_world_smoke_grenade)
+function GroupAIStateBesiege:detonate_smoke_grenade(detonate_pos, shooter_pos, duration, flashbang)
+	self:sync_smoke_grenade(detonate_pos, shooter_pos, duration, flashbang)
 end
 
 

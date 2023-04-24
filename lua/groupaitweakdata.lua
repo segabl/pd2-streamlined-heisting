@@ -8,6 +8,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.flash_grenade.timer = math.lerp(2, 1, f)
 	self.cs_grenade_timeout = { 60, 90 }
 	self.cs_grenade_lifetime = math.lerp(20, 40, f)
+	self.cs_grenade_chance_times = { 60, 240 }
 
 	self.spawn_cooldown_mul = math.lerp(2, 1, f)
 
