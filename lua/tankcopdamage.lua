@@ -37,15 +37,3 @@ function TankCopDamage:damage_bullet(attack_data, ...)
 
 	return result
 end
-
-
--- Make shotgun pellets prioritize face plate
-local head_armor_body_names = {
-	[Idstring("body_helmet_glass"):key()] = true,
-	[Idstring("body_helmet_plate"):key()] = true
-}
-
-function TankCopDamage:is_head(body)
-	local body_name = body and body:name()
-	return body_name and (body_name == self._ids_head_body_name or head_armor_body_names[body_name:key()])
-end
