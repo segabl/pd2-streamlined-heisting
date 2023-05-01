@@ -167,10 +167,14 @@
 			<file :name="wpn_npc_saiga/saiga_nm.texture"/>
 			<file :name="wpn_npc_saiga/wpn_npc_saiga.model"/>
 
-			<!-- huntsman retexture/model -->
+			<!-- huntsman retexture/model/sound -->
 			<file :name="wpn_npc_sawnoff_shotgun/sawnoff_df.texture"/>
 			<file :name="wpn_npc_sawnoff_shotgun/sawnoff_nm.texture"/>
 			<file :name="wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun.model"/>
+			<file :name="wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun.unit" dyn_package="false"/>
+
+			<!-- ump sound -->
+			<file :name="wpn_npc_ump/wpn_npc_ump.unit" dyn_package="false"/>
 
 			<!-- spas12 -->
 			<file :name="wpn_npc_spas12/spas12_df.texture"/>
@@ -200,12 +204,22 @@
 			<file :name="wpn_npc_shepheard/wpn_npc_shepheard.unit"/>
 		</group>
 
-		<group name="units/pd2_dlc_mad/weapons/">
+		<group name="units/pd2_dlc_mad/weapons/" dyn_package="false">
+			<!-- akmsu sound -->
+			<file :name="wpn_npc_akmsu/wpn_npc_akmsu.unit"/>
+
+			<!-- asval sound -->
+			<file :name="wpn_npc_asval/wpn_npc_asval.unit"/>
+
 			<!-- rpk retexture/model -->
 			<file :name="wpn_npc_rpk/rpk_df.texture"/>
 			<file :name="wpn_npc_rpk/rpk_nm.texture"/>
 			<file :name="wpn_npc_rpk/wpn_npc_rpk.material_config"/>
 			<file :name="wpn_npc_rpk/wpn_npc_rpk.model"/>
+			<file :name="wpn_npc_rpk/wpn_npc_rpk.unit"/>
+
+			<!-- sr2 sound -->
+			<file :name="wpn_npc_sr2/wpn_npc_sr2.unit"/>
 		</group>
 
 		<!-- america -->
