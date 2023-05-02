@@ -476,6 +476,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 	self._tactics.swat_rifle_flank = {
 		"flank",
+		"deathguard",
 		"flash_grenade"
 	}
 	self._tactics.shield_wall_ranged = {

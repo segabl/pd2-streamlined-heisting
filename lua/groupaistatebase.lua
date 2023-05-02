@@ -181,14 +181,31 @@ function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
 end
 
 
--- Check nav segment safety directly instead of area safety
-function GroupAIStateBase:is_nav_seg_safe(nav_seg)
+-- Ignore disabled criminals for area safety checks
+function GroupAIStateBase:is_area_safe(area)
 	for _, u_data in pairs(self._criminals) do
-		if u_data.tracker:nav_segment() == nav_seg then
+		if u_data.status ~= "disabled" and u_data.status ~= "dead" and area.nav_segs[u_data.tracker:nav_segment()] then
 			return
 		end
 	end
+	return true
+end
 
+function GroupAIStateBase:is_area_safe_assault(area)
+	for _, u_data in pairs(self._char_criminals) do
+		if u_data.status ~= "disabled" and u_data.status ~= "dead" and area.nav_segs[u_data.tracker:nav_segment()] then
+			return
+		end
+	end
+	return true
+end
+
+function GroupAIStateBase:is_nav_seg_safe(nav_seg)
+	for _, u_data in pairs(self._criminals) do
+		if u_data.status ~= "disabled" and u_data.status ~= "dead" and u_data.tracker:nav_segment() == nav_seg then
+			return
+		end
+	end
 	return true
 end
 
