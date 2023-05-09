@@ -577,6 +577,8 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 	self.hector_boss.no_run_stop = true
 	self.hector_boss.throwable = "frag"
 	self.hector_boss.throwable_cooldown = 15
+	self.hector_boss.immune_to_knock_down = true
+	self.hector_boss.immune_to_concussion = true
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss", function (self, presets)
@@ -589,6 +591,8 @@ Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss"
 	self.mobster_boss.move_speed = presets.move_speed.fast
 	self.mobster_boss.no_run_start = true
 	self.mobster_boss.no_run_stop = true
+	self.mobster_boss.immune_to_knock_down = true
+	self.mobster_boss.immune_to_concussion = true
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", function (self, presets)
