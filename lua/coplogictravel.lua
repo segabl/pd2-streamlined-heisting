@@ -34,6 +34,14 @@ function CopLogicTravel.on_pathing_results(data)
 end
 
 
+-- Sanity check for rare follow_unit crash
+Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
+	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
+		data.objective.follow_unit = nil
+	end
+end)
+
+
 -- Fix need for another queued task to update pathing after expired cover leave time
 Hooks:PreHook(CopLogicTravel, "upd_advance", "sh_upd_advance", function (data)
 	local unit = data.unit
