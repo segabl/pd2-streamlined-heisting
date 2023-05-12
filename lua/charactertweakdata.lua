@@ -358,22 +358,55 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	end
 
 	-- Tweak hurt severities
+	for _, preset in pairs(presets.hurt_severities) do
+		for _, damage_type in pairs(preset) do
+			if type(damage_type) == "table" then
+				damage_type.health_reference = "full"
+			end
+		end
+	end
+
+	presets.hurt_severities.base.bullet.zones = {
+		{
+			health_limit = 0.2,
+			none = 0.2,
+			light = 0.6,
+			moderate = 0.2
+		},
+		{
+			health_limit = 0.4,
+			light = 0.4,
+			moderate = 0.4,
+			heavy = 0.2
+		},
+		{
+			health_limit = 0.6,
+			light = 0.2,
+			moderate = 0.2,
+			heavy = 0.6
+		},
+		{
+			health_limit = 0.8,
+			heavy = 1
+		}
+	}
 	presets.hurt_severities.base.melee.zones = {
 		{
 			health_limit = 0.2,
 			light = 1
 		},
 		{
-			health_limit = 0.5,
+			health_limit = 0.4,
 			light = 0.5,
 			moderate = 0.5
 		},
 		{
-			health_limit = 0.8,
+			health_limit = 0.6,
 			moderate = 0.5,
 			heavy = 0.5
 		},
 		{
+			health_limit = 0.8,
 			heavy = 1
 		}
 	}
@@ -384,16 +417,17 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			moderate = 0.5
 		},
 		{
-			health_limit = 0.5,
+			health_limit = 0.4,
 			moderate = 0.5,
 			heavy = 0.5
 		},
 		{
-			health_limit = 0.8,
+			health_limit = 0.6,
 			heavy = 0.5,
 			explode = 0.5
 		},
 		{
+			health_limit = 0.8,
 			explode = 1
 		}
 	}
@@ -401,18 +435,23 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.hurt_severities.no_heavy_hurt = deep_clone(presets.hurt_severities.base)
 	presets.hurt_severities.no_heavy_hurt.bullet.zones = {
 		{
+			health_limit = 0.2,
+			none = 0.6,
+			light = 0.4
+		},
+		{
 			health_limit = 0.4,
-			none = 0.5,
-			light = 0.5
+			light = 0.6,
+			moderate = 0.4
 		},
 		{
-			health_limit = 0.7,
-			light = 0.7,
-			moderate = 0.3
+			health_limit = 0.6,
+			light = 0.4,
+			moderate = 0.6
 		},
 		{
-			light = 0.5,
-			moderate = 0.5
+			health_limit = 0.8,
+			moderate = 1
 		}
 	}
 	presets.hurt_severities.no_heavy_hurt.melee.zones = {
@@ -422,16 +461,17 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			light = 0.8
 		},
 		{
-			health_limit = 0.5,
+			health_limit = 0.4,
 			light = 0.8,
 			moderate = 0.2
 		},
 		{
-			health_limit = 0.8,
+			health_limit = 0.6,
 			light = 0.2,
 			moderate = 0.8
 		},
 		{
+			health_limit = 0.8,
 			moderate = 0.8,
 			heavy = 0.2
 		}
@@ -442,16 +482,17 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			light = 1,
 		},
 		{
-			health_limit = 0.5,
+			health_limit = 0.4,
 			light = 0.5,
 			moderate = 0.5
 		},
 		{
-			health_limit = 0.8,
+			health_limit = 0.6,
 			moderate = 0.5,
 			heavy = 0.5
 		},
 		{
+			health_limit = 0.8,
 			heavy = 0.5,
 			explode = 0.5
 		}
