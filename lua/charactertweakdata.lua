@@ -766,6 +766,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 
 	-- Reduce invulnerability duration
 	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 2
+
+	-- Set chatter preset
+	self.marshal_marksman.chatter = self.presets.enemy_chatter.no_chatter
+	self.marshal_shield.chatter = self.presets.enemy_chatter.no_chatter
+	self.marshal_shield_break.chatter = self.presets.enemy_chatter.no_chatter
 end)
 
 
