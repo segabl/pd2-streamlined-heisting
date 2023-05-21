@@ -77,27 +77,26 @@ if not StreamHeist then
 			end
 		end
 
-		if #Global.sh_mod_conflicts > 0 then
-			local message = managers.localization:text("sh_menu_conflicts") .. "\n\n" .. table.concat(Global.sh_mod_conflicts, "\n")
-			local buttons = {
-				{
-					text = managers.localization:text("sh_menu_conflicts_disable"),
-					callback = function ()
-						for _, mod_name in pairs(Global.sh_mod_conflicts) do
-							local mod = BLT.Mods:GetModByName(mod_name)
-							if mod then
-								mod:SetEnabled(false, true)
-							end
-						end
-						MenuCallbackHandler:perform_blt_save()
-					end
-				},
-				{
-					text = managers.localization:text("sh_menu_conflicts_ignore")
-				},
-			}
-			QuickMenu:new(managers.localization:text("sh_menu_warning"), message, buttons, true)
+		if #Global.sh_mod_conflicts == 0 then
+			return
 		end
+
+		local message = managers.localization:text("sh_menu_conflicts") .. "\n\n" .. table.concat(Global.sh_mod_conflicts, "\n")
+		local buttons = {
+			{
+				text = managers.localization:text("sh_menu_conflicts_disable"),
+				callback = function ()
+					for _, mod_name in pairs(Global.sh_mod_conflicts) do
+						BLT.Mods:GetModByName(mod_name):SetEnabled(false, true)
+					end
+					MenuCallbackHandler:perform_blt_save()
+				end
+			},
+			{
+				text = managers.localization:text("sh_menu_conflicts_ignore")
+			},
+		}
+		QuickMenu:new(managers.localization:text("sh_menu_warning"), message, buttons, true)
 	end)
 
 	-- Create settings menu
@@ -107,7 +106,7 @@ if not StreamHeist then
 		MenuHelper:NewMenu(menu_id)
 
 		local faction_menu_elements = {}
-		MenuCallbackHandler.sh_auto_faction_tweaks_toggle = function(self, item)
+		function MenuCallbackHandler:sh_auto_faction_tweaks_toggle(item)
 			local enabled = (item:value() == "on")
 			StreamHeist.settings.auto_faction_tweaks = enabled
 			for _, element in pairs(faction_menu_elements) do
@@ -115,11 +114,11 @@ if not StreamHeist then
 			end
 		end
 
-		MenuCallbackHandler.sh_faction_toggle = function(self, item)
+		function MenuCallbackHandler:sh_faction_toggle(item)
 			StreamHeist.settings.faction_tweaks[item:name()] = (item:value() == "on")
 		end
 
-		MenuCallbackHandler.sh_save = function()
+		function MenuCallbackHandler:sh_save()
 			io.save_as_json(StreamHeist.settings, StreamHeist.save_path)
 		end
 

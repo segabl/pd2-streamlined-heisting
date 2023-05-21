@@ -125,7 +125,7 @@ end)
 
 -- Delay spawn points when enemies die close to them
 Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function (self, unit)
-	if not Network:is_server() or not unit:character_damage():dead() then
+	if Network:is_client() or not unit:character_damage():dead() then
 		return
 	end
 

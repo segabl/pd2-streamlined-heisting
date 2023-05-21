@@ -1,8 +1,3 @@
-local math_lerp = math.lerp
-local math_map_range = math.map_range
-local math_random = math.random
-local table_insert = table.insert
-local table_remove = table.remove
 local mvec_add = mvector3.add
 local mvec_cpy = mvector3.copy
 local mvec_dir = mvector3.direction
@@ -310,10 +305,10 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 		local flank_chance = 2 -- First is shortest path to criminal, second is first actual flank path
 
 		repeat
-			local search_area = table_remove(to_search_areas, 1)
+			local search_area = table.remove(to_search_areas, 1)
 			if next(search_area.criminal.units) and not self:is_area_safe_assault(search_area) then
 				local flank = tactics_map.flank and found_areas[search_area] ~= objective_area
-				if not flank or math_random() < flank_chance then
+				if not flank or math.random() < flank_chance then
 					local new_assault_path = managers.navigation:search_coarse({
 						id = "GroupAI_assault",
 						from_seg = objective_area.pos_nav_seg,
@@ -339,7 +334,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			else
 				for _, other_area in pairs(search_area.neighbours) do
 					if not found_areas[other_area] then
-						table_insert(to_search_areas, other_area)
+						table.insert(to_search_areas, other_area)
 						found_areas[other_area] = search_area
 					end
 				end
@@ -374,7 +369,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			elseif not push then
 				-- If we aren't pushing, we go to one area before the criminal area
 				if #assault_path > 2 and assault_area.nav_segs[assault_path[#assault_path][1]] then
-					table_remove(assault_path)
+					table.remove(assault_path)
 				end
 				assault_area = assault_from
 			end
@@ -494,7 +489,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 	local nav_seg = managers.navigation._nav_segments[grenade_user.tracker:nav_segment()]
 	for neighbour_nav_seg_id, door_list in pairs(nav_seg.neighbours) do
 		if assault_area.nav_segs[neighbour_nav_seg_id] then
-			local random_door_id = door_list[math_random(#door_list)]
+			local random_door_id = door_list[math.random(#door_list)]
 			if type(random_door_id) == "number" then
 				door_pos = managers.navigation._room_doors[random_door_id].center
 			else
@@ -506,13 +501,13 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 
 	if detonate_pos and grenade_type == "flash_grenade" then
 		mvec_dir(detonate_offset, detonate_pos, door_pos or grenade_user.m_pos)
-		mvec_mul(detonate_offset, math_random(200, 400))
+		mvec_mul(detonate_offset, math.random(200, 400))
 	elseif door_pos then
 		detonate_pos = door_pos
 		mvec_dir(detonate_offset_pos, detonate_pos, assault_area.pos)
-		mvec_mul(detonate_offset_pos, math_random(50, 150))
+		mvec_mul(detonate_offset_pos, math.random(50, 150))
 		mvec_dir(detonate_offset, grenade_user.m_pos, assault_area.pos)
-		mvec_mul(detonate_offset, math_random(150))
+		mvec_mul(detonate_offset, math.random(150))
 		mvec_add(detonate_offset, detonate_offset_pos)
 	else
 		return
@@ -527,7 +522,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 	if grenade_type == "smoke_grenade" and assault_area.criminal_entered_t and table.size(assault_area.neighbours) <= 2 then
 		local teargas_chance_times = tweak_data.group_ai.cs_grenade_chance_times or { 60, 240 }
 		local teargas_chance = math.map_range(self._t - assault_area.criminal_entered_t, teargas_chance_times[1], teargas_chance_times[2], 0, 1)
-		if math_random() < teargas_chance then
+		if math.random() < teargas_chance then
 			local teargas_pos = managers.navigation:find_random_position_in_segment(assault_area.pos_nav_seg)
 			mvec_lerp(teargas_pos, teargas_pos, assault_area.pos, 0.5)
 
@@ -569,7 +564,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 	-- Minimum grenade cooldown
 	task_data.use_smoke_timer = self._t + 15
 	-- Individual grenade cooldowns
-	task_data[grenade_type .. "_next_t"] = self._t + math_lerp(timeout[1], timeout[2], math_random())
+	task_data[grenade_type .. "_next_t"] = self._t + math.lerp(timeout[1], timeout[2], math.random())
 
 	return true
 end
@@ -660,7 +655,7 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 	local low_weight = allowed_groups == self._tweak_data.reenforce.groups and 0.1 or allowed_groups == self._tweak_data.recon.groups and 0.4 or 0.7
 	local single_choice = longest_dis == shortest_dis
 	for i, dis in pairs(valid_spawn_group_distances) do
-		local my_wgt = single_choice and 1 or math_map_range(dis, shortest_dis, longest_dis, 1, low_weight)
+		local my_wgt = single_choice and 1 or math.map_range(dis, shortest_dis, longest_dis, 1, low_weight)
 		local my_spawn_group = valid_spawn_groups[i]
 		local my_group_types = my_spawn_group.mission_element:spawn_groups()
 		my_spawn_group.distance = dis
