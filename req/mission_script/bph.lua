@@ -10,5 +10,11 @@ return {
 			time_overkill_290 = 345,
 			time_sm_wish = 330
 		}
+	},
+	-- Allow bot navigation earlier
+	[102736] = {
+		on_executed = {
+			{ id = 103049, delay = 1 }
+		}
 	}
 }
