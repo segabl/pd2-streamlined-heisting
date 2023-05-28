@@ -9,8 +9,11 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.cs_grenade_timeout = { 60, 90 }
 	self.cs_grenade_lifetime = math.lerp(20, 40, f)
 	self.cs_grenade_chance_times = { 60, 240 }
+	self.min_grenade_timeout = 15
+	self.no_grenade_push_delay = 8
 
 	self.spawn_cooldown_mul = math.lerp(2, 1, f)
+	self.spawn_kill_cooldown = 10
 
 	-- Spawn Groups
 	local special_weight = math.lerp(3, 5, f)
@@ -50,6 +53,13 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.sustain_duration_min = { math.lerp(60, 120, f), math.lerp(120, 180, f), math.lerp(180, 240, f) }
 	self.besiege.assault.sustain_duration_max = self.besiege.assault.sustain_duration_min
 	self.besiege.assault.sustain_duration_balance_mul = { 1, 1, 1, 1 }
+	self.besiege.assault.fade = {
+		enemies_defeated_percentage = 0.5,
+		enemies_defeated_time = 30,
+		engagement_percentage = 0.25,
+		engagement_time = 20,
+		drama_time = 10
+	}
 
 	self.besiege.reenforce.groups = {
 		reenforce_init = { 1, 0, 0 },

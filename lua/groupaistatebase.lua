@@ -70,6 +70,8 @@ end
 local set_difficulty_original = GroupAIStateBase.set_difficulty
 function GroupAIStateBase:set_difficulty(value, ...)
 	if not managers.game_play_central or managers.game_play_central:get_heist_timer() < 1 or value < self._difficulty_value then
+		self._target_difficulty = nil
+
 		return set_difficulty_original(self, value, ...)
 	end
 
@@ -139,11 +141,9 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 		return
 	end
 
-	local u_pos = e_data.m_pos
-	local spawn_pos = spawn_point:value("position")
-	local dist_sq = mvector3.distance_sq(spawn_pos, u_pos)
-	local max_dist_sq = 1000000
-	if dist_sq > max_dist_sq then
+	local max_dis = 1000
+	local dis = mvector3.distance(spawn_point:value("position"), e_data.m_pos)
+	if dis > max_dis then
 		return
 	end
 
@@ -153,7 +153,7 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 				if group.spawn_pts then
 					for _, point in pairs(group.spawn_pts) do
 						if point.mission_element == spawn_point then
-							local delay_t = self._t + math.lerp(8, 0, dist_sq / max_dist_sq)
+							local delay_t = self._t + math.lerp(tweak_data.group_ai.spawn_kill_cooldown, 0, dis / max_dis)
 							group.delay_t = math.max(group.delay_t, delay_t)
 							return
 						end

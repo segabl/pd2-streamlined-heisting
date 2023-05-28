@@ -58,21 +58,21 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 
 	local end_assault
 	local is_skirmish = managers.skirmish:is_skirmish()
-	local enemies_defeated_time_limit = is_skirmish and 0 or 30
-	local engagement_time_limit = is_skirmish and 0 or 20
-	local drama_time_limit = is_skirmish and 0 or 10
-	local min_enemies_left = math.max(task_data.force * 0.5)
-	local enemies_left = self:_count_police_force("assault")
-	local enemies_defeated = enemies_left < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time_limit
+	local fade_settings = self._tweak_data.assault.fade
+	local enemies_defeated_time = is_skirmish and 0 or fade_settings.enemies_defeated_time
+	local engagement_time = is_skirmish and 0 or fade_settings.engagement_time
+	local drama_time = is_skirmish and 0 or fade_settings.drama_time
+	local min_enemies_left = math.floor(task_data.force * fade_settings.enemies_defeated_percentage)
+	local enemies_defeated = self:_count_police_force("assault") < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time
 	if enemies_defeated then
 		if not task_data.said_retreat then
 			task_data.said_retreat = true
 			self:_police_announce_retreat()
 		elseif task_data.phase_end_t < self._t then
-			local min_enemies_engaged = math.max(math.ceil(task_data.force * 0.25), 3)
+			local min_enemies_engaged = math.max(math.ceil(task_data.force * fade_settings.engagement_percentage), 3)
 			local engagement_pass = self:_count_criminals_engaged_force(min_enemies_engaged) < min_enemies_engaged
 			local drama_pass = self._drama_data.amount < tweak_data.drama.assault_fade_end
-			end_assault = self._t > task_data.phase_end_t + (not engagement_pass and engagement_time_limit or not drama_pass and drama_time_limit or 0)
+			end_assault = self._t > task_data.phase_end_t + (not engagement_pass and engagement_time or not drama_pass and drama_time or 0)
 		end
 	end
 
@@ -363,8 +363,8 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				if move_out then
 					self:_voice_move_in_start(group)
 				elseif not group.ignore_grenade_check_t then
-					local wait_time = math.map_range_clamped(table.size(assault_area.criminal.units), 1, 4, 8, 4)
-					group.ignore_grenade_check_t = self._t + wait_time * (tactics_map.charge and 0.25 or 1)
+					local delay = tweak_data.group_ai.no_grenade_push_delay * (tactics_map.charge and 0.25 or 1)
+					group.ignore_grenade_check_t = self._t + math.map_range_clamped(table.size(assault_area.criminal.units), 1, 4, delay, delay * 0.5)
 				end
 			elseif not push then
 				-- If we aren't pushing, we go to one area before the criminal area
@@ -562,7 +562,7 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 
 	task_data.use_smoke = false
 	-- Minimum grenade cooldown
-	task_data.use_smoke_timer = self._t + 15
+	task_data.use_smoke_timer = self._t + tweak_data.group_ai.min_grenade_timeout
 	-- Individual grenade cooldowns
 	task_data[grenade_type .. "_next_t"] = self._t + math.lerp(timeout[1], timeout[2], math.random())
 
