@@ -91,7 +91,7 @@ function WeaponTweakData:_set_presets()
 			v.BODY_DAMAGE_CLAMP = nil
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
-			v.suppression = v.is_shotgun and 2 or 1
+			v.suppression = v.armor_piercing and 3 or v.is_shotgun and 2 or 1
 		elseif k:match("_crew$") and crew_presets[v.usage] and not v.old_usage then
 			local player_id = k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
 			local player_weapon = crew_weapon_mapping[player_id] and self[crew_weapon_mapping[player_id]] or self[player_id]

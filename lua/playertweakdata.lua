@@ -69,6 +69,7 @@ Hooks:PostHook(PlayerTweakData, "init", "sh_init", function (self)
 	self.damage.MIN_DAMAGE_INTERVAL = 0.25
 	self.suppression.max_value = 5
 	self.suppression.receive_mul = 1
+	self.suppression.tolerance = 0
 end)
 
 
