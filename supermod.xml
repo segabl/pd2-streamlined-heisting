@@ -45,6 +45,7 @@
 			<group :hook_id="network/">
 				<post :hook_id="handlers/unitnetworkhandler"/>
 				<post :hook_id="matchmaking/networkmatchmakingsteam"/>
+				<post :hook_id="matchmaking/networkmatchmakingepic"/>
 			</group>
 
 			<post :hook_id="setups/gamesetup"/>
