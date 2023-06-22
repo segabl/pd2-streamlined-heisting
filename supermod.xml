@@ -457,6 +457,9 @@
 			<file :name="shared_textures/medic_body_df.texture"/>
 			<file :name="shared_textures/medic_head_df.texture"/>
 			<file :name="shared_textures/medic_head_nm.texture"/>
+			<file :name="shared_textures/taser_body_df.texture"/>
+			<file :name="shared_textures/taser_helmet_df.texture"/>
+			<file :name="shared_textures/taser_helmet_nm.texture"/>
 
 			<!-- helmets -->
 			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.material_config"/>
@@ -464,6 +467,8 @@
 			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.object"/>
 			<file :name="ene_acc_swat_medic_policia_federale_helmet/ene_acc_swat_medic_policia_federale_helmet.material_config"/>
 			<file :name="ene_acc_swat_medic_policia_federale_helmet/ene_acc_swat_medic_policia_federale_helmet.model"/>
+			<file :name="ene_acc_tazer_policia_federale_helmet/ene_acc_tazer_policia_federale_helmet.material_config"/>
+			<file :name="ene_acc_tazer_policia_federale_helmet/ene_acc_tazer_policia_federale_helmet.model"/>
 
 			<!-- rifle light -->
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale.material_config"/>
@@ -544,6 +549,11 @@
 			<!-- shotgun medic -->
 			<file :name="ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870.unit"/>
 			<file :name="ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870_husk.unit"/>
+
+			<!-- taser -->
+			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.material_config"/>
+			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale_contour.material_config"/>
+			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.model"/>
 		</group>
 
 		<!-- russian mercs -->
