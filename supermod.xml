@@ -467,8 +467,10 @@
 			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.object"/>
 			<file :name="ene_acc_swat_medic_policia_federale_helmet/ene_acc_swat_medic_policia_federale_helmet.material_config"/>
 			<file :name="ene_acc_swat_medic_policia_federale_helmet/ene_acc_swat_medic_policia_federale_helmet.model"/>
+			<file :name="ene_acc_swat_medic_policia_federale_helmet/ene_acc_swat_medic_policia_federale_helmet.object"/>
 			<file :name="ene_acc_tazer_policia_federale_helmet/ene_acc_tazer_policia_federale_helmet.material_config"/>
 			<file :name="ene_acc_tazer_policia_federale_helmet/ene_acc_tazer_policia_federale_helmet.model"/>
+			<file :name="ene_acc_tazer_policia_federale_helmet/ene_acc_tazer_policia_federale_helmet.object"/>
 
 			<!-- rifle light -->
 			<file :name="ene_swat_policia_federale/ene_swat_policia_federale.material_config"/>
