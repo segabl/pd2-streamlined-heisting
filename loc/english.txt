@@ -1,7 +1,7 @@
 {
 	"sh_menu_main" : "Streamlined Heisting",
 	"sh_menu_auto_faction_tweaks" : "Auto-detect faction improvements",
-	"sh_menu_auto_faction_tweaks_desc" : "Automatically disables faction improvements that conflict with mod_overrides mods",
+	"sh_menu_auto_faction_tweaks_desc" : "Automatically disables faction improvements that conflict with mod_overrides mods\nRequires a game restart to take effect",
 	"sh_menu_swat" : "Improved SWAT faction",
 	"sh_menu_fbi" : "Improved FBI faction",
 	"sh_menu_gensec" : "Improved GenSec faction",
@@ -10,6 +10,7 @@
 	"sh_menu_federales" : "Improved Federales faction",
 	"sh_menu_russia" : "Improved Russian faction",
 	"sh_menu_faction_tweak_desc" : "Improves enemy distinction and appearance\nRequires a game restart to take effect",
+	"sh_menu_faction_tweak_conflict_desc" : "Disabled due to the following mod:\n$MOD",
 	"sh_menu_warning" : "Warning",
 	"sh_menu_conflicts" : "The following mod(s) are likely to cause unintended behavior or crashes in combination with Streamlined Heisting:",
 	"sh_menu_conflicts_disable" : "Disable conflicting mods",

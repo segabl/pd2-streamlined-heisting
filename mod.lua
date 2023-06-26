@@ -132,14 +132,19 @@ if not StreamHeist then
 			priority = 100
 		})
 
+		local auto_faction_tweaks = StreamHeist.settings.auto_faction_tweaks
+		local faction_conflicts = Global.sh_faction_conflicts or {}
 		for i, faction in ipairs({ "swat", "fbi", "gensec", "zeal", "russia", "federales", "murkywater" }) do
+			local conflict = faction_conflicts[faction]
 			local menu_element = MenuHelper:AddToggle({
 				id = faction,
-				title = "sh_menu_" .. faction,
-				desc = "sh_menu_faction_tweak_desc",
+				localized = false,
+				title = managers.localization:text("sh_menu_" .. faction),
+				desc = managers.localization:text(conflict and "sh_menu_faction_tweak_conflict_desc" or "sh_menu_faction_tweak_desc", { MOD = conflict }),
 				callback = "sh_faction_toggle",
 				value = StreamHeist.settings.faction_tweaks[faction],
-				disabled = StreamHeist.settings.auto_faction_tweaks,
+				disabled = auto_faction_tweaks,
+				disabled_color = conflict and tweak_data.screen_colors.important_2,
 				menu_id = menu_id,
 				priority = 10 - i
 			})
@@ -180,6 +185,7 @@ if not StreamHeist then
 	-- Check faction tweaks
 	if not Global.sh_faction_tweaks_check then
 		Global.sh_faction_tweaks_check = true
+		Global.sh_faction_conflicts = {}
 
 		local auto_detect = StreamHeist.settings.auto_faction_tweaks
 		local asset_loader = StreamHeist.mod_instance.supermod:GetAssetLoader()
@@ -202,6 +208,7 @@ if not StreamHeist then
 				for _, spec in pairs(assets) do
 					if mod_overrides[spec.dbpath] then
 						StreamHeist:log("Disabling faction tweak for faction", faction, "due to mod_override", mod_overrides[spec.dbpath])
+						Global.sh_faction_conflicts[faction] = mod_overrides[spec.dbpath]
 						enabled = false
 						break
 					end
