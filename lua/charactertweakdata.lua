@@ -169,7 +169,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Bulldozer preset
 	presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
-		melee_dmg = 40 * dmg_mul_lin
+		melee_dmg = 40 * dmg_mul_lin,
+		aim_delay = { 0, aim_delay * 2 }
 	})
 	presets.weapon.sh_tank.is_shotgun_pump.RELOAD_SPEED = 1
 	presets.weapon.sh_tank.is_shotgun_pump.FALLOFF = {
