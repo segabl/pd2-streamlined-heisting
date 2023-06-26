@@ -556,6 +556,7 @@
 			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.material_config"/>
 			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale_contour.material_config"/>
 			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.model"/>
+			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.object"/>
 		</group>
 
 		<!-- russian mercs -->
