@@ -567,8 +567,8 @@ end)
 
 -- Tweak bosses
 Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", function (self, presets)
-	self.biker_boss.HEALTH_INIT = 400
-	self.biker_boss.player_health_scaling_mul = 1.5
+	self.biker_boss.HEALTH_INIT = 600
+	self.biker_boss.player_health_scaling_mul = 1.25
 	self.biker_boss.headshot_dmg_mul = 0.5
 	self.biker_boss.no_headshot_add_mul = true
 	self.biker_boss.damage.explosion_damage_mul = 0.5
@@ -581,8 +581,8 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", function (self, presets)
-	self.chavez_boss.HEALTH_INIT = 300
-	self.chavez_boss.player_health_scaling_mul = 1.5
+	self.chavez_boss.HEALTH_INIT = 400
+	self.chavez_boss.player_health_scaling_mul = 1.25
 	self.chavez_boss.headshot_dmg_mul = 0.75
 	self.chavez_boss.no_headshot_add_mul = true
 	self.chavez_boss.damage.explosion_damage_mul = 0.5
@@ -593,8 +593,8 @@ Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", 
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_boss", function (self, presets)
-	self.drug_lord_boss.HEALTH_INIT = 400
-	self.drug_lord_boss.player_health_scaling_mul = 1.5
+	self.drug_lord_boss.HEALTH_INIT = 600
+	self.drug_lord_boss.player_health_scaling_mul = 1.25
 	self.drug_lord_boss.headshot_dmg_mul = 0.75
 	self.drug_lord_boss.no_headshot_add_mul = true
 	self.drug_lord_boss.damage.explosion_damage_mul = 0.5
@@ -608,8 +608,8 @@ Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_b
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", function (self, presets)
-	self.hector_boss.HEALTH_INIT = 400
-	self.hector_boss.player_health_scaling_mul = 1.5
+	self.hector_boss.HEALTH_INIT = 600
+	self.hector_boss.player_health_scaling_mul = 1.25
 	self.hector_boss.headshot_dmg_mul = 0.5
 	self.hector_boss.no_headshot_add_mul = true
 	self.hector_boss.damage.explosion_damage_mul = 0.5
@@ -624,8 +624,8 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss", function (self, presets)
-	self.mobster_boss.HEALTH_INIT = 300
-	self.mobster_boss.player_health_scaling_mul = 1.5
+	self.mobster_boss.HEALTH_INIT = 400
+	self.mobster_boss.player_health_scaling_mul = 1.25
 	self.mobster_boss.headshot_dmg_mul = 0.75
 	self.mobster_boss.no_headshot_add_mul = true
 	self.mobster_boss.damage.explosion_damage_mul = 0.5
@@ -638,8 +638,8 @@ Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss"
 end)
 
 Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", function (self, presets)
-	self.triad_boss.HEALTH_INIT = 400
-	self.triad_boss.player_health_scaling_mul = 1.5
+	self.triad_boss.HEALTH_INIT = 600
+	self.triad_boss.player_health_scaling_mul = 1.25
 	self.triad_boss.headshot_dmg_mul = 0.5
 	self.triad_boss.no_headshot_add_mul = true
 	self.triad_boss.damage.explosion_damage_mul = 0.5
@@ -651,6 +651,18 @@ Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", fu
 	self.triad_boss.invulnerable_to_slotmask = nil
 	self.triad_boss.throwable_target_verified = false
 	self.triad_boss.throwable_cooldown = 20
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_deep_boss", "sh__init_deep_boss", function (self, presets)
+	self.deep_boss.HEALTH_INIT = 800
+	self.deep_boss.player_health_scaling_mul = 1.25
+	self.deep_boss.headshot_dmg_mul = 0.5
+	self.deep_boss.no_headshot_add_mul = true
+	self.deep_boss.damage.explosion_damage_mul = 0.5
+	self.deep_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.deep_boss.move_speed = presets.move_speed.slow
+	self.deep_boss.no_run_start = true
+	self.deep_boss.no_run_stop = true
 end)
 
 
