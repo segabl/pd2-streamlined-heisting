@@ -867,13 +867,20 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 			}
 		}
 	}
+end)
 
-	local is_ranc = Global.level_data and Global.level_data.level_id == "ranc" or Global.game_settings and Global.game_settings.level_id == "ranc"
-	local is_trai = Global.level_data and Global.level_data.level_id == "trai" or Global.game_settings and Global.game_settings.level_id == "trai"
+
+-- Handle level specific spawngroups
+Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups_level", "sh__init_enemy_spawn_groups_level", function (self, tweak_data)
+	local lvl_tweak_data = tweak_data.levels[Global.game_settings and Global.game_settings.level_id or Global.level_data and Global.level_data.level_id]
+	if not lvl_tweak_data or lvl_tweak_data.ai_marshal_spawns_disabled then
+		return
+	end
+
 	self.enemy_spawn_groups.marshal_squad = {
 		spawn_cooldown = 60,
 		max_nr_simultaneous_groups = 1,
-		initial_spawn_delay = (is_ranc or is_trai) and 120 or 480,
+		initial_spawn_delay = lvl_tweak_data.ai_marshal_spawns_fast and 90 or 480,
 		amount = { 1, 1 },
 		spawn = {
 			{
