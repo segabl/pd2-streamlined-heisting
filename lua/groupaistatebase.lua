@@ -259,9 +259,9 @@ Hooks:PreHook(GroupAIStateBase, "add_special_objective", "sh_add_special_objecti
 		return
 	end
 
-	objective_data.interval = 5
+	objective_data.interval = 4
 	objective_data.search_dis_sq = 4000000
-	objective_data.objective.interrupt_dis = 1000
+	objective_data.objective.interrupt_dis = 600
 	objective_data.objective.interrupt_health = 0.8
 	objective_data.objective.pose = nil
 end)
@@ -270,4 +270,12 @@ end)
 -- Fully count all criminals for the balancing multiplier
 function GroupAIStateBase:_get_balancing_multiplier(balance_multipliers)
 	return balance_multipliers[math.clamp(table.size(self._char_criminals), 1, #balance_multipliers)]
+end
+
+
+-- Disable drama zones to prevent skipping of anticipation, build and regroup phases
+-- The zones are only used for that, which makes the phases inconsistent for no real reason
+function GroupAIStateBase:_add_drama(amount)
+	self._drama_data.amount = math.clamp(self._drama_data.amount + amount, 0, 1)
+	self._drama_data.zone = nil
 end
