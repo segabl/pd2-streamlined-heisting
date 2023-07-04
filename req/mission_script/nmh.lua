@@ -16,7 +16,13 @@ return {
 			end
 		end
 	},
-	 -- Disable most reinforce points
+	-- Delay SWAT response
+	[102675] = {
+		on_executed = {
+			{ id = 103225, delay = 20 }
+		}
+	},
+	-- Disable most reinforce points
 	[103706] = {
 		values = {
 			enabled = false
