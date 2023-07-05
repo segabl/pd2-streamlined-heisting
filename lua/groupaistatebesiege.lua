@@ -139,17 +139,126 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 end
 
 
--- Add an alternate in_place check to prevent enemy groups from getting stuck
+-- Improve reenforce task handling to allow dynamic scaling of dispatch times
+function GroupAIStateBesiege:_upd_reenforce_tasks()
+	local reenforce_tasks = self._task_data.reenforce.tasks
+	local overshot_groups = {}
+	local undershot_tasks = {}
+
+	-- Check reenforce tasks
+	for i = #reenforce_tasks, 1, -1 do
+		local task_data = reenforce_tasks[i]
+		local force_settings = task_data.target_area.factors.force
+		local force_required = force_settings and force_settings.force or 0
+		local force_occupied = 0
+
+		local occupied_groups = {}
+		for _, group in pairs(self._groups) do
+			if (group.objective.target_area or group.objective.area) == task_data.target_area and group.objective.type == "reenforce_area" then
+				local size = group.has_spawned and group.size or group.initial_size
+				force_occupied = force_occupied + size
+				table.insert(occupied_groups, {
+					group = group,
+					size = size
+				})
+			end
+		end
+
+		if force_occupied > force_required then
+			table.sort(occupied_groups, function (a, b) return a.size < b.size end)
+			for _, group_data in pairs(occupied_groups) do
+				force_occupied = force_occupied - group_data.size
+				if force_occupied < force_required then
+					break
+				else
+					table.insert(overshot_groups, group_data.group)
+				end
+			end
+		elseif force_occupied < force_required then
+			if not self._task_data.regroup.active and self._task_data.assault.phase ~= "fade" and self:is_area_safe(task_data.target_area) then
+				table.insert(undershot_tasks, task_data)
+			end
+		end
+
+		if force_required == 0 then
+			table.remove(reenforce_tasks, i)
+		end
+	end
+
+	-- Handle areas that need reenforce
+	for _, task_data in pairs(undershot_tasks) do
+		local overshot_group = table.remove(overshot_groups)
+		if overshot_group then
+			overshot_group.objective.target_area = task_data.target_area
+		elseif self._task_data.reenforce.next_dispatch_t < self._t then
+			local spawned
+
+			if task_data.use_spawn_event then
+				task_data.use_spawn_event = false
+				spawned = self:_try_use_task_spawn_event(self._t, task_data.target_area, "reenforce")
+			end
+
+			if not spawned and not next(self._spawning_groups) then
+				local spawn_group, spawn_group_type = self:_find_spawn_group_near_area(task_data.target_area, self._tweak_data.reenforce.groups)
+				if spawn_group then
+					self:_spawn_in_group(spawn_group, spawn_group_type, {
+						attitude = "avoid",
+						scan = true,
+						pose = "stand",
+						type = "reenforce_area",
+						stance = "hos",
+						area = spawn_group.area,
+						target_area = task_data.target_area
+					})
+					spawned = true
+				end
+			end
+
+			-- Adjust next reinforce dispatch time based on the amount of tasks still needed
+			if spawned then
+				self._task_data.reenforce.next_dispatch_t = self._t + self:_get_difficulty_dependent_value(self._tweak_data.reenforce.interval) / #undershot_tasks
+				break
+			end
+		else
+			break
+		end
+	end
+
+	-- Retire overshot groups
+	for _, group in pairs(overshot_groups) do
+		if group.has_spawned then
+			self:_assign_group_to_retire(group)
+		end
+	end
+
+	self:_assign_enemy_groups_to_reenforce()
+end
+
+
+-- Improve in_place check to prevent enemy groups from getting stuck
+-- Moved these functions that were all pretty much identical to a helper function
 function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
+	self:_assign_enemy_groups_to_task(phase, "assault_area", self._set_assault_objective_to_group)
+end
+
+function GroupAIStateBesiege:_assign_enemy_groups_to_recon(phase)
+	self:_assign_enemy_groups_to_task(phase, "recon_area", self._set_recon_objective_to_group)
+end
+
+function GroupAIStateBesiege:_assign_enemy_groups_to_reenforce(phase)
+	self:_assign_enemy_groups_to_task(phase, "reenforce_area", self._set_reenforce_objective_to_group)
+end
+
+function GroupAIStateBesiege:_assign_enemy_groups_to_task(phase, objective_type, objective_func)
 	for _, group in pairs(self._groups) do
-		if group.has_spawned and group.objective.type == "assault_area" then
+		if group.has_spawned and group.objective.type == objective_type then
 			if group.objective.moving_out then
 				local done_moving
 
 				for _, u_data in pairs(group.units) do
 					local objective = u_data.unit:brain():objective()
 					if objective and objective.grp_objective == group.objective then
-						if objective.in_place or objective.area and objective.area.nav_segs[u_data.unit:movement():nav_tracker():nav_segment()] then
+						if objective.in_place then
 							done_moving = true
 						else
 							done_moving = false
@@ -167,7 +276,7 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
 			end
 
 			if not group.objective.moving_in then
-				self:_set_assault_objective_to_group(group, phase)
+				objective_func(self, group, phase)
 			end
 		end
 	end
@@ -430,14 +539,15 @@ end)
 
 -- Helper to check if any group member has visuals on their focus target
 function GroupAIStateBesiege:_can_group_see_target(group, limit_range)
-	local logic_data, focus_enemy
 	for _, u_data in pairs(group.units) do
-		logic_data = u_data.unit:brain()._logic_data
-		focus_enemy = logic_data and logic_data.attention_obj
-		if focus_enemy and focus_enemy.reaction > AIAttentionObject.REACT_AIM and focus_enemy.verified then
-			local weapon_range = logic_data.internal_data.weapon_range
-			if not limit_range or focus_enemy.dis < (weapon_range and weapon_range[limit_range] or 3000) then
-				return true
+		local logic_data = u_data.unit:brain()._logic_data
+		if logic_data.objective and logic_data.objective.grp_objective == group.objective then
+			local focus_enemy = logic_data and logic_data.attention_obj
+			if focus_enemy and focus_enemy.reaction > AIAttentionObject.REACT_AIM and focus_enemy.verified then
+				local weapon_range = logic_data.internal_data.weapon_range
+				if not limit_range or focus_enemy.dis < (weapon_range and weapon_range[limit_range] or 3000) then
+					return u_data
+				end
 			end
 		end
 	end
@@ -927,12 +1037,13 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 	end
 
 	local current_objective = group.objective
-	if not current_objective.target_area or current_objective.moving_out or current_objective.area == current_objective.target_area then
+	local target_area = current_objective.target_area
+	if not target_area or current_objective.moving_out or current_objective.area == target_area then
 		return
 	end
 
-	local move_in = current_objective.area.neighbours[current_objective.target_area.id]
-	if move_in and next(current_objective.target_area.criminal.units) then
+	local move_in = current_objective.area.neighbours[target_area.id]
+	if move_in and next(target_area.criminal.units) then
 		return
 	end
 
@@ -940,7 +1051,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 	local search_params = {
 		id = "GroupAI_reenforce",
 		from_seg = current_objective.area.pos_nav_seg,
-		to_seg = current_objective.target_area.pos_nav_seg,
+		to_seg = target_area.pos_nav_seg,
 		access_pos = self._get_group_acces_mask(group),
 		verify_clbk = callback(self, self, "is_nav_seg_safe")
 	}
@@ -990,7 +1101,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 		moving_in = move_in and true,
 		obstructed = obstructed,
 		area = self:get_area_from_nav_seg_id(coarse_path[#coarse_path][1]),
-		target_area = current_objective.target_area,
+		target_area = target_area,
 		coarse_path = coarse_path
 	})
 end)
@@ -1117,3 +1228,24 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", fun
 		coarse_path = coarse_path
 	})
 end)
+
+
+-- Spawn events are probably not used anywhere, but for the sake of correctness, fix this function
+-- All the functions that call this expect it to return true when it's used
+function GroupAIStateBase:_try_use_task_spawn_event(t, target_area, task_type, target_pos, force)
+	target_pos = target_pos or target_area.pos
+
+	local max_dis_sq = 3000 ^ 2
+	for _, event_data in pairs(self._spawn_events) do
+		if (event_data.task_type == task_type or event_data.task_type == "any") and mvec_dis_sq(target_pos, event_data.pos) < max_dis_sq then
+			if force or math.random() < event_data.chance then
+				self._anticipated_police_force = self._anticipated_police_force + event_data.amount
+				self._police_force = self._police_force + event_data.amount
+				self:_use_spawn_event(event_data)
+				return true
+			else
+				event_data.chance = math.min(1, event_data.chance + event_data.chance_inc)
+			end
+		end
+	end
+end
