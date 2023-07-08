@@ -517,6 +517,12 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		"flank",
 		"smoke_grenade"
 	}
+	self._tactics.marshal_marksman = {
+		"ranged_fire"
+	}
+	self._tactics.marshal_shield = {
+		"charge"
+	}
 
 	self.enemy_spawn_groups.tac_swat_shotgun_rush = {
 		amount = { 2, 3 },
