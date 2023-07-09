@@ -778,7 +778,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.spooc.spooc_attack_use_smoke_chance = 0
 
 	-- Reduce invulnerability duration
-	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 2
+	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 1.75
 
 	-- Set chatter preset
 	self.marshal_marksman.chatter = self.presets.enemy_chatter.no_chatter
