@@ -31,44 +31,23 @@ Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self
 		self:_stop_firing()
 	end
 
-	-- Reset focus delay on target change
-	if self._attention and self._attention.unit then
-		self._shoot_history.focus_start_t = math.max(TimerManager:game():time(), self._shoot_t)
-		self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
-		self._shooting_husk_player =  self._attention.unit:base() and  self._attention.unit:base().is_husk_player
-	end
-end)
-
-
--- Add a custom callback for the allow fire change, whenever we're allowed to shoot again,
--- apply aim and focus delay if sufficient time has passed since we last shot
-function CopActionShoot:allow_fire_clbk(state)
-	if not self._common_data.allow_fire == not state then
+	if not self._attention or not self._attention.unit then
 		return
 	end
 
+	self._shooting_husk_player = self._attention.unit:base() and self._attention.unit:base().is_husk_player
+
+	-- Set aim and focus delay on target change
 	local t = TimerManager:game():time()
-	if not state then
-		self._common_data._last_allow_fire_t = t
-	elseif self._attention and self._attention.unit then
-		local _, _, target_dis = self:_get_target_pos(self._shoot_from_pos, self._attention, t)
-		local no_fire_duration = t - (self._common_data._last_allow_fire_t or -100)
+	local _, _, target_dis = self:_get_target_pos(self._shoot_from_pos, self._attention, t)
+	local aim_delay_minmax = self._w_usage_tweak.aim_delay
+	local aim_delay = math.map_range_clamped(target_dis, 0, self._falloff[#self._falloff].r, aim_delay_minmax[1], aim_delay_minmax[2])
 
-		-- Apply aim delay if we haven't shot for more than 2 seconds
-		if no_fire_duration > 2 then
-			local aim_delay_minmax = self._w_usage_tweak.aim_delay
-			local aim_delay = math.map_range_clamped(target_dis, 0, self._falloff[#self._falloff].r, aim_delay_minmax[1], aim_delay_minmax[2])
-			if self._common_data.is_suppressed then
-				aim_delay = aim_delay * 1.5
-			end
-			self._shoot_t = math.max(t + aim_delay, self._shoot_t)
-		end
+	self._shoot_t = t + aim_delay * (self._common_data.is_suppressed and 1.5 or 1)
 
-		-- Reset focus delay when we're allowed to shoot again
-		self._shoot_history.focus_start_t = math.max(t, self._shoot_t)
-		self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
-	end
-end
+	self._shoot_history.focus_start_t = self._shoot_t
+	self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
+end)
 
 
 -- Thanks to the messy implementation of this function, we have to replace it completely, no hook can save us here
@@ -110,7 +89,7 @@ function CopActionShoot:update(t)
 		target_vec = self:_upd_ik(target_vec, fwd_dot, t)
 	end
 
-	if self._ext_anim.base_need_upd then
+	if ext_anim.base_need_upd then
 		self._ext_movement:upd_m_head_pos()
 	end
 
@@ -284,12 +263,12 @@ end
 -- Do all the melee related checks inside this function
 -- Adjust melee code to work against npcs
 function CopActionShoot:_chk_start_melee(t, target_dis)
-	-- Only start melee if target is the local player (or an NPC on the server)
-	if Network:is_client() and not self._shooting_player or Network:is_server() and self._shooting_husk_player then
+	if target_dis > 130 or not self._w_usage_tweak.melee_speed then
 		return
 	end
 
-	if target_dis > 130 or not self._w_usage_tweak.melee_speed then
+	-- Only start melee if target is the local player (or an NPC on the server)
+	if Network:is_client() and not self._shooting_player or Network:is_server() and self._shooting_husk_player then
 		return
 	end
 

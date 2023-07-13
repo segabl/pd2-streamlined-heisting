@@ -202,24 +202,22 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Sniper presets
 	presets.weapon.sh_sniper = based_on(presets.weapon.sh_base, {
-		use_laser = true,
-		focus_delay = focus_delay,
-		aim_delay = { 0, aim_delay * 3 },
-		range = { close = 5000, optimal = 10000, far = 15000 }
+		use_laser = true
 	})
+	presets.weapon.sh_sniper.is_rifle.aim_delay = { aim_delay, aim_delay * 2 }
+	presets.weapon.sh_sniper.is_rifle.range = { close = 5000, optimal = 10000, far = 15000 }
 	presets.weapon.sh_sniper.is_rifle.FALLOFF = {
-		{ dmg_mul = 23 * dmg_mul_lin, r = 0, acc = { 0, 0.5 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 23 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 23 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 24 * dmg_mul_lin, r = 0, acc = { 0.25, 0.75 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 24 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 24 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
 	}
-	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper, {
-		aim_delay = { 0, aim_delay * 1.5 },
-		range = { close = 1000, optimal = 2000, far = 4000 },
-		FALLOFF = function (falloff)
-			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.5 end)
-			manipulate_entries(falloff, "recoil", function (val) return { val[1] * 0.5, val[2] * 0.5 } end)
-		end
-	})
+	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper)
+	presets.weapon.sh_sniper_heavy.is_rifle.range = { close = 1000, optimal = 2000, far = 4000 }
+	presets.weapon.sh_sniper_heavy.is_rifle.FALLOFF = {
+		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.25, 0.75 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
+	}
 
 	-- Taser preset
 	presets.weapon.sh_taser = based_on(presets.weapon.sh_base, {
@@ -241,10 +239,10 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Marshal preset
 	presets.weapon.sh_marshal = based_on(presets.weapon.sh_base)
-	presets.weapon.sh_marshal.is_rifle.aim_delay = { 0, aim_delay * 1.5 }
+	presets.weapon.sh_marshal.is_rifle.aim_delay = { aim_delay, aim_delay * 2 }
 	presets.weapon.sh_marshal.is_rifle.range = { close = 1000, optimal = 2000, far = 4000 }
 	presets.weapon.sh_marshal.is_rifle.FALLOFF = {
-		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0, 0.5 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.25, 0.75 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
