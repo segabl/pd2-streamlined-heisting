@@ -231,26 +231,55 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 end
 
 
--- Check for minimum objective interruption distance
-local is_obstructed_original = CopLogicBase.is_obstructed
-function CopLogicBase.is_obstructed(data, objective, strictness, attention, ...)
-	local min_obj_interrupt_dis = data.char_tweak.min_obj_interrupt_dis
-	if not min_obj_interrupt_dis or not objective or not objective.interrupt_dis or objective.interrupt_dis < 0 then
-		return is_obstructed_original(data, objective, strictness, attention, ...)
-	end
-
+-- Check for verified interrupt distance and remove bad marshal interrupt distance
+function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 	attention = attention or data.attention_obj
-	if not attention or not attention.verified then
-		-- This is an additional multiplier, is_obstructed already halves when not visible, but for larger ranges thats not enough
-		min_obj_interrupt_dis = min_obj_interrupt_dis * 0.25
+	strictness = 1 - (strictness or 0)
+
+	if not objective or objective.is_default or (objective.in_place or not objective.nav_seg) and not objective.action then
+		return true, false
 	end
 
-	local interrupt_dis = objective.interrupt_dis
-	objective.interrupt_dis = math.max(interrupt_dis, min_obj_interrupt_dis)
-	local allow_trans, obj_failed = is_obstructed_original(data, objective, strictness, attention, ...)
-	objective.interrupt_dis = interrupt_dis
+	if objective.interrupt_suppression and data.is_suppressed then
+		return true, true
+	end
 
-	return allow_trans, obj_failed
+	if objective.interrupt_health then
+		local health_ratio = data.unit:character_damage():health_ratio()
+		if health_ratio < 1 and health_ratio * strictness < objective.interrupt_health or data.unit:character_damage():dead() then
+			return true, true
+		end
+	end
+
+	if objective.interrupt_dis then
+		if attention and (AIAttentionObject.REACT_COMBAT <= attention.reaction or data.cool and AIAttentionObject.REACT_SURPRISED <= attention.reaction) then
+			if objective.interrupt_dis == -1 then
+				return true, true
+			end
+
+			if attention.verified and data.char_tweak.min_obj_interrupt_dis then
+				if attention.dis * strictness < data.char_tweak.min_obj_interrupt_dis then
+					return true, true
+				end
+			end
+
+			if math.abs(attention.m_pos.z - data.m_pos.z) < 250 then
+				if attention.dis * strictness * (attention.verified and 1 or 2) < objective.interrupt_dis then
+					return true, true
+				end
+			end
+
+			if objective.pos and math.abs(attention.m_pos.z - objective.pos.z) < 250 then
+				if mvector3.distance(objective.pos, attention.m_pos) * strictness < objective.interrupt_dis then
+					return true, true
+				end
+			end
+		elseif objective.interrupt_dis == -1 and not data.cool then
+			return true, true
+		end
+	end
+
+	return false, false
 end
 
 
@@ -282,7 +311,7 @@ end
 local _upd_attention_obj_detection_original = CopLogicBase._upd_attention_obj_detection
 function CopLogicBase._upd_attention_obj_detection(...)
 	local delay = _upd_attention_obj_detection_original(...)
-	return math.min(1, delay)
+	return math.min(0.5, delay)
 end
 
 

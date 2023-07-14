@@ -1,8 +1,6 @@
-local math_random = math.random
 local mvec3_add = mvector3.add
 local mvec3_cross = mvector3.cross
 local mvec3_dir = mvector3.direction
-local mvec3_dis = mvector3.distance
 local mvec3_dis_sq = mvector3.distance_sq
 local mvec3_lerp = mvector3.lerp
 local mvec3_mul = mvector3.multiply
@@ -95,7 +93,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
 			my_data.moving_to_cover = nil
 		end
 
-		local pos = CopLogicTravel._get_pos_behind_unit(data, data.objective.shield_cover_unit, 50, 300)
+		local pos = CopLogicTravel._get_pos_behind_unit(data, data.objective.shield_cover_unit, 75, 300)
 		return pos or _get_exact_move_pos_original(data, nav_index, ...)
 	end
 
@@ -173,11 +171,8 @@ end
 
 function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
 	local threat_dir, threat_side, pos = tmp_vec1, tmp_vec2, tmp_vec3
-	local advancing = unit:brain() and unit:brain():is_advancing()
 	local unit_movement = unit:movement()
-	local unit_pos = advancing or unit_movement:m_pos()
-	-- If target unit is advancing, add an offset so we don't run in front of it during advance
-	local offset = advancing and mvec3_dis(advancing, unit_movement:m_pos()) * 0.5 or 0
+	local unit_pos = unit_movement.get_walk_to_pos and unit_movement:get_walk_to_pos() or unit_movement:m_pos()
 
 	if data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_AIM then
 		mvec3_dir(threat_dir, data.attention_obj.m_pos, unit_pos)
@@ -193,7 +188,6 @@ function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
 	local min_dis_sq = min_dis ^ 2
 	local nav_manager = managers.navigation
 	local ray_params = {
-		allow_entry = false,
 		trace = true,
 		pos_from = unit_pos,
 		pos_to = pos
@@ -203,14 +197,14 @@ function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
 	}
 
 	repeat
-		if math_random() < 0.5 then
+		if math.random() < 0.5 then
 			mvec3_neg(threat_side)
 		end
 
 		-- Get a random vector between main threat direction and side threat direction
-		mvec3_lerp(pos, threat_dir, threat_side, math_random() * 0.5)
+		mvec3_lerp(pos, threat_dir, threat_side, math.random() * 0.5)
 		mvec3_normalize(pos)
-		mvec3_mul(pos, offset + math_random(min_dis, max_dis))
+		mvec3_mul(pos, math.random(min_dis, max_dis))
 		mvec3_add(pos, unit_pos)
 
 		if not nav_manager:raycast(ray_params) or mvec3_dis_sq(ray_params.trace[1], unit_pos) > min_dis_sq then

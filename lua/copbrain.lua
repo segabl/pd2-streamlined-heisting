@@ -1,10 +1,12 @@
--- Set up logics
+-- Set up logics and needed data
 CopBrain._logic_variants.mobster_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.chavez_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.hector_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.drug_lord_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.biker_boss = CopBrain._logic_variants.triad_boss
 CopBrain._logic_variants.heavy_swat_sniper = CopBrain._logic_variants.marshal_marksman
+
+CopBrain._next_upd_t = 0
 
 
 -- Fix spamming of grenades by units that dodge with grenades (Cloaker)
@@ -58,6 +60,16 @@ Hooks:OverrideFunction(CopBrain, "on_surrender_chance", function (self)
 
 	managers.enemy:add_delayed_clbk(expire_clbk_id, callback(self, self, "clbk_surrender_chance_expired"), self._logic_data.surrender_window.expire_t)
 end)
+
+
+-- Limit logic updates, there's no need to update it every frame
+local update_original = CopBrain.update
+function CopBrain:update(unit, t, ...)
+	if self._next_upd_t <= t then
+		self._next_upd_t = t + 1 / 30
+		return update_original(self, unit, t, ...)
+	end
+end
 
 
 -- If Iter is installed and streamlined path option is used, don't make any further changes
