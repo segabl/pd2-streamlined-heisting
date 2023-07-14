@@ -1,6 +1,3 @@
-local tmp_vec = Vector3()
-
-
 -- Reuse function of idle logic to make enemies in an area aware of a player entering the area
 CopLogicAttack.on_area_safety = CopLogicIdle.on_area_safety
 
