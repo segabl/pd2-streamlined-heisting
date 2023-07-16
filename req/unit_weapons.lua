@@ -7,6 +7,7 @@ return {
 	[("units/payday2/characters/ene_fbi_3/ene_fbi_3"):key()] = "spas12",
 	[("units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870"):key()] = "spas12",
 	[("units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"):key()] = "spas12",
+	[("units/payday2/characters/ene_gang_mobster_boss/ene_gang_mobster_boss"):key()] = "rpk_lmg",
 	[("units/payday2/characters/ene_medic_r870/ene_medic_r870"):key()] = "spas12",
 	[("units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"):key()] = "mp5",
 	[("units/pd2_dlc_bex/characters/ene_bex_security_01/ene_bex_security_01"):key()] = { "mp5", "c45" },
