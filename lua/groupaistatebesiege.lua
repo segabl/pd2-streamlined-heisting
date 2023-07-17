@@ -613,7 +613,12 @@ function GroupAIStateBesiege:_chk_group_use_grenade(assault_area, group, detonat
 		local teargas_chance = math.map_range(self._t - assault_area.criminal_entered_t, teargas_chance_times[1], teargas_chance_times[2], 0, 1)
 		if math.random() < teargas_chance then
 			local teargas_pos = managers.navigation:find_random_position_in_segment(assault_area.pos_nav_seg)
-			mvec_lerp(teargas_pos, teargas_pos, assault_area.pos, 0.5)
+			mvec_lerp(teargas_pos, teargas_pos, assault_area.pos, 0.75)
+
+			local c_key = table.random_key(assault_area.criminal.units)
+			if c_key then
+				mvec_lerp(teargas_pos, teargas_pos, assault_area.criminal.units[c_key].m_pos, 0.5)
+			end
 
 			mvec_set(detonate_offset, math.UP)
 			mvec_mul(detonate_offset, 1000)
