@@ -137,34 +137,50 @@ end
 function CopLogicAttack._correct_path_start_pos() end
 
 
+-- Simplify function, navigation raycast is already done in CopLogicAttack._find_retreat_position
+function CopLogicAttack._confirm_retreat_position(retreat_pos, threat_pos, threat_head_pos, threat_tracker)
+	mvector3.set(tmp_vec1, retreat_pos)
+	mvector3.set_z(tmp_vec1, retreat_pos.z + 140)
+	if not World:raycast("ray", tmp_vec1, threat_head_pos, "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision") then
+		return retreat_pos
+	end
+end
+
+
 -- Make moving back during combat depend on weapon range
-function CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, engage)
-	local weapon_range = my_data.weapon_range or { close = 500 }
-	local close_range = weapon_range.close * 0.5
-	if focus_enemy and focus_enemy.nav_tracker and focus_enemy.verified and focus_enemy.dis < close_range and CopLogicAttack._can_move(data) then
-		local from_pos = mvector3.copy(data.m_pos)
-		local threat_tracker = focus_enemy.nav_tracker
-		local threat_head_pos = focus_enemy.m_head_pos
-		local retreat_to = CopLogicAttack._find_retreat_position(from_pos, focus_enemy.m_pos, threat_head_pos, threat_tracker, 400, engage)
+function CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, engage, range)
+	if not focus_enemy or not focus_enemy.nav_tracker or not focus_enemy.verified then
+		return
+	end
 
-		if retreat_to then
-			CopLogicAttack._cancel_cover_pathing(data, my_data)
+	local close_range = (my_data.weapon_range and (my_data.weapon_range[range] or my_data.weapon_range.close) or 800) * 0.5
+	if focus_enemy.dis > close_range or not CopLogicAttack._can_move(data) then
+		return
+	end
 
-			my_data.advancing = data.brain:action_request({
-				type = "walk",
-				variant = "walk",
-				body_part = 2,
-				nav_path = {
-					from_pos,
-					retreat_to
-				}
-			})
+	local from_pos = mvector3.copy(data.m_pos)
+	local threat_tracker = focus_enemy.nav_tracker
+	local threat_head_pos = focus_enemy.m_head_pos
+	local retreat_to = CopLogicAttack._find_retreat_position(from_pos, focus_enemy.m_pos, threat_head_pos, threat_tracker, close_range, engage)
+	if not retreat_to then
+		return
+	end
 
-			if my_data.advancing then
-				my_data.surprised = true
-				return true
-			end
-		end
+	CopLogicAttack._cancel_cover_pathing(data, my_data)
+
+	my_data.advancing = data.brain:action_request({
+		type = "walk",
+		variant = "walk",
+		body_part = 2,
+		nav_path = {
+			from_pos,
+			retreat_to
+		}
+	})
+
+	if my_data.advancing then
+		my_data.surprised = true
+		return true
 	end
 end
 
@@ -292,3 +308,56 @@ function CopLogicAttack._chk_wants_to_take_cover(data, my_data)
 		return true
 	end
 end
+
+
+-- Improve Marshal combat movement, they really just need to try to keep their distance
+function MarshalLogicAttack._upd_combat_movement(data)
+	local my_data = data.internal_data
+	local focus_enemy = data.attention_obj
+
+	if data.logic.action_taken(data, my_data) or CopLogicAttack._upd_pose(data, my_data) then
+		return
+	end
+
+	if data.unit:movement():chk_action_forbidden("walk") or not CopLogicAttack._can_move(data) then
+		return
+	end
+
+	if focus_enemy.verified then
+		if CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, true, "optimal") then
+			return
+		end
+
+		if data.important then
+			if data.is_suppressed and data.t - data.unit:character_damage():last_suppression_t() < 0.7 then
+				if CopLogicBase.chk_start_action_dodge(data, "scared") then
+					return
+				end
+			end
+
+			if focus_enemy.is_person and focus_enemy.dis < 2000 and (data.group and data.group.size > 1 or math.random() < 0.5) then
+				local dodge
+
+				if focus_enemy.is_local_player then
+					local e_movement_state = focus_enemy.unit:movement():current_state()
+					if not e_movement_state:_is_reloading() and not e_movement_state:_interacting() and not e_movement_state:is_equipping() then
+						dodge = true
+					end
+				else
+					local e_anim_data = focus_enemy.unit:anim_data()
+					if (e_anim_data.move or e_anim_data.idle) and not e_anim_data.reload then
+						dodge = true
+					end
+				end
+
+				if dodge and focus_enemy.aimed_at and CopLogicBase.chk_start_action_dodge(data, "preemptive") then
+					return
+				end
+			end
+		end
+	end
+
+	CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
+end
+
+function MarshalLogicAttack.update_cover(data) end

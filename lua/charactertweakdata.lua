@@ -763,7 +763,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_medic.min_obj_interrupt_dis = 600
 	self.tank_mini.min_obj_interrupt_dis = 600
 	self.shield.min_obj_interrupt_dis = 600
-	self.marshal_marksman.min_obj_interrupt_dis = 2000
 
 	-- Set melee weapons
 	self.biker.melee_weapon = "knife_1"
