@@ -30,23 +30,40 @@ Hooks:PreHook(CopLogicBase, "on_new_objective", "sh_on_new_objective", function 
 		return
 	end
 
-	local shielding_units = {}
-	if old_objective and alive(old_objective.shield_cover_unit) then
-		table.insert(shielding_units, old_objective.shield_cover_unit)
-	else
-		local logic_data
-		for _, u_data in pairs(data.group.units) do
-			logic_data = u_data.unit:brain()._logic_data
-			if logic_data and logic_data.tactics and logic_data.tactics.shield then
-				table.insert(shielding_units, u_data.unit)
+	local shield_unit = old_objective and old_objective.shield_cover_unit
+	if not alive(shield_unit) or shield_unit:character_damage():dead() then
+		local shield_followers = {}
+		for u_key, u_data in pairs(data.group.units) do
+			local logic_data = u_data.unit:brain()._logic_data
+			if logic_data.tactics then
+				if logic_data.tactics.shield_cover then
+					local shield_cover_unit = logic_data.objective and logic_data.objective.shield_cover_unit
+					if alive(shield_cover_unit) and not shield_cover_unit:character_damage():dead() then
+						local shield_key = shield_cover_unit:key()
+						shield_followers[shield_key] = (shield_followers[shield_key] or 0) + 1
+					end
+				elseif logic_data.tactics.shield then
+					shield_followers[u_key] = shield_followers[u_key] or 0
+				end
 			end
 		end
+
+		local best_shield_key
+		local least_followers = math.huge
+		for u_key, followers in pairs(shield_followers) do
+			if followers < least_followers then
+				best_shield_key = u_key
+				least_followers = followers
+			end
+		end
+
+		shield_unit = best_shield_key and data.group.units[best_shield_key].unit
 	end
 
-	if #shielding_units > 0 then
+	if shield_unit then
 		data.objective.type = "follow"
-		data.objective.shield_cover_unit = table.random(shielding_units)
-		data.objective.follow_unit = data.objective.shield_cover_unit
+		data.objective.shield_cover_unit = shield_unit
+		data.objective.follow_unit = shield_unit
 		data.objective.path_data = nil
 		data.objective.distance = 300
 	end
