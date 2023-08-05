@@ -18,12 +18,8 @@ function CivilianLogicFlee.rescue_SO_verification(ignore_this, params, unit, ...
 		return true
 	end
 
-	local nav_seg = data.unit:movement():nav_tracker():nav_segment()
-	if objective.area.nav_segs[nav_seg] then
-		return true
-	end
-
-	if unit:movement():nav_tracker():nav_segment() == nav_seg then
-		return managers.groupai:state()._rescue_allowed
+	local hostage_nav_seg = data.unit:movement():nav_tracker():nav_segment()
+	if objective.area.nav_segs[hostage_nav_seg] or hostage_nav_seg == unit:movement():nav_tracker():nav_segment() then
+		return objective.in_place or managers.groupai:state()._rescue_allowed
 	end
 end

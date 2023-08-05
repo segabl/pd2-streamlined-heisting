@@ -27,12 +27,8 @@ function CarryData:clbk_pickup_SO_verification(unit)
 	end
 
 	local nav_seg = unit:movement():nav_tracker():nav_segment()
-	if objective.area == self._steal_SO_data.pickup_area then
-		return true
-	end
-
-	if self._steal_SO_data.pickup_area.nav_segs[nav_seg] then
-		return managers.groupai:state()._rescue_allowed
+	if objective.area == self._steal_SO_data.pickup_area or self._steal_SO_data.pickup_area.nav_segs[nav_seg] then
+		return objective.in_place or managers.groupai:state()._rescue_allowed
 	end
 end
 
