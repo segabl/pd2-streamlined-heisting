@@ -527,8 +527,17 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Enemy chatter
 	presets.enemy_chatter.cop.retreat = nil
+	presets.enemy_chatter.cop.open_fire = true
+
 	presets.enemy_chatter.swat.push = true
 	presets.enemy_chatter.swat.flash_grenade = true
+	presets.enemy_chatter.swat.open_fire = true
+
+	presets.enemy_chatter.gangster = {
+		aggressive = true,
+		contact = true,
+		go_go = true
+	}
 
 	return presets
 end
@@ -778,10 +787,15 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Reduce invulnerability duration
 	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 1.75
 
-	-- Set chatter preset
+	-- Set chatter presets
 	self.marshal_marksman.chatter = self.presets.enemy_chatter.no_chatter
 	self.marshal_shield.chatter = self.presets.enemy_chatter.no_chatter
 	self.marshal_shield_break.chatter = self.presets.enemy_chatter.no_chatter
+	self.mobster.chatter = self.presets.enemy_chatter.gangster
+	self.biker.chatter = self.presets.enemy_chatter.gangster
+	self.biker_escape.chatter = self.presets.enemy_chatter.gangster
+	self.bolivian.chatter = self.presets.enemy_chatter.gangster
+	self.bolivian_indoors.chatter = self.presets.enemy_chatter.gangster
 end)
 
 
