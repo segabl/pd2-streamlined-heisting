@@ -84,7 +84,7 @@ function BossLogicAttack._chk_use_throwable(data, my_data, focus)
 	end
 
 	if data.used_throwable_t and data.t < data.used_throwable_t then
-		return
+		return data.used_throwable_shoot_t and data.t < data.used_throwable_shoot_t
 	end
 
 	if (not focus.verified) == data.char_tweak.throwable_target_verified then
@@ -119,7 +119,9 @@ function BossLogicAttack._chk_use_throwable(data, my_data, focus)
 		mvec_mul(offset, -20)
 		mvec_add(throw_from, offset)
 	else
-		throw_from = data.unit:inventory():equipped_unit():position()
+		local weapon_unit = data.unit:inventory():equipped_unit()
+		local fire_object = weapon_unit:base():fire_object() or weapon_unit:orientation_object()
+		throw_from = fire_object:position()
 	end
 
 	local throw_to = focus.verified and focus.m_pos or focus.last_verified_pos
@@ -141,14 +143,16 @@ function BossLogicAttack._chk_use_throwable(data, my_data, focus)
 
 	data.used_throwable_t = data.t + (data.char_tweak.throwable_cooldown or 15)
 
-	local action_data = {
-		body_part = 3,
-		type = "act",
-		variant = is_throwable and "throw_grenade" or "recoil_single"
-	}
-	if not data.brain:action_request(action_data) then
+	local redirect = is_throwable and "throw_grenade" or "recoil_single"
+	if not mov_ext:play_redirect(redirect) then
 		return
 	end
+
+	managers.network:session():send_to_peers_synched("play_distance_interact_redirect", data.unit, redirect)
+
+	CopLogicAttack.aim_allow_fire(false, false, data, my_data)
+
+	data.used_throwable_shoot_t = data.t + 1
 
 	local throw_dir = tmp_vec1
 	mvec_dir(throw_dir, throw_from, throw_to)
