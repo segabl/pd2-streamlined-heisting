@@ -735,12 +735,12 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_medic.headshot_dmg_mul = 4
 	self.tank_mini.headshot_dmg_mul = 4
 
-	-- Fix/set explosion damage multipliers
+	-- Clear explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
-	self.tank.damage.explosion_damage_mul = 0.85
-	self.tank_hw.damage.explosion_damage_mul = 0.85
-	self.tank_medic.damage.explosion_damage_mul = 0.85
-	self.tank_mini.damage.explosion_damage_mul = 0.85
+	self.tank.damage.explosion_damage_mul = 1
+	self.tank_hw.damage.explosion_damage_mul = 1
+	self.tank_medic.damage.explosion_damage_mul = 1
+	self.tank_mini.damage.explosion_damage_mul = 1
 	self.shield.damage.explosion_damage_mul = 1
 	self.phalanx_minion.damage.explosion_damage_mul = 1
 	self.phalanx_vip.damage.explosion_damage_mul = 1
