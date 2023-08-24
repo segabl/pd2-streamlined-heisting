@@ -115,6 +115,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Adds hints when an enemy can't be intimidated due to temporary cooldown, no surrender preset or maximum amount of hostages reached
 - Fixes Jokers sometimes following the wrong player
 - Makes civilians' reactions to intimidation more consistent and fixes them jumping into a standing position randomly
+- Fixes enemies sometimes just disappearing when they are told to retreat
 
 ## Credits
 
