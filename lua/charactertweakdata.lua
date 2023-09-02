@@ -60,8 +60,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	})
 
 	presets.weapon.sh_base.is_pistol.FALLOFF = {
-		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.15, 0.3 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.3, 0.6 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.2, 0.3 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.4, 0.6 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	presets.weapon.sh_base.akimbo_pistol.melee_dmg = nil
@@ -69,8 +69,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base.akimbo_pistol.melee_retry_delay = nil
 	presets.weapon.sh_base.akimbo_pistol.RELOAD_SPEED = 0.8
 	presets.weapon.sh_base.akimbo_pistol.FALLOFF = {
-		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.2 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.2, 0.4 }, mode = { 1, 0, 0, 0 } }
+		{ dmg_mul = 3 * dmg_mul, r = 0, acc = { 0.6, 0.9 }, recoil = { 0.1, 0.3 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 1 * dmg_mul, r = 3000, acc = { 0.1, 0.4 }, recoil = { 0.2, 0.6 }, mode = { 1, 0, 0, 0 } }
 	}
 
 	presets.weapon.sh_base.is_revolver.RELOAD_SPEED = 0.9
