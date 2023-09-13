@@ -89,7 +89,6 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Reduces the effect of health granularity drastically (damage dealt to enemies is closer to the actual weapon damage listed in the inventory)
 - Restores spawning voicelines for Bulldozers and Tasers and spawn noise for scripted Cloaker spawns
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
-- Fixes Medic- and Minigundozers ignoring the Bulldozer spawn cap
 - Fixes various animation issues, like enemies playing full body crouching animations when suppressed when they are already crouching
 - Makes special enemies and bosses more responsive by detaching their attack logic updates from the enemy task scheduler
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
