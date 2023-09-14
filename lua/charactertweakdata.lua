@@ -286,8 +286,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		significant_chance = 0,
 		reasons = {
 			pants_down = 1,
-			weapon_down = 0.7,
-			flanked = 0.6,
+			weapon_down = 0.6,
+			flanked = 0.5,
 			unaware_of_aggressor = 0.4,
 			isolated = 0.3
 		},
@@ -308,7 +308,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		reasons = {
 			pants_down = 0.9,
 			weapon_down = 0.5,
-			flanked = 0.5,
+			flanked = 0.4,
 			unaware_of_aggressor = 0.3,
 			isolated = 0.2
 		},
@@ -328,8 +328,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		significant_chance = 0,
 		reasons = {
 			pants_down = 0.8,
-			weapon_down = 0.3,
-			flanked = 0.4,
+			weapon_down = 0.4,
+			flanked = 0.3,
 			unaware_of_aggressor = 0.2,
 			isolated = 0.1
 		},
