@@ -409,7 +409,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categor
 	if self[difficulty_func] then
 		self[difficulty_func](self)
 	else
-		StreamHeist:warn("GroupAITweakData." .. difficulty_func, "does not exist")
+		StreamHeist:warn("GroupAITweakData.%s does not exist", difficulty_func)
 	end
 
 	-- Russian Cops/HRT

@@ -484,7 +484,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			-- Log and remove groups that get stuck
 			local element_id = group.spawn_group_element and group.spawn_group_element._id or 0
 			local element_name = group.spawn_group_element and group.spawn_group_element._editor_name or ""
-			StreamHeist:warn(string.format("Group %s spawned from element %u (%s) is stuck, removing it!", group.id, element_id, element_name))
+			StreamHeist:warn("Group %s spawned from element %u (%s) is stuck, removing it!", group.id, element_id, element_name)
 
 			for _, u_data in pairs(group.units) do
 				u_data.unit:brain():set_active(false)
@@ -902,7 +902,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_perform_group_spawning", function 
 		end
 
 		if hopeless then
-			StreamHeist:warn("Spawn group", spawn_task.spawn_group.id, "failed to spawn unit", u_type_name)
+			StreamHeist:warn("Spawn group %s failed to spawn unit %s", spawn_task.spawn_group.id, u_type_name)
 			return true
 		end
 	end

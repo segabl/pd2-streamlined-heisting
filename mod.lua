@@ -35,18 +35,18 @@ if not StreamHeist then
 		return self._mission_script_patches
 	end
 
-	function StreamHeist:log(...)
+	function StreamHeist:log(str, ...)
 		if self.logging then
-			log("[StreamlinedHeisting] " .. table.concat({...}, " "))
+			log("[StreamlinedHeisting] " .. str:format(...))
 		end
 	end
 
-	function StreamHeist:warn(...)
-		log("[StreamlinedHeisting][Warning] " .. table.concat({...}, " "))
+	function StreamHeist:warn(str, ...)
+		log("[StreamlinedHeisting][Warning] " .. str:format(...))
 	end
 
-	function StreamHeist:error(...)
-		log("[StreamlinedHeisting][Error] " .. table.concat({...}, " "))
+	function StreamHeist:error(str, ...)
+		log("[StreamlinedHeisting][Error] " .. str:format(...))
 	end
 
 	-- Redirect unit localization for units that can't be auto-detected
@@ -207,7 +207,7 @@ if not StreamHeist then
 				local assets = asset_loader.script_loadable_packages[faction].assets
 				for _, spec in pairs(assets) do
 					if mod_overrides[spec.dbpath] then
-						StreamHeist:log("Disabling faction tweak for faction", faction, "due to mod_override", mod_overrides[spec.dbpath])
+						StreamHeist:log("Disabling faction tweak for faction %s due to mod_override %s", faction, mod_overrides[spec.dbpath])
 						Global.sh_faction_conflicts[faction] = mod_overrides[spec.dbpath]
 						enabled = false
 						break

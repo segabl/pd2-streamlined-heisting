@@ -16,42 +16,42 @@ Hooks:PreHook(MissionManager, "_activate_mission", "sh__activate_mission", funct
 	for element_id, data in pairs(mission_script_elements) do
 		local element = self:get_element_by_id(element_id)
 		if not element then
-			StreamHeist:error(string.format("Mission script element %u could not be found", element_id))
+			StreamHeist:error("Mission script element %u could not be found", element_id)
 		else
 			-- Check if this element is supposed to trigger reinforce points
 			if data.reinforce then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element_id, function ()
-					StreamHeist:log(string.format("%s executed, toggled %u reinforce point(s)", element:editor_name(), #data.reinforce))
+					StreamHeist:log("%s executed, %s %u reinforce point(s)", element:editor_name(), v.force and "enabled" or "disabled", #data.reinforce)
 					for _, v in pairs(data.reinforce) do
 						managers.groupai:state():set_area_min_police_force(v.name, v.force, v.position)
 					end
 				end)
-				StreamHeist:log(string.format("%s hooked as reinforce trigger for %u area(s)", element:editor_name(), #data.reinforce))
+				StreamHeist:log("%s hooked as reinforce trigger for %u area(s)", element:editor_name(), #data.reinforce)
 			end
 
 			-- Check if this element is supposed to trigger a difficulty change
 			if data.difficulty then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_difficulty_" .. element_id, function ()
-					StreamHeist:log(string.format("%s executed, set difficulty to %.2g", element:editor_name(), data.difficulty))
+					StreamHeist:log("%s executed, set difficulty to %.2g", element:editor_name(), data.difficulty)
 					managers.groupai:state():set_difficulty(data.difficulty)
 				end)
-				StreamHeist:log(string.format("%s hooked as difficulty change trigger", element:editor_name()))
+				StreamHeist:log("%s hooked as difficulty change trigger", element:editor_name())
 			end
 
 			-- Check if this element has custom values set
 			if data.values then
 				for k, v in pairs(data.values) do
 					element._values[k] = v
-					StreamHeist:log(string.format("%s value \"%s\" has been set to \"%s\"", element:editor_name(), k, tostring(v)))
+					StreamHeist:log("%s value \"%s\" has been set to \"%s\"", element:editor_name(), k, tostring(v))
 				end
 			end
 
 			if data.flashlight ~= nil then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_func_" .. element_id, function ()
-					StreamHeist:log(string.format("%s executed, changing flashlight state to %s", element:editor_name(), data.flashlight and "true" or "false"))
+					StreamHeist:log("%s executed, changing flashlight state to %s", element:editor_name(), data.flashlight and "true" or "false")
 					managers.game_play_central:set_flashlights_on(data.flashlight)
 				end)
-				StreamHeist:log(string.format("%s hooked as flashlight state trigger", element:editor_name()))
+				StreamHeist:log("%s hooked as flashlight state trigger", element:editor_name())
 			end
 
 			if data.on_executed then
@@ -62,25 +62,25 @@ Hooks:PreHook(MissionManager, "_activate_mission", "sh__activate_mission", funct
 						if v.remove then
 							if val then
 								table.remove(element._values.on_executed, i)
-								StreamHeist:log(string.format("Removed element %s from on_executed of %s", new_element:editor_name(), element:editor_name()))
+								StreamHeist:log("Removed element %s from on_executed of %s", new_element:editor_name(), element:editor_name())
 							end
 						elseif val then
 							val.delay = v.delay or 0
 							val.delay_rand = v.delay_rand or 0
-							StreamHeist:log(string.format("Modified element %s in on_executed of %s", new_element:editor_name(), element:editor_name()))
+							StreamHeist:log("Modified element %s in on_executed of %s", new_element:editor_name(), element:editor_name())
 						else
 							table.insert(element._values.on_executed, v)
-							StreamHeist:log(string.format("Added element %s to on_executed of %s", new_element:editor_name(), element:editor_name()))
+							StreamHeist:log("Added element %s to on_executed of %s", new_element:editor_name(), element:editor_name())
 						end
 					else
-						StreamHeist:error(string.format("Mission script element %u could not be found", v.id))
+						StreamHeist:error("Mission script element %u could not be found", v.id)
 					end
 				end
 			end
 
 			if data.func then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_func_" .. element_id, data.func)
-				StreamHeist:log(string.format("%s hooked as function call trigger", element:editor_name()))
+				StreamHeist:log("%s hooked as function call trigger", element:editor_name())
 			end
 		end
 	end
