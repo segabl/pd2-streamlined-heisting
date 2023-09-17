@@ -3,6 +3,7 @@
 Streamlined Heisting makes a lot of the gameplay mechanics more consistent. It is intended to build on what I think Overkill tried to accomplish rather than being a complete rebalance mod. As such, the mod doesn't add tons of new features or enemies and doesn't touch player balance or skills. The changes this mod makes are intended to make the game more consistent by replacing some of the very outdated code and fixing broken and disabled features.  
   
 For a player side balance, check out [Streamlined Heisting Complements](https://github.com/segabl/pd2-sh-complements), a small tweaks mod specifically made with Streamlined Heisting in mind.  
+Also check out [Alarmingly Streamlined Spawngroups](https://github.com/erushinj/moon-alarmingly-streamlined-spawngroups) for some cool extra features and further customization options.  
   
 As with all mods that extensively change mechanics or add new units, this mod locks your matchmaking and you will only be able to play with other people that are also using it. When enabling or disabling the mod from the BLT mods menu make sure to restart the game to avoid issues.
 
@@ -119,8 +120,8 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 ## Credits
 
 - [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
-- [creepyyy](https://modworkshop.net/user/54264), [moon](https://modworkshop.net/user/55749), [Nardo](https://modworkshop.net/user/19738) for testing and providing feedback
+- [nikita](https://modworkshop.net/user/54264), [miss miki](https://modworkshop.net/user/55749), [Nardo](https://modworkshop.net/user/19738), [hitscanner](https://modworkshop.net/user/hitscanner) for testing and providing feedback
 - [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
-- [Masavik](https://modworkshop.net/user/52365) for creating the GenSec Shield model
-- [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and providing animation fixes
+- [Masavik](https://modworkshop.net/user/52365) for creating the GenSec shield model
+- [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and providing some animation fixes
