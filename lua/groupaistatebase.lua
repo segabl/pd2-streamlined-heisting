@@ -256,3 +256,11 @@ function GroupAIStateBase:_add_drama(amount)
 	self._drama_data.amount = math.clamp(self._drama_data.amount + amount, 0, 1)
 	self._drama_data.zone = nil
 end
+
+
+-- Add chance for enemies to comment on squad member deaths
+Hooks:PostHook(GroupAIStateBase, "_remove_group_member", "sh__remove_group_member", function (self, group, u_key, is_casualty)
+	if is_casualty and math.random() < 0.2 then
+		self:_chk_say_group(group, "group_death")
+	end
+end)

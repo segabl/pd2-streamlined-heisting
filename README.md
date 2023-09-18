@@ -89,6 +89,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 
 - Reduces the effect of health granularity drastically (damage dealt to enemies is closer to the actual weapon damage listed in the inventory)
 - Restores spawning voicelines for Bulldozers and Tasers and spawn noise for scripted Cloaker spawns
+- Improves variety of enemy combat chatter and enables idle chatter for stealth
 - Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes various animation issues, like enemies playing full body crouching animations when suppressed when they are already crouching
 - Makes special enemies and bosses more responsive by detaching their attack logic updates from the enemy task scheduler

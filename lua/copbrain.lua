@@ -63,6 +63,15 @@ Hooks:OverrideFunction(CopBrain, "on_surrender_chance", function (self)
 end)
 
 
+-- Handle suppressed chatter in logic
+Hooks:OverrideFunction(CopBrain, "on_suppressed", function (self, state)
+	self._logic_data.is_suppressed = state or nil
+	if self._current_logic.on_suppressed_state then
+		self._current_logic.on_suppressed_state(self._logic_data)
+	end
+end)
+
+
 -- Limit logic updates, there's no need to update it every frame
 local update_original = CopBrain.update
 function CopBrain:update(unit, t, ...)
