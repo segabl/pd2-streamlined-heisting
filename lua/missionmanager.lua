@@ -21,7 +21,7 @@ Hooks:PreHook(MissionManager, "_activate_mission", "sh__activate_mission", funct
 			-- Check if this element is supposed to trigger reinforce points
 			if data.reinforce then
 				Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element_id, function ()
-					StreamHeist:log("%s executed, %s %u reinforce point(s)", element:editor_name(), v.force and "enabled" or "disabled", #data.reinforce)
+					StreamHeist:log("%s executed, toggled %u reinforce point(s)", element:editor_name(), #data.reinforce)
 					for _, v in pairs(data.reinforce) do
 						managers.groupai:state():set_area_min_police_force(v.name, v.force, v.position)
 					end
