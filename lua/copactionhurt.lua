@@ -1,7 +1,12 @@
 -- Make concussion update function use hurt update (to update position and play the full animation)
+-- Fix Shields not using their own concussion stun animations
 -- Remove position reservations on death
 Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 	if self._hurt_type == "concussion" then
+		if self._unit:base()._tweak_table == "shield" then
+			local redir_res = self._ext_movement:play_redirect("concussion_stun")
+			self._machine:set_parameter(redir_res, "shield_var" .. self:_pseudorandom(4), 1)
+		end
 		self.update = self._upd_hurt
 	elseif self._hurt_type == "death" and Network:is_server() then
 		self._unit:brain():rem_all_pos_rsrv()
