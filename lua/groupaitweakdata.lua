@@ -95,26 +95,23 @@ end)
 
 -- Improve enemy chatter, make proper use of chatter settings like duration and radius
 Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", function (self)
-	local interval_short = { 1, 2 }
-	local interval_medium = { 5, 10 }
-	local interval_long = { 10, 20 }
+	local interval = { 1, 2 }
 	local duration_short = { 5, 10 }
 	local duration_medium = { 10, 20 }
 	local duration_long = { 20, 40 }
 	local radius_small = 800
-	local radius_large = 1200
+	local radius_medium = 1200
+	local radius_large = 1600
 
 	for _, chatter in pairs(self.enemy_chatter) do
-		chatter.interval = interval_short
+		chatter.interval = interval
 		chatter.duration = duration_short
 		chatter.radius = radius_small
 		chatter.max_nr = 1
 	end
 
 	-- Loud chatter
-	self.enemy_chatter.aggressive.interval = interval_medium
 	self.enemy_chatter.aggressive.duration = duration_medium
-	self.enemy_chatter.contact.interval = interval_medium
 	self.enemy_chatter.contact.duration = duration_medium
 	self.enemy_chatter.retreat.queue = "m01"
 	self.enemy_chatter.push = clone(self.enemy_chatter.go_go)
@@ -131,20 +128,17 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", 
 	self.enemy_chatter.get_loot.queue = "l01"
 	self.enemy_chatter.watch_background = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.watch_background.queue = "bak"
-	self.enemy_chatter.watch_background.interval = interval_medium
 	self.enemy_chatter.watch_background.duration = duration_medium
 	self.enemy_chatter.hostage_delay = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.hostage_delay.queue = "p02"
-	self.enemy_chatter.hostage_delay.interval = interval_long
 	self.enemy_chatter.hostage_delay.duration = duration_long
-	self.enemy_chatter.hostage_delay.radius = radius_large
+	self.enemy_chatter.hostage_delay.radius = radius_medium
 	self.enemy_chatter.group_death = clone(self.enemy_chatter.watch_background)
 	self.enemy_chatter.group_death.queue = "lk3a"
 
 	-- Stealth chatter
 	self.enemy_chatter.idle = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.idle.queue = "a06"
-	self.enemy_chatter.idle.interval = interval_long
 	self.enemy_chatter.idle.duration = duration_long
 	self.enemy_chatter.idle.radius = radius_large
 	self.enemy_chatter.report = clone(self.enemy_chatter.idle)

@@ -16,7 +16,8 @@ if not StreamHeist then
 				murkywater = true,
 				federales = true,
 				russia = true
-			}
+			},
+			radio_filtered_heavies = false
 		}
 	}
 
@@ -118,6 +119,10 @@ if not StreamHeist then
 			StreamHeist.settings.faction_tweaks[item:name()] = (item:value() == "on")
 		end
 
+		function MenuCallbackHandler:sh_toggle(item)
+			StreamHeist.settings[item:name()] = (item:value() == "on")
+		end
+
 		function MenuCallbackHandler:sh_save()
 			io.save_as_json(StreamHeist.settings, StreamHeist.save_path)
 		end
@@ -146,11 +151,27 @@ if not StreamHeist then
 				disabled = auto_faction_tweaks,
 				disabled_color = conflict and tweak_data.screen_colors.important_2,
 				menu_id = menu_id,
-				priority = 10 - i
+				priority = 100 - i
 			})
 
 			table.insert(faction_menu_elements, menu_element)
 		end
+
+		MenuHelper:AddDivider({
+			menu_id = menu_id,
+			size = 24,
+			priority = 90
+		})
+
+		MenuHelper:AddToggle({
+			id = "radio_filtered_heavies",
+			title = "sh_menu_radio_filtered_heavies",
+			desc = "sh_menu_radio_filtered_heavies_desc",
+			callback = "sh_toggle",
+			value = StreamHeist.settings.radio_filtered_heavies,
+			menu_id = menu_id,
+			priority = 89
+		})
 
 		nodes[menu_id] = MenuHelper:BuildMenu(menu_id, { back_callback = "sh_save" })
 		MenuHelper:AddMenuItem(nodes["blt_options"], menu_id, "sh_menu_main")

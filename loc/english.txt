@@ -11,6 +11,8 @@
 	"sh_menu_russia" : "Improved Russian faction",
 	"sh_menu_faction_tweak_desc" : "Improves enemy distinction and appearance\nRequires a game restart to take effect",
 	"sh_menu_faction_tweak_conflict_desc" : "Disabled due to the following mod:\n$MOD",
+	"sh_menu_radio_filtered_heavies" : "Radio-filtered Heavy SWAT",
+	"sh_menu_radio_filtered_heavies_desc" : "Makes Heavy SWAT units use radio-filtered voicelines\nDisables the radio filter on regular SWAT units on Death Sentence",
 	"sh_menu_warning" : "Warning",
 	"sh_menu_conflicts" : "The following mod(s) are likely to cause unintended behavior or crashes in combination with Streamlined Heisting:",
 	"sh_menu_conflicts_disable" : "Disable conflicting mods",

@@ -714,7 +714,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_mini.spawn_sound_event = self.tank_mini.speech_prefix_p1 .. "_entrance"
 	self.taser.spawn_sound_event = self.taser.speech_prefix_p1 .. "_entrance"
 
-	-- Fix gangster speech prefixes
+	-- Fix speech prefixes
 	self.gangster.speech_prefix_p1 = "lt"
 	self.gangster.speech_prefix_p2 = nil
 	self.gangster.speech_prefix_count = 2
@@ -724,6 +724,26 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.biker.speech_prefix_p1 = "bik"
 	self.biker.speech_prefix_p2 = nil
 	self.biker.speech_prefix_count = 2
+	self.gensec.speech_prefix_p1 = self._unit_prefixes.cop
+	self.cop.speech_prefix_p1 = self._unit_prefixes.cop
+	self.cop_scared.speech_prefix_p1 = self._unit_prefixes.cop
+	self.fbi.speech_prefix_p1 = self._unit_prefixes.cop
+	self.sniper.speech_prefix_p1 = self._unit_prefixes.cop
+	self.shield.speech_prefix_p1 = self._unit_prefixes.swat
+	self.marshal_marksman.speech_prefix_p1 = self._unit_prefixes.swat
+	self.marshal_shield.speech_prefix_p1 = self._unit_prefixes.swat
+	self.marshal_shield_break.speech_prefix_p1 = self._unit_prefixes.swat
+
+	if StreamHeist.settings.radio_filtered_heavies then
+		self.swat.speech_prefix_p2 = "n"
+		self.fbi_swat.speech_prefix_p2 = "n"
+		self.city_swat.speech_prefix_p2 = "n"
+		self.shield.speech_prefix_p2 = "n"
+		self.marshal_shield.speech_prefix_p2 = "n"
+		self.marshal_shield_break.speech_prefix_p2 = "n"
+		self.heavy_swat.speech_prefix_p2 = "d"
+		self.fbi_heavy_swat.speech_prefix_p2 = "d"
+	end
 
 	-- Tweak some health values for better scaling
 	self.tank.HEALTH_INIT = 200
