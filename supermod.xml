@@ -536,6 +536,8 @@
 			<!-- c45 shield -->
 			<file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45.model"/>
 			<file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45.object"/>
+			<file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45.unit"/>
+			<file :name="ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45_husk.unit"/>
 
 			<!-- mp9 shield -->
 			<file :name="ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9.unit"/>
