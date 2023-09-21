@@ -3,7 +3,7 @@
 -- Remove position reservations on death
 Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 	if self._hurt_type == "concussion" then
-		if self._unit:base()._tweak_table == "shield" then
+		if self._ext_inventory:shield_unit() then
 			local redir_res = self._ext_movement:play_redirect("concussion_stun")
 			self._machine:set_parameter(redir_res, "shield_var" .. self:_pseudorandom(4), 1)
 		end
