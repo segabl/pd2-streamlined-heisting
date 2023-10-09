@@ -117,6 +117,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes Jokers sometimes following the wrong player
 - Makes civilians' reactions to intimidation more consistent and fixes them jumping into a standing position randomly
 - Fixes enemies sometimes just disappearing when they are told to retreat
+- Maxes the maximum amount of random drill jams depend on the drill timer and prevents jams shortly after fixing a drill
 
 ## Credits
 

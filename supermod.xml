@@ -149,6 +149,7 @@
 				<group :hook_id="props/">
 					<post :hook_id="aiattentionobject"/>
 					<post :hook_id="carrydata"/>
+					<post :hook_id="timergui"/>
 				</group>
 
 				<group :hook_id="weapons/">
