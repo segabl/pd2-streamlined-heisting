@@ -120,9 +120,10 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 
 ## Credits
 
-- [AverageChan](https://modworkshop.net/user/97086) for helping with testing and fixing some assets
-- [nikita](https://modworkshop.net/user/54264), [miss miki](https://modworkshop.net/user/55749), [Nardo](https://modworkshop.net/user/19738), [hitscanner](https://modworkshop.net/user/hitscanner) for testing and providing feedback
+- [AverageChan](https://modworkshop.net/user/97086) for testing, feedback and fixing some assets
 - [fuglore](https://modworkshop.net/user/32041) for inspiring some gameplay features and fixes
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
 - [Masavik](https://modworkshop.net/user/52365) for creating the GenSec shield model
-- [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and providing some animation fixes
+- [miss miki](https://modworkshop.net/user/55749) for testing, feedback and some mission script improvements
+- [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and some animation fixes
+- [hitscanner](https://modworkshop.net/user/hitscanner), [Nardo](https://modworkshop.net/user/19738), [nikita](https://modworkshop.net/user/54264) and others for testing and feedback
