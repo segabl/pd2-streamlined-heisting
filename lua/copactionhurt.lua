@@ -1,6 +1,7 @@
 -- Make concussion update function use hurt update (to update position and play the full animation)
 -- Fix Shields not using their own concussion stun animations
 -- Remove position reservations on death
+-- Improve reaction to ECM feedback by playing specific voicelines and pain sounds
 Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 	if self._hurt_type == "concussion" then
 		if self._ext_inventory:shield_unit() then
@@ -8,8 +9,14 @@ Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 			self._machine:set_parameter(redir_res, "shield_var" .. self:_pseudorandom(4), 1)
 		end
 		self.update = self._upd_hurt
-	elseif self._hurt_type == "death" and Network:is_server() then
-		self._unit:brain():rem_all_pos_rsrv()
+	elseif Network:is_server() then
+		if self._hurt_type == "death" then
+			self._unit:brain():rem_all_pos_rsrv()
+		elseif self._hurt_type == "hurt_sick" then
+			local t = TimerManager:game():time()
+			self._say_sick_t = t + math.rand((self._sick_time - t) * 0.5)
+			self._say_hurt_t = t + math.rand(2, 5)
+		end
 	end
 end)
 
@@ -17,6 +24,14 @@ end)
 -- Make sick update finish their hurt exit anims before expiring
 Hooks:OverrideFunction(CopActionHurt, "_upd_sick", function (self, t)
 	if self._sick_time then
+		if self._say_sick_t and t > self._say_sick_t then
+			managers.groupai:state():chk_say_enemy_chatter(self._unit, self._common_data.pos, "jammer")
+			self._say_sick_t = nil
+		elseif self._say_hurt_t and t > self._say_hurt_t and not self._unit:sound():speaking(t) then
+			self._unit:sound():say("x01a_any_3p", true)
+			self._say_hurt_t = t + math.rand(2, 5)
+		end
+
 		if t > self._sick_time then
 			self._ext_movement:play_redirect("idle")
 			self._sick_time = nil
