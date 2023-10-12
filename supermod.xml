@@ -68,6 +68,7 @@
 					<group :hook_id="logics/">
 						<post :hook_id="civilianlogicflee"/>
 						<post :hook_id="civilianlogicsurrender"/>
+						<post :hook_id="civilianlogictravel"/>
 					</group>
 
 					<post :hook_id="civilianbrain"/>
