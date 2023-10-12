@@ -526,7 +526,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.suppression.hard_agg.brown_point = { 7, 9 }
 
 	-- Enemy chatter
-	presets.enemy_chatter.cop.retreat = nil
 	presets.enemy_chatter.cop.flank = true
 	presets.enemy_chatter.cop.open_fire = true
 	presets.enemy_chatter.cop.watch_background = true
@@ -551,6 +550,15 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		aggressive = true,
 		contact = true,
 		go_go = true
+	}
+
+	presets.enemy_chatter.security = {
+		aggressive = true,
+		go_go = true,
+		contact = true,
+		suppress = true,
+		idle = true,
+		report = true
 	}
 
 	return presets
@@ -830,6 +838,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.biker_escape.chatter = self.presets.enemy_chatter.gangster
 	self.bolivian.chatter = self.presets.enemy_chatter.gangster
 	self.bolivian_indoors.chatter = self.presets.enemy_chatter.gangster
+	self.gensec.chatter = self.presets.enemy_chatter.security
+	self.security.chatter = self.presets.enemy_chatter.security
+	self.security_undominatable.chatter = self.presets.enemy_chatter.security
+	self.security_mex.chatter = self.presets.enemy_chatter.security
+	self.security_mex_no_pager.chatter = self.presets.enemy_chatter.security
 end)
 
 
