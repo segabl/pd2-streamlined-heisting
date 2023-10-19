@@ -105,6 +105,7 @@
 							<post :hook_id="coplogicphalanxminion"/>
 							<post :hook_id="coplogicphalanxvip"/>
 							<post :hook_id="coplogicsniper"/>
+							<post :hook_id="coplogictrade"/>
 							<post :hook_id="coplogictravel"/>
 						</group>
 
