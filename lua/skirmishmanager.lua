@@ -1,5 +1,5 @@
 -- Make enemy units switch difficulty factions over waves
-local wave_unit_categories = {
+SkirmishManager.wave_unit_categories = {
 	[2] = {
 		FBI_swat_M4 = Idstring("units/payday2/characters/ene_swat_1/ene_swat_1"),
 		FBI_swat_R870 = Idstring("units/payday2/characters/ene_swat_2/ene_swat_2"),
@@ -52,7 +52,7 @@ Hooks:PostHook(SkirmishManager, "init_finalize", "sh_init_finalize", function (s
 	end
 
 	local unit_categories = tweak_data.group_ai.unit_categories
-	local first = wave_unit_categories[2]
+	local first = self.wave_unit_categories[2]
 	for k, v in pairs(first) do
 		unit_categories[k].unit_types.america = {
 			v
@@ -61,10 +61,10 @@ Hooks:PostHook(SkirmishManager, "init_finalize", "sh_init_finalize", function (s
 end)
 
 Hooks:PostHook(SkirmishManager, "_apply_modifiers_for_wave", "sh__apply_modifiers_for_wave", function (self, wave_number)
-	self._unit_wave_index = wave_unit_categories[wave_number] and wave_number or self._unit_wave_index or 2
+	self._unit_wave_index = self.wave_unit_categories[wave_number] and wave_number or self._unit_wave_index or 2
 	local next_unit_wave_index = 8
 	for i = wave_number + 1, next_unit_wave_index do
-		if wave_unit_categories[i] then
+		if self.wave_unit_categories[i] then
 			next_unit_wave_index = i
 			break
 		end
@@ -80,14 +80,14 @@ Hooks:PostHook(SkirmishManager, "_apply_modifiers_for_wave", "sh__apply_modifier
 	end
 
 	local unit_categories = tweak_data.group_ai.unit_categories
-	for k, v in pairs(wave_unit_categories[self._unit_wave_index]) do
+	for k, v in pairs(self.wave_unit_categories[self._unit_wave_index]) do
 		unit_categories[k].unit_types.america = {}
 		for _ = 1, amount - progress do
 			table.insert(unit_categories[k].unit_types.america, v)
 		end
 	end
 
-	for k, v in pairs(wave_unit_categories[next_unit_wave_index]) do
+	for k, v in pairs(self.wave_unit_categories[next_unit_wave_index]) do
 		for _ = 1, progress do
 			table.insert(unit_categories[k].unit_types.america, v)
 		end

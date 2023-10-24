@@ -1,7 +1,7 @@
 -- Make Bulldozer armor prevent damage
 TankCopDamage.IS_TANK = true
 
-local armor_body_names = {
+TankCopDamage.armor_body_names = {
 	[Idstring("body_armor_back"):key()] = true,
 	[Idstring("body_armor_chest"):key()] = true,
 	[Idstring("body_armor_neck"):key()] = true,
@@ -12,6 +12,7 @@ local armor_body_names = {
 	[Idstring("body_ammo"):key()] = true,
 	[Idstring("body_vest"):key()] = true
 }
+
 function TankCopDamage:damage_bullet(attack_data, ...)
 	if self._dead or self._invulnerable then
 		return
@@ -19,7 +20,7 @@ function TankCopDamage:damage_bullet(attack_data, ...)
 
 	local plate_name = self._ids_plate_name
 	local hit_body_name = attack_data.col_ray.body and attack_data.col_ray.body:name()
-	if armor_body_names[hit_body_name:key()] then
+	if self.armor_body_names[hit_body_name:key()] then
 		self._ids_plate_name = hit_body_name
 	end
 

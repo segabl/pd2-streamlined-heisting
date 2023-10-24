@@ -11,7 +11,7 @@ local function based_on(preset, values)
 			if type(val) == "function" then
 				val(entry[val_name])
 			else
-				entry[val_name] = val ~= nil_value and val
+				entry[val_name] = val ~= nil_value and val or nil
 			end
 		end
 	end
@@ -847,7 +847,7 @@ end)
 
 
 -- Create a preset scaling function that assigns the correct weapon presets and handles HP scaling
-local access_presets = {
+CharacterTweakData.access_presets = {
 	cop = "sh_strong",
 	fbi = "sh_strong",
 	gangster = "sh_strong",
@@ -857,7 +857,8 @@ local access_presets = {
 	tank = "sh_tank",
 	taser = "sh_taser"
 }
-local preset_overrides = {
+
+CharacterTweakData.tweak_table_presets = {
 	fbi_heavy_swat = "sh_heavy",
 	heavy_swat = "sh_heavy",
 	heavy_swat_sniper = "sh_sniper_heavy",
@@ -867,11 +868,15 @@ local preset_overrides = {
 	medic = "sh_heavy",
 	tank_medic = "sh_heavy"
 }
-local hp_muls = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
+
+CharacterTweakData.hp_multipliers = {
+	1, 1, 1.5, 2, 3, 4, 6, 8
+}
+
 function CharacterTweakData:_set_presets()
 	local diff_i = self.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local diff_i_norm = math.max(0, diff_i - 2) / (#self.tweak_data.difficulties - 2)
-	local hp_mul = hp_muls[diff_i]
+	local hp_mul = self.hp_multipliers[diff_i]
 
 	for _, name in pairs(self._enemy_list) do
 		local char_preset = self[name]
@@ -888,7 +893,7 @@ function CharacterTweakData:_set_presets()
 			char_preset.headshot_dmg_mul = char_preset.base_headshot_dmg_mul * 2
 		end
 
-		char_preset.weapon = self.presets.weapon[preset_overrides[name] or access_presets[char_preset.access] or "sh_base"]
+		char_preset.weapon = self.presets.weapon[self.tweak_table_presets[name] or self.access_presets[char_preset.access] or "sh_base"]
 	end
 
 	-- Flashbanged duration

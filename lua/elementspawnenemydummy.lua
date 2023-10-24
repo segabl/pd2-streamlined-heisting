@@ -6,7 +6,7 @@ if Global.editor_mode or level_id == "modders_devmap" or level_id == "Enemy_Spaw
 end
 
 -- Map to correct incorrect faction spawns
-local enemy_replacements = {
+ElementSpawnEnemyDummy.faction_mapping = {
 	normal = {
 		swat_1 = "units/payday2/characters/ene_swat_1/ene_swat_1",
 		swat_2 = "units/payday2/characters/ene_swat_2/ene_swat_2",
@@ -51,10 +51,11 @@ local enemy_replacements = {
 		cloaker = "units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker"
 	}
 }
-enemy_replacements.hard = enemy_replacements.normal
-enemy_replacements.overkill_145 = enemy_replacements.overkill
-enemy_replacements.overkill_290 = enemy_replacements.easy_wish
-local enemy_mapping = {
+ElementSpawnEnemyDummy.faction_mapping.hard = ElementSpawnEnemyDummy.faction_mapping.normal
+ElementSpawnEnemyDummy.faction_mapping.overkill_145 = ElementSpawnEnemyDummy.faction_mapping.overkill
+ElementSpawnEnemyDummy.faction_mapping.overkill_290 = ElementSpawnEnemyDummy.faction_mapping.easy_wish
+
+ElementSpawnEnemyDummy.enemy_mapping = {
 	[Idstring("units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1"):key()] = "dozer_1",
 	[Idstring("units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"):key()] = "dozer_2",
 	[Idstring("units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"):key()] = "dozer_3",
@@ -93,10 +94,7 @@ else
 	difficulty = Global.game_settings and Global.game_settings.difficulty or "normal"
 end
 Hooks:PostHook(ElementSpawnEnemyDummy, "init", "sh_init", function(self)
-	local mapped_name = enemy_mapping[self._enemy_name:key()]
-	local mapped_unit = enemy_replacements[difficulty] and enemy_replacements[difficulty][mapped_name]
-	local mapped_unit_ids = mapped_unit and Idstring(mapped_unit)
-	if mapped_unit_ids and mapped_unit_ids ~= self._enemy_name then
-		self._enemy_name = mapped_unit_ids
-	end
+	local mapped_name = self.enemy_mapping[self._enemy_name:key()]
+	local mapped_unit = self.faction_mapping[difficulty] and self.faction_mapping[difficulty][mapped_name]
+	self._enemy_name = mapped_unit and Idstring(mapped_unit) or self._enemy_name
 end)
