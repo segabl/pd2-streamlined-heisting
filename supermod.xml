@@ -358,6 +358,8 @@
 			<file :name="ene_murkywater_shield/ene_murkywater_shield_husk.unit"/>
 
 			<!-- fix heavy body plate -->
+			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.material_config"/>
+			<file :name="ene_murkywater_heavy/ene_murkywater_heavy_contour.material_config"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.model"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.object"/>
 			<file :name="ene_murkywater_heavy/ene_murkywater_heavy.unit"/>
@@ -368,8 +370,6 @@
 			<file :name="ene_murkywater_heavy_g36/ene_murkywater_heavy_g36_husk.unit"/>
 
 			<!-- make heavy shotgunner distinct and fix body plate -->
-			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.material_config"/>
-			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun_contour.material_config"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.model"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.object"/>
 			<file :name="ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun.unit"/>

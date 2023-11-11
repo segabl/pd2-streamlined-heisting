@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <dynamic_object>
-	<diesel materials="units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun" orientation_object="root_point"/>
+	<diesel materials="units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy" orientation_object="root_point"/>
 	<sequence_manager file="units/payday2/characters/ragdoll"/>
 	<animation_def name="anims/units/enemies/cop/cop_def"/>
 
