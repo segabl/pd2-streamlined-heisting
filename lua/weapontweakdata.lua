@@ -22,9 +22,6 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.m249_npc.usage = "is_lmg"
 	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
 	self.mossberg_npc.anim_usage = "is_shotgun_pump"
-	self.mossberg_npc.CLIP_AMMO_MAX = 2
-	self.mossberg_npc.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
-	self.mossberg_npc.sounds.prefix = self.huntsman_crew.sounds.prefix
 	self.mossberg_npc.usage = "is_double_barrel"
 	self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
 	self.rpk_lmg_npc.usage = "is_lmg"

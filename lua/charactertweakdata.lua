@@ -345,17 +345,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		}
 	}
 
-	-- Tweak movement speed presets
-	presets.move_speed.very_slow = deep_clone(presets.move_speed.slow)
-	for _, pose in pairs(presets.move_speed.very_slow) do
-		for _, stance in pairs(pose.walk) do
-			for dir, speed in pairs(stance) do
-				stance[dir] = speed * 0.85
-			end
-		end
-		pose.run = deep_clone(pose.walk)
-	end
-
 	-- Tweak hurt severities
 	for _, preset in pairs(presets.hurt_severities) do
 		for _, damage_type in pairs(preset) do
@@ -526,6 +515,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.suppression.hard_agg.brown_point = { 7, 9 }
 
 	-- Enemy chatter
+	presets.enemy_chatter.cop.aggressive = true
+	presets.enemy_chatter.cop.go_go = true
+	presets.enemy_chatter.cop.contact = true
 	presets.enemy_chatter.cop.flank = true
 	presets.enemy_chatter.cop.open_fire = true
 	presets.enemy_chatter.cop.watch_background = true
@@ -700,10 +692,10 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	-- Set hurt severities
 	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
+	self.zeal_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.heavy_swat_sniper.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.shadow_spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
-	self.medic.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt
 	self.marshal_marksman.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.marshal_shield_break.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 
@@ -714,6 +706,8 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.fbi_heavy_swat.surrender = self.presets.surrender.hard
 	self.city_swat.surrender = self.presets.surrender.normal
 	self.heavy_swat_sniper.surrender = self.presets.surrender.hard
+	self.zeal_swat.surrender = self.presets.surrender.normal
+	self.zeal_heavy_swat.surrender = self.presets.surrender.hard
 
 	-- Restore special entrance announcements
 	self.tank.spawn_sound_event = self.tank.speech_prefix_p1 .. "_entrance"
@@ -746,11 +740,13 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 		self.swat.speech_prefix_p2 = "n"
 		self.fbi_swat.speech_prefix_p2 = "n"
 		self.city_swat.speech_prefix_p2 = "n"
+		self.zeal_swat.speech_prefix_p2 = "n"
 		self.shield.speech_prefix_p2 = "n"
 		self.marshal_shield.speech_prefix_p2 = "n"
 		self.marshal_shield_break.speech_prefix_p2 = "n"
 		self.heavy_swat.speech_prefix_p2 = "d"
 		self.fbi_heavy_swat.speech_prefix_p2 = "d"
+		self.zeal_heavy_swat.speech_prefix_p2 = "d"
 	end
 
 	-- Tweak some health values for better scaling
@@ -789,20 +785,21 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.marshal_shield.damage.explosion_damage_mul = 1
 
 	-- Fix/tweak suppression settings
-	self.medic.suppression = nil
 	self.fbi.suppression = self.presets.suppression.easy
 	self.gensec.suppression = self.presets.suppression.easy
 	self.swat.suppression = self.presets.suppression.hard_def
+	self.zeal_swat.suppression = self.presets.suppression.hard_def
 	self.heavy_swat_sniper.suppression = self.presets.suppression.hard_agg
 
 	-- Allow arrests
 	self.fbi.no_arrest = nil
 	self.swat.no_arrest = nil
 	self.fbi_swat.no_arrest = nil
+	self.zeal_swat.no_arrest = nil
 
 	-- Tweak move speeds
-	self.tank_mini.move_speed = self.presets.move_speed.very_slow
 	self.swat.move_speed = self.presets.move_speed.very_fast
+	self.zeal_swat.move_speed = self.presets.move_speed.very_fast
 	self.cop.move_speed = self.presets.move_speed.fast
 
 	-- Set custom objective interrupt distance
@@ -866,7 +863,8 @@ CharacterTweakData.tweak_table_presets = {
 	marshal_shield = "sh_marshal",
 	marshal_shield_break = "sh_marshal",
 	medic = "sh_heavy",
-	tank_medic = "sh_heavy"
+	tank_medic = "sh_heavy",
+	zeal_heavy_swat = "sh_heavy"
 }
 
 CharacterTweakData.hp_multipliers = {

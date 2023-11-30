@@ -1,15 +1,7 @@
--- Make concussion update function use hurt update (to update position and play the full animation)
--- Fix Shields not using their own concussion stun animations
 -- Remove position reservations on death
 -- Improve reaction to ECM feedback by playing specific voicelines and pain sounds
-Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
-	if self._hurt_type == "concussion" then
-		if self._ext_inventory:shield_unit() then
-			local redir_res = self._ext_movement:play_redirect("concussion_stun")
-			self._machine:set_parameter(redir_res, "shield_var" .. self:_pseudorandom(4), 1)
-		end
-		self.update = self._upd_hurt
-	elseif Network:is_server() then
+if Network:is_server() then
+	Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 		if self._hurt_type == "death" then
 			self._unit:brain():rem_all_pos_rsrv()
 		elseif self._hurt_type == "hurt_sick" then
@@ -17,8 +9,8 @@ Hooks:PostHook(CopActionHurt, "init", "sh_init", function (self)
 			self._say_sick_t = t + math.rand((self._sick_time - t) * 0.5)
 			self._say_hurt_t = t + math.rand(2, 5)
 		end
-	end
-end)
+	end)
+end
 
 
 -- Make sick update finish their hurt exit anims before expiring

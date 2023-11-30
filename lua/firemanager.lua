@@ -7,60 +7,6 @@ local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local offset_vec = Vector3(0, 0, 30)
 
--- Fix fire damage update resetting DoT grace and not triggering DoT damage until no more fire DoT is added
--- Instead of updating the damage received time, update the DoT duration with the difference between new and old received time
-Hooks:OverrideFunction(FireManager, "_add_doted_enemy", function (self, enemy_unit, fire_damage_received_time, weapon_unit, dot_length, dot_damage, user_unit, is_molotov)
-	if not self._doted_enemies then
-		return
-	end
-
-	local dot_info = nil
-	for _, cur_dot_info in ipairs(self._doted_enemies) do
-		if cur_dot_info.enemy_unit == enemy_unit then
-			dot_info = cur_dot_info
-			break
-		end
-	end
-
-	if dot_info then
-		dot_info.weapon_unit = weapon_unit
-		dot_info.user_unit = user_unit
-		dot_info.is_molotov = is_molotov
-		dot_info.dot_damage = dot_damage
-		dot_info.dot_length = dot_length + fire_damage_received_time - dot_info.fire_damage_received_time
-	else
-		dot_info = {
-			fire_dot_counter = 0,
-			enemy_unit = enemy_unit,
-			fire_damage_received_time = fire_damage_received_time,
-			weapon_unit = weapon_unit,
-			dot_length = dot_length,
-			dot_damage = dot_damage,
-			user_unit = user_unit,
-			is_molotov = is_molotov
-		}
-
-		table.insert(self._doted_enemies, dot_info)
-
-		local has_delayed_info = false
-		for index, delayed_dot in pairs(self.predicted_dot_info) do
-			if enemy_unit == delayed_dot.enemy_unit then
-				dot_info.sound_source = delayed_dot.sound_source
-				dot_info.fire_effects = delayed_dot.fire_effects
-				table.remove(self.predicted_dot_info, index)
-				has_delayed_info = true
-			end
-		end
-
-		if not has_delayed_info then
-			self:_start_enemy_fire_effect(dot_info)
-			self:start_burn_body_sound(dot_info)
-		end
-	end
-
-	self:check_achievemnts(enemy_unit, fire_damage_received_time)
-end)
-
 
 -- Remove splinter calculation (not really needed for fire) and optimize function
 Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, params)
@@ -73,7 +19,7 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 	local damage_range = params.damage_range or range
 	local alert_filter = params.alert_filter or managers.groupai:state():get_unit_type_filter("civilians_enemies")
 	local owner = params.owner
-	local fire_dot_data = params.fire_dot_data
+	local dot_data = params.dot_data
 	local alert_radius = params.alert_radius or 3000
 	local is_molotov = params.is_molotov
 	local obstruction_slotmask = managers.slot:get_mask("molotov_raycasts")
@@ -96,8 +42,7 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 			variant = "fire",
 			position = hit_pos,
 			range = damage_range,
-			damage = player_dmg,
-			ignite_character = params.ignite_character
+			damage = player_dmg
 		})
 	end
 
@@ -159,22 +104,24 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 					end
 
 					local dead_before = hit_unit:character_damage():dead()
-					hit_unit:character_damage():damage_fire({
+					local col_ray = {
+						unit = hit_unit,
+						position = hit_body:position(),
+						ray = dir
+					}
+					local defense_data = hit_unit:character_damage():damage_fire({
 						variant = "fire",
 						damage = math.max(dmg, 1),
 						attacker_unit = user_unit,
 						weapon_unit = owner,
-						ignite_character = params.ignite_character,
-						col_ray = self._col_ray or {
-							position = hit_body:position(),
-							ray = dir
-						},
+						col_ray = col_ray,
 						is_fire_dot_damage = false,
-						fire_dot_data = fire_dot_data,
+						fire_dot_data = dot_data,
 						is_molotov = is_molotov
 					})
+					local dead_now = hit_unit:character_damage():dead()
 
-					if not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
+					if not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and dead_now then
 						local tweak_id = hit_unit:base()._tweak_table
 						if CopDamage.is_civilian(tweak_id) then
 							count_civilian_kills = count_civilian_kills + 1
@@ -182,6 +129,13 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 							count_gangster_kills = count_gangster_kills + 1
 						elseif managers.enemy:is_enemy(hit_unit) then
 							count_cop_kills = count_cop_kills + 1
+						end
+					end
+
+					if dot_data and not dead_now and defense_data and defense_data ~= "friendly_fire" and hit_unit:character_damage().damage_dot then
+						local damage_class = CoreSerialize.string_to_classtable(dot_data.damage_class)
+						if damage_class then
+							damage_class:start_dot_damage(col_ray, owner, dot_data, nil, user_unit, defense_data)
 						end
 					end
 				end

@@ -31,7 +31,6 @@
 
 				<post :hook_id="crimespreemanager"/>
 				<post :hook_id="dynamicresourcemanager"/>
-				<post :hook_id="enemymanager"/>
 				<post :hook_id="explosionmanager"/>
 				<post :hook_id="firemanager"/>
 				<post :hook_id="hudmanager"/>
@@ -39,8 +38,6 @@
 				<post :hook_id="playermanager"/>
 				<post :hook_id="skirmishmanager"/>
 			</group>
-
-			<post :hook_id="modifiers/modifierheavies"/>
 
 			<group :hook_id="network/">
 				<post :hook_id="base/networkmanager"/>
@@ -79,10 +76,7 @@
 					<post :hook_id="boss/logics/bosslogicattack"/>
 
 					<group :hook_id="cop/">
-						<group :hook_id="actions/full_body/">
-							<post :hook_id="copactiondodge"/>
-							<post :hook_id="copactionhurt"/>
-						</group>
+						<post :hook_id="actions/full_body/copactionhurt"/>
 
 						<group :hook_id="actions/lower_body/">
 							<post :hook_id="copactionidle"/>
@@ -90,7 +84,6 @@
 						</group>
 
 						<group :hook_id="actions/upper_body/">
-							<post :hook_id="copactionreload"/>
 							<post :hook_id="copactionshoot"/>
 							<post :hook_id="copactiontase"/>
 						</group>
@@ -117,6 +110,7 @@
 						<post :hook_id="copsound"/>
 					</group>
 
+					<post :hook_id="medic/medicdamage"/>
 					<post :hook_id="shield/logics/shieldlogicattack"/>
 
 					<group :hook_id="spooc/">
@@ -145,11 +139,9 @@
 				<group :hook_id="player_team/">
 					<post :hook_id="actions/lower_body/criminalactionwalk"/>
 					<post :hook_id="teamaidamage"/>
-					<post :hook_id="teamaimovement"/>
 				</group>
 
 				<group :hook_id="props/">
-					<post :hook_id="aiattentionobject"/>
 					<post :hook_id="carrydata"/>
 					<post :hook_id="timergui"/>
 				</group>
@@ -180,11 +172,10 @@
 			<file :name="wpn_npc_saiga/saiga_nm.texture"/>
 			<file :name="wpn_npc_saiga/wpn_npc_saiga.model"/>
 
-			<!-- huntsman retexture/model/sound -->
+			<!-- huntsman retexture/model -->
 			<file :name="wpn_npc_sawnoff_shotgun/sawnoff_df.texture"/>
 			<file :name="wpn_npc_sawnoff_shotgun/sawnoff_nm.texture"/>
 			<file :name="wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun.model"/>
-			<file :name="wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun.unit" dyn_package="false"/>
 
 			<!-- ump sound -->
 			<file :name="wpn_npc_ump/wpn_npc_ump.unit" dyn_package="false"/>

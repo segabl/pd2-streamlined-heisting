@@ -27,7 +27,6 @@ Vanilla uses multiple presets that are assigned based on difficulty, but not eve
 - Simplifies the clunky fire mode system and interpolates the number of rounds fired based on distance instead (enemies will utilize full auto more)
 - Properly implements and makes use of aim delay, enemies will now take time to aim at their target before shooting (depends on distance and difficulty)
 - Fixes barely working focus delay code, enemies will take some time to reach their maximum accuracy when shooting (depends on difficulty)
-- Replaces pseudo-random hit chance calculation with regular random function to avoid lucky/unlucky rolls leading to a lot of hits/misses in a row
 - Allows NPCs to use melee attacks against other NPCs
 - Improves suppression presets to be more distinct between different enemy types
 
@@ -37,7 +36,6 @@ At one point the game had unique spawn groups with different behaviours and tact
 
 - Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
 - Restores original spawn groups that were disabled, adding back shotgunners, reinforce groups and hostage rescue units
-- Adds Skulldozers to the Mayhem Bulldozer spawn pool
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
 - Fixes units with hunt objective only moving to player locations once
@@ -90,27 +88,22 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Reduces the effect of health granularity drastically (damage dealt to enemies is closer to the actual weapon damage listed in the inventory)
 - Restores spawning voicelines for Bulldozers and Tasers and spawn noise for scripted Cloaker spawns
 - Improves variety of enemy combat chatter and enables idle chatter for stealth
-- Fixes enemy suppression, the closer your shots are to an enemy, the more they will suppress instead of the other way around
 - Fixes various animation issues, like enemies playing full body crouching animations when suppressed when they are already crouching
 - Makes special enemies and bosses more responsive by detaching their attack logic updates from the enemy task scheduler
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes sentry guns not count as criminals which stops enemies from pathing to them and ultimately get stuck
 - Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
 - Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
-- Fixes Cloakers being stuck in the beatdown animation and ignoring threats after a charge attack
-- Fixes the Crime Spree "Heavies" modifier replacing the wrong units
 - Fixes the assault fade phase almost always ending after the minimum amount of time
 - Increases the time it takes for Winters to reach the maximum damage reduction (from 10-50% in 40s to 5-50% in 90s)
 - Makes hurt and knockdown animations not stackable, no new animation triggers while there's already one playing
 - Fixes some spawn points being unavailable on certain maps due to incorrect pathing checks
 - Makes flashbangs more consistent and less penalizing when looking away in time
-- Fixes fire damage over time not triggering when a new damage over time instance is applied within a second
 - Fixes and optimizes fire spawned from molotovs and tripmines
 - Fixes instances of Winters not leaving the map when the formation was told to break up before he was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
 - Updates old boss enemies with the new boss logic to make those boss fights more interesting
 - Tweaks some heist mission scripts to play better or fix issues
-- Fixes scripted enemies sometimes immediatley leaving the map after they spawn
 - Makes enemies use more varied dodge directions
 - Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
 - Adds hints when an enemy can't be intimidated due to temporary cooldown, no surrender preset or maximum amount of hostages reached
