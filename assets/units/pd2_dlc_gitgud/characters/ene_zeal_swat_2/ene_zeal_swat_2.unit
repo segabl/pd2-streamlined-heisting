@@ -10,7 +10,7 @@
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData"/>
 		<extension name="base" class="CopBase">
-			<var name="_tweak_table" value="swat"/>
+			<var name="_tweak_table" value="zeal_swat"/>
 			<var name="_default_weapon_id" value="ksg"/>
 		</extension>
 		<extension name="inventory" class="CopInventory"/>
