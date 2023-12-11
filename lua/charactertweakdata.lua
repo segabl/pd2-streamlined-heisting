@@ -744,9 +744,13 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 		self.shield.speech_prefix_p2 = "n"
 		self.marshal_shield.speech_prefix_p2 = "n"
 		self.marshal_shield_break.speech_prefix_p2 = "n"
-		self.heavy_swat.speech_prefix_p2 = "d"
-		self.fbi_heavy_swat.speech_prefix_p2 = "d"
-		self.zeal_heavy_swat.speech_prefix_p2 = "d"
+
+		-- Only set filter for American factions, others don't have the filtered voice set
+		if self._unit_prefixes.heavy_swat == "l" then
+			self.heavy_swat.speech_prefix_p2 = "d"
+			self.fbi_heavy_swat.speech_prefix_p2 = "d"
+			self.zeal_heavy_swat.speech_prefix_p2 = "d"
+		end
 	end
 
 	-- Tweak some health values for better scaling
