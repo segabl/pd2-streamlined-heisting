@@ -9,5 +9,21 @@ return {
 		values = {
 			enabled = false
 		}
+	},
+	-- Increase window spawngroup intervals
+	[100132] = {
+		values = {
+			interval = 20
+		}
+	},
+	[100133] = {
+		values = {
+			interval = 20
+		}
+	},
+	[103491] = {
+		values = {
+			interval = 20
+		}
 	}
 }
