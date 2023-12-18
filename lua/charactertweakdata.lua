@@ -748,8 +748,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 		-- Only set filter for American factions, others don't have the filtered voice set
 		if self._unit_prefixes.heavy_swat == "l" then
 			self.heavy_swat.speech_prefix_p2 = "d"
+			self.heavy_swat.speech_prefix_count = 5
 			self.fbi_heavy_swat.speech_prefix_p2 = "d"
+			self.fbi_heavy_swat.speech_prefix_count = 5
 			self.zeal_heavy_swat.speech_prefix_p2 = "d"
+			self.zeal_heavy_swat.speech_prefix_count = 5
 		end
 	end
 
