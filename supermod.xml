@@ -564,8 +564,9 @@
 
 		<!-- russian mercs -->
 		<group name="units/pd2_dlc_mad/characters/" dyn_package="false" target="scripted" load_group="russia">
-			<!-- disable lights on heavies -->
+			<!-- disable lights on heavies and taser -->
 			<file :name="ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36.object"/>
+			<file :name="ene_akan_cs_tazer_ak47_ass/ene_akan_cs_tazer_ak47_ass.object"/>
 			
 			<!-- redirect unit models for consistency -->
 			<file :name="ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass.unit"/>
