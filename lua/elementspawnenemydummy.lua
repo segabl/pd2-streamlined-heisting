@@ -10,7 +10,6 @@ ElementSpawnEnemyDummy.faction_mapping = {
 	normal = {
 		swat_1 = "units/payday2/characters/ene_swat_1/ene_swat_1",
 		swat_2 = "units/payday2/characters/ene_swat_2/ene_swat_2",
-		swat_3 = "units/payday2/characters/ene_swat_1/ene_swat_1",
 		heavy_1 = "units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1",
 		heavy_2 = "units/payday2/characters/ene_swat_heavy_r870/ene_swat_heavy_r870",
 		shield = "units/payday2/characters/ene_shield_2/ene_shield_2",
@@ -19,16 +18,17 @@ ElementSpawnEnemyDummy.faction_mapping = {
 	overkill = {
 		swat_1 = "units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1",
 		swat_2 = "units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2",
-		swat_3 = "units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1",
 		heavy_1 = "units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1",
 		heavy_2 = "units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870",
 		shield = "units/payday2/characters/ene_shield_1/ene_shield_1",
 		sniper = "units/payday2/characters/ene_sniper_2/ene_sniper_2"
 	},
 	easy_wish = {
-		swat_1 = "units/payday2/characters/ene_city_swat_1/ene_city_swat_1",
+		swat_1 = {
+			"units/payday2/characters/ene_city_swat_1/ene_city_swat_1",
+			"units/payday2/characters/ene_city_swat_3/ene_city_swat_3"
+		},
 		swat_2 = "units/payday2/characters/ene_city_swat_2/ene_city_swat_2",
-		swat_3 = "units/payday2/characters/ene_city_swat_3/ene_city_swat_3",
 		heavy_1 = "units/payday2/characters/ene_city_heavy_g36/ene_city_heavy_g36",
 		heavy_2 = "units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870",
 		shield = "units/payday2/characters/ene_city_shield/ene_city_shield",
@@ -37,7 +37,6 @@ ElementSpawnEnemyDummy.faction_mapping = {
 	sm_wish = {
 		swat_1 = "units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat",
 		swat_2 = "units/pd2_dlc_gitgud/characters/ene_zeal_swat_2/ene_zeal_swat_2",
-		swat_3 = "units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat",
 		heavy_1 = "units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy",
 		heavy_2 = "units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_2/ene_zeal_swat_heavy_2",
 		shield = "units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield",
@@ -64,7 +63,7 @@ ElementSpawnEnemyDummy.enemy_mapping = {
 	[Idstring("units/payday2/characters/ene_city_shield/ene_city_shield"):key()] = "shield",
 	[Idstring("units/payday2/characters/ene_city_swat_1/ene_city_swat_1"):key()] = "swat_1",
 	[Idstring("units/payday2/characters/ene_city_swat_2/ene_city_swat_2"):key()] = "swat_2",
-	[Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3"):key()] = "swat_3",
+	[Idstring("units/payday2/characters/ene_city_swat_3/ene_city_swat_3"):key()] = "swat_1",
 	[Idstring("units/payday2/characters/ene_city_swat_r870/ene_city_swat_r870"):key()] = "swat_2",
 	[Idstring("units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"):key()] = "heavy_1",
 	[Idstring("units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870"):key()] = "heavy_2",
@@ -96,5 +95,5 @@ end
 Hooks:PostHook(ElementSpawnEnemyDummy, "init", "sh_init", function(self)
 	local mapped_name = self.enemy_mapping[self._enemy_name:key()]
 	local mapped_unit = self.faction_mapping[difficulty] and self.faction_mapping[difficulty][mapped_name]
-	self._enemy_name = mapped_unit and Idstring(mapped_unit) or self._enemy_name
+	self._enemy_name = mapped_unit and Idstring(type(mapped_unit) == "table" and table.random(mapped_unit) or mapped_unit) or self._enemy_name
 end)
