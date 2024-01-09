@@ -34,12 +34,10 @@ Vanilla uses multiple presets that are assigned based on difficulty, but not eve
 
 At one point the game had unique spawn groups with different behaviours and tactics which have been disabled or broken over time, like shotgunners or hostage rescue units. Missing tactics have been implemented and spawn groups have been restored and improved to have a bigger variety of enemies and make combat more interesting.
 
-- Makes spawn group code less convoluted, the base spawn groups are the same for every difficulty, only the chances of some of them appearing are changing
 - Restores original spawn groups that were disabled, adding back shotgunners, reinforce groups and hostage rescue units
 - Fixes scripted spawns to use the correct enemy faction when spawning enemies
 - Fixes units with defend type objectives rushing the player instead of actually defending their designated areas
-- Fixes units with hunt objective only moving to player locations once
-- Adds reinforce points to loot secure points and the escape zone
+- Adds dynamic reinforce points to loot secure points and the escape zone
 - Fixes enemies crouch-walking when they are supposed to run
 - Implements missing `murder` tactic, enemies with this tactic will focus on finishing off downed and tased players regardless of any aggressive behavior
 - Implements missing `shield` and `shield_cover` tactics, enemies with `shield_cover` tactic will stick closely to group members with `shield` tactic
@@ -51,8 +49,12 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
 - Makes Medics require line of sight to heal
 - Fixes Bulldozers sprinting when they shouldn't and not switching to walking when they are close enough
-- Adds increasing chance for enemies to use teargas grenades when players camp in an area for too long
+- Adds chance for enemies to use teargas grenades when players camp in an area for too long
 - Makes enemies less hesitant to shoot while moving and react to threats with adequate reactions
+- Fixes enemies walking backwards towards their objective when they are not aware of threats
+- Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
+- Updates old boss enemies with the new boss logic to make those boss fights more interesting
+- Makes enemies use more varied dodge directions
 
 ### Improves the difficulty curve
 
@@ -74,10 +76,9 @@ There are some inconsistencies with various enemy factions in the game that lead
 
 - Adds unique weapons for different factions, similar to how GenSec uses their own rifles and shotguns
 - Adds chest armor to the heavy SWAT on Normal and Hard, to be in line with the heavy SWATs on other difficulties
-- Makes heavy shotgunners more distinct from their rifle counterparts by adding gadgets to their helmets
-- Replaces the lazy recolors for Mexican police with better recolors of the less seen cop models (blue SWAT)
+- Makes shotgunners more distinct from their rifle counterparts (added shell straps, gadget variations)
+- Replaces the lazy recolors for Mexican police with custom models based on the less seen SWAT models
 - Adds missing enemy types (ZEAL Shotgunners, ZEAL Medic, GenSec and ZEAL Sniper)
-- Adds slight visual variations to murkywater shotgunners (both heavies and lights) to make them more distinct
 - Fixes heavy Murkywater units body armor protecting their back
 - Fixes some broken LOD models and removes some normal seams
 
@@ -88,12 +89,9 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Reduces the effect of health granularity drastically (damage dealt to enemies is closer to the actual weapon damage listed in the inventory)
 - Restores spawning voicelines for Bulldozers and Tasers and spawn noise for scripted Cloaker spawns
 - Improves variety of enemy combat chatter and enables idle chatter for stealth
-- Fixes various animation issues, like enemies playing full body crouching animations when suppressed when they are already crouching
 - Makes special enemies and bosses more responsive by detaching their attack logic updates from the enemy task scheduler
 - Adds a short delay before SWAT turrets retract to repair, giving a longer time window to deal damage after their shield breaks
 - Makes sentry guns not count as criminals which stops enemies from pathing to them and ultimately get stuck
-- Fixes enemies walking/running backwards towards their target/objective when they are not aware of threats
-- Fixes enemy turn behaviour/speed differing between host and client and makes it more lenient
 - Fixes the assault fade phase almost always ending after the minimum amount of time
 - Increases the time it takes for Winters to reach the maximum damage reduction (from 10-50% in 40s to 5-50% in 90s)
 - Makes hurt and knockdown animations not stackable, no new animation triggers while there's already one playing
@@ -102,15 +100,13 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes and optimizes fire spawned from molotovs and tripmines
 - Fixes instances of Winters not leaving the map when the formation was told to break up before he was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
-- Updates old boss enemies with the new boss logic to make those boss fights more interesting
 - Tweaks some heist mission scripts to play better or fix issues
-- Makes enemies use more varied dodge directions
 - Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
 - Adds hints when an enemy can't be intimidated due to temporary cooldown, no surrender preset or maximum amount of hostages reached
 - Fixes Jokers sometimes following the wrong player
 - Makes civilians' reactions to intimidation more consistent and fixes them jumping into a standing position randomly
 - Fixes enemies sometimes just disappearing when they are told to retreat
-- Maxes the maximum amount of random drill jams depend on the drill timer and prevents jams shortly after fixing a drill
+- Makes the maximum amount of random drill jams depend on the drill timer and prevents jams shortly after fixing a drill
 
 ## Credits
 
@@ -119,5 +115,4 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - [Jarey_](https://modworkshop.net/user/1664) for providing the base texture for the ZEAL medic
 - [Masavik](https://modworkshop.net/user/52365) for creating the GenSec shield model
 - [miss miki](https://modworkshop.net/user/55749) for testing, feedback and some mission script improvements
-- [RedFlame](https://github.com/RedFlamer) for notifying me of problematic vanilla code and some animation fixes
 - [hitscanner](https://modworkshop.net/user/hitscanner), [Nardo](https://modworkshop.net/user/19738), [nikita](https://modworkshop.net/user/54264) and others for testing and feedback
