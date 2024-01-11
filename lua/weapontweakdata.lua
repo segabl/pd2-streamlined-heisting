@@ -19,12 +19,10 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	-- Fix some weapon data
 	self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
 	self.dmr_npc.trail = "effects/particles/weapons/sniper_trail"
-	self.m249_npc.usage = "is_lmg"
 	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
-	self.mossberg_npc.anim_usage = "is_shotgun_pump"
 	self.mossberg_npc.usage = "is_double_barrel"
-	self.rpk_lmg_npc.sounds.prefix = self.rpk_crew.sounds.prefix
-	self.rpk_lmg_npc.usage = "is_lmg"
+	self.mossberg_npc.reload = "looped"
+	self.mossberg_npc.looped_reload_single = true
 	self.saiga_npc.auto.fire_rate = 0.18
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.sko12_conc_npc.auto = { fire_rate = 0.22 }
@@ -44,6 +42,7 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.benelli_npc = based_on(self.r870_npc, self.ben_crew)
 	self.ksg_npc = based_on(self.r870_npc, self.ksg_crew)
 	self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
+	self.rpk_lmg_npc = based_on(self.m249_npc, self.rpk_crew)
 end)
 
 
@@ -95,10 +94,6 @@ function WeaponTweakData:_set_presets()
 			if player_weapon then
 				v.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
 				v.auto = player_weapon.auto
-			end
-
-			if v.usage == "is_lmg" then
-				v.anim_usage = v.anim_usage or "is_rifle"
 			end
 
 			local usage = crew_presets[v.usage]

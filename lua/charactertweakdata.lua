@@ -106,6 +106,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 
 	presets.weapon.sh_base.is_double_barrel = deep_clone(presets.weapon.sh_base.is_shotgun_pump)
+	presets.weapon.sh_base.is_double_barrel.RELOAD_SPEED = 6
 	presets.weapon.sh_base.is_double_barrel.FALLOFF = {
 		{ dmg_mul = 5 * dmg_mul_str, r = 0, acc = { 0.8, 1 }, recoil = { 0.8, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 3 * dmg_mul_str, r = 2000, acc = { 0.6, 0.8 }, recoil = { 1, 1.4 }, mode = { 1, 0, 0, 0 } }
@@ -298,7 +299,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			},
 			aggressor_dis = {
 				[100] = 0.3,
-				[1000] = 0
+				[800] = 0
 			}
 		}
 	}
@@ -310,7 +311,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			weapon_down = 0.5,
 			flanked = 0.4,
 			unaware_of_aggressor = 0.3,
-			isolated = 0.2
+			isolated = 0.15
 		},
 		factors = {
 			health = {
@@ -319,7 +320,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			},
 			aggressor_dis = {
 				[100] = 0.2,
-				[1000] = 0
+				[800] = 0
 			}
 		}
 	}
@@ -331,7 +332,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			weapon_down = 0.4,
 			flanked = 0.3,
 			unaware_of_aggressor = 0.2,
-			isolated = 0.1
+			isolated = 0
 		},
 		factors = {
 			health = {
@@ -340,7 +341,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			},
 			aggressor_dis = {
 				[100] = 0.1,
-				[1000] = 0
+				[800] = 0
 			}
 		}
 	}
