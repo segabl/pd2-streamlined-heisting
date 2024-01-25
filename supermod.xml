@@ -57,7 +57,10 @@
 
 			<group :hook_id="units/">
 				<group :hook_id="beings/player/">
-					<post :hook_id="states/playerdriving"/>
+					<group :hook_id="states/">
+						<post :hook_id="playerdriving"/>
+						<post :hook_id="playertased"/>
+					</group>
 					<post :hook_id="playerdamage"/>
 				</group>
 
