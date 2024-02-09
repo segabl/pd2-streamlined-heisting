@@ -7,6 +7,6 @@ function PlayerTased:_check_action_shock(t, input, ...)
 
 	if do_shock then
 		local cam_base = self._unit:camera():camera_unit():base()
-		cam_base:animate_pitch(t, nil, cam_base._camera_properties.pitch + math.random(-10, 10), 0.25)
+		cam_base:animate_pitch(t, nil, cam_base._camera_properties.pitch + math.random(-5, 5), 0.25)
 	end
 end
