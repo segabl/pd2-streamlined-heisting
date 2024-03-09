@@ -289,6 +289,9 @@
 				<!-- give city shotgunner distinct helmet -->
 				<file :name="ene_city_swat_2/ene_city_swat_2.model"/>
 
+				<!-- fix city submachine gunner lod -->
+				<file :name="ene_city_swat_3/ene_city_swat_3.model"/>
+
 				<!-- make city shield use submachine gunner model -->
 				<file :name="ene_city_shield/ene_city_shield.unit"/>
 				<file :name="ene_city_shield/ene_city_shield_husk.unit"/>
