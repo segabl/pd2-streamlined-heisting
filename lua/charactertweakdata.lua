@@ -238,6 +238,13 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		end
 	})
 
+	-- Medic preset
+	presets.weapon.sh_medic = based_on(presets.weapon.sh_base, {
+		FALLOFF = function (falloff)
+			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
+		end
+	})
+
 	-- Marshal preset
 	presets.weapon.sh_marshal = based_on(presets.weapon.sh_base)
 	presets.weapon.sh_marshal.is_rifle.aim_delay = { aim_delay, aim_delay * 2 }
@@ -838,11 +845,10 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.marshal_marksman.chatter = self.presets.enemy_chatter.no_chatter
 	self.marshal_shield.chatter = self.presets.enemy_chatter.no_chatter
 	self.marshal_shield_break.chatter = self.presets.enemy_chatter.no_chatter
+	self.gangster.chatter = self.presets.enemy_chatter.gangster
 	self.mobster.chatter = self.presets.enemy_chatter.gangster
 	self.biker.chatter = self.presets.enemy_chatter.gangster
 	self.biker_escape.chatter = self.presets.enemy_chatter.gangster
-	self.bolivian.chatter = self.presets.enemy_chatter.gangster
-	self.bolivian_indoors.chatter = self.presets.enemy_chatter.gangster
 	self.gensec.chatter = self.presets.enemy_chatter.security
 	self.security.chatter = self.presets.enemy_chatter.security
 	self.security_undominatable.chatter = self.presets.enemy_chatter.security
@@ -870,8 +876,8 @@ CharacterTweakData.tweak_table_presets = {
 	marshal_marksman = "sh_marshal",
 	marshal_shield = "sh_marshal",
 	marshal_shield_break = "sh_marshal",
-	medic = "sh_heavy",
-	tank_medic = "sh_heavy",
+	medic = "sh_medic",
+	tank_medic = "sh_medic",
 	zeal_heavy_swat = "sh_heavy"
 }
 
