@@ -135,14 +135,6 @@ Hooks:PreHook(CopLogicAttack, "aim_allow_fire", "sh_aim_allow_fire", function (s
 end)
 
 
--- Make suppressed chatter less frequent
-Hooks:PostHook(CopLogicAttack, "on_suppressed_state", "sh_on_suppressed_state", function (data)
-	if data.is_suppressed and data.char_tweak.chatter and data.char_tweak.chatter.suppress then
-		managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "suppress")
-	end
-end)
-
-
 -- Pathing related fixes to stop spamming walk actions when the new position is the same as the current position
 local _find_retreat_position_original = CopLogicAttack._find_retreat_position
 function CopLogicAttack._find_retreat_position(from_pos, ...)

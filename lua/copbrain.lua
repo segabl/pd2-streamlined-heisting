@@ -63,9 +63,16 @@ Hooks:OverrideFunction(CopBrain, "on_surrender_chance", function (self)
 end)
 
 
--- Handle suppressed chatter in logic
+-- Handle suppressed chatter (say voiceline on start instead of start and end)
 Hooks:OverrideFunction(CopBrain, "on_suppressed", function (self, state)
 	self._logic_data.is_suppressed = state or nil
+
+	if state == "panic" then
+		self._unit:sound():say(math.random() < 0.5 and "lk3a" or "lk3b", true)
+	elseif state and self._logic_data.char_tweak.chatter and self._logic_data.char_tweak.chatter.suppress then
+		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._logic_data.m_pos, "suppress")
+	end
+
 	if self._current_logic.on_suppressed_state then
 		self._current_logic.on_suppressed_state(self._logic_data)
 	end
