@@ -31,7 +31,7 @@ Hooks:OverrideFunction(CrimeSpreeManager, "on_mission_completed", function (self
 				spree_add = spree_add - diff
 			elseif spree_level < server_spree_level and managers.experience:current_level() >= tweak_data.crime_spree.catchup_min_level then
 				local diff = server_spree_level - spree_level
-				self._catchup_bonus = math.min(tweak_data.crime_spree.catchup_limit, math.floor(diff * tweak_data.crime_spree.catchup_bonus))
+				self._catchup_bonus = math.min(tweak_data.crime_spree.catchup_limit, math.ceil(diff * tweak_data.crime_spree.catchup_bonus))
 				spree_add = spree_add + self._catchup_bonus
 			end
 		end
