@@ -817,6 +817,12 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.zeal_swat.move_speed = self.presets.move_speed.very_fast
 	self.cop.move_speed = self.presets.move_speed.fast
 
+	-- Set dodge presets
+	self.gensec.dodge = self.presets.dodge.poor
+	self.fbi.dodge = self.presets.dodge.average
+	self.fbi_female.dodge = self.presets.dodge.average
+	self.medic.dodge = self.presets.dodge.poor
+
 	-- Set custom objective interrupt distance
 	self.taser.min_obj_interrupt_dis = 1000
 	self.spooc.min_obj_interrupt_dis = 800
