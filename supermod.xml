@@ -39,6 +39,11 @@
 				<post :hook_id="skirmishmanager"/>
 			</group>
 
+			<group :hook_id="modifiers/">
+				<post :hook_id="modifierheavies"/>
+				<post :hook_id="modifierlessconcealment"/>
+			</group>
+
 			<group :hook_id="network/">
 				<post :hook_id="base/networkmanager"/>
 				<post :hook_id="handlers/unitnetworkhandler"/>
