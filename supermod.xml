@@ -116,6 +116,7 @@
 						<post :hook_id="copinventory"/>
 						<post :hook_id="copmovement"/>
 						<post :hook_id="copsound"/>
+						<post :hook_id="huskcopbrain"/>
 					</group>
 
 					<post :hook_id="medic/medicdamage"/>
