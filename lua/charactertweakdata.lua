@@ -506,6 +506,17 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		end
 	end
 
+	-- Tweak move speed presets
+	presets.move_speed.extremely_slow = deep_clone(presets.move_speed.slow)
+	for _, pose in pairs(presets.move_speed.extremely_slow) do
+		for _, stance in pairs(pose.walk) do
+			for dir, speed in pairs(stance) do
+				stance[dir] = speed * 0.75
+			end
+		end
+		pose.run = deep_clone(pose.walk)
+	end
+
 	-- Tweak suppression presets
 	presets.suppression.easy.panic_chance_mul = 1
 	presets.suppression.easy.duration = { 7, 9 }
