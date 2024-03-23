@@ -581,12 +581,30 @@ local character_map_original = CharacterTweakData.character_map
 function CharacterTweakData:character_map(...)
 	local char_map = character_map_original(self, ...)
 
-	table.insert(char_map.basic.list, "ene_sniper_3")
-	table.insert(char_map.gitgud.list, "ene_zeal_swat_2")
-	table.insert(char_map.gitgud.list, "ene_zeal_swat_heavy_2")
-	table.insert(char_map.gitgud.list, "ene_zeal_medic_m4")
-	table.insert(char_map.gitgud.list, "ene_zeal_medic_r870")
-	table.insert(char_map.gitgud.list, "ene_zeal_sniper")
+	local function safe_add(char_map_table, element)
+		if char_map_table and char_map_table.list then
+			table.insert(char_map_table.list, element)
+		end
+	end
+
+	safe_add(char_map.basic, "ene_sniper_3")
+	safe_add(char_map.gitgud, "ene_zeal_swat_2")
+	safe_add(char_map.gitgud, "ene_zeal_swat_heavy_2")
+	safe_add(char_map.gitgud, "ene_zeal_medic_m4")
+	safe_add(char_map.gitgud, "ene_zeal_medic_r870")
+	safe_add(char_map.gitgud, "ene_zeal_sniper")
+
+	if not HopLib then
+		safe_add(char_map.basic, "ene_city_swat_r870")
+		safe_add(char_map.basic, "ene_city_shield")
+		safe_add(char_map.basic, "ene_fbi_heavy_r870")
+		safe_add(char_map.basic, "ene_swat_heavy_r870")
+		safe_add(char_map.mad, "ene_akan_fbi_heavy_r870")
+		safe_add(char_map.mad, "ene_akan_fbi_shield_dw_sr2_smg")
+		safe_add(char_map.mad, "ene_akan_cs_heavy_r870")
+		safe_add(char_map.bex, "ene_swat_policia_federale_fbi")
+		safe_add(char_map.bex, "ene_swat_policia_federale_fbi_r870")
+	end
 
 	return char_map
 end
