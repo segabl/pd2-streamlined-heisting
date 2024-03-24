@@ -198,11 +198,13 @@ if not StreamHeist then
 
 	-- Disable some of "The Fixes"
 	TheFixesPreventer = TheFixesPreventer or {}
+	TheFixesPreventer.crash_aim_allow_fire_coplogicattack = true
+	TheFixesPreventer.crash_no_unit_type_aistatebesiege = true
 	TheFixesPreventer.crash_upd_aim_coplogicattack = true
-	TheFixesPreventer.fix_copmovement_aim_state_discarded = true
+	TheFixesPreventer.fix_gensec_shotgunner_in_murkywater = true
+	TheFixesPreventer.fix_hostages_not_moving = true
 	TheFixesPreventer.tank_remove_recoil_anim = true
 	TheFixesPreventer.tank_walk_near_players  = true
-	TheFixesPreventer.fix_hostages_not_moving = true
 
 	-- Check faction tweaks
 	if not Global.sh_faction_tweaks_check then
