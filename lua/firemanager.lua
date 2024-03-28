@@ -115,8 +115,6 @@ Hooks:OverrideFunction(FireManager, "detect_and_give_dmg", function (self, param
 						attacker_unit = user_unit,
 						weapon_unit = owner,
 						col_ray = col_ray,
-						is_fire_dot_damage = false,
-						fire_dot_data = dot_data,
 						is_molotov = is_molotov
 					})
 					local dead_now = hit_unit:character_damage():dead()
