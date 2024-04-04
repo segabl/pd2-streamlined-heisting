@@ -69,6 +69,8 @@
 					<post :hook_id="playerdamage"/>
 				</group>
 
+				<post :hook_id="characters/characterattentionobject"/>
+
 				<group :hook_id="civilians/">
 					<group :hook_id="logics/">
 						<post :hook_id="civilianlogicflee"/>

@@ -201,6 +201,7 @@ if not StreamHeist then
 	TheFixesPreventer.crash_aim_allow_fire_coplogicattack = true
 	TheFixesPreventer.crash_no_unit_type_aistatebesiege = true
 	TheFixesPreventer.crash_upd_aim_coplogicattack = true
+	TheFixesPreventer.fix_ai_set_attention = true
 	TheFixesPreventer.fix_gensec_shotgunner_in_murkywater = true
 	TheFixesPreventer.fix_hostages_not_moving = true
 	TheFixesPreventer.tank_remove_recoil_anim = true
