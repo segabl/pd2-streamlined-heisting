@@ -6,7 +6,7 @@ Hooks:PreHook(CrimeSpreeManager, "on_mission_started", "sh_on_mission_started", 
 end)
 
 
--- Make secured bonus bags add crime spree levels and fix incorrect level gain
+-- Make secured bags add crime spree levels and fix incorrect level gain
 -- Unfortunately a function override is pretty much the only thing we can do here
 Hooks:OverrideFunction(CrimeSpreeManager, "on_mission_completed", function (self, mission_id)
 	if not self:is_active() then
@@ -19,7 +19,7 @@ Hooks:OverrideFunction(CrimeSpreeManager, "on_mission_completed", function (self
 		local mission_data = self:get_mission(mission_id)
 		self._mission_completion_gain = mission_data.add
 
-		local spree_add = mission_data.add + math.min(managers.loot:get_secured_bonus_bags_amount(), 10)
+		local spree_add = mission_data.add + math.min(managers.loot:get_secured_bags_amount(), 10)
 		local spree_level = self:spree_level()
 		local server_spree_level = self:server_spree_level()
 
