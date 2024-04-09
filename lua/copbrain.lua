@@ -32,6 +32,7 @@ end
 -- Set Joker owner to keep follow objective correct
 Hooks:PreHook(CopBrain, "convert_to_criminal", "sh_convert_to_criminal", function (self, mastermind_criminal)
 	self._logic_data.minion_owner = mastermind_criminal or managers.player:local_player()
+	self._logic_data.combat_chatter_cooldown_t = self._logic_data.t + math.rand(30, 90)
 end)
 
 

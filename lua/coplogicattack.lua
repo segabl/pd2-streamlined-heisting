@@ -121,9 +121,7 @@ Hooks:PreHook(CopLogicAttack, "aim_allow_fire", "sh_aim_allow_fire", function (s
 	if not chatter then
 		return
 	elseif data.unit:in_slot(16) then
-		if not data.combat_chatter_cooldown_t then
-			data.combat_chatter_cooldown_t = data.t + math.rand(30, 90)
-		elseif aim and is_off_cooldown and chatter.aggressive and not data.unit:sound():speaking(data.t) then
+		if aim and is_off_cooldown and chatter.aggressive and not data.unit:sound():speaking(data.t) then
 			data.unit:sound():say(shoot and "lk3a" or "lk3b", true)
 			data.combat_chatter_cooldown_t = data.t + math.rand(30, 90)
 		end
