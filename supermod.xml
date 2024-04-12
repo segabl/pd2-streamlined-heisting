@@ -42,6 +42,7 @@
 			<group :hook_id="modifiers/">
 				<post :hook_id="modifierheavies"/>
 				<post :hook_id="modifierlessconcealment"/>
+				<post :hook_id="modifiermedicdeathwish"/>
 			</group>
 
 			<group :hook_id="network/">
