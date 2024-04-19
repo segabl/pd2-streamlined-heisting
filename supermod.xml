@@ -80,7 +80,6 @@
 					</group>
 
 					<post :hook_id="civilianbrain"/>
-					<post :hook_id="civiliandamage"/>
 				</group>
 
 				<group :hook_id="enemies/">
