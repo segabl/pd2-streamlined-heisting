@@ -13,7 +13,7 @@ end
 
 
 -- Setup/fix npc weapons
-Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
+Hooks:PostHook(WeaponTweakData, "init", "sh_init", function (self, tweak_data)
 	self.tweak_data = tweak_data
 
 	-- Fix some weapon data
@@ -88,23 +88,26 @@ function WeaponTweakData:_set_presets()
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
 			v.suppression = v.armor_piercing and 3 or v.is_shotgun and 2 or 1
-		elseif k:match("_crew$") and crew_presets[v.usage] and not v.old_usage then
+		elseif k:match("_crew$") then
 			local player_id = k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
 			local player_weapon = crew_weapon_mapping[player_id] and self[crew_weapon_mapping[player_id]] or self[player_id]
 			if player_weapon then
 				v.CLIP_AMMO_MAX = player_weapon.CLIP_AMMO_MAX
-				v.auto = player_weapon.auto
+				v.alert_size = self.stats.alert_size[player_weapon.stats.alert_size] or v.alert_size
 			end
 
-			local usage = crew_presets[v.usage]
-			local is_automatic = v.auto and usage.autofire_rounds
-			local mag = v.CLIP_AMMO_MAX
-			local burst = is_automatic and math.min(usage.autofire_rounds[2], mag) or 1
-			local rate = is_automatic and v.auto.fire_rate or 0
-			local recoil = (usage.FALLOFF[1].recoil[1] + usage.FALLOFF[1].recoil[2]) * 0.5
+			-- Check for BWE balance
+			if not v.old_usage and crew_presets[v.usage] then
+				local usage = crew_presets[v.usage]
+				local is_automatic = v.auto and usage.autofire_rounds
+				local mag = v.CLIP_AMMO_MAX
+				local burst = is_automatic and math.min(usage.autofire_rounds[2], mag) or 1
+				local rate = is_automatic and v.auto.fire_rate or 0
+				local recoil = (usage.FALLOFF[1].recoil[1] + usage.FALLOFF[1].recoil[2]) * 0.5
 
-			v.DAMAGE = ((mag / burst) * (burst - 1) * rate + (mag / burst - 1) * recoil + 2) / mag
-			v.FIRE_MODE = is_automatic and "auto" or "single"
+				v.DAMAGE = ((mag / burst) * (burst - 1) * rate + (mag / burst - 1) * recoil + 2) / mag
+				v.FIRE_MODE = is_automatic and "auto" or "single"
+			end
 		end
 	end
 end
