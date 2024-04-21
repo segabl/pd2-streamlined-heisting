@@ -353,6 +353,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		}
 	}
 
+	presets.base.surrender_break_time = { 10, 15 }
+
 	-- Tweak hurt severities
 	for _, preset in pairs(presets.hurt_severities) do
 		for _, damage_type in pairs(preset) do
@@ -934,6 +936,11 @@ function CharacterTweakData:_set_presets()
 		-- Remove damage clamps, they are not a fun or intuitive mechanic
 		char_preset.DAMAGE_CLAMP_BULLET = nil
 		char_preset.DAMAGE_CLAMP_EXPLOSION = nil
+
+		-- Set default surrender break time
+		if char_preset.surrender_break_time then
+			char_preset.surrender_break_time = self.presets.base.surrender_break_time
+		end
 
 		if char_preset.headshot_dmg_mul then
 			char_preset.base_headshot_dmg_mul = char_preset.base_headshot_dmg_mul or char_preset.headshot_dmg_mul
