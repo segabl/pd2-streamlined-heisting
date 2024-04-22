@@ -108,6 +108,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Makes civilians' reactions to intimidation more consistent and fixes them jumping into a standing position randomly
 - Fixes enemies sometimes just disappearing when they are told to retreat
 - Makes the maximum amount of random drill jams depend on the drill timer and prevents jams shortly after fixing a drill
+- Fixes enemies and civilians getting stuck and not updating their logic properly in some cases
 
 ## Credits
 
