@@ -32,12 +32,43 @@ function CopLogicTravel.on_pathing_results(data)
 end
 
 
--- Sanity check for rare follow_unit crash
-Hooks:PreHook(CopLogicTravel, "_begin_coarse_pathing", "sh__begin_coarse_pathing", function (data)
-	if data.objective.follow_unit and not alive(data.objective.follow_unit) then
-		data.objective.follow_unit = nil
+-- Follow pathing improvement, use continuous instead of segmented path
+local _begin_coarse_pathing_original = CopLogicTravel._begin_coarse_pathing
+function CopLogicTravel._begin_coarse_pathing(data, my_data, ...)
+	if not data.objective or data.objective.type ~= "follow" then
+		return _begin_coarse_pathing_original(data, my_data, ...)
 	end
-end)
+
+	local nav_seg, pos
+	if alive(data.objective.follow_unit) then
+		local follow_tracker = data.objective.follow_unit:movement():nav_tracker()
+		nav_seg = follow_tracker:nav_segment()
+		pos = follow_tracker:field_position()
+	else
+		nav_seg = data.objective.nav_seg or data.objective.area and data.objective.area.pos_nav_seg
+		pos = managers.navigation._nav_segments[nav_seg].pos
+	end
+
+	my_data.coarse_path_index = 1
+	my_data.coarse_path = {
+		{
+			data.unit:movement():nav_tracker():nav_segment(),
+			mvector3.copy(data.m_pos)
+		},
+		{
+			nav_seg,
+			pos
+		}
+	}
+end
+
+local _get_allowed_travel_nav_segs_original = CopLogicTravel._get_allowed_travel_nav_segs
+function CopLogicTravel._get_allowed_travel_nav_segs(data, ...)
+	-- Returning nothing here allows all nav segments
+	if not data.objective or data.objective.type ~= "follow" then
+		return _get_allowed_travel_nav_segs_original(data, ...)
+	end
+end
 
 
 -- Fix need for another queued task to update pathing after expired cover leave time
@@ -52,7 +83,7 @@ end)
 
 
 -- Make groups move together (remove close to criminal check to avoid splitting groups)
-function CopLogicTravel.chk_group_ready_to_move(data, my_data)
+function CopLogicTravel.chk_group_ready_to_move(data)
 	local my_objective = data.objective
 	if not my_objective.grp_objective or my_objective.type == "follow" then
 		return true
