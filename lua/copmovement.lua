@@ -53,3 +53,19 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 
 	return damage_clbk_original(self, my_unit, damage_info)
 end
+
+
+-- Toggle flashlights when set to cool or uncool
+Hooks:PreHook(CopMovement, "_post_init", "sh__post_init", function (self)
+	local equipped_weapon = self._ext_inventory:equipped_unit()
+	if equipped_weapon then
+		equipped_weapon:base():set_flashlight_enabled(false)
+	end
+end)
+
+Hooks:PostHook(CopMovement, "set_cool", "sh_set_cool", function (self, state)
+	local equipped_weapon = self._ext_inventory:equipped_unit()
+	if equipped_weapon then
+		equipped_weapon:base():set_flashlight_enabled(not state)
+	end
+end)

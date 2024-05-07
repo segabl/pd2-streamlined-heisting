@@ -1,5 +1,7 @@
 {
 	"sh_menu_main" : "Streamlined Heisting",
+	"sh_menu_faction_tweaks" : "Faction improvements",
+	"sh_menu_faction_tweaks_desc" : "Enable or disable visual improvements for specific enemy factions",
 	"sh_menu_auto_faction_tweaks" : "Auto-detect faction improvements",
 	"sh_menu_auto_faction_tweaks_desc" : "Automatically disables faction improvements that conflict with mod_overrides mods\nRequires a game restart to take effect",
 	"sh_menu_swat" : "Improved SWAT faction",
@@ -13,6 +15,8 @@
 	"sh_menu_faction_tweak_conflict_desc" : "Disabled due to the following mod:\n$MOD",
 	"sh_menu_radio_filtered_heavies" : "Radio-filtered Heavy SWAT",
 	"sh_menu_radio_filtered_heavies_desc" : "Makes Heavy SWAT units use radio-filtered voicelines\nDisables the radio filter on regular SWAT units on Death Sentence",
+	"sh_menu_allow_flashlights" : "Allow flashlights",
+	"sh_menu_allow_flashlights_desc" : "Makes enemies use flashlights if they are enabled through mission scripting",
 	"sh_menu_warning" : "Warning",
 	"sh_menu_conflicts" : "The following mod(s) are likely to cause unintended behavior or crashes in combination with Streamlined Heisting:",
 	"sh_menu_conflicts_disable" : "Disable conflicting mods",

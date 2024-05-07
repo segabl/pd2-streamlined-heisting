@@ -955,7 +955,6 @@ function CharacterTweakData:_set_presets()
 
 	-- Cloaker attack timeout
 	self.spooc.spooc_attack_timeout = { math.lerp(8, 3, diff_i_norm), math.lerp(10, 4, diff_i_norm) }
-	self.shadow_spooc.shadow_spooc_attack_timeout = self.spooc.spooc_attack_timeout
 
 	-- Dozer armor damage multiplier
 	self.tank_armor_damage_mul = 1 / hp_mul

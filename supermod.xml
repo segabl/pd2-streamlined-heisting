@@ -166,6 +166,7 @@
 					</group>
 					<post :hook_id="akimboweaponbase"/>
 					<post :hook_id="newnpcraycastweaponbase"/>
+					<post :hook_id="npcraycastweaponbase"/>
 					<post :hook_id="raycastweaponbase"/>
 				</group>
 			</group>

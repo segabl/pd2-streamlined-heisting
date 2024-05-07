@@ -17,7 +17,8 @@ if not StreamHeist then
 				federales = true,
 				russia = true
 			},
-			radio_filtered_heavies = false
+			radio_filtered_heavies = true,
+			allow_flashlights = true
 		}
 	}
 
@@ -104,7 +105,10 @@ if not StreamHeist then
 	Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenusStreamlinedHeisting", function(_, nodes)
 
 		local menu_id = "sh_menu"
+		local menu_id_faction_tweaks = "sh_menu_faction_tweaks"
+
 		MenuHelper:NewMenu(menu_id)
+		MenuHelper:NewMenu(menu_id_faction_tweaks)
 
 		local faction_menu_elements = {}
 		function MenuCallbackHandler:sh_auto_faction_tweaks_toggle(item)
@@ -127,13 +131,48 @@ if not StreamHeist then
 			io.save_as_json(StreamHeist.settings, StreamHeist.save_path)
 		end
 
+		MenuHelper:AddButton({
+			id = "faction_tweaks",
+			title = "sh_menu_faction_tweaks",
+			desc = "sh_menu_faction_tweaks_desc",
+			next_node = menu_id_faction_tweaks,
+			menu_id = menu_id,
+			priority = 100
+		})
+
+		MenuHelper:AddDivider({
+			menu_id = menu_id,
+			size = 16,
+			priority = 99
+		})
+
+		MenuHelper:AddToggle({
+			id = "radio_filtered_heavies",
+			title = "sh_menu_radio_filtered_heavies",
+			desc = "sh_menu_radio_filtered_heavies_desc",
+			callback = "sh_toggle",
+			value = StreamHeist.settings.radio_filtered_heavies,
+			menu_id = menu_id,
+			priority = 98
+		})
+
+		MenuHelper:AddToggle({
+			id = "allow_flashlights",
+			title = "sh_menu_allow_flashlights",
+			desc = "sh_menu_allow_flashlights_desc",
+			callback = "sh_toggle",
+			value = StreamHeist.settings.allow_flashlights,
+			menu_id = menu_id,
+			priority = 97
+		})
+
 		MenuHelper:AddToggle({
 			id = "auto_faction_tweaks",
 			title = "sh_menu_auto_faction_tweaks",
 			desc = "sh_menu_auto_faction_tweaks_desc",
 			callback = "sh_auto_faction_tweaks_toggle",
 			value = StreamHeist.settings.auto_faction_tweaks,
-			menu_id = menu_id,
+			menu_id = menu_id_faction_tweaks,
 			priority = 100
 		})
 
@@ -150,29 +189,14 @@ if not StreamHeist then
 				value = StreamHeist.settings.faction_tweaks[faction],
 				disabled = auto_faction_tweaks,
 				disabled_color = conflict and tweak_data.screen_colors.important_2,
-				menu_id = menu_id,
+				menu_id = menu_id_faction_tweaks,
 				priority = 100 - i
 			})
 
 			table.insert(faction_menu_elements, menu_element)
 		end
 
-		MenuHelper:AddDivider({
-			menu_id = menu_id,
-			size = 24,
-			priority = 90
-		})
-
-		MenuHelper:AddToggle({
-			id = "radio_filtered_heavies",
-			title = "sh_menu_radio_filtered_heavies",
-			desc = "sh_menu_radio_filtered_heavies_desc",
-			callback = "sh_toggle",
-			value = StreamHeist.settings.radio_filtered_heavies,
-			menu_id = menu_id,
-			priority = 89
-		})
-
+		nodes[menu_id_faction_tweaks] = MenuHelper:BuildMenu(menu_id_faction_tweaks, { back_callback = "sh_save" })
 		nodes[menu_id] = MenuHelper:BuildMenu(menu_id, { back_callback = "sh_save" })
 		MenuHelper:AddMenuItem(nodes["blt_options"], menu_id, "sh_menu_main")
 	end)
