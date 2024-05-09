@@ -4,6 +4,7 @@ Hooks:PostHook(LevelsTweakData, "init", "sh_init", function (self)
 	self.arm_und.flashlights_on = true
 	self.dah.flashlights_on = true
 	self.election_day_2.flashlights_on = true
+	self.escape_overpass_night.flashlights_on = true
 	self.escape_park.flashlights_on = true
 	self.firestarter_1.flashlights_on = true
 	self.firestarter_2.flashlights_on = true

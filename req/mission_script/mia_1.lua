@@ -1,3 +1,8 @@
+local disabled = {
+	values = {
+		enabled = false
+	}
+}
 return {
 	-- Improve reinforce spots
 	[100022] = {
@@ -9,14 +14,6 @@ return {
 			}
 		}
 	},
-	[100589] = {
-		values = {
-			enabled = false
-		}
-	},
-	[100590] = {
-		values = {
-			enabled = false
-		}
-	}
+	[100589] = disabled,
+	[100590] = disabled
 }

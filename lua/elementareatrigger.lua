@@ -1,3 +1,8 @@
+if Network:is_client() then
+	return
+end
+
+
 -- When an escape or loot secure zone is activated, mark that area for reinforcement spawngroups
 -- This is done by checking the list of elements an ElementAreaTrigger executes for ElementMissionEnd or ElementCarry,
 -- If it contains any of these, it is considered the escape zone/loot secure trigger

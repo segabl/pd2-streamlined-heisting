@@ -1,4 +1,5 @@
 return {
+	-- Reinforce spots
 	[102477] = {
 		reinforce = {
 			{

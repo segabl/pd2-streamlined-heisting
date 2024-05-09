@@ -1,4 +1,10 @@
 return {
+	-- Starting difficulty
+	[100136] = {
+		values = {
+			difficulty = 0.5
+		}
+	},
 	-- Boss spawn
 	[100707] = {
 		difficulty = 0.1

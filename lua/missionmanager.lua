@@ -48,6 +48,9 @@ MissionManager.mission_script_patch_funcs = {
 	end,
 
 	reinforce = function (self, element, data)
+		if Network:is_client() then
+			return
+		end
 		Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element:id(), function ()
 			StreamHeist:log("%s executed, toggled %u reinforce point(s)", element:editor_name(), #data)
 			for _, v in pairs(data) do
@@ -58,6 +61,9 @@ MissionManager.mission_script_patch_funcs = {
 	end,
 
 	difficulty = function (self, element, data)
+		if Network:is_client() then
+			return
+		end
 		Hooks:PostHook(element, "on_executed", "sh_on_executed_difficulty_" .. element:id(), function ()
 			StreamHeist:log("%s executed, set difficulty to %.2g", element:editor_name(), data)
 			managers.groupai:state():set_difficulty(data)
@@ -74,6 +80,9 @@ MissionManager.mission_script_patch_funcs = {
 	end,
 
 	groups = function (self, element, data)
+		if Network:is_client() then
+			return
+		end
 		local new_groups = table.list_to_set(element._values.preferred_spawn_groups)
 		for group_name, enabled in pairs(data) do
 			new_groups[group_name] = enabled or nil

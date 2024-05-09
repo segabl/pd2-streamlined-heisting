@@ -1,17 +1,11 @@
-return {
-	[100029] = {
-		values = {
-			interval = 15
-		}
-	},
-	[100441] = {
-		values = {
-			interval = 15
-		}
-	},
-	[103333] = {
-		values = {
-			interval = 15
-		}
+local interval = {
+	values = {
+		interval = 15
 	}
+}
+return {
+	-- Crash site spawn group delays
+	[100029] = interval,
+	[100441] = interval,
+	[103333] = interval
 }

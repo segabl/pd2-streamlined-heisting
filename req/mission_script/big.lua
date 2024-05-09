@@ -1,3 +1,8 @@
+local interval = {
+	values = {
+		interval = 20
+	}
+}
 return {
 	[105844] = {
 		reinforce = {
@@ -14,21 +19,9 @@ return {
 		}
 	},
 	-- Elevator intervals
-	[105434] = {
-		values = {
-			interval = 20
-		}
-	},
-	[105450] = {
-		values = {
-			interval = 20
-		}
-	},
-	[105500] = {
-		values = {
-			interval = 20
-		}
-	},
+	[105434] = interval,
+	[105450] = interval,
+	[105500] = interval,
 	-- Enable roof spawns
 	[100006] = {
 		values = {
@@ -36,16 +29,8 @@ return {
 		}
 	},
 	-- Roof spawn intervals
-	[100007] = {
-		values = {
-			interval = 20
-		}
-	},
-	[100692] = {
-		values = {
-			interval = 20
-		}
-	},
+	[100007] = interval,
+	[100692] = interval,
 	-- Make server hack guranteed when solo
 	[104494] = {
 		pre_func = function (self)

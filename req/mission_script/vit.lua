@@ -1,13 +1,10 @@
+local interval = {
+	values = {
+		interval = 30
+	}
+}
 return {
 	-- Increase delay on side door spawns
-	[103347] = {
-		values = {
-			interval = 30
-		}
-	},
-	[103348] = {
-		values = {
-			interval = 30
-		}
-	}
+	[103347] = interval,
+	[103348] = interval
 }

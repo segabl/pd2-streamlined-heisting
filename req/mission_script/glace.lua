@@ -1,3 +1,18 @@
+local interval_long = {
+	values = {
+		interval = 60
+	}
+}
+local interval_medium = {
+	values = {
+		interval = 45
+	}
+}
+local interval_short = {
+	values = {
+		interval = 30
+	}
+}
 return {
 	-- Make cloaker spawn participate to group AI
 	[101320] = {
@@ -12,39 +27,11 @@ return {
 		}
 	},
 	-- Increase spawn group intervals next to prison vans, closest to furthest
-	[100867] = {
-		values = {
-			interval = 60
-		}
-	},
-	[101153] = {
-		values = {
-			interval = 60
-		}
-	},
-	[101157] = {
-		values = {
-			interval = 60
-		}
-	},
-	[101154] = {
-		values = {
-			interval = 45
-		}
-	},
-	[101160] = {
-		values = {
-			interval = 45
-		}
-	},
-	[101156] = {
-		values = {
-			interval = 30
-		}
-	},
-	[101159] = {
-		values = {
-			interval = 30
-		}
-	}
+	[100867] = interval_long,
+	[101153] = interval_long,
+	[101157] = interval_long,
+	[101154] = interval_medium,
+	[101160] = interval_medium,
+	[101156] = interval_short,
+	[101159] = interval_short
 }
