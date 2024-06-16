@@ -26,3 +26,11 @@ function PlayerDamage:_calc_armor_damage(...)
 
 	return health_subtracted
 end
+
+
+-- Fix Anarchist regen not triggering HUD armor update for clients
+Hooks:PostHook(PlayerDamage, "change_armor", "sh_change_armor", function (self, change)
+	if change > 0 and self:armor_ratio() < 1 then
+		self:_send_set_armor()
+	end
+end)
