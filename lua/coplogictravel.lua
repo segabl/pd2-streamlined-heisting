@@ -35,7 +35,7 @@ end
 -- Follow pathing improvement, use continuous instead of segmented path
 local _begin_coarse_pathing_original = CopLogicTravel._begin_coarse_pathing
 function CopLogicTravel._begin_coarse_pathing(data, my_data, ...)
-	if not data.objective or data.objective.type ~= "follow" then
+	if not data.objective or data.objective.type ~= "follow" or data.path_fail_t and data.t - data.path_fail_t < 2 then
 		return _begin_coarse_pathing_original(data, my_data, ...)
 	end
 
