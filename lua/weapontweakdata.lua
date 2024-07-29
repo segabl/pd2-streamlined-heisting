@@ -88,6 +88,7 @@ function WeaponTweakData:_set_presets()
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
 			v.suppression = v.armor_piercing and 3 or v.is_shotgun and 2 or 1
+			v.spread = v.rays and v.rays > 1 and 6 or 0
 		elseif k:match("_crew$") then
 			local player_id = k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
 			local player_weapon = crew_weapon_mapping[player_id] and self[crew_weapon_mapping[player_id]] or self[player_id]
