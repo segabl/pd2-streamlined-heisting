@@ -728,6 +728,17 @@ end)
 
 -- Set specific character preset settings
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
+	-- Support for older game versions
+	if not self.zeal_swat then
+		self.zeal_swat = deep_clone(self.swat)
+		table.insert(self._enemy_list, "zeal_swat")
+	end
+
+	if not self.zeal_heavy_swat then
+		self.zeal_heavy_swat = deep_clone(self.heavy_swat)
+		table.insert(self._enemy_list, "zeal_heavy_swat")
+	end
+
 	-- Set hurt severities
 	self.heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.fbi_heavy_swat.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
