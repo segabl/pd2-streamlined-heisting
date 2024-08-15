@@ -1044,7 +1044,7 @@ function GroupAIStateBesiege:_spawn_in_group(spawn_group, spawn_group_type, grp_
 
 		total_weight = total_weight + spawn_entry.freq
 
-		local entry_removed = spawn_entry.amount_min and _add_unit_type_to_spawn_task(i, spawn_entry)
+		local entry_removed = spawn_entry.amount_min and spawn_entry.amount_min > 0 and _add_unit_type_to_spawn_task(i, spawn_entry)
 		if not entry_removed then
 			i = i + 1
 		end
