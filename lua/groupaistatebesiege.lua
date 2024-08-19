@@ -1397,9 +1397,3 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", fun
 		coarse_path = coarse_path
 	})
 end)
-
-
--- Make this function properly set rescue state again for checking if recon tasks are allowed
-Hooks:OverrideFunction(GroupAIStateBase, "_set_rescue_state", function (self, state)
-	self._rescue_allowed = state
-end)
