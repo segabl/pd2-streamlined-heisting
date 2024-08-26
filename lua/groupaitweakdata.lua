@@ -704,7 +704,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	table.remove(self.enemy_spawn_groups.tac_swat_rifle_flank_no_medic.spawn)
 
 	self.enemy_spawn_groups.tac_shield_wall_ranged = {
-		amount = { 4, 5 },
+		amount = { 4, 4 },
 		spawn = {
 			{
 				freq = difficulty_index / 16,
@@ -715,8 +715,13 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.shield_wall_ranged
 			},
 			{
+				freq = 0.25,
+				rank = 2,
+				unit = "FBI_swat_M4",
+				tactics = self._tactics.shield_support_ranged
+			},
+			{
 				freq = 1,
-				amount_min = 2,
 				rank = 2,
 				unit = "FBI_heavy_G36",
 				tactics = self._tactics.shield_support_ranged
@@ -733,7 +738,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	self.enemy_spawn_groups.tac_shield_wall = self.enemy_spawn_groups.tac_shield_wall_ranged
 
 	self.enemy_spawn_groups.tac_shield_wall_charge = {
-		amount = { 4, 5 },
+		amount = { 4, 4 },
 		spawn = {
 			{
 				freq = difficulty_index / 16,
@@ -744,8 +749,13 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				tactics = self._tactics.shield_wall_charge
 			},
 			{
+				freq = 0.25,
+				rank = 2,
+				unit = "FBI_swat_R870",
+				tactics = self._tactics.shield_support_charge
+			},
+			{
 				freq = 1,
-				amount_min = 2,
 				rank = 2,
 				unit = "FBI_heavy_R870",
 				tactics = self._tactics.shield_support_charge
