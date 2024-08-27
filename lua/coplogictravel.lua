@@ -10,6 +10,7 @@ local mvec3_set = mvector3.set
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local tmp_vec3 = Vector3()
+local tmp_vec4 = Vector3()
 
 
 -- Reuse function of idle logic to make enemies in an area aware of a player entering the area
@@ -230,9 +231,14 @@ function CopLogicTravel._determine_destination_occupation(data, objective, ...)
 end
 
 function CopLogicTravel._get_pos_behind_unit(data, unit, min_dis, max_dis)
-	local threat_dir, threat_side, pos = tmp_vec1, tmp_vec2, tmp_vec3
+	local threat_dir, threat_side, pos, unit_pos = tmp_vec1, tmp_vec2, tmp_vec3, tmp_vec4
 	local unit_movement = unit:movement()
-	local unit_pos = unit_movement.get_walk_to_pos and unit_movement:get_walk_to_pos() or unit_movement:m_pos()
+
+	mvec3_set(unit_pos, unit_movement:m_pos())
+	local walk_to_pos = unit_movement.get_walk_to_pos and unit_movement:get_walk_to_pos()
+	if walk_to_pos then
+		mvec3_lerp(unit_pos, unit_pos, walk_to_pos, math.min(mvector3.distance(unit_pos, data.m_pos) / 1000, 1))
+	end
 
 	if data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_AIM then
 		mvec3_dir(threat_dir, data.attention_obj.m_pos, unit_pos)
