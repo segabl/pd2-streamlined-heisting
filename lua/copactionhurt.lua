@@ -60,6 +60,23 @@ Hooks:OverrideFunction(CopActionHurt, "chk_block", function (self, action_type, 
 end)
 
 
+-- Allow dodge and surrender actions to interrupt hurt actions
+CopActionHurt.allowed_client_act_variants = {
+	hands_up = true,
+	hands_back = true,
+	tied = true,
+	tied_all_in_one = true
+}
+
+function CopActionHurt:chk_block_client(action_desc, action_type, t)
+	if action_desc.type == "dodge" or action_desc.type == "act" and self.allowed_client_act_variants[action_desc.variant] then
+		return false
+	end
+
+	return self:chk_block(action_type, t)
+end
+
+
 -- Fix pseudo random number generator having very low entropy
 function CopActionHurt:_pseudorandom(a, b)
 	if CopActionHurt._host_peer == nil then

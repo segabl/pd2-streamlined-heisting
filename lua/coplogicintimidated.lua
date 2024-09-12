@@ -32,7 +32,6 @@ end
 -- Don't immediately break out of surrender when the conditions are met
 Hooks:PostHook(CopLogicIntimidated, "enter", "sh_enter", function (data)
 	data.internal_data.surrender_break_delay_t = TimerManager:game():time() + 2
-	data.unit:network():send("action_hurt_end")
 end)
 
 Hooks:PostHook(CopLogicIntimidated, "on_intimidated", "sh_on_intimidated", function (data)
