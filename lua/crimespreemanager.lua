@@ -19,7 +19,7 @@ Hooks:OverrideFunction(CrimeSpreeManager, "on_mission_completed", function (self
 		local mission_data = self:get_mission(mission_id)
 		self._mission_completion_gain = mission_data.add
 
-		local spree_add = mission_data.add + math.min(managers.loot:get_secured_bags_amount(), 10)
+		local spree_add = mission_data.add + math.min(managers.loot:get_secured_bags_amount(), 20)
 		local spree_level = self:spree_level()
 		local server_spree_level = self:server_spree_level()
 

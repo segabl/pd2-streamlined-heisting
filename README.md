@@ -101,7 +101,7 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes instances of Winters not leaving the map when the formation was told to break up before he was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
 - Tweaks some heist mission scripts to play better or fix issues
-- Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 10 additional levels)
+- Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 20 additional levels)
 - Fixes Crime Spree level gain being calculated incorrectly when the host has a different level
 - Adds hints when an enemy can't be intimidated due to temporary cooldown, no surrender preset or maximum amount of hostages reached
 - Fixes Jokers sometimes following the wrong player
