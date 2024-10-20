@@ -574,6 +574,14 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	self._tactics.marshal_shield = {
 		"charge"
 	}
+	self._tactics.support_ranged = {
+		"unit_cover",
+		"ranged_fire"
+	}
+	self._tactics.support_charge = {
+		"unit_cover",
+		"charge"
+	}
 
 	self.enemy_spawn_groups.tac_swat_shotgun_rush = {
 		amount = { 2, 3 },
@@ -599,7 +607,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_R870",
-				tactics = self._tactics.swat_shotgun_rush
+				tactics = self._tactics.support_charge
 			}
 		}
 	}
@@ -631,7 +639,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_R870",
-				tactics = self._tactics.swat_shotgun_flank
+				tactics = self._tactics.support_charge
 			}
 		}
 	}
@@ -663,7 +671,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
-				tactics = self._tactics.swat_rifle
+				tactics = self._tactics.support_ranged
 			}
 		}
 	}
@@ -695,7 +703,7 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				amount_max = 1,
 				rank = 1,
 				unit = "medic_M4",
-				tactics = self._tactics.swat_rifle_flank
+				tactics = self._tactics.support_ranged
 			}
 		}
 	}

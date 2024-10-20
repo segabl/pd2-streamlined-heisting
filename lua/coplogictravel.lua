@@ -119,13 +119,13 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
 	local my_data = data.internal_data
 	local nav_manager = managers.navigation
 
-	if alive(data.objective.shield_cover_unit) then
+	if alive(data.objective.cover_unit) then
 		if my_data.moving_to_cover then
 			nav_manager:release_cover(my_data.moving_to_cover[1])
 			my_data.moving_to_cover = nil
 		end
 
-		local pos = CopLogicTravel._get_pos_behind_unit(data, data.objective.shield_cover_unit, 75, 300)
+		local pos = CopLogicTravel._get_pos_behind_unit(data, data.objective.cover_unit, 75, 300)
 		return pos or _get_exact_move_pos_original(data, nav_index, ...)
 	end
 
