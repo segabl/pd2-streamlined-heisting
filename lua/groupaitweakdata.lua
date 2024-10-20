@@ -934,6 +934,13 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				rank = 1,
 				unit = "FBI_swat_M4",
 				tactics = self._tactics.swat_rifle
+			},
+			{
+				freq = 0.2,
+				amount_max = 1,
+				rank = 1,
+				unit = "marshal_marksman",
+				tactics = self._tactics.marshal_marksman
 			}
 		}
 	}
