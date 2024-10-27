@@ -105,7 +105,7 @@ function CopActionShoot:update(t)
 		-- Reload
 		self:_stop_firing()
 		CopActionReload._play_reload(self, t)
-	elseif not target_vec or not self._common_data.allow_fire then
+	elseif not target_vec or not target_dis or not target_pos or not self._common_data.allow_fire then
 		-- Stop shooting
 		if self._autofiring then
 			self:_stop_firing()
