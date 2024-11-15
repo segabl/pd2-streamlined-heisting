@@ -19,8 +19,10 @@ local temp_vec2 = Vector3()
 -- Helper function to reset variables when shooting is stopped
 function CopActionShoot:_stop_firing()
 	self._is_single_shot = nil
-	self._autofiring = nil
-	self._weapon_base:stop_autofire()
+	if self._autofiring then
+		self._autofiring = nil
+		self._weapon_base:stop_autofire()
+	end
 end
 
 
@@ -93,25 +95,38 @@ function CopActionShoot:update(t)
 			self._ext_movement:play_redirect("reload_looped_exit")
 		end
 		return
-	elseif ext_anim.equip or ext_anim.melee then
+	elseif ext_anim.melee then
+		self._shoot_t = t + 0.25
+		return
+	elseif ext_anim.equip then
 		return
 	end
 
-	if target_vec and self._common_data.allow_fire and self._shield_use_cooldown and self._shield_use_cooldown < t and target_dis < self._shield_use_range then
+	-- Reload
+	if self._weapon_base:clip_empty() then
+		self:_stop_firing()
+		CopActionReload._play_reload(self, t)
+		return
+	end
+
+	-- Stop shooting
+	if not target_vec or not target_dis or not target_pos or not self._common_data.allow_fire then
+		self:_stop_firing()
+		return
+	end
+
+	-- Melee
+	if self:_chk_start_melee(t, target_dis) then
+		return
+	end
+
+	-- Shield flash
+	if self._shield_use_cooldown and self._shield_use_cooldown < t and target_dis < self._shield_use_range then
 		self._shield_use_cooldown = self._shield_base:request_use(t) or self._shield_use_cooldown
 	end
 
-	if self._weapon_base:clip_empty() then
-		-- Reload
-		self:_stop_firing()
-		CopActionReload._play_reload(self, t)
-	elseif not target_vec or not target_dis or not target_pos or not self._common_data.allow_fire then
-		-- Stop shooting
-		if self._autofiring then
-			self:_stop_firing()
-		end
-	elseif self._autofiring then
-		-- Update shooting
+	-- Update shooting
+	if self._autofiring then
 		local falloff, i_range = self:_get_shoot_falloff(target_dis, self._falloff)
 		local dmg_buff = self._unit:base():get_total_buff("base_damage")
 		local dmg_mul = (1 + dmg_buff) * falloff.dmg_mul
@@ -139,8 +154,12 @@ function CopActionShoot:update(t)
 		if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
 			self._unit:unit_data().mission_element:event("killshot", self._unit)
 		end
-	elseif self._apply_aim_focus_delay then
-		-- Apply aim and focus delay
+
+		return
+	end
+
+	-- Apply aim and focus delay
+	if self._apply_aim_focus_delay then
 		if t < self._next_vis_ray_t then
 			return
 		elseif self._shooting_player and self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._verif_slotmask, "ray_type", "ai_vision", "report") then
@@ -157,14 +176,14 @@ function CopActionShoot:update(t)
 		self._shoot_history.focus_delay = self._w_usage_tweak.focus_delay
 
 		self._apply_aim_focus_delay = false
-	elseif self._shoot_t < t and self._mod_enable_t < t then
-		-- Start shooting
+
+		return
+	end
+
+	-- Start shooting
+	if self._shoot_t < t and self._mod_enable_t < t then
 		if self._common_data.char_tweak.no_move_and_shoot and ext_anim.move then
 			self._shoot_t = t + (self._common_data.char_tweak.move_and_shoot_cooldown or 1)
-			return
-		end
-
-		if self:_chk_start_melee(t, target_dis) then
 			return
 		end
 
@@ -281,7 +300,7 @@ end
 -- Do all the melee related checks inside this function
 -- Adjust melee code to work against npcs
 function CopActionShoot:_chk_start_melee(t, target_dis)
-	if target_dis > 130 or not self._w_usage_tweak.melee_speed then
+	if target_dis > 130 or self._shoot_t > t or self._mod_enable_t > t or not self._w_usage_tweak.melee_speed then
 		return
 	end
 
@@ -298,6 +317,13 @@ function CopActionShoot:_chk_start_melee(t, target_dis)
 	if not attention_unit or not attention_unit:character_damage() or not attention_unit:character_damage().damage_melee then
 		return
 	end
+
+	if self._autofiring and math.random() < 0.75 then
+		self._melee_timeout_t = t + self._w_usage_tweak.melee_retry_delay[1] * 0.25
+		return
+	end
+
+	self:_stop_firing()
 
 	if not self:_play_melee_anim(t) then
 		return
