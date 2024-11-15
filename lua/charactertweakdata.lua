@@ -53,7 +53,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		aim_delay = { 0, aim_delay },
 		melee_dmg = melee_dmg_tbl[diff_i],
 		melee_speed = 1,
-		melee_retry_delay = { 1, 2 },
+		melee_retry_delay = { 2, 3 },
 		range = { close = 750, optimal = 1500, far = 3000 },
 		spread = 5,
 		RELOAD_SPEED = 1
@@ -193,7 +193,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 4 * dmg_mul_lin, r = 3000, acc = { 0.1, 0.3 }, recoil = { 1, 1.8 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_tank.mini.no_autofire_stop = true
-	presets.weapon.sh_tank.mini.RELOAD_SPEED = 0.2
+	presets.weapon.sh_tank.mini.melee_speed = 0.75
+	presets.weapon.sh_tank.mini.RELOAD_SPEED = 0.3
 	presets.weapon.sh_tank.mini.autofire_rounds = { 50, 500 }
 	presets.weapon.sh_tank.mini.FALLOFF = {
 		{ dmg_mul = 5 * dmg_mul_lin, r = 0, acc = { 0.15, 0.35 }, recoil = { 0.5, 0.8 }, mode = { 1, 0, 0, 0 } },
@@ -429,6 +430,19 @@ function CharacterTweakData:_presets(tweak_data, ...)
 			explode = 1
 		}
 	}
+
+	presets.hurt_severities.only_light_hurt.bullet.zones = {
+		{
+			health_limit = 0.3,
+			none = 0.6,
+			light = 0.4
+		},
+		{
+			light = 1
+		}
+	}
+	presets.hurt_severities.only_light_hurt.melee.zones = deep_clone(presets.hurt_severities.only_light_hurt.bullet.zones)
+	presets.hurt_severities.only_light_hurt.explosion.zones = deep_clone(presets.hurt_severities.only_light_hurt.bullet.zones)
 
 	presets.hurt_severities.no_heavy_hurt = deep_clone(presets.hurt_severities.base)
 	presets.hurt_severities.no_heavy_hurt.bullet.zones = {
@@ -748,6 +762,8 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.shadow_spooc.damage.hurt_severity = self.presets.hurt_severities.no_hurts
 	self.marshal_marksman.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
 	self.marshal_shield_break.damage.hurt_severity = self.presets.hurt_severities.no_heavy_hurt
+	self.tank_hw.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt
+	self.tank_mini.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt
 
 	-- Set custom surrender chances (default is "easy", like vanilla)
 	self.swat.surrender = self.presets.surrender.normal
