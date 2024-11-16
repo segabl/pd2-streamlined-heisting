@@ -118,3 +118,4 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - [Masavik](https://modworkshop.net/user/52365) for creating the GenSec shield model
 - [miss miki](https://modworkshop.net/user/55749) for testing, feedback and some mission script improvements
 - [hitscanner](https://modworkshop.net/user/hitscanner), [Nardo](https://modworkshop.net/user/19738), [nikita](https://modworkshop.net/user/54264) and others for testing and feedback
+- [PlayBONK](https://modworkshop.net/user/13634) for creating the shield bash animation

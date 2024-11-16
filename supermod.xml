@@ -621,7 +621,7 @@
 			</group>
 		</group>
 
-		<!-- Improve navigation data -->
+		<!-- improve navigation data -->
 		<group name="levels/narratives/">
 			<file :name="classics/flat/nav_manager_data.nav_data"/>
 			<file :name="dentist/hox/stage_2/nav_manager_data.nav_data"/>
@@ -631,6 +631,9 @@
 			<file :name="h_alex_must_die/stage_1/nav_manager_data.nav_data"/>
 			<file :name="skm/skm_big2/nav_manager_data.nav_data"/>
 		</group>
+
+		<!-- animations -->
+		<file name="anims/shared/boss/shield/cbt_crh_melee.animation"/>
 
 	</assets>
 

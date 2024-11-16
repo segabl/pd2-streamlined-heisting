@@ -54,6 +54,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		melee_dmg = melee_dmg_tbl[diff_i],
 		melee_speed = 1,
 		melee_retry_delay = { 2, 3 },
+		melee_range = 125,
 		range = { close = 750, optimal = 1500, far = 3000 },
 		spread = 5,
 		RELOAD_SPEED = 1
@@ -230,9 +231,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Shield preset
 	presets.weapon.sh_shield = based_on(presets.weapon.sh_base, {
-		melee_speed = nil_value,
-		melee_dmg = nil_value,
-		melee_retry_delay = nil_value,
+		melee_dmg = melee_dmg_tbl[diff_i] * 0.75,
+		melee_retry_delay = { 1, 2 },
 		range = { close = 500, optimal = 1000, far = 2000 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
@@ -255,9 +255,6 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
-	presets.weapon.sh_marshal.is_pistol.melee_speed = nil
-	presets.weapon.sh_marshal.is_pistol.melee_dmg = nil
-	presets.weapon.sh_marshal.is_pistol.melee_retry_delay = nil
 	presets.weapon.sh_marshal.is_pistol.range = { close = 500, optimal = 1000, far = 2000 }
 	presets.weapon.sh_marshal.is_pistol.FALLOFF = {
 		{ dmg_mul = 10 * dmg_mul_lin, r = 0, acc = { 0.8, 1 }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },

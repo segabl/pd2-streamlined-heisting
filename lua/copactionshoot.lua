@@ -116,7 +116,7 @@ function CopActionShoot:update(t)
 	end
 
 	-- Melee
-	if self:_chk_start_melee(t, target_dis) then
+	if self:_chk_start_melee(t, target_dis, target_pos) then
 		return
 	end
 
@@ -299,8 +299,13 @@ end
 
 -- Do all the melee related checks inside this function
 -- Adjust melee code to work against npcs
-function CopActionShoot:_chk_start_melee(t, target_dis)
-	if target_dis > 130 or self._shoot_t > t or self._mod_enable_t > t or not self._w_usage_tweak.melee_speed then
+function CopActionShoot:_chk_start_melee(t, target_dis, target_pos)
+	if self._shoot_t > t or self._mod_enable_t > t or not self._w_usage_tweak.melee_speed then
+		return
+	end
+
+	local z_diff = math.abs(target_pos.z - self._shoot_from_pos.z)
+	if z_diff > 200 or target_dis > math.sqrt(((self._w_usage_tweak.melee_range or 125) * 0.8) ^ 2 + z_diff ^ 2) then
 		return
 	end
 
@@ -371,10 +376,16 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 
+	local target_pos = self._melee_unit:movement():m_head_pos()
+	local z_diff = math.abs(target_pos.z - self._shoot_from_pos.z)
+	if z_diff > 200 then
+		return
+	end
+
 	local target_vec = temp_vec1
-	local target_dis = mvec3_dir(target_vec, self._shoot_from_pos, self._melee_unit:movement():m_head_pos())
-	local max_dis = 150
-	if target_dis >= max_dis then
+	local target_dis = mvec3_dir(target_vec, self._shoot_from_pos, target_pos)
+	local max_dis = math.sqrt((self._w_usage_tweak.melee_range or 125) ^ 2 + z_diff ^ 2)
+	if target_dis > max_dis then
 		return
 	end
 
