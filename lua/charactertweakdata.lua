@@ -55,6 +55,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		melee_speed = 1,
 		melee_retry_delay = { 2, 3 },
 		melee_range = 125,
+		melee_force = 400,
 		range = { close = 750, optimal = 1500, far = 3000 },
 		spread = 5,
 		RELOAD_SPEED = 1
@@ -171,7 +172,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Bulldozer preset
 	presets.weapon.sh_tank = based_on(presets.weapon.sh_base, {
-		melee_dmg = 40 * dmg_mul_lin,
+		melee_dmg = melee_dmg_tbl[diff_i] * 2,
+		melee_force = 600,
 		aim_delay = { 0, aim_delay * 2 }
 	})
 	presets.weapon.sh_tank.is_shotgun_pump.RELOAD_SPEED = 1
@@ -233,6 +235,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_shield = based_on(presets.weapon.sh_base, {
 		melee_dmg = melee_dmg_tbl[diff_i] * 0.75,
 		melee_retry_delay = { 1, 2 },
+		melee_range = 150,
+		melee_force = 500,
 		range = { close = 500, optimal = 1000, far = 2000 },
 		FALLOFF = function (falloff)
 			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
