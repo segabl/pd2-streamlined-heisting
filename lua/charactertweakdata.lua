@@ -85,8 +85,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_base.is_sniper = deep_clone(presets.weapon.sh_base.is_revolver)
 	presets.weapon.sh_base.is_sniper.range = { close = 5000, optimal = 10000, far = 15000 }
 	presets.weapon.sh_base.is_sniper.FALLOFF = {
-		{ dmg_mul = 4 * dmg_mul_str, r = 0, acc = { 0, 0.5 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
-		{ dmg_mul = 4 * dmg_mul_str, r = 2000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_str, r = 0, acc = { 0.25, 0.75 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
+		{ dmg_mul = 4 * dmg_mul_str, r = 1000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 4 * dmg_mul_str, r = 4000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
 
@@ -209,16 +209,16 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.weapon.sh_sniper = based_on(presets.weapon.sh_base, {
 		use_laser = true
 	})
-	presets.weapon.sh_sniper.is_rifle.aim_delay = { aim_delay, aim_delay * 2 }
-	presets.weapon.sh_sniper.is_rifle.range = { close = 5000, optimal = 10000, far = 15000 }
-	presets.weapon.sh_sniper.is_rifle.FALLOFF = {
+	presets.weapon.sh_sniper.is_sniper.aim_delay = { aim_delay, aim_delay * 2 }
+	presets.weapon.sh_sniper.is_sniper.range = { close = 5000, optimal = 10000, far = 15000 }
+	presets.weapon.sh_sniper.is_sniper.FALLOFF = {
 		{ dmg_mul = 24 * dmg_mul_lin, r = 0, acc = { 0.25, 0.75 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 24 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 24 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 3, 4 }, mode = { 1, 0, 0, 0 } }
 	}
 	presets.weapon.sh_sniper_heavy = based_on(presets.weapon.sh_sniper)
-	presets.weapon.sh_sniper_heavy.is_rifle.range = { close = 1000, optimal = 2000, far = 4000 }
-	presets.weapon.sh_sniper_heavy.is_rifle.FALLOFF = {
+	presets.weapon.sh_sniper_heavy.is_sniper.range = { close = 1000, optimal = 2000, far = 4000 }
+	presets.weapon.sh_sniper_heavy.is_sniper.FALLOFF = {
 		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.25, 0.75 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1.5, 2 }, mode = { 1, 0, 0, 0 } }
@@ -252,9 +252,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Marshal preset
 	presets.weapon.sh_marshal = based_on(presets.weapon.sh_base)
-	presets.weapon.sh_marshal.is_rifle.aim_delay = { aim_delay, aim_delay * 2 }
-	presets.weapon.sh_marshal.is_rifle.range = { close = 1000, optimal = 2000, far = 4000 }
-	presets.weapon.sh_marshal.is_rifle.FALLOFF = {
+	presets.weapon.sh_marshal.is_sniper.aim_delay = { aim_delay, aim_delay * 2 }
+	presets.weapon.sh_marshal.is_sniper.range = { close = 1000, optimal = 2000, far = 4000 }
+	presets.weapon.sh_marshal.is_sniper.FALLOFF = {
 		{ dmg_mul = 12 * dmg_mul_lin, r = 0, acc = { 0.25, 0.75 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }

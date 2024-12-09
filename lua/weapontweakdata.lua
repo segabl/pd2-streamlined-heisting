@@ -89,6 +89,10 @@ function WeaponTweakData:_set_presets()
 			v.DAMAGE = 1
 			v.suppression = v.armor_piercing and 3 or v.is_shotgun and 2 or 1
 			v.spread = v.rays and v.rays > 1 and 6 or 0
+			if v.categories and v.categories[1] == "snp" and v.usage ~= "is_sniper" then
+				v.anim_usage = v.anim_usage or v.usage
+				v.usage = "is_sniper"
+			end
 		elseif k:match("_crew$") then
 			local player_id = k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
 			local player_weapon = crew_weapon_mapping[player_id] and self[crew_weapon_mapping[player_id]] or self[player_id]
