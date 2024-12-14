@@ -311,13 +311,19 @@ end)
 -- Stop existing advancing action on exit to a new travel logic
 -- This allows enemies to start their new path immediately instead of having to finish the old one
 Hooks:PreHook(CopLogicTravel, "exit", "sh_exit", function (data, new_logic_name)
-	if new_logic_name == "travel" and data.internal_data.advancing and not data.unit:movement():chk_action_forbidden("idle") then
+	if new_logic_name == "travel" then
+		CopLogicTravel.cancel_advance(data)
+	end
+end)
+
+function CopLogicTravel.cancel_advance(data)
+	if data.internal_data.advancing and not data.unit:movement():chk_action_forbidden("idle") then
 		data.brain:action_request({
 			body_part = 2,
 			type = "idle"
 		})
 	end
-end)
+end
 
 
 -- Fix enemies sometimes disappearing when they are told to retire
