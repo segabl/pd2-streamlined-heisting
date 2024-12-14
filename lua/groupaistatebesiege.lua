@@ -1152,7 +1152,9 @@ function GroupAIStateBesiege:_chk_say_group(group, chatter_type)
 end
 
 Hooks:PostHook(GroupAIStateBesiege, "_assign_group_to_retire", "sh__assign_group_to_retire", function (self, group)
-	self:_chk_say_group(group, "retreat")
+	if not group.said_retreat then
+		group.said_retreat = self:_chk_say_group(group, "retreat")
+	end
 end)
 
 
