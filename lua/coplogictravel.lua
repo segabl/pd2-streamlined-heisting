@@ -353,3 +353,17 @@ Hooks:PostHook(CopLogicTravel, "queued_update", "sh_queued_update", function (da
 		managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "report")
 	end
 end)
+
+
+-- Make better use of pathing priority
+function CopLogicTravel.get_pathing_prio(data)
+	if data.team and data.team.friends.player then
+		return 6
+	elseif data.unit:base().has_tag and data.unit:base():has_tag("special") then
+		return 4
+	elseif data.important then
+		return 2
+	else
+		return 0
+	end
+end
