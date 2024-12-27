@@ -32,14 +32,14 @@ function CopActionWalk:_adjust_move_anim(side, speed)
 end
 
 
--- Fix potential crash when walk action gets interrupted on client
+-- Fix potential crash when walk action gets interrupted on client and simplify interrupt path
 local get_husk_interrupt_desc_original = CopActionWalk.get_husk_interrupt_desc
 function CopActionWalk:get_husk_interrupt_desc(...)
 	local old_action_desc = get_husk_interrupt_desc_original(self, ...)
 
-	if not old_action_desc.nav_path then
-		old_action_desc.nav_path = self._nav_path
-	end
+	local from = mvector3.copy(self._ext_movement:m_pos())
+	local path = old_action_desc.nav_path or self._nav_path
+	old_action_desc.nav_path = self._calculate_simplified_path(from, path, 2, true)
 
 	return old_action_desc
 end
@@ -51,10 +51,10 @@ end
 
 
 -- Fix pathing start position (should always be our current position)
-Hooks:PreHook(CopActionWalk, "init", "sh_init", function (self, action_desc, common_data)
-	local pos =  common_data.pos
+Hooks:PreHook(CopActionWalk, "init", "sh_init", function(self, action_desc, common_data)
+	local pos = common_data.pos
 	local from_pos = action_desc.nav_path[1]
 	if pos.x ~= from_pos.x or pos.y ~= from_pos.y then
-		table.insert(action_desc.nav_path, 1, mvector3.copy(common_data.pos))
+		table.insert(action_desc.nav_path, 1, mvector3.copy(pos))
 	end
 end)
