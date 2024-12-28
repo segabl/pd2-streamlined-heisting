@@ -430,7 +430,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 				damage = 0,
 				attacker_unit = self._unit,
 				col_ray = {
-					position = shoot_from_pos + fwd * 50,
+					position = self._shoot_from_pos + fwd * 50,
 					ray = mvector3.copy(target_vec)
 				}
 			})
