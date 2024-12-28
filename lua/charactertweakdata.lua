@@ -158,15 +158,15 @@ function CharacterTweakData:_presets(tweak_data, ...)
 
 	-- Heavy preset (deal less damage in exchange for being bulkier)
 	presets.weapon.sh_heavy = based_on(presets.weapon.sh_base, {
-		FALLOFF = function (falloff)
-			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.85 end)
+		FALLOFF = function(falloff)
+			manipulate_entries(falloff, "dmg_mul", function(val) return val * 0.85 end)
 		end
 	})
 
 	-- Stronger preset (for gangsters and basic cops)
 	presets.weapon.sh_strong = based_on(presets.weapon.sh_base, {
-		FALLOFF = function (falloff)
-			manipulate_entries(falloff, "dmg_mul", function (val) return val * 1.25 end)
+		FALLOFF = function(falloff)
+			manipulate_entries(falloff, "dmg_mul", function(val) return val * 1.25 end)
 		end
 	})
 
@@ -238,15 +238,15 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		melee_range = 150,
 		melee_force = 500,
 		range = { close = 500, optimal = 1000, far = 2000 },
-		FALLOFF = function (falloff)
-			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
+		FALLOFF = function(falloff)
+			manipulate_entries(falloff, "dmg_mul", function(val) return val * 0.75 end)
 		end
 	})
 
 	-- Medic preset
 	presets.weapon.sh_medic = based_on(presets.weapon.sh_base, {
-		FALLOFF = function (falloff)
-			manipulate_entries(falloff, "dmg_mul", function (val) return val * 0.75 end)
+		FALLOFF = function(falloff)
+			manipulate_entries(falloff, "dmg_mul", function(val) return val * 0.75 end)
 		end
 	})
 
@@ -259,8 +259,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		{ dmg_mul = 12 * dmg_mul_lin, r = 1000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 12 * dmg_mul_lin, r = 4000, acc = { 0.5, 1 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
-	presets.weapon.sh_marshal.is_pistol.range = { close = 500, optimal = 1000, far = 2000 }
-	presets.weapon.sh_marshal.is_pistol.FALLOFF = {
+	presets.weapon.sh_marshal.is_revolver.range = { close = 500, optimal = 1000, far = 2000 }
+	presets.weapon.sh_marshal.is_revolver.FALLOFF = {
 		{ dmg_mul = 10 * dmg_mul_lin, r = 0, acc = { 0.8, 1 }, recoil = { 0.75, 1 }, mode = { 1, 0, 0, 0 } },
 		{ dmg_mul = 5 * dmg_mul_lin, r = 2000, acc = { 0.3, 0.6 }, recoil = { 1, 1.5 }, mode = { 1, 0, 0, 0 } }
 	}
@@ -628,7 +628,7 @@ end
 
 
 -- Add new weapons
-Hooks:PostHook(CharacterTweakData, "_create_table_structure", "sh__create_table_structure", function (self)
+Hooks:PostHook(CharacterTweakData, "_create_table_structure", "sh__create_table_structure", function(self)
 	table.insert(self.weap_ids, "shepheard")
 	table.insert(self.weap_unit_names, Idstring("units/payday2/weapons/wpn_npc_shepheard/wpn_npc_shepheard"))
 
@@ -641,13 +641,13 @@ end)
 
 
 -- Tweak bosses
-Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", function(self, presets)
 	self.biker_boss.HEALTH_INIT = 600
 	self.biker_boss.player_health_scaling_mul = 1.25
 	self.biker_boss.headshot_dmg_mul = 0.5
 	self.biker_boss.no_headshot_add_mul = true
 	self.biker_boss.damage.explosion_damage_mul = 0.5
-	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
 	self.biker_boss.move_speed = presets.move_speed.slow
 	self.biker_boss.no_run_start = true
 	self.biker_boss.no_run_stop = true
@@ -655,7 +655,7 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 	self.biker_boss.throwable_cooldown = 10
 end)
 
-Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", function(self, presets)
 	self.chavez_boss.HEALTH_INIT = 400
 	self.chavez_boss.player_health_scaling_mul = 1.25
 	self.chavez_boss.headshot_dmg_mul = 0.75
@@ -667,13 +667,13 @@ Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", 
 	self.chavez_boss.no_run_stop = true
 end)
 
-Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_boss", function(self, presets)
 	self.drug_lord_boss.HEALTH_INIT = 600
 	self.drug_lord_boss.player_health_scaling_mul = 1.25
 	self.drug_lord_boss.headshot_dmg_mul = 0.75
 	self.drug_lord_boss.no_headshot_add_mul = true
 	self.drug_lord_boss.damage.explosion_damage_mul = 0.5
-	self.drug_lord_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.drug_lord_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
 	self.drug_lord_boss.move_speed = presets.move_speed.normal
 	self.drug_lord_boss.no_run_start = true
 	self.drug_lord_boss.no_run_stop = true
@@ -682,13 +682,13 @@ Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_b
 	self.drug_lord_boss.throwable_cooldown = 10
 end)
 
-Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", function(self, presets)
 	self.hector_boss.HEALTH_INIT = 600
 	self.hector_boss.player_health_scaling_mul = 1.25
 	self.hector_boss.headshot_dmg_mul = 0.5
 	self.hector_boss.no_headshot_add_mul = true
 	self.hector_boss.damage.explosion_damage_mul = 0.5
-	self.hector_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.hector_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
 	self.hector_boss.move_speed = presets.move_speed.slow
 	self.hector_boss.no_run_start = true
 	self.hector_boss.no_run_stop = true
@@ -698,13 +698,13 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 	self.hector_boss.immune_to_concussion = true
 end)
 
-Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss", function(self, presets)
 	self.mobster_boss.HEALTH_INIT = 400
 	self.mobster_boss.player_health_scaling_mul = 1.25
 	self.mobster_boss.headshot_dmg_mul = 0.75
 	self.mobster_boss.no_headshot_add_mul = true
 	self.mobster_boss.damage.explosion_damage_mul = 0.5
-	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
 	self.mobster_boss.move_speed = presets.move_speed.fast
 	self.mobster_boss.no_run_start = true
 	self.mobster_boss.no_run_stop = true
@@ -712,13 +712,13 @@ Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss"
 	self.mobster_boss.immune_to_concussion = true
 end)
 
-Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", function(self, presets)
 	self.triad_boss.HEALTH_INIT = 600
 	self.triad_boss.player_health_scaling_mul = 1.25
 	self.triad_boss.headshot_dmg_mul = 0.5
 	self.triad_boss.no_headshot_add_mul = true
 	self.triad_boss.damage.explosion_damage_mul = 0.5
-	self.triad_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.triad_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
 	self.triad_boss.move_speed = presets.move_speed.slow
 	self.triad_boss.no_run_start = true
 	self.triad_boss.no_run_stop = true
@@ -728,13 +728,13 @@ Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", fu
 	self.triad_boss.throwable_cooldown = 20
 end)
 
-Hooks:PostHook(CharacterTweakData, "_init_deep_boss", "sh__init_deep_boss", function (self, presets)
+Hooks:PostHook(CharacterTweakData, "_init_deep_boss", "sh__init_deep_boss", function(self, presets)
 	self.deep_boss.HEALTH_INIT = 800
 	self.deep_boss.player_health_scaling_mul = 1.25
 	self.deep_boss.headshot_dmg_mul = 0.5
 	self.deep_boss.no_headshot_add_mul = true
 	self.deep_boss.damage.explosion_damage_mul = 0.5
-	self.deep_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.deep_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
 	self.deep_boss.move_speed = presets.move_speed.slow
 	self.deep_boss.no_run_start = true
 	self.deep_boss.no_run_stop = true

@@ -1,23 +1,29 @@
 -- Copies weapon data and sets some values from a crew weapon version
-local function based_on(weap, crew_weap)
-	local w = deep_clone(weap)
-	w.categories = clone(crew_weap.categories)
-	w.sounds.prefix = crew_weap.sounds.prefix
-	w.muzzleflash = crew_weap.muzzleflash
-	w.shell_ejection = crew_weap.shell_ejection
-	w.hold = crew_weap.hold
-	w.reload = crew_weap.reload
-	w.anim_usage = crew_weap.anim_usage or crew_weap.usage
-	return w
+local function copy_data(weapon, stats, cosmetics)
+	weapon = weapon or {}
+	for k, v in pairs(stats) do
+		weapon[k] = type(v) == "table" and deep_clone(v) or v
+	end
+	weapon.categories = clone(cosmetics.categories)
+	weapon.sounds.prefix = cosmetics.sounds.prefix
+	weapon.muzzleflash = cosmetics.muzzleflash
+	weapon.muzzleflash_silenced = cosmetics.muzzleflash_silenced
+	weapon.shell_ejection = cosmetics.shell_ejection
+	weapon.hold = cosmetics.hold
+	weapon.reload = cosmetics.reload
+	weapon.anim_usage = cosmetics.anim_usage or cosmetics.usage
+	return weapon
 end
 
 
 -- Setup/fix npc weapons
-Hooks:PostHook(WeaponTweakData, "init", "sh_init", function (self, tweak_data)
+Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.tweak_data = tweak_data
 
 	-- Fix some weapon data
 	self.asval_smg_npc.sounds.prefix = self.asval_crew.sounds.prefix
+	self.deagle_npc.usage = "is_revolver"
+	self.deagle_npc.anim_usage = "is_pistol"
 	self.dmr_npc.trail = "effects/particles/weapons/sniper_trail"
 	self.mac11_npc.sounds.prefix = self.mac10_crew.sounds.prefix
 	self.mossberg_npc.usage = "is_double_barrel"
@@ -33,16 +39,16 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function (self, tweak_data)
 
 	-- Make weapons of the same use type have the same stats (damage increase is handled by weapon presets)
 	-- This ensures consistent damage scaling independent of the weapon use of different factions
-	self.ak47_ass_npc = based_on(self.m4_npc, self.ak47_crew)
-	self.akmsu_smg_npc = based_on(self.m4_npc, self.akmsu_crew)
-	self.g36_npc = based_on(self.m4_npc, self.g36_crew)
-	self.mp5_npc = based_on(self.m4_npc, self.mp5_crew)
-	self.scar_npc = based_on(self.m4_npc, self.scar_crew)
-	self.shepheard_npc = based_on(self.m4_npc, self.shepheard_crew)
-	self.benelli_npc = based_on(self.r870_npc, self.ben_crew)
-	self.ksg_npc = based_on(self.r870_npc, self.ksg_crew)
-	self.spas12_npc = based_on(self.r870_npc, self.spas12_crew)
-	self.rpk_lmg_npc = based_on(self.m249_npc, self.rpk_crew)
+	self.ak47_ass_npc = copy_data(self.ak47_ass_npc, self.m4_npc, self.ak47_crew)
+	self.akmsu_smg_npc = copy_data(self.akmsu_smg_npc, self.m4_npc, self.akmsu_crew)
+	self.g36_npc = copy_data(self.g36_npc, self.m4_npc, self.g36_crew)
+	self.mp5_npc = copy_data(self.mp5_npc, self.m4_npc, self.mp5_crew)
+	self.scar_npc = copy_data(self.scar_npc, self.m4_npc, self.scar_crew)
+	self.shepheard_npc = copy_data(self.shepheard_npc, self.m4_npc, self.shepheard_crew)
+	self.benelli_npc = copy_data(self.benelli_npc, self.r870_npc, self.ben_crew)
+	self.ksg_npc = copy_data(self.ksg_npc, self.r870_npc, self.ksg_crew)
+	self.spas12_npc = copy_data(self.spas12_npc, self.r870_npc, self.spas12_crew)
+	self.rpk_lmg_npc = copy_data(self.rpk_lmg_npc, self.m249_npc, self.rpk_crew)
 end)
 
 
@@ -69,6 +75,11 @@ local crew_weapon_mapping = {
 	raging_bull = "new_raging_bull",
 	x_c45 = "x_g17"
 }
+local alert_sizes = {
+	is_sniper = 10000,
+	is_smg = 3000,
+	is_pistol = 2500
+}
 function WeaponTweakData:_set_presets()
 	local diff_i = self.tweak_data:difficulty_to_index(Global.game_settings and Global.game_settings.difficulty or "normal")
 	local crew_presets = self.tweak_data.character.presets.weapon.gang_member
@@ -93,6 +104,7 @@ function WeaponTweakData:_set_presets()
 				v.anim_usage = v.anim_usage or v.usage
 				v.usage = "is_sniper"
 			end
+			v.alert_size = (alert_sizes[v.usage] or 5000) * (v.has_suppressor and 0.2 or 1)
 		elseif k:match("_crew$") then
 			local player_id = k:gsub("_crew$", ""):gsub("_secondary$", ""):gsub("_primary$", "")
 			local player_weapon = crew_weapon_mapping[player_id] and self[crew_weapon_mapping[player_id]] or self[player_id]
