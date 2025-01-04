@@ -10,7 +10,7 @@ end
 
 
 -- Fix head position update on suppression
-Hooks:PreHook(CopMovement, "_upd_stance", "sh__upd_stance", function (self, t)
+Hooks:PreHook(CopMovement, "_upd_stance", "sh__upd_stance", function(self, t)
 	if self._stance.transition and self._stance.transition.next_upd_t < t then
 		self._force_head_upd = true
 	elseif self._suppression.transition and self._suppression.transition.next_upd_t < t then
@@ -18,11 +18,11 @@ Hooks:PreHook(CopMovement, "_upd_stance", "sh__upd_stance", function (self, t)
 	end
 end)
 
-Hooks:PostHook(CopMovement, "_change_stance", "sh__change_stance", function (self)
+Hooks:PostHook(CopMovement, "_change_stance", "sh__change_stance", function(self)
 	self._force_head_upd = true
 end)
 
-Hooks:PostHook(CopMovement, "on_suppressed", "sh_on_suppressed", function (self)
+Hooks:PostHook(CopMovement, "on_suppressed", "sh_on_suppressed", function(self)
 	self._force_head_upd = true
 end)
 
@@ -56,16 +56,32 @@ end
 
 
 -- Toggle flashlights when set to cool or uncool
-Hooks:PreHook(CopMovement, "_post_init", "sh__post_init", function (self)
+Hooks:PreHook(CopMovement, "_post_init", "sh__post_init", function(self)
 	local equipped_weapon = self._ext_inventory:equipped_unit()
-	if equipped_weapon then
+	if alive(equipped_weapon) then
 		equipped_weapon:base():set_flashlight_enabled(false)
 	end
 end)
 
-Hooks:PostHook(CopMovement, "set_cool", "sh_set_cool", function (self, state)
+function CopMovement:_chk_flashlight_state()
 	local equipped_weapon = self._ext_inventory:equipped_unit()
-	if equipped_weapon then
-		equipped_weapon:base():set_flashlight_enabled(not state)
+	if not alive(equipped_weapon) then
+		return
 	end
-end)
+
+	local flashlight_on = not self:cool() and not self._ext_inventory:shield_unit() and managers.game_play_central:flashlights_on()
+	if flashlight_on then
+		local lights = self._unit:get_objects_by_type(Idstring("light"))
+		if #lights > 0 and lights[1]:enable() then
+			flashlight_on = false
+		end
+	end
+
+	equipped_weapon:base():set_flashlight_enabled(flashlight_on)
+end
+
+Hooks:PostHook(CopMovement, "set_cool", "sh_set_cool", CopMovement._chk_flashlight_state)
+
+function CopMovement:sync_equip_weapon()
+	self:_chk_flashlight_state()
+end
