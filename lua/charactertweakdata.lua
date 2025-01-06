@@ -271,8 +271,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 
 	-- Give team AI more reasonable preset values based on enemy HP multipliers
-	local dmg_mul_team_tbl = { 1, 1, 1.5, 2, 3, 4, 6, 8 }
-	local dmg_mul_team = dmg_mul_team_tbl[diff_i]
+	local dmg_mul_team = self.hp_multipliers[diff_i]
 	presets.weapon.gang_member = deep_clone(presets.weapon.sh_base)
 	for _, v in pairs(presets.weapon.gang_member) do
 		v.melee_dmg = dmg_mul_team * 5

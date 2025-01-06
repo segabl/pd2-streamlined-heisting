@@ -22,15 +22,14 @@ Hooks:PostHook(CopBase, "init", "sh_init", function(self)
 end)
 
 
+-- Check for weapon changes
+CopBase.unit_weapon_mapping = StreamHeist:require("unit_weapons")
 if Network:is_client() then
 	return
 end
 
-
--- Check for weapon changes
-local weapon_mapping = StreamHeist:require("unit_weapons")
 Hooks:PreHook(CopBase, "post_init", "sh_post_init", function(self)
-	local mapping = weapon_mapping[self._unit:name():key()]
+	local mapping = self.unit_weapon_mapping[self._unit:name():key()]
 	local mapping_type = type(mapping)
 	if mapping_type == "table" then
 		local selector = WeightedSelector:new()
