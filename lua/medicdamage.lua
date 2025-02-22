@@ -1,4 +1,4 @@
--- Make medics require line of sight to heal
+-- Make medics require line of sight to heal and slightly increase healing radius to compensate
 local verify_heal_requesting_unit_original = MedicDamage.verify_heal_requesting_unit
 function MedicDamage:verify_heal_requesting_unit(requesting_unit, ...)
 	if not verify_heal_requesting_unit_original(self, requesting_unit, ...) then
@@ -17,6 +17,11 @@ function MedicDamage:verify_heal_requesting_unit(requesting_unit, ...)
 	end
 
 	return false
+end
+
+local get_healing_radius_sq_original = MedicDamage.get_healing_radius_sq
+function MedicDamage:get_healing_radius_sq(...)
+	return get_healing_radius_sq_original(self, ...) * 1.5 * 1.5
 end
 
 

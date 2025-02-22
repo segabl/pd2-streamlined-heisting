@@ -47,7 +47,7 @@ At one point the game had unique spawn groups with different behaviours and tact
 - Reverts changes made to the Taser's line of sight check to allow them to tase more consistently again
 - Makes Cloaker attacks more consistent by removing some of their restrictions and fixes them crouch-charging on clients
 - Makes Shields reduce explosion damage from the front instead of a generic explosion damage resistance
-- Makes Medics require line of sight to heal
+- Makes Medics require line of sight to heal and slightly increases their healing radius
 - Fixes Bulldozers sprinting when they shouldn't and not switching to walking when they are close enough
 - Adds chance for enemies to use teargas grenades when players camp in an area for too long
 - Makes enemies less hesitant to shoot while moving and react to threats with adequate reactions
