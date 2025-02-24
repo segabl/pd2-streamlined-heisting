@@ -647,6 +647,7 @@ Hooks:PostHook(CharacterTweakData, "_init_biker_boss", "sh__init_biker_boss", fu
 	self.biker_boss.no_headshot_add_mul = true
 	self.biker_boss.damage.explosion_damage_mul = 0.5
 	self.biker_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.biker_boss.use_animation_on_fire_damage = false
 	self.biker_boss.move_speed = presets.move_speed.slow
 	self.biker_boss.no_run_start = true
 	self.biker_boss.no_run_stop = true
@@ -661,6 +662,7 @@ Hooks:PostHook(CharacterTweakData, "_init_chavez_boss", "sh__init_chavez_boss", 
 	self.chavez_boss.no_headshot_add_mul = true
 	self.chavez_boss.damage.explosion_damage_mul = 0.5
 	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts
+	self.chavez_boss.use_animation_on_fire_damage = false
 	self.chavez_boss.move_speed = presets.move_speed.fast
 	self.chavez_boss.no_run_start = true
 	self.chavez_boss.no_run_stop = true
@@ -673,6 +675,7 @@ Hooks:PostHook(CharacterTweakData, "_init_drug_lord_boss", "sh__init_drug_lord_b
 	self.drug_lord_boss.no_headshot_add_mul = true
 	self.drug_lord_boss.damage.explosion_damage_mul = 0.5
 	self.drug_lord_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.drug_lord_boss.use_animation_on_fire_damage = false
 	self.drug_lord_boss.move_speed = presets.move_speed.normal
 	self.drug_lord_boss.no_run_start = true
 	self.drug_lord_boss.no_run_stop = true
@@ -688,6 +691,7 @@ Hooks:PostHook(CharacterTweakData, "_init_hector_boss", "sh__init_hector_boss", 
 	self.hector_boss.no_headshot_add_mul = true
 	self.hector_boss.damage.explosion_damage_mul = 0.5
 	self.hector_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.hector_boss.use_animation_on_fire_damage = false
 	self.hector_boss.move_speed = presets.move_speed.slow
 	self.hector_boss.no_run_start = true
 	self.hector_boss.no_run_stop = true
@@ -704,6 +708,7 @@ Hooks:PostHook(CharacterTweakData, "_init_mobster_boss", "sh__init_mobster_boss"
 	self.mobster_boss.no_headshot_add_mul = true
 	self.mobster_boss.damage.explosion_damage_mul = 0.5
 	self.mobster_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.mobster_boss.use_animation_on_fire_damage = false
 	self.mobster_boss.move_speed = presets.move_speed.fast
 	self.mobster_boss.no_run_start = true
 	self.mobster_boss.no_run_stop = true
@@ -718,6 +723,7 @@ Hooks:PostHook(CharacterTweakData, "_init_triad_boss", "sh__init_triad_boss", fu
 	self.triad_boss.no_headshot_add_mul = true
 	self.triad_boss.damage.explosion_damage_mul = 0.5
 	self.triad_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.triad_boss.use_animation_on_fire_damage = false
 	self.triad_boss.move_speed = presets.move_speed.slow
 	self.triad_boss.no_run_start = true
 	self.triad_boss.no_run_stop = true
@@ -734,6 +740,7 @@ Hooks:PostHook(CharacterTweakData, "_init_deep_boss", "sh__init_deep_boss", func
 	self.deep_boss.no_headshot_add_mul = true
 	self.deep_boss.damage.explosion_damage_mul = 0.5
 	self.deep_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.deep_boss.use_animation_on_fire_damage = false
 	self.deep_boss.move_speed = presets.move_speed.slow
 	self.deep_boss.no_run_start = true
 	self.deep_boss.no_run_stop = true
