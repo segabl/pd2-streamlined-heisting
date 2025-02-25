@@ -258,14 +258,6 @@ function GroupAIStateBase:_add_drama(amount)
 end
 
 
--- Add chance for enemies to comment on squad member deaths
-Hooks:PostHook(GroupAIStateBase, "_remove_group_member", "sh__remove_group_member", function (self, group, u_key, is_casualty)
-	if is_casualty and math.random() < 0.2 then
-		self:_chk_say_group(group, "group_death")
-	end
-end)
-
-
 -- Set a minimum gunshot and bullet impact alert range in loud
 Hooks:PreHook(GroupAIStateBase, "propagate_alert", "sh_propagate_alert", function (self, alert_data)
 	if alert_data[1] == "bullet" and alert_data[3] and self:enemy_weapons_hot() then

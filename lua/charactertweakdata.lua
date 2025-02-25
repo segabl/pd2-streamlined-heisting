@@ -560,6 +560,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.enemy_chatter.cop.get_hostages = true
 	presets.enemy_chatter.cop.get_loot = true
 	presets.enemy_chatter.cop.group_death = true
+	presets.enemy_chatter.cop.trip_mine = true
+	presets.enemy_chatter.cop.saw = true
 	presets.enemy_chatter.cop.idle = true
 	presets.enemy_chatter.cop.report = true
 
@@ -572,6 +574,8 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.enemy_chatter.swat.get_hostages = true
 	presets.enemy_chatter.swat.get_loot = true
 	presets.enemy_chatter.swat.group_death = true
+	presets.enemy_chatter.swat.trip_mine = true
+	presets.enemy_chatter.swat.saw = true
 
 	presets.enemy_chatter.gangster = {
 		aggressive = true,
