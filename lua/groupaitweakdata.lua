@@ -116,6 +116,8 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", 
 	self.enemy_chatter.retreat.queue = "m01"
 	self.enemy_chatter.push = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.push.queue = "pus"
+	self.enemy_chatter.stand_by = clone(self.enemy_chatter.go_go)
+	self.enemy_chatter.stand_by.queue = "prm"
 	self.enemy_chatter.flank = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.flank.queue = "t01"
 	self.enemy_chatter.open_fire = clone(self.enemy_chatter.go_go)

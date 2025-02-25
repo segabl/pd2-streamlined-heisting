@@ -566,6 +566,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.enemy_chatter.cop.report = true
 
 	presets.enemy_chatter.swat.push = true
+	presets.enemy_chatter.swat.stand_by = true
 	presets.enemy_chatter.swat.flank = true
 	presets.enemy_chatter.swat.flash_grenade = true
 	presets.enemy_chatter.swat.open_fire = true

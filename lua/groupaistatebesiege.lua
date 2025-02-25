@@ -271,7 +271,9 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_task(phase, objective_type,
 					group.objective.moving_out = nil
 					group.in_place_t = self._t
 					group.objective.moving_in = nil
-					self:_voice_move_complete(group)
+					if group.objective.assigned_t then
+						self:_chk_say_group(group, "ready")
+					end
 				end
 			end
 
@@ -330,7 +332,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 			})
 
 			if coarse_path then
-				self:_voice_deathguard_start(group)
+				self:_chk_say_group(group, "go_go")
 				self:_set_objective_to_enemy_group(group, {
 					distance = 800,
 					type = "assault_area",
@@ -447,8 +449,9 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				end
 
 				if phase_is_anticipation then
-					if self._hostage_headcount > 0 then
-						self:_chk_say_group(group, "hostage_delay")
+					local time_until_phase_end = self._task_data.assault.phase_end_t - self._t
+					if not group.said_standby and time_until_phase_end > 3 and in_place_duration > 1 then
+						group.said_standby = self:_chk_say_group(group, self._hostage_headcount > 0 and "hostage_delay" or "stand_by")
 					end
 					return
 				end
@@ -464,9 +467,14 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				if not self:_chk_group_use_grenade(assault_area, group, detonate_pos) then
 					if not group.ignore_grenade_check_t then
 						local delay = tweak_data.group_ai.no_grenade_push_delay * (tactics_map.charge and 0.25 or 1)
-						group.ignore_grenade_check_t = self._t + math.map_range_clamped(table.size(assault_area.criminal.units), 1, 4, delay, delay * 0.5)
+						local num_criminals = table.size(assault_area.criminal.units)
+						group.ignore_grenade_check_t = self._t + math.map_range_clamped(num_criminals, 1, 4, delay, delay * 0.5)
 						return
 					elseif group.ignore_grenade_check_t > self._t then
+						local time_until_push = math.min(group.ignore_grenade_check_t, self._task_data.assault.use_smoke_timer) - self._t
+						if not group.said_standby and time_until_push > 3 and in_place_duration > 1 then
+							group.said_standby = self:_chk_say_group(group, "stand_by")
+						end
 						return
 					end
 				end
