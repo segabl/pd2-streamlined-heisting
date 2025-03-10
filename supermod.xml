@@ -68,6 +68,7 @@
 						<post :hook_id="playertased"/>
 					</group>
 					<post :hook_id="playerdamage"/>
+					<post :hook_id="playerinventory"/>
 				</group>
 
 				<post :hook_id="characters/characterattentionobject"/>
