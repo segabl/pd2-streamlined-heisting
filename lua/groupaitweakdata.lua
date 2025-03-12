@@ -1,5 +1,5 @@
 -- Set up spawn group weights and assault phase settings
-Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function (self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", function(self, difficulty_index)
 	local f = math.max(0, difficulty_index - 2) / 6
 
 	self.smoke_grenade_timeout = { 25, 35 }
@@ -94,7 +94,7 @@ end)
 
 
 -- Improve enemy chatter, make proper use of chatter settings like duration and radius
-Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", function (self)
+Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", function(self)
 	local interval = { 1, 2 }
 	local duration_short = { 5, 10 }
 	local duration_medium = { 10, 20 }
@@ -113,6 +113,7 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", 
 	-- Loud chatter
 	self.enemy_chatter.aggressive.duration = duration_medium
 	self.enemy_chatter.contact.duration = duration_medium
+	self.enemy_chatter.contact.radius = radius_medium
 	self.enemy_chatter.retreat.queue = "m01"
 	self.enemy_chatter.push = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.push.queue = "pus"
@@ -131,10 +132,12 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", 
 	self.enemy_chatter.watch_background = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.watch_background.queue = "bak"
 	self.enemy_chatter.watch_background.duration = duration_medium
-	self.enemy_chatter.hostage_delay = clone(self.enemy_chatter.go_go)
-	self.enemy_chatter.hostage_delay.queue = "p02"
-	self.enemy_chatter.hostage_delay.duration = duration_long
-	self.enemy_chatter.hostage_delay.radius = radius_medium
+	self.enemy_chatter.hostage_delay_1 = clone(self.enemy_chatter.go_go)
+	self.enemy_chatter.hostage_delay_1.queue = "p01"
+	self.enemy_chatter.hostage_delay_1.duration = duration_long
+	self.enemy_chatter.hostage_delay_1.radius = radius_medium
+	self.enemy_chatter.hostage_delay_2 = clone(self.enemy_chatter.hostage_delay_1)
+	self.enemy_chatter.hostage_delay_2.queue = "p02"
 	self.enemy_chatter.group_death = clone(self.enemy_chatter.watch_background)
 	self.enemy_chatter.group_death.queue = "lk3a"
 	self.enemy_chatter.trip_mine = clone(self.enemy_chatter.contact)
@@ -164,11 +167,11 @@ end)
 -- depend on the difficulty, for instance FBI_heavy_G36 will spawn normal M4 heavies on overkill despite the unit category name
 function GroupAITweakData:_init_unit_categories_normal()
 	local FBI_swat_M4 = self.unit_categories.FBI_swat_M4.unit_types
-	FBI_swat_M4.america = {Idstring("units/payday2/characters/ene_swat_1/ene_swat_1")}
-	FBI_swat_M4.russia = {Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass")}
-	FBI_swat_M4.zombie = {Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_1/ene_swat_hvh_1")}
-	FBI_swat_M4.murkywater = {Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light")}
-	FBI_swat_M4.federales = {Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale")}
+	FBI_swat_M4.america = { Idstring("units/payday2/characters/ene_swat_1/ene_swat_1") }
+	FBI_swat_M4.russia = { Idstring("units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass") }
+	FBI_swat_M4.zombie = { Idstring("units/pd2_dlc_hvh/characters/ene_swat_hvh_1/ene_swat_hvh_1") }
+	FBI_swat_M4.murkywater = { Idstring("units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light") }
+	FBI_swat_M4.federales = { Idstring("units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale") }
 
 	local FBI_swat_R870 = self.unit_categories.FBI_swat_R870.unit_types
 	FBI_swat_R870.america = { Idstring("units/payday2/characters/ene_swat_2/ene_swat_2") }
@@ -457,7 +460,7 @@ function GroupAITweakData:_init_unit_categories_sm_wish()
 	}
 end
 
-Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categories", function (self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "sh__init_unit_categories", function(self, difficulty_index)
 	local difficulty_func = "_init_unit_categories_" .. (Global.game_settings and Global.game_settings.difficulty or "normal")
 	if self[difficulty_func] then
 		self[difficulty_func](self)
@@ -522,7 +525,7 @@ end)
 
 
 -- Set up tactics and spawngroups
-Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function (self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spawn_groups", function(self, difficulty_index)
 	self._tactics.swat_shotgun_rush = {
 		"charge",
 		"deathguard",
@@ -962,7 +965,7 @@ end)
 
 
 -- Handle level specific spawngroups
-Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups_level", "sh__init_enemy_spawn_groups_level", function (self, tweak_data)
+Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups_level", "sh__init_enemy_spawn_groups_level", function(self, tweak_data)
 	local lvl_tweak_data = tweak_data.levels[Global.game_settings and Global.game_settings.level_id or Global.level_data and Global.level_data.level_id]
 	if not lvl_tweak_data or lvl_tweak_data.ai_marshal_spawns_disabled then
 		return

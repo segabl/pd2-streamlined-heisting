@@ -165,7 +165,7 @@ function GroupAIStateBesiege:_upd_reenforce_tasks()
 		end
 
 		if force_occupied > force_required then
-			table.sort(occupied_groups, function (a, b) return a.size < b.size end)
+			table.sort(occupied_groups, function(a, b) return a.size < b.size end)
 			for _, group_data in pairs(occupied_groups) do
 				force_occupied = force_occupied - group_data.size
 				if force_occupied < force_required then
@@ -287,7 +287,7 @@ end
 
 -- Improve and heavily simplify objective assignment code, fix pull back and open fire objectives
 -- Basically, a lot of this function was needlessly complex and had oversights or incorrect conditions
-Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", function (self, group, phase)
+Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", function(self, group, phase)
 	local phase_is_anticipation = phase == "anticipation"
 	local current_objective = group.objective
 	local approach, open_fire, pull_back
@@ -451,7 +451,11 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 				if phase_is_anticipation then
 					local time_until_phase_end = self._task_data.assault.phase_end_t - self._t
 					if not group.said_standby and time_until_phase_end > 3 and in_place_duration > 1 then
-						group.said_standby = self:_chk_say_group(group, self._hostage_headcount > 0 and "hostage_delay" or "stand_by")
+						if self._hostage_headcount > 0 then
+							group.said_standby = self:_chk_say_group(group, self._assault_number == 0 and "hostage_delay_1" or "hostage_delay_2")
+						else
+							group.said_standby = self:_chk_say_group(group, "stand_by")
+						end
 					end
 					return
 				end
@@ -1159,7 +1163,7 @@ function GroupAIStateBesiege:_chk_say_group(group, chatter_type)
 	end
 end
 
-Hooks:PostHook(GroupAIStateBesiege, "_assign_group_to_retire", "sh__assign_group_to_retire", function (self, group)
+Hooks:PostHook(GroupAIStateBesiege, "_assign_group_to_retire", "sh__assign_group_to_retire", function(self, group)
 	if not group.said_retreat then
 		group.said_retreat = self:_chk_say_group(group, "retreat")
 	end
@@ -1168,7 +1172,7 @@ end)
 
 -- When scripted spawns are assigned to group ai, use a generic group type instead of using their category as type
 -- This ensures they are not retired immediatley cause they are not part of assault/recon group types
-Hooks:OverrideFunction(GroupAIStateBesiege, "assign_enemy_to_group_ai", function (self, unit, team_id)
+Hooks:OverrideFunction(GroupAIStateBesiege, "assign_enemy_to_group_ai", function(self, unit, team_id)
 	local area = self:get_area_from_nav_seg_id(unit:movement():nav_tracker():nav_segment())
 	local grp_objective = {
 		type = self._task_data.assault.active and "assault_area" or "recon_area",
@@ -1205,7 +1209,7 @@ end
 
 
 -- Simplify reenforce objective assignment and prevent them from being stuck at spawn
-Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group", function (self, group)
+Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group", function(self, group)
 	if not group.has_spawned then
 		return
 	end
@@ -1268,14 +1272,21 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 	elseif next(target_area.criminal.units) then
 		local u_key, u_data = self._determine_group_leader(group.units)
 		local tactics_map = u_data and u_data.tactics_map or {}
+		local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
 		if tactics_map.no_push then
-			return
+			move_in = false
 		elseif self:_can_group_see_target(group, "close") then
-			return
+			move_in = false
 		elseif not self:_chk_group_use_grenade(target_area, group) then
-			if not group.in_place_t or self._t - group.in_place_t < tweak_data.group_ai.no_grenade_push_delay * 0.5 then
-				return
+			if in_place_duration < tweak_data.group_ai.no_grenade_push_delay * 0.5 then
+				move_in = false
 			end
+		end
+		if not move_in then
+			if not group.said_standby then
+				group.said_standby = self:_chk_say_group(group, "stand_by")
+			end
+			return
 		end
 	end
 
@@ -1296,7 +1307,7 @@ end)
 
 
 -- Simplify and improve recon objective assignment
-Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", function (self, group)
+Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", function(self, group)
 	if not group.has_spawned then
 		return
 	end
@@ -1397,14 +1408,25 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", fun
 	elseif next(target_area.criminal.units) then
 		local u_key, u_data = self._determine_group_leader(group.units)
 		local tactics_map = u_data and u_data.tactics_map or {}
+		local in_place_duration = group.in_place_t and self._t - group.in_place_t or 0
 		if tactics_map.no_push then
-			return
+			move_in = false
 		elseif self:_can_group_see_target(group, "close") then
-			return
+			move_in = false
 		elseif not self:_chk_group_use_grenade(target_area, group) then
-			if not group.in_place_t or self._t - group.in_place_t < tweak_data.group_ai.no_grenade_push_delay * 0.5 then
-				return
+			if in_place_duration < tweak_data.group_ai.no_grenade_push_delay * 0.5 then
+				move_in = false
 			end
+		end
+		if not move_in then
+			if not group.said_standby then
+				if target_area.hostages then
+					group.said_standby = self:_chk_say_group(group, self._assault_number == 0 and "hostage_delay_1" or "hostage_delay_2")
+				else
+					group.said_standby = self:_chk_say_group(group, "stand_by")
+				end
+			end
+			return
 		end
 	end
 
