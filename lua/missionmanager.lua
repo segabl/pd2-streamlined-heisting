@@ -6,18 +6,18 @@ end
 
 -- Add custom mission script changes and triggers for specific levels
 MissionManager.mission_script_patch_funcs = {
-	values = function (self, element, data)
+	values = function(self, element, data)
 		for k, v in pairs(data) do
 			element._values[k] = v
 			StreamHeist:log("%s value \"%s\" has been set to \"%s\"", element:editor_name(), k, tostring(v))
 		end
 	end,
 
-	on_executed = function (self, element, data)
+	on_executed = function(self, element, data)
 		for _, v in pairs(data) do
 			local new_element = self:get_element_by_id(v.id)
 			if new_element then
-				local val, i = table.find_value(element._values.on_executed, function (val) return val.id == v.id end)
+				local val, i = table.find_value(element._values.on_executed, function(val) return val.id == v.id end)
 				if v.remove then
 					if val then
 						table.remove(element._values.on_executed, i)
@@ -37,21 +37,21 @@ MissionManager.mission_script_patch_funcs = {
 		end
 	end,
 
-	pre_func = function (self, element, data)
-		Hooks:PreHook(element, "on_executed", "sh_on_executed_func_" .. element:id(), data)
+	pre_func = function(self, element, data)
+		Hooks:PreHook(element, "on_executed", "sh_on_executed_pre_func_" .. element:id(), data)
 		StreamHeist:log("%s hooked as pre function call trigger", element:editor_name())
 	end,
 
-	func = function (self, element, data)
+	func = function(self, element, data)
 		Hooks:PostHook(element, "on_executed", "sh_on_executed_func_" .. element:id(), data)
 		StreamHeist:log("%s hooked as function call trigger", element:editor_name())
 	end,
 
-	reinforce = function (self, element, data)
+	reinforce = function(self, element, data)
 		if Network:is_client() then
 			return
 		end
-		Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element:id(), function ()
+		Hooks:PostHook(element, "on_executed", "sh_on_executed_reinforce_" .. element:id(), function()
 			StreamHeist:log("%s executed, toggled %u reinforce point(s)", element:editor_name(), #data)
 			for _, v in pairs(data) do
 				managers.groupai:state():set_area_min_police_force(v.name, v.force, v.position)
@@ -60,26 +60,26 @@ MissionManager.mission_script_patch_funcs = {
 		StreamHeist:log("%s hooked as reinforce trigger for %u area(s)", element:editor_name(), #data)
 	end,
 
-	difficulty = function (self, element, data)
+	difficulty = function(self, element, data)
 		if Network:is_client() then
 			return
 		end
-		Hooks:PostHook(element, "on_executed", "sh_on_executed_difficulty_" .. element:id(), function ()
+		Hooks:PostHook(element, "on_executed", "sh_on_executed_difficulty_" .. element:id(), function()
 			StreamHeist:log("%s executed, set difficulty to %.2g", element:editor_name(), data)
 			managers.groupai:state():set_difficulty(data)
 		end)
 		StreamHeist:log("%s hooked as difficulty change trigger", element:editor_name())
 	end,
 
-	flashlight = function (self, element, data)
-		Hooks:PostHook(element, "on_executed", "sh_on_executed_func_" .. element:id(), function ()
+	flashlight = function(self, element, data)
+		Hooks:PostHook(element, "on_executed", "sh_on_executed_flashlight_" .. element:id(), function()
 			StreamHeist:log("%s executed, changing flashlight state to %s", element:editor_name(), data and "true" or "false")
 			managers.game_play_central:set_flashlights_on(data)
 		end)
 		StreamHeist:log("%s hooked as flashlight state trigger", element:editor_name())
 	end,
 
-	groups = function (self, element, data)
+	groups = function(self, element, data)
 		if Network:is_client() then
 			return
 		end
@@ -89,10 +89,30 @@ MissionManager.mission_script_patch_funcs = {
 		end
 		element._values.preferred_spawn_groups = table.map_keys(new_groups)
 		StreamHeist:log("Changed %u preferred group(s) of %s", table.size(data), element:editor_name())
+	end,
+
+	ai_area = function(self, element, data)
+		Hooks:PostHook(element, "on_executed", "sh_on_executed_ai_area_" .. element:id(), function()
+			StreamHeist:log("%s executed, creating %d AI area(s)", element:editor_name(), #data)
+			for _, nav_segs in ipairs(data) do
+				local area_pos = Vector3()
+				for _, nav_seg_id in ipairs(nav_segs) do
+					local nav_seg = managers.navigation._nav_segments[nav_seg_id]
+					if not nav_seg then
+						StreamHeist:error("Nav segment %u could not be found", nav_seg_id)
+						return
+					end
+					mvector3.add_scaled(area_pos, nav_seg.pos, 1 / #nav_segs)
+				end
+				self._ai_area_id = (self._ai_area_id or 10000) + 1
+				managers.groupai:state():add_area(self._ai_area_id, nav_segs, area_pos)
+			end
+		end)
+		StreamHeist:log("%s hooked as AI area trigger", element:editor_name())
 	end
 }
 
-Hooks:PreHook(MissionManager, "_activate_mission", "sh__activate_mission", function (self)
+Hooks:PreHook(MissionManager, "_activate_mission", "sh__activate_mission", function(self)
 	local mission_script_elements = StreamHeist:mission_script_patches()
 	if not mission_script_elements then
 		return

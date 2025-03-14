@@ -34,5 +34,12 @@ return {
 	},
 	-- Enable additional sniper spots
 	[101599] = enabled,
-	[101521] = enabled
+	[101521] = enabled,
+	-- Enable civilian on bridge
+	[103353] = enabled,
+	[103354] = {
+		values = {
+			SO_access = managers.navigation:convert_access_filter_to_number({ "civ_male" })
+		}
+	}
 }
