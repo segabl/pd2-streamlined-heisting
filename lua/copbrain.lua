@@ -8,6 +8,7 @@ CopBrain._logic_variants.heavy_swat_sniper = CopBrain._logic_variants.marshal_ma
 
 CopBrain._next_cover_grenade_chk_t = 0
 CopBrain._next_logic_upd_t = 0
+CopBrain._logic_upd_interval = 1 / 30
 
 
 -- Fix spamming of grenades by units that dodge with grenades (Cloaker)
@@ -30,14 +31,14 @@ end
 
 
 -- Set Joker owner to keep follow objective correct
-Hooks:PreHook(CopBrain, "convert_to_criminal", "sh_convert_to_criminal", function (self, mastermind_criminal)
+Hooks:PreHook(CopBrain, "convert_to_criminal", "sh_convert_to_criminal", function(self, mastermind_criminal)
 	self._logic_data.minion_owner = mastermind_criminal or managers.player:local_player()
 	self._logic_data.combat_chatter_cooldown_t = self._logic_data.t + math.rand(30, 90)
 end)
 
 
 -- Make surrender window slightly shorter and less random
-Hooks:OverrideFunction(CopBrain, "on_surrender_chance", function (self)
+Hooks:OverrideFunction(CopBrain, "on_surrender_chance", function(self)
 	local t = TimerManager:game():time()
 
 	if self._logic_data.surrender_window then
@@ -65,7 +66,7 @@ end)
 
 
 -- Handle suppressed chatter (say voiceline on start instead of start and end)
-Hooks:OverrideFunction(CopBrain, "on_suppressed", function (self, state)
+Hooks:OverrideFunction(CopBrain, "on_suppressed", function(self, state)
 	self._logic_data.is_suppressed = state or nil
 
 	if state == "panic" then
@@ -84,7 +85,7 @@ end)
 local update_original = CopBrain.update
 function CopBrain:update(unit, t, ...)
 	if self._next_logic_upd_t <= t then
-		self._next_logic_upd_t = t + 1 / 30
+		self._next_logic_upd_t = t + self._logic_upd_interval
 		return update_original(self, unit, t, ...)
 	end
 end
@@ -97,7 +98,7 @@ end
 
 
 -- Call pathing results callback in logic if it exists
-Hooks:PostHook(CopBrain, "clbk_pathing_results", "sh_clbk_pathing_results", function (self)
+Hooks:PostHook(CopBrain, "clbk_pathing_results", "sh_clbk_pathing_results", function(self)
 	local current_logic = self._current_logic
 	if current_logic.on_pathing_results then
 		current_logic.on_pathing_results(self._logic_data)
