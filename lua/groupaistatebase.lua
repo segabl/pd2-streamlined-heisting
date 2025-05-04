@@ -1,5 +1,5 @@
 -- Set up needed variables
-Hooks:PostHook(GroupAIStateBase, "init", "sh_init", function (self)
+Hooks:PostHook(GroupAIStateBase, "init", "sh_init", function(self)
 	self._next_police_upd_task = 0
 	self._next_group_spawn_t = {}
 end)
@@ -49,7 +49,7 @@ Hooks:PostHook(GroupAIStateBase, "update", "sh_update", GroupAIStateBase._update
 
 -- Register Winters and minions as soon as they spawn, not just after they reach their objective or take damage
 -- This fixes instances of Winters not leaving the map because the phalanx is broken up before he is registered
-Hooks:PostHook(GroupAIStateBase, "on_enemy_registered", "sh_on_enemy_registered", function (self, unit)
+Hooks:PostHook(GroupAIStateBase, "on_enemy_registered", "sh_on_enemy_registered", function(self, unit)
 	if self._phalanx_spawn_group and not self._phalanx_spawn_group.has_spawned then
 		local logics = unit:brain()._logics
 		if logics == CopBrain._logic_variants.phalanx_minion then
@@ -62,7 +62,7 @@ end)
 
 
 -- Delay spawn points when enemies die close to them
-Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function (self, unit)
+Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregistered", function(self, unit)
 	if Network:is_client() or not unit:character_damage():dead() then
 		return
 	end
@@ -77,7 +77,7 @@ Hooks:PostHook(GroupAIStateBase, "on_enemy_unregistered", "sh_on_enemy_unregiste
 		return
 	end
 
-	local max_dis = 1000
+	local max_dis = 1500
 	local dis = mvector3.distance(spawn_point:value("position"), e_data.m_pos)
 	if dis > max_dis then
 		return
@@ -160,7 +160,7 @@ end
 
 
 -- Set accurate criminal position
-Hooks:PostHook(GroupAIStateBase, "criminal_spotted", "sh_criminal_spotted", function (self, unit)
+Hooks:PostHook(GroupAIStateBase, "criminal_spotted", "sh_criminal_spotted", function(self, unit)
 	local u_sighting = self._criminals[unit:key()]
 	mvector3.set(u_sighting.pos, u_sighting.m_det_pos)
 end)
@@ -168,7 +168,7 @@ end)
 
 -- Do not update detected position and time on nav segment change
 -- Log time when criminals enter an area to use for the teargas check
-Hooks:OverrideFunction(GroupAIStateBase, "on_criminal_nav_seg_change", function (self, unit, nav_seg_id)
+Hooks:OverrideFunction(GroupAIStateBase, "on_criminal_nav_seg_change", function(self, unit, nav_seg_id)
 	local u_key = unit:key()
 	local u_sighting = self._criminals[u_key]
 	if not u_sighting then
@@ -181,7 +181,7 @@ Hooks:OverrideFunction(GroupAIStateBase, "on_criminal_nav_seg_change", function 
 	local area = self:get_area_from_nav_seg_id(nav_seg_id)
 	if prev_area ~= area then
 		if prev_area and not u_sighting.ai then
-			if table.count(prev_area.criminal.units, function (c_data) return not c_data.ai end) <= 1 then
+			if table.count(prev_area.criminal.units, function(c_data) return not c_data.ai end) <= 1 then
 				prev_area.criminal_left_t = self._t
 				prev_area.old_criminal_entered_t = prev_area.criminal_entered_t
 				prev_area.criminal_entered_t = nil
@@ -231,7 +231,7 @@ end
 
 
 -- Adjust objective data for rescue and steal SOs
-Hooks:PreHook(GroupAIStateBase, "add_special_objective", "sh_add_special_objective", function (self, id, objective_data)
+Hooks:PreHook(GroupAIStateBase, "add_special_objective", "sh_add_special_objective", function(self, id, objective_data)
 	if type(id) ~= "string" or not id:match("^carrysteal") and not id:match("^rescue") then
 		return
 	end
@@ -259,7 +259,7 @@ end
 
 
 -- Set a minimum gunshot and bullet impact alert range in loud
-Hooks:PreHook(GroupAIStateBase, "propagate_alert", "sh_propagate_alert", function (self, alert_data)
+Hooks:PreHook(GroupAIStateBase, "propagate_alert", "sh_propagate_alert", function(self, alert_data)
 	if alert_data[1] == "bullet" and alert_data[3] and self:enemy_weapons_hot() then
 		alert_data[3] = math.max(alert_data[3], 800)
 	end
@@ -288,6 +288,6 @@ end
 
 
 -- Make this function properly set rescue state again for checking if recon tasks are allowed
-Hooks:OverrideFunction(GroupAIStateBase, "_set_rescue_state", function (self, state)
+Hooks:OverrideFunction(GroupAIStateBase, "_set_rescue_state", function(self, state)
 	self._rescue_allowed = state
 end)
