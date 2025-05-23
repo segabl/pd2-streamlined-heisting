@@ -527,7 +527,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	for _, pose in pairs(presets.move_speed.extremely_slow) do
 		for _, stance in pairs(pose.walk) do
 			for dir, speed in pairs(stance) do
-				stance[dir] = speed * 0.75
+				stance[dir] = speed * 0.9
 			end
 		end
 		pose.run = deep_clone(pose.walk)
