@@ -413,7 +413,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 						from_seg = objective_area.pos_nav_seg,
 						to_seg = flank and found_areas[search_area].pos_nav_seg or search_area.pos_nav_seg,
 						access_pos = group_access_mask,
-						verify_clbk = callback(self, self, "is_nav_seg_safe")
+						verify_clbk = callback(self, self, "is_nav_seg_area_safe")
 					})
 
 					if new_assault_path then
@@ -524,7 +524,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_assault_objective_to_group", f
 		local retreat_area
 		for _, u_data in pairs(group.units) do
 			local nav_seg_id = u_data.tracker:nav_segment()
-			if self:is_nav_seg_safe(nav_seg_id) then
+			if self:is_nav_seg_area_safe(nav_seg_id) then
 				retreat_area = self:get_area_from_nav_seg_id(nav_seg_id)
 				break
 			end
@@ -1239,7 +1239,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 		from_seg = objective_area.pos_nav_seg,
 		to_seg = target_area.pos_nav_seg,
 		access_pos = self._get_group_acces_mask(group),
-		verify_clbk = callback(self, self, "is_nav_seg_safe")
+		verify_clbk = callback(self, self, "is_nav_seg_area_safe")
 	}
 
 	local coarse_path = managers.navigation:search_coarse(search_params)
@@ -1261,7 +1261,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_reenforce_objective_to_group",
 		local is_safe = true
 		for i = 1, #coarse_path do
 			if is_safe then
-				is_safe = self:is_nav_seg_safe(coarse_path[i][1])
+				is_safe = self:is_nav_seg_area_safe(coarse_path[i][1])
 			else
 				table.remove(coarse_path)
 			end
@@ -1332,7 +1332,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", fun
 			local safe = true
 			local forwardmost_i_nav_point = self:_get_group_forwardmost_coarse_path_index(group) or #current_objective.coarse_path
 			for i = forwardmost_i_nav_point + 1, #current_objective.coarse_path do
-				if not self:is_nav_seg_safe(current_objective.coarse_path[i][1]) then
+				if not self:is_nav_seg_area_safe(current_objective.coarse_path[i][1]) then
 					objective_area = self:get_area_from_nav_seg_id(current_objective.coarse_path[forwardmost_i_nav_point][1])
 					safe = false
 					break
@@ -1383,7 +1383,7 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_set_recon_objective_to_group", fun
 				from_seg = objective_area.pos_nav_seg,
 				to_seg = search_area.pos_nav_seg,
 				access_pos = group_access_mask,
-				verify_clbk = callback(self, self, "is_nav_seg_safe")
+				verify_clbk = callback(self, self, "is_nav_seg_area_safe")
 			})
 
 			if new_recon_path then
