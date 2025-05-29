@@ -9,9 +9,18 @@ local chance_increase = {
 	}
 }
 return {
+	-- Combine some navigation areas
+	[100053] = {
+		ai_area = {
+			{ 38, 39, 40 },
+			{ 50, 51, 52 },
+			{ 55, 78 },
+			{ 61, 165 }
+		}
+	},
 	-- Give saw to all players
 	[101865] = {
-		func = function (self)
+		func = function(self)
 			managers.network:session():send_to_peers_synched("give_equipment", self._values.equipment, self._values.amount)
 		end
 	},
