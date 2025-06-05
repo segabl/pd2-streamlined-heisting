@@ -14,6 +14,8 @@
 		</group>
 
 		<group hook_id="lib/">
+			<post :hook_id="gamemodes/gamemodestandard"/>
+
 			<group :hook_id="managers/">
 				<group :hook_id="group_ai_states/">
 					<post :hook_id="groupaistatebase"/>
