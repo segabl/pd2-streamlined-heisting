@@ -17,6 +17,9 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	-- Spawn Groups
 	local special_weight = math.lerp(3, 5, f)
+	local special_weight_tbl = { 0, special_weight * 0.5, special_weight }
+	local rare_special_weight_tbl = { 0, special_weight * 0.125, special_weight * 0.25 }
+	local no_spawn_weight_tbl = { 0, 0, 0 }
 	self.besiege.assault.groups = {
 		tac_swat_shotgun_rush = { 1, 1.5, 2 },
 		tac_swat_shotgun_rush_no_medic = { 1, 0.5, 0 },
@@ -26,18 +29,21 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 		tac_swat_rifle_no_medic = { 8, 4, 0 },
 		tac_swat_rifle_flank = { 4, 6, 8 },
 		tac_swat_rifle_flank_no_medic = { 4, 2, 0 },
-		tac_shield_wall_ranged = { 0, special_weight * 0.5, special_weight },
-		tac_shield_wall_charge = { 0, special_weight * 0.5, special_weight },
-		tac_tazer_flanking = { 0, special_weight * 0.5, special_weight },
-		tac_tazer_charge = { 0, special_weight * 0.5, special_weight },
-		tac_bull_rush = { 0, special_weight * 0.5, special_weight },
-		FBI_spoocs = { 0, special_weight * 0.5, special_weight },
-		single_spooc = { 0, 0, 0 },
-		Phalanx = { 0, 0, 0 },
-		marshal_squad = { 0, 0, 0 },
-		snowman_boss = { 0, 0, 0 },
-		piggydozer = { 0, 0, 0 },
-		custom_assault = { 0, 0, 0 } -- Catches all scripted spawns during assault participating to group ai
+		tac_shield_wall_ranged = special_weight_tbl,
+		tac_shield_wall_charge = special_weight_tbl,
+		tac_tazer_flanking = special_weight_tbl,
+		tac_tazer_charge = special_weight_tbl,
+		tac_bull_rush = special_weight_tbl,
+		tac_bull_tazer_rush = rare_special_weight_tbl,
+		FBI_spoocs = special_weight_tbl,
+		tac_spooc_tazer = rare_special_weight_tbl,
+		single_spooc = no_spawn_weight_tbl,
+		Phalanx = no_spawn_weight_tbl,
+		marshal_squad = no_spawn_weight_tbl,
+		snowman_boss = no_spawn_weight_tbl,
+		piggydozer = no_spawn_weight_tbl,
+		custom = no_spawn_weight_tbl,
+		custom_assault = no_spawn_weight_tbl
 	}
 
 	-- Winters damage reduction settings
@@ -73,12 +79,13 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	self.besiege.recon.groups = {
 		hostage_rescue = { 1, 1, 1 },
-		single_spooc = { 0, 0, 0 },
-		Phalanx = { 0, 0, 0 },
-		marshal_squad = { 0, 0, 0 },
-		snowman_boss = { 0, 0, 0 },
-		piggydozer = { 0, 0, 0 },
-		custom_recon = { 0, 0, 0 } -- Catches all scripted spawns during recon participating to group ai
+		single_spooc = no_spawn_weight_tbl,
+		Phalanx = no_spawn_weight_tbl,
+		marshal_squad = no_spawn_weight_tbl,
+		snowman_boss = no_spawn_weight_tbl,
+		piggydozer = no_spawn_weight_tbl,
+		custom = no_spawn_weight_tbl,
+		custom_recon = no_spawn_weight_tbl
 	}
 
 	self.besiege.recon.force = { 2, 4, 6 }
@@ -574,7 +581,8 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 	}
 	self._tactics.spooc = {
 		"flank",
-		"smoke_grenade"
+		"smoke_grenade",
+		"unit_cover"
 	}
 	self._tactics.marshal_marksman = {
 		"ranged_fire",
@@ -820,6 +828,28 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 		}
 	}
 
+	self.enemy_spawn_groups.tac_bull_tazer_rush = {
+		amount = { 2, 2 },
+		spawn = {
+			{
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				rank = 2,
+				unit = "FBI_tank",
+				tactics = self._tactics.tank_rush
+			},
+			{
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				rank = 1,
+				unit = "CS_tazer",
+				tactics = self._tactics.shield_support_charge
+			}
+		}
+	}
+
 	self.enemy_spawn_groups.tac_tazer_flanking = {
 		amount = { 3, 4 },
 		spawn = {
@@ -856,6 +886,31 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "sh__init_enemy_spa
 				rank = 1,
 				unit = "FBI_swat_R870",
 				tactics = self._tactics.tazer_charge
+			}
+		}
+	}
+
+	self.enemy_spawn_groups.tac_spooc_tazer = {
+		amount = {
+			2,
+			2
+		},
+		spawn = {
+			{
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				rank = 1,
+				unit = "spooc",
+				tactics = self._tactics.spooc
+			},
+			{
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				rank = 1,
+				unit = "CS_tazer",
+				tactics = self._tactics.tazer_flanking
 			}
 		}
 	}
@@ -974,21 +1029,50 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups_level", "sh__init_ene
 	self.enemy_spawn_groups.marshal_squad = {
 		spawn_cooldown = 60,
 		max_nr_simultaneous_groups = 1,
-		initial_spawn_delay = lvl_tweak_data.ai_marshal_spawns_fast and 90 or 480,
+		initial_spawn_delay = lvl_tweak_data.ai_marshal_spawns_fast and 90 or 420,
 		amount = { 1, 1 },
 		spawn = {
-			{
+			self:_distance_weighted_spawn_entry({
 				rank = 1,
 				freq = 1,
 				unit = "marshal_marksman",
 				tactics = self._tactics.marshal_marksman
-			},
-			{
+			}, 1000, 3000, 1, 10),
+			self:_distance_weighted_spawn_entry({
 				rank = 1,
 				freq = 1,
 				unit = "marshal_shield",
 				tactics = self._tactics.marshal_shield
-			}
+			}, 1000, 3000, 10, 1)
 		}
 	}
 end)
+
+-- Helper to change freq based on engagement distance
+function GroupAITweakData:_distance_weighted_spawn_entry(spawn_entry, from_dis, to_dis, from_weight, to_weight)
+	local function dis_freq()
+		local dis = 0
+		local num = 0
+		for _, data in pairs(managers and managers.groupai and managers.groupai:state()._police or {}) do
+			local focus_enemy = data.unit:brain()._logic_data.attention_obj
+			if focus_enemy and focus_enemy.criminal_record and focus_enemy.verified_dis and focus_enemy.verified_t then
+				dis = dis + focus_enemy.verified_dis
+				num = num + 1
+			end
+		end
+		if num > 0 then
+			self._last_dis_freq = dis / num
+		end
+		return math.map_range_clamped(self._last_dis_freq or (from_dis + to_dis) / 2, from_dis, to_dis, from_weight, to_weight)
+	end
+
+	local base_freq = spawn_entry.freq or 1
+	spawn_entry.freq = nil
+	return setmetatable(spawn_entry, {
+		__index = function(t, k)
+			if k == "freq" then
+				return base_freq * dis_freq()
+			end
+		end
+	})
+end

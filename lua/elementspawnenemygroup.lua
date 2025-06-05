@@ -55,6 +55,14 @@ ElementSpawnEnemyGroup.group_mapping = {
 	tac_tazer_flanking = {
 		"tac_tazer_flanking",
 		"tac_tazer_charge"
+	},
+	tac_bull_rush = {
+		"tac_bull_rush",
+		"tac_bull_tazer_rush"
+	},
+	FBI_spoocs = {
+		"FBI_spoocs",
+		"tac_spooc_tazer"
 	}
 }
 ElementSpawnEnemyGroup.group_mapping.tac_swat_rifle_flank = ElementSpawnEnemyGroup.group_mapping.tac_swat_rifle
