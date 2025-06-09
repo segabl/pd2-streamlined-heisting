@@ -154,3 +154,14 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 	self:_send_sync_melee_attack_result(attack_data, hit_offset_height)
 	self:_on_damage_received(attack_data)
 end
+
+
+-- Revert headshot multipliers for fire damage
+local damage_fire_original = CopDamage.damage_fire
+function CopDamage:damage_fire(attack_data, ...)
+	local head_body_name = self._head_body_name
+	self._head_body_name = nil
+	local result = damage_fire_original(self, attack_data, ...)
+	self._head_body_name = head_body_name
+	return result
+end
