@@ -1,3 +1,8 @@
+local interval = {
+	values = {
+		interval = 20
+	}
+}
 return {
 	-- Combine some navigation areas
 	[100087] = {
@@ -18,5 +23,8 @@ return {
 			{ 32, 33, 34 },
 			{ 83, 85, 90 }
 		}
-	}
+	},
+	-- Add intervals to rappel spawns
+	[103174] = interval,
+	[104731] = interval
 }

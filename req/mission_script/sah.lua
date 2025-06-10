@@ -76,5 +76,30 @@ return {
 			tac_shield_wall_ranged = false,
 			tac_shield_wall_charge = false
 		}
+	},
+	-- Combine some navigation areas
+	[100017] = {
+		ai_area = {
+			{ 7, 8, 9 },
+			{ 34, 35 }
+		}
+	},
+	[100814] = {
+		ai_area = {
+			{ 33, 51 },
+			{ 38, 40 }
+		}
+	},
+	[100817] = {
+		ai_area = {
+			{ 38, 40 },
+			{ 42, 73 }
+		}
+	},
+	[100819] = {
+		ai_area = {
+			{ 33, 51 },
+			{ 42, 73 }
+		}
 	}
 }

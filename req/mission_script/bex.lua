@@ -1,3 +1,8 @@
+local disabled = {
+	values = {
+		enabled = false
+	}
+}
 return {
 	-- Disable server room reinforce
 	[101835] = {
@@ -63,6 +68,29 @@ return {
 			{
 				name = "parts_car"
 			}
+		}
+	},
+	-- Disable broken navlinks
+	[102541] = {
+		on_executed = {
+			{ id = 102544, remove = true }
+		}
+	},
+	[104726] = {
+		on_executed = {
+			{ id = 101490, remove = true }
+		}
+	},
+	-- Disable cheat spawns
+	[100741] = disabled,
+	[102369] = disabled,
+	[102382] = disabled,
+	[102781] = disabled,
+	-- Combine some navigation areas
+	[100017] = {
+		ai_area = {
+			{ 57, 59 },
+			{ 68, 77 }
 		}
 	}
 }

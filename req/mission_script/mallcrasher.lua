@@ -1,8 +1,13 @@
+local interval = {
+	values = {
+		interval = 20
+	}
+}
 return {
 	-- Combine some navigation areas
 	[300000] = {
 		ai_area = {
-			{ 1, 2, 5, 9 },
+			{ 1, 2, 5 },
 			{ 47, 54, 67, 68, 70, 112 },
 			{ 49, 61, 73 },
 			{ 41, 52 },
@@ -23,5 +28,16 @@ return {
 		on_executed = {
 			{ id = 300164, delay = 45 }
 		}
-	}
+	},
+	-- Enable unused spawngroup
+	[300164] = {
+		values = {
+			spawn_groups = { 300313, 300314, 300281 }
+		}
+	},
+	-- Add intervals to rappel spawns
+	[301847] = interval,
+	[301852] = interval,
+	[302083] = interval,
+	[302084] = interval
 }
