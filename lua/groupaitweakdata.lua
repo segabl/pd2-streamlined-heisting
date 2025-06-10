@@ -16,19 +16,23 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.spawn_kill_cooldown = 10
 
 	-- Spawn Groups
+	local rifle_weight = 16
+	local rifle_flank_weight = 8
+	local shotgun_weight = 2
+	local shotgun_flank_weight = 1
 	local special_weight = math.lerp(3, 5, f)
 	local special_weight_tbl = { 0, special_weight * 0.5, special_weight }
 	local rare_special_weight_tbl = { 0, special_weight * 0.125, special_weight * 0.25 }
 	local no_spawn_weight_tbl = { 0, 0, 0 }
 	self.besiege.assault.groups = {
-		tac_swat_shotgun_rush = { 1, 1.5, 2 },
-		tac_swat_shotgun_rush_no_medic = { 1, 0.5, 0 },
-		tac_swat_shotgun_flank = { 0.5, 0.75, 1 },
-		tac_swat_shotgun_flank_no_medic = { 0.5, 0.25, 0 },
-		tac_swat_rifle = { 8, 12, 16 },
-		tac_swat_rifle_no_medic = { 8, 4, 0 },
-		tac_swat_rifle_flank = { 4, 6, 8 },
-		tac_swat_rifle_flank_no_medic = { 4, 2, 0 },
+		tac_swat_shotgun_rush = { shotgun_weight * 0.5, shotgun_weight * 0.75, shotgun_weight },
+		tac_swat_shotgun_rush_no_medic = { shotgun_weight * 0.5, shotgun_weight * 0.25, 0 },
+		tac_swat_shotgun_flank = { shotgun_flank_weight * 0.5, shotgun_flank_weight * 0.75, shotgun_flank_weight },
+		tac_swat_shotgun_flank_no_medic = { shotgun_flank_weight * 0.5, shotgun_flank_weight * 0.25, 0 },
+		tac_swat_rifle = { rifle_weight * 0.5, rifle_weight * 0.75, rifle_weight },
+		tac_swat_rifle_no_medic = { rifle_weight * 0.5, rifle_weight * 0.25, 0 },
+		tac_swat_rifle_flank = { rifle_flank_weight * 0.5, rifle_flank_weight * 0.75, rifle_flank_weight },
+		tac_swat_rifle_flank_no_medic = { rifle_flank_weight * 0.5, rifle_flank_weight * 0.25, 0 },
 		tac_shield_wall_ranged = special_weight_tbl,
 		tac_shield_wall_charge = special_weight_tbl,
 		tac_tazer_flanking = special_weight_tbl,
@@ -93,7 +97,7 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 
 	self.besiege.regroup.duration = { 30, 25, 20 }
 
-	self.besiege.recurring_group_SO.recurring_cloaker_spawn.interval = { math.lerp(120, 15, f), math.lerp(240, 30, f) }
+	self.besiege.recurring_group_SO.recurring_cloaker_spawn.interval = { math.lerp(60, 15, f), math.lerp(120, 30, f) }
 
 	self.street = deep_clone(self.besiege)
 	self.safehouse = deep_clone(self.besiege)
