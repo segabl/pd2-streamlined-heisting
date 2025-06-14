@@ -52,7 +52,7 @@ if not StreamHeist then
 	end
 
 	-- Redirect unit localization for units that can't be auto-detected
-	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function (loc)
+	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitStreamlinedHeisting", function(loc)
 		loc:add_localized_strings({
 			ene_zeal_medic = loc:exists("ene_medic") and loc:text("ene_medic"),
 			ene_zeal_sniper = loc:exists("ene_sniper") and loc:text("ene_sniper")
@@ -87,7 +87,7 @@ if not StreamHeist then
 		local buttons = {
 			{
 				text = managers.localization:text("sh_menu_conflicts_disable"),
-				callback = function ()
+				callback = function()
 					for _, mod_name in pairs(Global.sh_mod_conflicts) do
 						BLT.Mods:GetModByName(mod_name):SetEnabled(false, true)
 					end
@@ -229,7 +229,7 @@ if not StreamHeist then
 	TheFixesPreventer.fix_gensec_shotgunner_in_murkywater = true
 	TheFixesPreventer.fix_hostages_not_moving = true
 	TheFixesPreventer.tank_remove_recoil_anim = true
-	TheFixesPreventer.tank_walk_near_players  = true
+	TheFixesPreventer.tank_walk_near_players = true
 
 	-- Check faction tweaks
 	if not Global.sh_faction_tweaks_check then
@@ -238,13 +238,41 @@ if not StreamHeist then
 
 		local auto_detect = StreamHeist.settings.auto_faction_tweaks
 		local asset_loader = StreamHeist.mod_instance.supermod:GetAssetLoader()
-		local mod_overrides = {}
+		local mod_assets = {}
 		if auto_detect then
+			-- Mod overrides
 			for modname, data in pairs(DB:mods()) do
 				for _, file in pairs(data.files) do
 					local name, ext = file:match("^(.-)%.(.-)$")
 					if ext == "model" then
-						mod_overrides[name] = modname
+						mod_assets[name:key()] = modname
+					end
+				end
+			end
+
+			-- Supermod
+			local up_index = 1
+			while true do
+				local name, val = debug.getupvalue(BLTSuperMod.AssetLoader.LoadAsset, up_index)
+				if not name then
+					break
+				elseif name == "_dynamic_unloaded_assets" then
+					for _, asset in pairs(val) do
+						if asset.extension == "model" then
+							mod_assets[asset.dbpath:key()] = asset.file:gsub("^mods/", ""):gsub("^assets/mod_overrides/", ""):gsub("^(.-)/.+$", "%1")
+						end
+					end
+					break
+				end
+				up_index = up_index + 1
+			end
+
+			-- BeardLib
+			local beardlib_assets = Global and Global.fm and Global.fm.added_files and Global.fm.added_files[Idstring("model"):key()]
+			if beardlib_assets then
+				for key, data in pairs(beardlib_assets) do
+					if data.file then
+						mod_assets[key] = data.file:gsub("^mods/", ""):gsub("^assets/mod_overrides/", ""):gsub("^(.-)/.+$", "%1")
 					end
 				end
 			end
@@ -255,9 +283,10 @@ if not StreamHeist then
 				enabled = true
 				local assets = asset_loader.script_loadable_packages[faction].assets
 				for _, spec in pairs(assets) do
-					if mod_overrides[spec.dbpath] then
-						StreamHeist:log("Disabling faction tweak for faction %s due to mod_override %s", faction, mod_overrides[spec.dbpath])
-						Global.sh_faction_conflicts[faction] = mod_overrides[spec.dbpath]
+					local mod = mod_assets[spec.dbpath:key()]
+					if mod then
+						StreamHeist:log("Disabling faction tweak for faction %s due to mod %s", faction, mod)
+						Global.sh_faction_conflicts[faction] = mod
 						enabled = false
 						break
 					end
