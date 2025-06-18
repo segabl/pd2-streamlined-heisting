@@ -482,6 +482,8 @@
 			<file :name="shared_textures/taser_body_df.texture"/>
 			<file :name="shared_textures/taser_helmet_df.texture"/>
 			<file :name="shared_textures/taser_helmet_nm.texture"/>
+			<file :name="shared_textures/cloaker_body_df.texture"/>
+			<file :name="shared_textures/cloaker_body_nm.texture"/>
 
 			<!-- helmets -->
 			<file :name="ene_acc_policia_federale_helmet/ene_acc_policia_federale_helmet.material_config"/>
@@ -581,6 +583,17 @@
 			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale_contour.material_config"/>
 			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.model"/>
 			<file :name="ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale.object"/>
+
+			<!-- cloaker -->
+			<file :name="ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale.material_config"/>
+			<file :name="ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale_contour.material_config"/>
+			<file :name="ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale.model"/>
+			<file :name="ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale.object"/>
+			<file :name="ene_swat_cloaker_policia_federale/debris/ene_spook_head_debris.material_config"/>
+			<file :name="ene_swat_cloaker_policia_federale/debris/ene_spook_head_debris.model"/>
+			<file :name="ene_swat_cloaker_policia_federale/debris/ene_spook_head_debris.object"/>
+			<file :name="ene_swat_cloaker_policia_federale/debris/ene_spook_upper_body_debris.model"/>
+			<file :name="ene_swat_cloaker_policia_federale/debris/ene_spook_upper_body_debris.object"/>
 		</group>
 
 		<!-- russian mercs -->
