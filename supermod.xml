@@ -619,6 +619,15 @@
 			<file :name="ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870_husk.unit"/>
 			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870.unit"/>
 			<file :name="ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870_husk.unit"/>
+
+			<!-- make heavy shotgunner distinct -->
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870.cooked_physics"/>
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870.material_config"/>
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870_contour.material_config"/>
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870.model"/>
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870.object"/>
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870.unit"/>
+			<file :name="ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870_husk.unit"/>
 		</group>
 
 		<!-- character fixes and changes -->
