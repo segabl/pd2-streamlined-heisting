@@ -3,7 +3,7 @@
 	"sh_menu_faction_tweaks" : "Faction improvements",
 	"sh_menu_faction_tweaks_desc" : "Enable or disable visual improvements for specific enemy factions",
 	"sh_menu_auto_faction_tweaks" : "Auto-detect faction improvements",
-	"sh_menu_auto_faction_tweaks_desc" : "Automatically disables faction improvements that conflict with mod_overrides mods\nRequires a game restart to take effect",
+	"sh_menu_auto_faction_tweaks_desc" : "Automatically disables faction improvements that conflict with other mods\nRequires a game restart to take effect",
 	"sh_menu_swat" : "Improved SWAT faction",
 	"sh_menu_fbi" : "Improved FBI faction",
 	"sh_menu_gensec" : "Improved GenSec faction",
