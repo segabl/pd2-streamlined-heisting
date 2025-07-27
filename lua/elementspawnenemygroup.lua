@@ -75,13 +75,12 @@ Hooks:PostHook(ElementSpawnEnemyGroup, "_finalize_values", "sh__finalize_values"
 		return
 	end
 
-	if self._values.interval == 0 then
-		for _, id in pairs(self._values.elements) do
-			local spawn_point = self:get_mission_element(id)
-			if spawn_point and spawn_point._values.spawn_action then
-				self._values.interval = 5
-				break
-			end
+	self._values.interval = math.max(3 * tweak_data.group_ai.spawn_cooldown_mul, self._values.interval)
+	for _, id in pairs(self._values.elements) do
+		local spawn_point = self:get_mission_element(id)
+		if spawn_point and spawn_point._values.spawn_action then
+			self._values.interval = math.max(6 * tweak_data.group_ai.spawn_cooldown_mul, self._values.interval)
+			break
 		end
 	end
 
