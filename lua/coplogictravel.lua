@@ -77,14 +77,37 @@ end
 
 
 -- Fix need for another queued task to update pathing after expired cover leave time
-Hooks:PreHook(CopLogicTravel, "upd_advance", "sh_upd_advance", function (data)
+-- Reposition when the current destination position is too far from the follow unit
+Hooks:PreHook(CopLogicTravel, "upd_advance", "sh_upd_advance", function(data)
 	local unit = data.unit
 	local my_data = data.internal_data
 	local t = TimerManager:game():time()
 	if my_data.cover_leave_t and my_data.cover_leave_t < t and not unit:movement():chk_action_forbidden("walk") and not data.unit:anim_data().reload then
 		my_data.cover_leave_t = nil
 	end
+
+	CopLogicTravel._chk_relocate(data, my_data)
 end)
+
+function CopLogicTravel._chk_relocate(data, my_data)
+	local objective = data.objective
+	if not objective or not alive(objective.follow_unit) or not my_data.advancing or not my_data.coarse_path or my_data.processing_coarse_path then
+		return
+	end
+
+	local destination_pos = my_data.coarse_path[#my_data.coarse_path][2]
+	local follow_pos = objective.follow_unit:movement():nav_tracker():field_position()
+	if mvector3.distance_sq(destination_pos, follow_pos) < 3000 ^ 2 then
+		return
+	end
+
+	data.brain:action_request({
+		body_part = 2,
+		type = "idle"
+	})
+
+	CopLogicTravel._begin_coarse_pathing(data, my_data)
+end
 
 
 -- Make groups move together (remove close to criminal check to avoid splitting groups)
@@ -148,14 +171,14 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index, ...)
 	local nav_seg_pos = nav_manager._nav_segments[nav_seg_id].pos
 
 	-- Pick cover positions that are close to nav segment doors
-	local doors = nav_manager:find_segment_doors(nav_seg_id, function (seg_id) return seg_id == next_nav_seg_id end)
+	local doors = nav_manager:find_segment_doors(nav_seg_id, function(seg_id) return seg_id == next_nav_seg_id end)
 	local door = table.random(doors)
 	local to_pos = door and door.center or coarse_path[nav_index][2] or nav_seg_pos
 
 	local cover = nav_manager:find_cover_in_nav_seg_2(nav_seg_id, to_pos)
 	if cover then
 		nav_manager:reserve_cover(cover, data.pos_rsrv_id)
-		my_data.moving_to_cover = {	cover }
+		my_data.moving_to_cover = { cover }
 		to_pos = cover[1]
 	else
 		mvector3.step(tmp_vec1, to_pos, nav_seg_pos, 200)
@@ -294,7 +317,7 @@ end
 
 
 -- Fix cover wait time being set to 0 if players aren't literally next to enemy
-Hooks:PostHook(CopLogicTravel, "action_complete_clbk", "sh_action_complete_clbk", function (data, action)
+Hooks:PostHook(CopLogicTravel, "action_complete_clbk", "sh_action_complete_clbk", function(data, action)
 	if action:type() ~= "walk" then
 		return
 	end
@@ -314,7 +337,7 @@ end)
 
 -- Stop existing advancing action on exit to a new travel logic
 -- This allows enemies to start their new path immediately instead of having to finish the old one
-Hooks:PreHook(CopLogicTravel, "exit", "sh_exit", function (data, new_logic_name)
+Hooks:PreHook(CopLogicTravel, "exit", "sh_exit", function(data, new_logic_name)
 	if new_logic_name == "travel" then
 		CopLogicTravel.cancel_advance(data)
 	end
@@ -352,7 +375,7 @@ end
 
 
 -- Play generic radio report chatter during travel while unalerted
-Hooks:PostHook(CopLogicTravel, "queued_update", "sh_queued_update", function (data)
+Hooks:PostHook(CopLogicTravel, "queued_update", "sh_queued_update", function(data)
 	if data.cool and data.char_tweak.chatter and data.char_tweak.chatter.report then
 		managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "report")
 	end
