@@ -115,7 +115,7 @@ function CopLogicAttack._chk_say_chatter(data, chatter_type, cooldown)
 	end
 end
 
-Hooks:PreHook(CopLogicAttack, "aim_allow_fire", "sh_aim_allow_fire", function (shoot, aim, data, my_data)
+Hooks:PreHook(CopLogicAttack, "aim_allow_fire", "sh_aim_allow_fire", function(shoot, aim, data, my_data)
 	local chatter = data.char_tweak.chatter
 	local is_off_cooldown = not data.combat_chatter_cooldown_t or data.combat_chatter_cooldown_t < data.t
 	if not chatter then
@@ -146,7 +146,7 @@ function CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
 	local from_pos = data.m_pos
 	local reservation = {
 		radius = 30,
-		position =  from_pos,
+		position = from_pos,
 		filter = data.pos_rsrv_id
 	}
 	if managers.navigation:is_pos_free(reservation) then
@@ -322,9 +322,9 @@ function CopLogicAttack._update_cover(data)
 end
 
 
--- Improve check for cover requirement
+-- Improve check for cover requirement and make cover verification more lenient
 function CopLogicAttack._chk_wants_to_take_cover(data, my_data)
-	if not data.attention_obj or data.attention_obj.reaction < AIAttentionObject.REACT_COMBAT then
+	if not data.attention_obj or data.attention_obj.reaction < AIAttentionObject.REACT_SHOOT then
 		return
 	end
 
@@ -337,6 +337,18 @@ function CopLogicAttack._chk_wants_to_take_cover(data, my_data)
 	end
 
 	if data.unit:inventory():equipped_unit():base():get_ammo_ratio() < 0.3 then
+		return true
+	end
+end
+
+function CopLogicAttack._verify_cover(cover, threat_pos, min_dis, max_dis)
+	local threat_dis = mvector3.direction(tmp_vec1, cover[1], threat_pos)
+	if min_dis and threat_dis < min_dis or max_dis and threat_dis > max_dis then
+		return
+	end
+
+	local cover_dot = mvector3.dot(tmp_vec1, cover[2])
+	if cover_dot > 0.33 then
 		return true
 	end
 end
