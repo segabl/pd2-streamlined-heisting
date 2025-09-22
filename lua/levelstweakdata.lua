@@ -27,6 +27,7 @@ Hooks:PostHook(LevelsTweakData, "init", "sh_init", function(self)
 		}
 	}
 	self.sand.ai_unit_group_overrides = self.chas.ai_unit_group_overrides
+	self.pent.ai_unit_group_overrides = self.chas.ai_unit_group_overrides
 
 	self.rvd1.ai_unit_group_overrides = {
 		CS_cop_C45_R870 = {
@@ -43,4 +44,62 @@ Hooks:PostHook(LevelsTweakData, "init", "sh_init", function(self)
 		}
 	}
 	self.rvd2.ai_unit_group_overrides = self.rvd1.ai_unit_group_overrides
+
+	self.hox_2.ai_unit_group_overrides = {
+		CS_cop_C45_R870 = {
+			america = {
+				Idstring("units/payday2/characters/ene_fbi_office_1/ene_fbi_office_1"),
+				Idstring("units/payday2/characters/ene_fbi_office_2/ene_fbi_office_2"),
+				Idstring("units/payday2/characters/ene_fbi_office_3/ene_fbi_office_3"),
+				Idstring("units/payday2/characters/ene_fbi_office_4/ene_fbi_office_4"),
+				Idstring("units/payday2/characters/ene_fbi_female_2/ene_fbi_female_2"),
+				Idstring("units/payday2/characters/ene_fbi_female_3/ene_fbi_female_3"),
+				Idstring("units/payday2/characters/ene_fbi_female_4/ene_fbi_female_4")
+			}
+		},
+		FBI_suit_C45_M4 = {
+			america = {
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_1"),
+				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_2"),
+				Idstring("units/payday2/characters/ene_fbi_female_2/ene_fbi_female_2"),
+				Idstring("units/payday2/characters/ene_fbi_female_3/ene_fbi_female_3"),
+				Idstring("units/payday2/characters/ene_fbi_female_4/ene_fbi_female_4")
+			}
+		},
+		FBI_suit_M4_MP5 = {
+			america = {
+				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_2"),
+				Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3"),
+				Idstring("units/payday2/characters/ene_fbi_office_1/ene_fbi_office_1"),
+				Idstring("units/payday2/characters/ene_fbi_office_2/ene_fbi_office_2"),
+				Idstring("units/payday2/characters/ene_fbi_office_3/ene_fbi_office_3"),
+				Idstring("units/payday2/characters/ene_fbi_office_4/ene_fbi_office_4")
+			}
+		}
+	}
+
+	self.hox_3.ai_unit_group_overrides = {
+		CS_cop_C45_R870 = {
+			america = {
+				Idstring("units/pd2_mcmansion/characters/ene_hoxton_breakout_guard_1/ene_hoxton_breakout_guard_1"),
+				Idstring("units/pd2_mcmansion/characters/ene_hoxton_breakout_guard_2/ene_hoxton_breakout_guard_2")
+			}
+		},
+		FBI_suit_C45_M4 = {
+			america = {
+				Idstring("units/payday2/characters/ene_fbi_1/ene_fbi_1"),
+				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_2"),
+				Idstring("units/pd2_mcmansion/characters/ene_hoxton_breakout_guard_1/ene_hoxton_breakout_guard_1"),
+				Idstring("units/pd2_mcmansion/characters/ene_hoxton_breakout_guard_2/ene_hoxton_breakout_guard_2")
+			}
+		},
+		FBI_suit_M4_MP5 = {
+			america = {
+				Idstring("units/payday2/characters/ene_fbi_2/ene_fbi_2"),
+				Idstring("units/payday2/characters/ene_fbi_3/ene_fbi_3"),
+				Idstring("units/pd2_mcmansion/characters/ene_hoxton_breakout_guard_1/ene_hoxton_breakout_guard_1"),
+				Idstring("units/pd2_mcmansion/characters/ene_hoxton_breakout_guard_2/ene_hoxton_breakout_guard_2")
+			}
+		}
+	}
 end)
