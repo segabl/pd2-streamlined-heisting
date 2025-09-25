@@ -102,4 +102,17 @@ Hooks:PostHook(LevelsTweakData, "init", "sh_init", function(self)
 			}
 		}
 	}
+
+	self.chca.ai_unit_group_overrides = {
+		CS_cop_C45_R870 = {
+			america = {
+				Idstring("units/pd2_dlc_chca/characters/ene_security_cruise_1/ene_security_cruise_1"),
+				Idstring("units/pd2_dlc_chca/characters/ene_security_cruise_2/ene_security_cruise_2"),
+				Idstring("units/pd2_dlc_chca/characters/ene_security_cruise_3/ene_security_cruise_3"),
+				Idstring("units/pd2_dlc_chca/characters/ene_triad_cruise_1/ene_triad_cruise_1"),
+				Idstring("units/pd2_dlc_chca/characters/ene_triad_cruise_2/ene_triad_cruise_2"),
+				Idstring("units/pd2_dlc_chca/characters/ene_triad_cruise_3/ene_triad_cruise_3")
+			}
+		}
+	}
 end)
