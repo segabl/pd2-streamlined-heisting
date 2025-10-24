@@ -98,7 +98,6 @@ These are miscellaneous changes, fixes and optimizations that don't fit any of t
 - Fixes some spawn points being unavailable on certain maps due to incorrect pathing checks
 - Makes flashbangs more consistent and less penalizing when looking away in time
 - Fixes and optimizes fire spawned from molotovs and tripmines
-- Fixes instances of Winters not leaving the map when the formation was told to break up before he was registered
 - Fixes various synchronization issues where incorrect or incomplete data was sent to clients
 - Tweaks some heist mission scripts to play better or fix issues
 - Makes secured additional bags in Crime Spree reward one level per bag (up to a maximum of 20 additional levels)

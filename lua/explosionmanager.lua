@@ -3,7 +3,7 @@
 local hit_dir = Vector3()
 local shield_slot_mask = World:make_slot_mask(8)
 local criminal_names = table.list_to_set(CriminalsManager.character_names())
-Hooks:OverrideFunction(ExplosionManager, "_damage_characters", function (self, detect_results, params, variant, damage_func_name)
+Hooks:OverrideFunction(ExplosionManager, "_damage_characters", function(self, detect_results, params, variant, damage_func_name)
 	local user_unit = params.user
 	local owner = params.owner
 	local damage = params.damage
@@ -41,9 +41,29 @@ Hooks:OverrideFunction(ExplosionManager, "_damage_characters", function (self, d
 		end
 	end
 
+	local characters_hit_list = {}
+	for key, unit in pairs(detect_results.characters_hit) do
+		table.insert(characters_hit_list, { unit = unit, key = key })
+	end
+
+	table.sort(characters_hit_list, function(a, b)
+		local base_a_ext = a.unit:base()
+		local base_b_ext = b.unit:base()
+		if not base_a_ext or not base_b_ext then
+			return false
+		end
+
+		local priority_a = base_a_ext._char_tweak and base_a_ext._char_tweak.target_priority or 0
+		local priority_b = base_b_ext._char_tweak and base_b_ext._char_tweak.target_priority or 0
+		return priority_a > priority_b
+	end)
+
 	local hit_body, hit_body_pos, len, can_damage, tweak_table, count_table
 	local do_self_damage = not alive(user_unit) or not user_unit:base() or not user_unit:base()._tweak_table
-	for key, unit in pairs(detect_results.characters_hit) do
+	for _, data in pairs(characters_hit_list) do
+		local unit = data.unit
+		local key = data.key
+
 		hit_body = get_first_body_hit(detect_results.bodies_hit[key])
 		hit_body_pos = hit_body and hit_body:center_of_mass() or alive(unit) and unit:position()
 		len = mvector3.direction(hit_dir, hit_pos, hit_body_pos)

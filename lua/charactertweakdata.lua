@@ -932,6 +932,10 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.security_undominatable.chatter = self.presets.enemy_chatter.security
 	self.security_mex.chatter = self.presets.enemy_chatter.security
 	self.security_mex_no_pager.chatter = self.presets.enemy_chatter.security
+
+	-- Explosion/Graze Priority
+	self.medic.target_priority = 10
+	self.tank_medic.target_priority = 10
 end)
 
 

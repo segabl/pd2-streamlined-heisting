@@ -43,7 +43,6 @@
 
 			<group :hook_id="modifiers/">
 				<post :hook_id="modifierheavies"/>
-				<post :hook_id="modifierlessconcealment"/>
 				<post :hook_id="modifiermedicdeathwish"/>
 			</group>
 
@@ -108,8 +107,6 @@
 							<post :hook_id="coplogicidle"/>
 							<post :hook_id="coplogicinactive"/>
 							<post :hook_id="coplogicintimidated"/>
-							<post :hook_id="coplogicphalanxminion"/>
-							<post :hook_id="coplogicphalanxvip"/>
 							<post :hook_id="coplogicsniper"/>
 							<post :hook_id="coplogictrade"/>
 							<post :hook_id="coplogictravel"/>
@@ -166,7 +163,6 @@
 				<group :hook_id="weapons/">
 					<group :hook_id="grenades/">
 						<post :hook_id="quickcsgrenade"/>
-						<post :hook_id="quickflashgrenade"/>
 						<post :hook_id="quicksmokegrenade"/>
 					</group>
 					<post :hook_id="akimboweaponbase"/>
