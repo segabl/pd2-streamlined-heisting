@@ -272,7 +272,10 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_task(phase, objective_type,
 					group.in_place_t = self._t
 					group.objective.moving_in = nil
 					if group.objective.assigned_t then
-						self:_chk_say_group(group, "ready")
+						local say_clear = math.random() < 0.5 and not self:_can_group_see_target(group, nil, 5)
+						if not say_clear or not self:_chk_say_group(group, "clear") then
+							self:_chk_say_group(group, "ready")
+						end
 					end
 				end
 			end
