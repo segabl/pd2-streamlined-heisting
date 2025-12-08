@@ -32,13 +32,13 @@ function CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, ..
 
 	local can_arrest = not record.status and record.arrest_timeout < data.t and CopLogicBase._can_arrest(data)
 	if not can_arrest or record.assault_t and attention_data.unit:base():arrest_settings().aggression_timeout > data.t - record.assault_t then
-		return attention_data.verified and AIAttentionObject.REACT_COMBAT or attention_reaction
+		return math.max(attention_reaction, AIAttentionObject.REACT_COMBAT)
 	end
 
 	for u_key, other_crim_rec in pairs(managers.groupai:state():all_criminals()) do
 		local other_crim_attention_info = data.detected_attention_objects[u_key]
 		if other_crim_attention_info and (other_crim_attention_info.is_deployable or other_crim_attention_info.verified and other_crim_rec.assault_t and data.t - other_crim_rec.assault_t < other_crim_rec.unit:base():arrest_settings().aggression_timeout) then
-			return attention_data.verified and AIAttentionObject.REACT_COMBAT or attention_reaction
+			return math.max(attention_reaction, AIAttentionObject.REACT_COMBAT)
 		end
 	end
 
