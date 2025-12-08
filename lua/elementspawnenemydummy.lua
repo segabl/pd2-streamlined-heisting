@@ -103,7 +103,7 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "init", "sh_init", function (self)
 end)
 
 Hooks:PreHook(ElementSpawnEnemyDummy, "produce", "sh_produce", function (self, params)
-	if not params and self._enemy_table then
+	if not (params and params.name) and self._enemy_table then
 		self._enemy_name = Idstring(table.random(self._enemy_table))
 	end
 end)
