@@ -98,7 +98,7 @@ function WeaponTweakData:_set_presets()
 			v.BODY_DAMAGE_CLAMP = nil
 		elseif k:match("_npc$") then
 			v.DAMAGE = 1
-			v.suppression = v.armor_piercing and 3 or v.is_shotgun and 2 or 1
+			v.suppression = v.armor_piercing and 5 or v.is_shotgun and 3 or 1
 			v.spread = v.rays and v.rays > 1 and 6 or 0
 			if v.categories and v.categories[1] == "snp" and v.usage ~= "is_sniper" then
 				v.anim_usage = v.anim_usage or v.usage
