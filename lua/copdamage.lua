@@ -13,7 +13,7 @@ end
 
 
 -- Make head hitbox size consistent across enemies
-Hooks:PostHook(CopDamage, "init", "sh_init", function (self)
+Hooks:PostHook(CopDamage, "init", "sh_init", function(self)
 	local head_body = self._unit:body(self._head_body_name or "head")
 	if head_body then
 		head_body:set_sphere_radius(18)
@@ -38,7 +38,7 @@ end
 
 
 -- Additional suppression on hit
-Hooks:PreHook(CopDamage, "_on_damage_received", "sh__on_damage_received", function (self, damage_info)
+Hooks:PreHook(CopDamage, "_on_damage_received", "sh__on_damage_received", function(self, damage_info)
 	self:build_suppression(4 * damage_info.damage / self._HEALTH_INIT, nil)
 end)
 
@@ -54,7 +54,7 @@ end
 
 
 -- Make hurt type more dynamic by interpolating between hurt severity entries
-Hooks:OverrideFunction(CopDamage, "get_damage_type", function (self, damage_percent, category)
+Hooks:OverrideFunction(CopDamage, "get_damage_type", function(self, damage_percent, category)
 	local hurt_table = self._char_tweak.damage.hurt_severity[category or "bullet"]
 	local dmg = damage_percent / self._HEALTH_GRANULARITY
 
@@ -164,4 +164,21 @@ function CopDamage:damage_fire(attack_data, ...)
 	local result = damage_fire_original(self, attack_data, ...)
 	self._head_body_name = head_body_name
 	return result
+end
+
+
+-- Add temporary DR when healed by a medic
+Hooks:PostHook(CopDamage, "do_medic_heal", "sh_do_medic_heal", function(self)
+	self._last_medic_heal_t = TimerManager:game():time()
+end)
+
+local _apply_damage_reduction_original = CopDamage._apply_damage_reduction
+function CopDamage:_apply_damage_reduction(...)
+	local damage = _apply_damage_reduction_original(self, ...)
+
+	if self._last_medic_heal_t and TimerManager:game():time() - self._last_medic_heal_t < 2 then
+		damage = damage * 0.5
+	end
+
+	return damage
 end
