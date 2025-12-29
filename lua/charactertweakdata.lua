@@ -553,6 +553,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	presets.enemy_chatter.cop.aggressive = true
 	presets.enemy_chatter.cop.go_go = true
 	presets.enemy_chatter.cop.contact = true
+	presets.enemy_chatter.cop.detect = true
 	presets.enemy_chatter.cop.flank = true
 	presets.enemy_chatter.cop.open_fire = true
 	presets.enemy_chatter.cop.watch_background = true
@@ -587,9 +588,9 @@ function CharacterTweakData:_presets(tweak_data, ...)
 	}
 
 	presets.enemy_chatter.security = {
-		aggressive = true,
 		go_go = true,
 		contact = true,
+		detect = true,
 		suppress = true,
 		idle = true,
 		report = true

@@ -119,6 +119,7 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", 
 		chatter.duration = duration_short
 		chatter.radius = radius_small
 		chatter.max_nr = 1
+		chatter.group_min = 0
 	end
 
 	-- Loud chatter
@@ -164,12 +165,17 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "sh__init_chatter_data", 
 	self.enemy_chatter.jammer.radius = radius_medium
 	self.enemy_chatter.saw = clone(self.enemy_chatter.sentry_gun)
 	self.enemy_chatter.saw.queue = "ch4"
+	self.enemy_chatter.detect = clone(self.enemy_chatter.contact)
+	self.enemy_chatter.detect.queue = "a01"
+	self.enemy_chatter.detect.radius = radius_small
+	self.enemy_chatter.detect.duration = duration_short
 
 	-- Stealth chatter
 	self.enemy_chatter.idle = clone(self.enemy_chatter.go_go)
 	self.enemy_chatter.idle.queue = "a06"
 	self.enemy_chatter.idle.duration = duration_long
 	self.enemy_chatter.idle.radius = radius_large
+	self.enemy_chatter.idle.interval = { 5, 10 }
 	self.enemy_chatter.report = clone(self.enemy_chatter.idle)
 	self.enemy_chatter.report.queue = "a05"
 end)
