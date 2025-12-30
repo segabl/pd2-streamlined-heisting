@@ -543,17 +543,14 @@ Hooks:PostHook(CopLogicBase, "death_clbk", "sh_death_clbk", function(data, damag
 end)
 
 
--- Disable forced "contact" voiceline
+-- Disable forced voicelines
+local empty_chatter = {}
 local _set_attention_obj_original = CopLogicBase._set_attention_obj
 function CopLogicBase._set_attention_obj(data, ...)
-	local contact = data.char_tweak.chatter and data.char_tweak.chatter.contact
-	if contact then
-		data.char_tweak.chatter.contact = nil
-	end
+	local chatter = data.char_tweak.chatter
+	data.char_tweak.chatter = empty_chatter
 
 	_set_attention_obj_original(data, ...)
 
-	if contact then
-		data.char_tweak.chatter.contact = contact
-	end
+	data.char_tweak.chatter = chatter
 end
