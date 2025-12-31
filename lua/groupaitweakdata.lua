@@ -13,7 +13,8 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.no_grenade_push_delay = 8
 
 	self.spawn_cooldown_mul = math.lerp(2, 1, f)
-	self.spawn_kill_cooldown = 10
+	self.spawn_kill_cooldown = math.lerp(20, 10, f)
+	self.spawn_kill_max_dis = 1500
 
 	-- Spawn Groups
 	local rifle_weight = 16

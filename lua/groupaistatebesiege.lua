@@ -872,19 +872,17 @@ function GroupAIStateBesiege:force_spawn_group(group, group_types, guarantee)
 	end
 end
 
-function GroupAIStateBesiege:_is_spawn_task_type_on_cooldown(spawn_task)
-	local group_objective_type = spawn_task.group.objective.type
-	return self._next_group_spawn_t[group_objective_type] and self._next_group_spawn_t[group_objective_type] > self._t
+function GroupAIStateBesiege:_is_objective_type_on_cooldown(type)
+	return self._next_group_spawn_t[type] and self._next_group_spawn_t[type] > self._t
 end
 
-function GroupAIStateBesiege:_set_spawn_task_type_cooldown(spawn_task, cooldown)
-	local group_objective_type = spawn_task.group.objective.type
-	self._next_group_spawn_t[group_objective_type] = self._t + cooldown
+function GroupAIStateBesiege:_set_objective_type_cooldown(type, cooldown)
+	self._next_group_spawn_t[type] = self._t + cooldown
 end
 
 function GroupAIStateBesiege:_upd_group_spawning()
 	for _, spawn_task in ipairs(self._spawning_groups) do
-		if spawn_task.group.size > 0 or not self:_is_spawn_task_type_on_cooldown(spawn_task) then
+		if spawn_task.group.size > 0 or not self:_is_objective_type_on_cooldown(spawn_task.group.objective.type) then
 			self:_perform_group_spawning(spawn_task)
 			return
 		end
@@ -946,6 +944,7 @@ function GroupAIStateBesiege:_perform_group_spawning(spawn_task, force)
 					spawned_unit:brain():set_spawn_entry(spawn_entry, u_data.tactics_map)
 
 					u_data.rank = spawn_entry.rank
+					u_data.spawn_group = spawn_task.spawn_group
 
 					self:_add_group_member(spawn_task.group, u_key)
 
@@ -1018,7 +1017,7 @@ function GroupAIStateBesiege:_perform_group_spawning(spawn_task, force)
 	end
 
 	-- Set a cooldown before new units can be spawned via regular spawn tasks
-	self:_set_spawn_task_type_cooldown(spawn_task, spawn_task.group.size * tweak_data.group_ai.spawn_cooldown_mul)
+	self:_set_objective_type_cooldown(spawn_task.group.objective.type, spawn_task.group.size * tweak_data.group_ai.spawn_cooldown_mul)
 end
 
 function GroupAIStateBesiege:_spawn_in_group(spawn_group, spawn_group_type, grp_objective, ai_task)
