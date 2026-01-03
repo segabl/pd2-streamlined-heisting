@@ -5,7 +5,7 @@ return {
 			enabled = false
 		}
 	},
-	[101596] = {
+	[101595] = {
 		difficulty = 0.5
 	}
 }
