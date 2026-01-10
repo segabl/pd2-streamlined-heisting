@@ -522,6 +522,11 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		end
 	end
 
+	presets.dodge.special = deep_clone(presets.dodge.athletic)
+	presets.dodge.special.occasions.scared = nil
+	presets.dodge.special.occasions.hit.chance = 0.45
+	presets.dodge.special.occasions.preemptive.chance = 0.25
+
 	-- Tweak move speed presets
 	presets.move_speed.extremely_slow = deep_clone(presets.move_speed.slow)
 	for _, pose in pairs(presets.move_speed.extremely_slow) do
@@ -895,6 +900,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.fbi.dodge = self.presets.dodge.average
 	self.fbi_female.dodge = self.presets.dodge.average
 	self.medic.dodge = self.presets.dodge.poor
+	self.taser.dodge = self.presets.dodge.special
 
 	-- Set custom objective interrupt distance
 	self.taser.min_obj_interrupt_dis = 1000
@@ -914,8 +920,11 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.tank_hw.melee_weapon = "helloween"
 	self.tank_mini.melee_weapon = "bash"
 
-	-- Disable cloaker smoke drop after attack (they already have a chance to drop one when they dodge)
+	-- Tweak cloakers
 	self.spooc.spooc_attack_use_smoke_chance = 0
+	self.shadow_spooc.spooc_attack_use_smoke_chance = 0
+	self.spooc.max_spooc_dis = 2000
+	self.shadow_spooc.max_spooc_dis = 2000
 
 	-- Reduce invulnerability duration
 	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 1.75
