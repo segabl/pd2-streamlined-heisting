@@ -215,7 +215,7 @@ Hooks:PreHook(GroupAIStateBase, "add_special_objective", "sh_add_special_objecti
 
 	objective_data.interval = 4
 	objective_data.search_dis_sq = 4000000
-	objective_data.objective.interrupt_dis = 600
+	objective_data.objective.interrupt_dis = 800
 	objective_data.objective.interrupt_health = 0.8
 	objective_data.objective.pose = nil
 end)
