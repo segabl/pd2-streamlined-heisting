@@ -109,6 +109,19 @@ MissionManager.mission_script_patch_funcs = {
 			end
 		end)
 		StreamHeist:log("%s hooked as AI area trigger", element:editor_name())
+	end,
+
+	spawn = function(self, element, data)
+		Hooks:PostHook(element, "on_executed", "sh_on_executed_spawn_unit_" .. element:id(), function()
+			StreamHeist:log("%s executed, spawning %d unit(s)", element:editor_name(), #data)
+			for _, u_data in ipairs(data) do
+				local unit = World:spawn_unit(u_data.name, u_data.pos or Vector3(), u_data.rot or Rotation())
+				if u_data.visible ~= nil then
+					unit:set_visible(u_data.visible)
+				end
+			end
+		end)
+		StreamHeist:log("%s hooked as unit spawn trigger", element:editor_name())
 	end
 }
 
