@@ -868,10 +868,6 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 
 	-- Clear explosion damage multipliers
 	self.fbi_heavy_swat.damage.explosion_damage_mul = 1
-	self.tank.damage.explosion_damage_mul = 1
-	self.tank_hw.damage.explosion_damage_mul = 1
-	self.tank_medic.damage.explosion_damage_mul = 1
-	self.tank_mini.damage.explosion_damage_mul = 1
 	self.shield.damage.explosion_damage_mul = 1
 	self.phalanx_minion.damage.explosion_damage_mul = 1
 	self.phalanx_vip.damage.explosion_damage_mul = 1
@@ -927,7 +923,7 @@ Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
 	self.shadow_spooc.max_spooc_dis = 2000
 
 	-- Reduce invulnerability duration
-	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 1.75
+	self.marshal_shield_break.tmp_invulnerable_on_tweak_change = 1.5
 
 	-- Set chatter presets
 	self.marshal_marksman.chatter = self.presets.enemy_chatter.no_chatter

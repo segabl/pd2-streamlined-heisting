@@ -32,7 +32,8 @@ Hooks:PostHook(WeaponTweakData, "init", "sh_init", function(self, tweak_data)
 	self.saiga_npc.auto.fire_rate = 0.18
 	self.saiga_npc.CLIP_AMMO_MAX = 20
 	self.sko12_conc_npc.auto = { fire_rate = 0.22 }
-	self.sko12_conc_npc.concussion_data.chance = 0.1
+	self.sko12_conc_npc.concussion_data.chance = 0.25
+	self.sko12_conc_npc.concussion_data.distance_max = 2000
 	self.sko12_conc_npc.FIRE_MODE = "auto"
 	self.sr2_smg_npc.sounds.prefix = self.sr2_crew.sounds.prefix
 	self.ump_npc.sounds.prefix = self.schakal_crew.sounds.prefix
