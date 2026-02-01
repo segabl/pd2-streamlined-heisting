@@ -122,6 +122,23 @@ MissionManager.mission_script_patch_funcs = {
 			end
 		end)
 		StreamHeist:log("%s hooked as unit spawn trigger", element:editor_name())
+	end,
+
+	flee_point = function(self, element, data)
+		if Network:is_client() then
+			return
+		end
+		Hooks:PostHook(element, "on_executed", "sh_on_executed_flee_point_" .. element:id(), function()
+			StreamHeist:log("%s executed, toggled %u flee point(s)", element:editor_name(), #data)
+			for _, v in pairs(data) do
+				if v.position then
+					managers.groupai:state():add_flee_point(v.name, v.position)
+				else
+					managers.groupai:state():remove_flee_point(v.name)
+				end
+			end
+		end)
+		StreamHeist:log("%s hooked as flee point trigger for %u area(s)", element:editor_name(), #data)
 	end
 }
 
