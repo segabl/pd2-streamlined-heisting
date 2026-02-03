@@ -33,14 +33,14 @@ return {
 	[100692] = interval,
 	-- Make server hack a higher chance when solo
 	[104494] = {
-		pre_func = function (self)
+		pre_func = function(self)
 			if table.size(managers.network:session():peers()) == 0 then
 				self._chance = 90
 			end
 		end
 	},
-	-- Combine some navigation areas
 	[100017] = {
+		-- Combine some navigation areas
 		ai_area = {
 			{ 25, 26, 119 },
 			{ 27, 120, 121 },
@@ -48,6 +48,11 @@ return {
 			{ 38, 133 },
 			{ 41, 42, 50, 66 },
 			{ 43, 44, 51 }
+		},
+		-- Additional flee points
+		flee_point = {
+			{ name = "right_side", position = Vector3(3500, 2500, -1200) },
+			{ name = "left_side", position = Vector3(3800, -4450, -1050) }
 		}
 	}
 }

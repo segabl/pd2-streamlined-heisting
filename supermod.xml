@@ -645,6 +645,7 @@
 
 		<!-- improve navigation data -->
 		<group name="levels/narratives/">
+			<file :name="bain/big/nav_manager_data.nav_data"/>
 			<file :name="classics/flat/nav_manager_data.nav_data"/>
 			<file :name="dentist/hox/stage_2/nav_manager_data.nav_data"/>
 			<file :name="dentist/mia/stage2/nav_manager_data.nav_data"/>

@@ -36,7 +36,7 @@ return {
 	[104729] = reinforce,
 	[104730] = reinforce,
 	-- Additional flee points
-	[100918] = {
+	[105722] = {
 		flee_point = {
 			{ name = "back_spawns", position = Vector3(1950, 6350, 1) }
 		}
