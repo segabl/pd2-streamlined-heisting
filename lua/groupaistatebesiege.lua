@@ -57,11 +57,11 @@ function GroupAIStateBesiege:_upd_assault_task(...)
 	self:_assign_recon_groups_to_retire()
 
 	local end_assault
-	local is_skirmish = managers.skirmish:is_skirmish()
+	local do_fade = not managers.skirmish:is_skirmish()
 	local fade_settings = self._tweak_data.assault.fade
-	local enemies_defeated_time = is_skirmish and 0 or fade_settings.enemies_defeated_time
-	local engagement_time = is_skirmish and 0 or fade_settings.engagement_time
-	local drama_time = is_skirmish and 0 or fade_settings.drama_time
+	local enemies_defeated_time = do_fade and fade_settings.enemies_defeated_time or 0
+	local engagement_time = do_fade and fade_settings.engagement_time or 0
+	local drama_time = do_fade and fade_settings.drama_time or 0
 	local min_enemies_left = math.floor(task_data.force * fade_settings.enemies_defeated_percentage)
 	local enemies_defeated = self:_count_police_force("assault") < min_enemies_left or self._t > task_data.phase_end_t + enemies_defeated_time
 	if enemies_defeated then

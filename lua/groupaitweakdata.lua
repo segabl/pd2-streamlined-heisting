@@ -69,9 +69,9 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "sh__init_task_data", functi
 	self.besiege.assault.fade = {
 		enemies_defeated_percentage = 0.5,
 		enemies_defeated_time = 30,
-		engagement_percentage = 0.25,
+		engagement_percentage = 0.35,
 		engagement_time = 20,
-		drama_time = 10
+		drama_time = 5
 	}
 
 	self.besiege.reenforce.groups = {
