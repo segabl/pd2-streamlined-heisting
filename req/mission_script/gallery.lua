@@ -1,4 +1,11 @@
 return {
+	-- Combine some navigation areas
+	[100442] = {
+		ai_area = {
+			{ 13, 100 },
+			{ 53, 56, 57, 58 }
+		}
+	},
 	-- Disable Winters
 	[104262] = {
 		values = {
