@@ -306,7 +306,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 				[0.0] = 1
 			},
 			aggressor_dis = {
-				[100] = 0.3,
+				[100] = 0.25,
 				[800] = 0
 			}
 		}
@@ -317,7 +317,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		reasons = {
 			pants_down = 0.9,
 			weapon_down = 0.5,
-			flanked = 0.4,
+			flanked = 0.35,
 			unaware_of_aggressor = 0.3,
 			isolated = 0.15
 		},
@@ -327,7 +327,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 				[0.0] = 0.75
 			},
 			aggressor_dis = {
-				[100] = 0.2,
+				[100] = 0.15,
 				[800] = 0
 			}
 		}
@@ -338,7 +338,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 		reasons = {
 			pants_down = 0.8,
 			weapon_down = 0.4,
-			flanked = 0.3,
+			flanked = 0.2,
 			unaware_of_aggressor = 0.2,
 			isolated = 0
 		},
@@ -348,7 +348,7 @@ function CharacterTweakData:_presets(tweak_data, ...)
 				[0.0] = 0.5
 			},
 			aggressor_dis = {
-				[100] = 0.1,
+				[100] = 0.05,
 				[800] = 0
 			}
 		}
