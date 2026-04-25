@@ -9,6 +9,17 @@ for i = 0, 3 do
 	})
 end
 return {
+	-- Combine some navigation areas
+	[134066] = {
+		ai_area = {
+			{ 41, 42 },
+			{ 4, 34, 135 },
+			{ 3, 136, 137 },
+			{ 30, 31 },
+			{ 113, 117 },
+			{ 114, 115 }
+		}
+	},
 	[101469] = {
 		groups = {
 			tac_shield_wall = false,
@@ -21,6 +32,15 @@ return {
 			tac_shield_wall = false,
 			tac_shield_wall_ranged = false,
 			tac_shield_wall_charge = false
+		},
+		values = {
+			elements = {
+				102515,
+				102516,
+				102517,
+				102518,
+				102519
+			}
 		}
 	},
 	-- Add LoS blockers
