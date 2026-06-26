@@ -46,10 +46,7 @@
 				<post :hook_id="modifiermedicdeathwish"/>
 			</group>
 
-			<group :hook_id="network/">
-				<post :hook_id="base/networkmanager"/>
-				<post :hook_id="handlers/unitnetworkhandler"/>
-			</group>
+			<post :hook_id="network/handlers/unitnetworkhandler"/>
 
 			<post :hook_id="setups/gamesetup"/>
 
@@ -170,6 +167,8 @@
 					<post :hook_id="raycastweaponbase"/>
 				</group>
 			</group>
+
+			<post :hook_id="utils/version"/>
 		</group>
 	</hooks>
 
