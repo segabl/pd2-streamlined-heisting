@@ -2,14 +2,13 @@
 local enter_original = TeamAILogicAssault.enter
 function TeamAILogicAssault.enter(data, ...)
 	local movement = data.unit:movement()
-	local set_stance = movement.set_stance
-	movement.set_stance = function(self, ...)
-		if self:stance_code() == 1 then
-			return set_stance(self, ...)
-		end
+	local set_stance = rawget(movement, "set_stance")
+
+	if movement:stance_code() ~= 1 then
+		movement.set_stance = function() end
 	end
 
 	enter_original(data, ...)
 
-	movement.set_stance = set_stance ~= getmetatable(movement).set_stance and set_stance or nil
+	movement.set_stance = set_stance
 end
