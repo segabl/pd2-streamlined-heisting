@@ -21,7 +21,9 @@ function CopActionShoot:_stop_firing()
 	self._is_single_shot = nil
 	if self._autofiring then
 		self._autofiring = nil
-		self._weapon_base:stop_autofire()
+		if self._weapon_base then
+			self._weapon_base:stop_autofire()
+		end
 	end
 end
 
@@ -29,7 +31,7 @@ end
 -- Set some values needed for fixed focus and aim delay
 Hooks:PostHook(CopActionShoot, "on_attention", "sh_on_attention", function (self)
 	-- Stop autofiring on target change
-	if not self._w_usage_tweak.no_autofire_stop then
+	if not self._w_usage_tweak or not self._w_usage_tweak.no_autofire_stop then
 		self:_stop_firing()
 	end
 
