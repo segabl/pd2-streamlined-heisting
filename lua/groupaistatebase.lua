@@ -268,3 +268,10 @@ end
 Hooks:OverrideFunction(GroupAIStateBase, "_set_rescue_state", function(self, state)
 	self._rescue_allowed = state
 end)
+
+
+-- Temporary fix for ElementAIArea not adding areas corretly
+local add_area_original = GroupAIStateBase.add_area
+function GroupAIStateBase:add_area(area_id, nav_segs, ...)
+	return add_area_original(self, tostring(area_id), table.collect(nav_segs, function(v) return tostring(v) end), ...)
+end
