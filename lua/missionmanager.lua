@@ -94,7 +94,7 @@ MissionManager.mission_script_patch_funcs = {
 	ai_area = function(self, element, data)
 		Hooks:PostHook(element, "on_executed", "sh_on_executed_ai_area_" .. element:id(), function()
 			StreamHeist:log("%s executed, creating %d AI area(s)", element:editor_name(), #data)
-			for _, nav_segs in ipairs(data) do
+			for i, nav_segs in ipairs(data) do
 				local area_pos = Vector3()
 				local nav_seg_ids = {}
 				for _, nav_seg_id in ipairs(nav_segs) do
@@ -106,8 +106,7 @@ MissionManager.mission_script_patch_funcs = {
 					mvector3.add_scaled(area_pos, nav_seg.pos, 1 / #nav_segs)
 					table.insert(nav_seg_ids, nav_seg.unique_id or nav_seg_id)
 				end
-				self._ai_area_id = (self._ai_area_id or 10000) + 1
-				managers.groupai:state():add_area(self._ai_area_id, nav_seg_ids, area_pos)
+				managers.groupai:state():add_area(element:id() .. ":" .. i, nav_seg_ids, area_pos)
 			end
 		end)
 		StreamHeist:log("%s hooked as AI area trigger", element:editor_name())
