@@ -1526,3 +1526,48 @@ Hooks:OverrideFunction(GroupAIStateBesiege, "_assign_group_to_retire", function(
 		attitude = "avoid"
 	})
 end)
+
+
+-- Handle multiple min police force ids in the same area
+-- New force will only be set if it's higher than an existing one
+-- A lower one will be restored if the higher one is removed
+function GroupAIStateBesiege:set_area_min_police_force(id, force, pos)
+	if force then
+		local nav_seg_id = managers.navigation:get_nav_seg_from_pos(pos, true)
+		local area = self:get_area_from_nav_seg_id(nav_seg_id)
+
+		area.factors.force = area.factors.force or {
+			all = {}
+		}
+
+		local force_factor = area.factors.force
+		if not force_factor.force or force_factor.id == id or force > force_factor.force then
+			force_factor.id = id
+			force_factor.force = force
+		end
+
+		force_factor.all[id] = force
+	else
+		for _, area in pairs(self._area_data) do
+			local force_factor = area.factors.force
+			if force_factor then
+				force_factor.all[id] = nil
+				if force_factor.id == id then
+					local new_id
+					for k, v in pairs(force_factor.all) do
+						if not new_id or v > force_factor.all[new_id] then
+							new_id = k
+						end
+					end
+					if new_id then
+						force_factor.id = new_id
+						force_factor.force = force_factor.all[new_id]
+					else
+						area.factors.force = nil
+					end
+					return
+				end
+			end
+		end
+	end
+end
