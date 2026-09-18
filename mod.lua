@@ -18,7 +18,8 @@ if not StreamHeist then
 				russia = true
 			},
 			radio_filtered_heavies = true,
-			allow_flashlights = true
+			allow_flashlights = true,
+			restore_cloaker_spawn_noise = true
 		}
 	}
 
@@ -164,6 +165,16 @@ if not StreamHeist then
 			value = StreamHeist.settings.allow_flashlights,
 			menu_id = menu_id,
 			priority = 97
+		})
+
+		MenuHelper:AddToggle({
+			id = "restore_cloaker_spawn_noise",
+			title = "sh_menu_restore_cloaker_spawn_noise",
+			desc = "sh_menu_restore_cloaker_spawn_noise_desc",
+			callback = "sh_toggle",
+			value = StreamHeist.settings.restore_cloaker_spawn_noise,
+			menu_id = menu_id,
+			priority = 96
 		})
 
 		MenuHelper:AddToggle({
