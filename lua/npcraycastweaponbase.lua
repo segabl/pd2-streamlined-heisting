@@ -1,3 +1,4 @@
+-- Set up flashlight data for NPC weapons and fix cases of them using the wrong tweak data
 NPCRaycastWeaponBase.flashlight_blacklist = {
 	[Idstring("units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun"):key()] = true,
 	[Idstring("units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"):key()] = true,
@@ -11,7 +12,20 @@ NPCRaycastWeaponBase.flashlight_blacklist = {
 	[Idstring("units/pd2_dlc_usm2/weapons/wpn_npc_deagle/wpn_npc_deagle"):key()] = true
 }
 
-Hooks:PostHook(NPCRaycastWeaponBase, "init", "sh_init", function (self)
+local init_original = NPCRaycastWeaponBase.init
+function NPCRaycastWeaponBase:init(...)
+	if self.name_id and self.name_id:match("_crew$") then
+		local new_name_id = self.name_id:gsub("_crew$", "_npc")
+		if tweak_data.weapon[new_name_id] then
+			StreamHeist:log("NPC weapon using crew tweak data '%s', changed to '%s'", self.name_id, new_name_id)
+			self.name_id = new_name_id
+		else
+			StreamHeist:warn("NPC weapon using crew tweak data '%s'", self.name_id)
+		end
+	end
+
+	init_original(self, ...)
+
 	if not StreamHeist.settings.allow_flashlights or self.flashlight_blacklist[self._unit:name():key()] then
 		if self._flashlight_data and alive(self._flashlight_data.light) then
 			World:delete_light(self._flashlight_data.light)
@@ -51,4 +65,4 @@ Hooks:PostHook(NPCRaycastWeaponBase, "init", "sh_init", function (self)
 	light:set_enable(false)
 
 	self._unit:set_moving()
-end)
+end
