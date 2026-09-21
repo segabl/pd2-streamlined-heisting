@@ -8,6 +8,7 @@ end)
 
 -- Keep hunt and search as actual objective types instead of making it defend_area
 -- This is done to be able to differentiate between those objectives and make hunt work properly (search is currently unused)
+-- Add interruptible flag to allow interruption of AI_sniper objectives
 local get_objective_original = ElementSpecialObjective.get_objective
 function ElementSpecialObjective:get_objective(...)
 	local objective = get_objective_original(self, ...)
@@ -23,6 +24,8 @@ function ElementSpecialObjective:get_objective(...)
 			objective.area = managers.groupai:state():get_area_from_nav_seg_id(objective.nav_seg)
 		end
 	end
+
+	objective.interruptible = self._values.interruptible
 
 	return objective
 end

@@ -7,7 +7,7 @@ return {
 		}
 	},
 	-- Reinforce fountain
-	[102802] = {
+	[103141] = {
 		reinforce = {
 			{
 				name = "fountain",
@@ -21,6 +21,14 @@ return {
 			{
 				name = "fountain"
 			}
+		}
+	},
+	-- Disable auctioneer sniper objective on damage
+	[105761] = {
+		values = {
+			interruptible = true,
+			interrupt_dmg = 0.1,
+			interrupt_dis = 3
 		}
 	}
 }
