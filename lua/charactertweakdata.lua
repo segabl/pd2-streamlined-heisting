@@ -759,6 +759,19 @@ Hooks:PostHook(CharacterTweakData, "_init_deep_boss", "sh__init_deep_boss", func
 	self.deep_boss.no_run_stop = true
 end)
 
+Hooks:PostHook(CharacterTweakData, "_init_auctioneer_boss", "sh__init_auctioneer_boss", function(self, presets)
+	self.auctioneer_boss.HEALTH_INIT = 400
+	self.auctioneer_boss.player_health_scaling_mul = 1.25
+	self.auctioneer_boss.headshot_dmg_mul = 0.75
+	self.auctioneer_boss.no_headshot_add_mul = true
+	self.auctioneer_boss.damage.explosion_damage_mul = 0.5
+	self.auctioneer_boss.damage.hurt_severity = presets.hurt_severities.only_light_hurt
+	self.auctioneer_boss.use_animation_on_fire_damage = false
+	self.auctioneer_boss.move_speed = presets.move_speed.normal
+	self.auctioneer_boss.no_run_start = true
+	self.auctioneer_boss.no_run_stop = true
+end)
+
 
 -- Set specific character preset settings
 Hooks:PostHook(CharacterTweakData, "init", "sh_init", function(self)
