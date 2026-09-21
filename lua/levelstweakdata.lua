@@ -44,6 +44,7 @@ Hooks:PostHook(LevelsTweakData, "init", "sh_init", function(self)
 		}
 	}
 	self.rvd2.ai_unit_group_overrides = self.rvd1.ai_unit_group_overrides
+	self.auc.ai_unit_group_overrides = self.rvd1.ai_unit_group_overrides
 
 	self.hox_2.ai_unit_group_overrides = {
 		CS_cop_C45_R870 = {
