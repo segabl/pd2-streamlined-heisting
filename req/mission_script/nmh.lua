@@ -30,5 +30,29 @@ return {
 	-- Disable most reinforce points
 	[103706] = disabled,
 	[103707] = disabled,
-	[103847] = disabled
+	[103847] = disabled,
+	-- Let cloaker interrupt sniper SO
+	[104306] = {
+		values = {
+			interruptible = true,
+			interrupt_dmg = 0.1,
+			interrupt_dis = 3
+		}
+	},
+	-- Fix dozer/shield elevator ambush
+	[104114] = {
+		pre_func = function()
+			local ai_graph = managers.mission:get_element_by_id(104126)
+			local unit_sequence = managers.mission:get_element_by_id(102876)
+			if ai_graph and unit_sequence and alive(unit_sequence._unit) then
+				ai_graph:on_executed()
+				unit_sequence._unit:damage():run_sequence_simple("run_sequence")
+			end
+		end
+	},
+	[104116] = {
+		on_executed = {
+			{ id = 104112, delay = 0 }
+		}
+	}
 }
