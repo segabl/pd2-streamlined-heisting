@@ -2,12 +2,12 @@ return {
 	-- Scale PonR with difficulty
 	[101161] = {
 		values = {
-			time_normal = 420,
-			time_hard = 405,
-			time_overkill = 390,
-			time_overkill_145 = 375,
-			time_easy_wish = 360,
-			time_overkill_290 = 345,
+			time_normal = 390,
+			time_hard = 380,
+			time_overkill = 370,
+			time_overkill_145 = 360,
+			time_easy_wish = 350,
+			time_overkill_290 = 340,
 			time_sm_wish = 330
 		}
 	},
