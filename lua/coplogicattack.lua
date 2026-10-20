@@ -371,6 +371,33 @@ function CopLogicAttack._verify_cover(cover, threat_pos, min_dis, max_dis)
 end
 
 
+-- Improve logic for when to run and when to walk
+function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
+	local focus_enemy = data.attention_obj
+	local haste = focus_enemy and focus_enemy.reaction >= AIAttentionObject.REACT_SHOOT and focus_enemy.dis < (focus_enemy.verified and my_data.weapon_range.far or my_data.weapon_range.optimal) and "walk" or "run"
+	local end_pose = my_data.moving_to_cover and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) and "crouch" or nil
+
+	local new_action_data = {
+		body_part = 2,
+		type = "walk",
+		nav_path = my_data.cover_path,
+		variant = haste,
+		end_pose = end_pose
+	}
+
+	my_data.cover_path = nil
+	my_data.advancing = data.unit:brain():action_request(new_action_data)
+
+	if my_data.advancing then
+		my_data.moving_to_cover = my_data.best_cover
+		my_data.at_cover_shoot_pos = nil
+		my_data.in_cover = nil
+
+		data.brain:rem_pos_rsrv("path")
+	end
+end
+
+
 -- Improve Marshal combat movement, they really just need to try to keep their distance
 function MarshalLogicAttack._upd_combat_movement(data)
 	local my_data = data.internal_data
