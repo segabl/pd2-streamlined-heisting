@@ -1,4 +1,14 @@
 return {
+	-- Combine some navigation areas
+	[100667] = {
+		ai_area = {
+			{ 2, 3 },
+			{ 11, 24, 25 },
+			{ 15, 22, 49 },
+			{ 18, 19 },
+			{ 26, 27 }
+		}
+	},
 	-- Randomize planks amount
 	[100822] = {
 		values = {
@@ -25,6 +35,12 @@ return {
 				force = 2,
 				position = Vector3(675, -1200, 875)
 			}
+		}
+	},
+	-- Disable visible flee point
+	[100458] = {
+		values = {
+			enabled = false
 		}
 	}
 }

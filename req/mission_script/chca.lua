@@ -9,8 +9,8 @@ for i = 0, 3 do
 	})
 end
 return {
-	-- Combine some navigation areas
-	[134066] = {
+	[100017] = {
+		-- Combine some navigation areas
 		ai_area = {
 			{ 41, 42 },
 			{ 4, 34, 135 },
@@ -18,7 +18,9 @@ return {
 			{ 30, 31 },
 			{ 113, 117 },
 			{ 114, 115 }
-		}
+		},
+		-- Add LoS blockers
+		spawn = los_blockers
 	},
 	[101469] = {
 		groups = {
@@ -42,9 +44,5 @@ return {
 				102519
 			}
 		}
-	},
-	-- Add LoS blockers
-	[143003] = {
-		spawn = los_blockers
 	}
 }
